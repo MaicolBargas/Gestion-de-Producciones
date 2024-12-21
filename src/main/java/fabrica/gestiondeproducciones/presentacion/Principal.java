@@ -4,8 +4,6 @@
  */
 package fabrica.gestiondeproducciones.presentacion;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author maico
@@ -31,7 +29,6 @@ public class Principal extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         menuPrincipal = new javax.swing.JMenuBar();
         menuSilos = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -48,15 +45,17 @@ public class Principal extends javax.swing.JFrame {
         );
 
         menuSilos.setText("Silos");
+        menuSilos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSilosMouseClicked(evt);
+            }
+        });
         menuSilos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuSilosActionPerformed(evt);
             }
         });
         menuPrincipal.add(menuSilos);
-
-        jMenu2.setText("Edit");
-        menuPrincipal.add(jMenu2);
 
         setJMenuBar(menuPrincipal);
 
@@ -79,12 +78,14 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuSilosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSilosActionPerformed
-        
-        JOptionPane.showMessageDialog(null,"Clickeado el menu");
+
+    }//GEN-LAST:event_menuSilosActionPerformed
+
+    private void menuSilosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSilosMouseClicked
         GestionSilos gestionSilos = new GestionSilos();
         escritorio.add(gestionSilos);
         gestionSilos.show();
-    }//GEN-LAST:event_menuSilosActionPerformed
+    }//GEN-LAST:event_menuSilosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -124,7 +125,6 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu menuSilos;
     // End of variables declaration//GEN-END:variables
