@@ -1,27 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Silo;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author maico
- */
+
 public class GestionSilos extends javax.swing.JInternalFrame {
     Utilidades utilidad = new Utilidades();
     Silo silo = new Silo();
     Controlador controlador = new Controlador();
+    DefaultTableModel modelo = new DefaultTableModel();;
     /**
      * Creates new form GestionSilos
      */
     public GestionSilos() {
         initComponents();
+        listarSilos();
+    }
+    
+    private void listarSilos(){
+        limpiarTabla();
+        List<Silo> lista = controlador.listarSilos();
+        modelo = (DefaultTableModel) TablaSilos.getModel();
+        Object[] objeto = new Object[3];
+        for(int i = 0; i < lista.size(); i++){
+            objeto[0] = lista.get(i).getId();
+            objeto[1] = lista.get(i).getCodigoInterno();
+            objeto[2] = lista.get(i).getCapacidad();
+            modelo.addRow(objeto);
+        }
+        TablaSilos.setModel(modelo);
+    }
+    
+    private void limpiarTabla(){
+        for(int i = 0; i < modelo.getRowCount(); i++){
+            modelo.removeRow(i);
+            i =- 1;
+        }
     }
 
     /**
@@ -49,8 +68,8 @@ public class GestionSilos extends javax.swing.JInternalFrame {
         btnAlta = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TablaSilos = new javax.swing.JTable();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -110,9 +129,8 @@ public class GestionSilos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCapacidad, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                        .addComponent(txtCodigoInterno)))
+                    .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                    .addComponent(txtCodigoInterno))
                 .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
@@ -193,7 +211,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 170));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaSilos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -202,16 +220,25 @@ public class GestionSilos extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-        });
-        jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 640, 300));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(TablaSilos);
+        TablaSilos.getAccessibleContext().setAccessibleName("tablaSilos");
+        TablaSilos.getAccessibleContext().setAccessibleDescription("");
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 197, 630, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -235,6 +262,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
       boolean altaSilo = controlador.altaSilo(silo);
       if(altaSilo){
         JOptionPane.showMessageDialog(null, "Silo dado de alta.");
+        listarSilos();
       }
       
         
@@ -242,6 +270,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaSilos;
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnModificar;
@@ -253,8 +282,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCodigoInterno;
     private javax.swing.JPanel panelBase;
     private javax.swing.JTextField txtCapacidad;
