@@ -4,12 +4,19 @@
  */
 package fabrica.gestiondeproducciones.presentacion;
 
+import fabrica.gestiondeproducciones.dominio.Controlador;
+import fabrica.gestiondeproducciones.dominio.Silo;
+import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author maico
  */
 public class GestionSilos extends javax.swing.JInternalFrame {
-
+    Utilidades utilidad = new Utilidades();
+    Silo silo = new Silo();
+    Controlador controlador = new Controlador();
     /**
      * Creates new form GestionSilos
      */
@@ -129,6 +136,11 @@ public class GestionSilos extends javax.swing.JInternalFrame {
         txtId.getAccessibleContext().setAccessibleName("txtId");
 
         btnAlta.setText("Alta");
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaActionPerformed(evt);
+            }
+        });
 
         btnBaja.setText("Baja");
 
@@ -143,7 +155,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAlta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBaja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -165,7 +177,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(51, 51, 51)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(216, Short.MAX_VALUE))
         );
@@ -211,6 +223,22 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     private void txtCodigoInternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoInternoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoInternoActionPerformed
+
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        
+      int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno");
+      int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad");
+      
+      silo.setCodigoInterno(codigoInterno);
+      silo.setCapacidad(capacidad);
+      
+      boolean altaSilo = controlador.altaSilo(silo);
+      if(altaSilo){
+        JOptionPane.showMessageDialog(null, "Silo dado de alta.");
+      }
+      
+        
+    }//GEN-LAST:event_btnAltaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

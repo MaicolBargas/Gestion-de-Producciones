@@ -76,7 +76,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" pref="210" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="216" max="32767" attributes="0"/>
               </Group>
@@ -195,7 +195,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnAlta" max="32767" attributes="0"/>
                           <Component id="btnBaja" max="32767" attributes="0"/>
-                          <Component id="btnModificar" pref="91" max="32767" attributes="0"/>
+                          <Component id="btnModificar" pref="90" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -220,6 +220,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Alta"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAltaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnBaja">
               <Properties>
