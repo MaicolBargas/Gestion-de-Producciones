@@ -1,6 +1,8 @@
 
 package fabrica.gestiondeproducciones.utilidades;
 
+import javax.swing.JOptionPane;
+
 
 public class Utilidades {
     
@@ -10,8 +12,10 @@ public class Utilidades {
             Integer numero = Integer.valueOf(valor);
             return numero;
            }catch(NumberFormatException e){
-               
+            JOptionPane.showMessageDialog(null, "El campo "+nombre+" no es numerico, por favor verifique.");
            }
+        }else{
+        JOptionPane.showMessageDialog(null, "El campo "+nombre+" no puede ser vacio");
         }
         return null;
     }

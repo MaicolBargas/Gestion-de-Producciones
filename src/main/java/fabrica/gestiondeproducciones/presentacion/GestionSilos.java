@@ -68,6 +68,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
         btnAlta = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaSilos = new javax.swing.JTable();
 
@@ -161,8 +162,18 @@ public class GestionSilos extends javax.swing.JInternalFrame {
         });
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -185,8 +196,15 @@ public class GestionSilos extends javax.swing.JInternalFrame {
                 .addComponent(btnBaja)
                 .addGap(18, 18, 18)
                 .addComponent(btnModificar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -195,18 +213,25 @@ public class GestionSilos extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpiar)
+                .addGap(42, 42, 42)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimpiar))))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 170));
@@ -234,6 +259,11 @@ public class GestionSilos extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        TablaSilos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaSilosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(TablaSilos);
         TablaSilos.getAccessibleContext().setAccessibleName("tablaSilos");
         TablaSilos.getAccessibleContext().setAccessibleDescription("");
@@ -252,7 +282,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodigoInternoActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        
+      
       int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno");
       int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad");
       
@@ -262,17 +292,62 @@ public class GestionSilos extends javax.swing.JInternalFrame {
       boolean altaSilo = controlador.altaSilo(silo);
       if(altaSilo){
         JOptionPane.showMessageDialog(null, "Silo dado de alta.");
+        limpiarFormulario();
         listarSilos();
       }
-      
-        
     }//GEN-LAST:event_btnAltaActionPerformed
 
+    private void TablaSilosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaSilosMouseClicked
+        int fila = TablaSilos.rowAtPoint(evt.getPoint());
+        txtId.setText(TablaSilos.getValueAt(fila, 0).toString());
+        txtCodigoInterno.setText(TablaSilos.getValueAt(fila, 1).toString());
+        txtCapacidad.setText(TablaSilos.getValueAt(fila, 2).toString());
+    }//GEN-LAST:event_TablaSilosMouseClicked
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        int id = utilidad.validarNumericos(txtId.getText(), "Id");
+        boolean bajaSilo = controlador.bajaSilo(id);
+        if(bajaSilo){
+            JOptionPane.showMessageDialog(null, "Silo dado de baja.");
+            limpiarFormulario();
+            listarSilos();
+        }
+        
+    }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+      
+      int id = utilidad.validarNumericos(txtId.getText(), "Id");
+      int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno");
+      int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad");
+      
+      silo.setId(id);
+      silo.setCodigoInterno(codigoInterno);
+      silo.setCapacidad(capacidad);
+      
+      boolean modificarSilo = controlador.modificarSilo(silo);
+      if(modificarSilo){
+        JOptionPane.showMessageDialog(null, "Silo modificado correctamente.");
+        limpiarFormulario();
+        listarSilos();
+      }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    public void limpiarFormulario(){
+        txtId.setText("");
+        txtCodigoInterno.setText("");
+        txtCapacidad.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaSilos;
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

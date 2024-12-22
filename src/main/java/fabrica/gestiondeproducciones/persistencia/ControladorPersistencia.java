@@ -15,4 +15,15 @@ public class ControladorPersistencia {
         return persistenciaSilo.listarSilos();
     }
     
+    public boolean bajaSilo(int id){
+        return persistenciaSilo.bajaSilo(id);
+    }
+    
+    public boolean modificarSilo(Silo silo){
+       return persistenciaSilo.modificarSilo(silo);
+    }
+    
+    public Silo buscarSilo(int id){
+        return persistenciaSilo.buscarSilo(id);
+    }
 }
