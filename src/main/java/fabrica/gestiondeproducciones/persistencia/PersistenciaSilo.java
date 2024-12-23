@@ -1,6 +1,7 @@
 package fabrica.gestiondeproducciones.persistencia;
 
 import fabrica.gestiondeproducciones.dominio.Silo;
+import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,14 +27,14 @@ public class PersistenciaSilo {
             consulta.setInt(2, silo.getCapacidad());
             consulta.execute();
             return true;
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+        }catch(SQLException e){            
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
         }finally{
             try{
                 con.close();
             }catch(SQLException e){
-            
+               JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
     }
@@ -53,7 +54,7 @@ public class PersistenciaSilo {
                 lista.add(silo);
             }
         }catch(SQLException e){
-            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
         }
         return lista;
@@ -69,13 +70,13 @@ public class PersistenciaSilo {
             consulta.execute();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
         }finally{
             try{
                 con.close();
             }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
     }
@@ -91,13 +92,13 @@ public class PersistenciaSilo {
             consulta.execute();
             return true;
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
         }finally{
             try{
                 con.close();
             }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
         
@@ -118,13 +119,13 @@ public class PersistenciaSilo {
             silo.setCapacidad(resultado.getInt("capacidad"));  
             return silo;
         }catch(SQLException e){
-            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
         }finally{
             try{
                 con.close();
             }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
     }    
