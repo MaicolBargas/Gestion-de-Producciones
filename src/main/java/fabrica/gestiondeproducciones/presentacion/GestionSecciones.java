@@ -1,11 +1,25 @@
 
 package fabrica.gestiondeproducciones.presentacion;
+
+
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Seccion;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import javax.swing.JOptionPane;
+
+import javax.swing.JOptionPane;
+
+import java.util.List;
+
+import fabrica.gestiondeproducciones.dominio.Seccion;
+
+
+
+import javax.swing.JOptionPane;
 
 public class GestionSecciones extends javax.swing.JInternalFrame {
 

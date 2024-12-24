@@ -1,6 +1,7 @@
+
 package fabrica.gestiondeproducciones.persistencia;
 
-import fabrica.gestiondeproducciones.dominio.Silo;
+import fabrica.gestiondeproducciones.dominio.Tambo;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,21 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class PersistenciaSilo {
+public class PersistenciaTambo {
+    
     Conexion conexion = new Conexion();
     Connection con;
     PreparedStatement consulta;
     ResultSet resultado;
-    String nombreTabla = "silos";
+    String nombreTabla = "tambo";
     
-    public boolean altaSilo(Silo silo){
-        String sql = "INSERT INTO "+ nombreTabla +"(codigoSilo, capacidad) VALUES (?,?)";
+    public boolean altaTambo(Tambo tambo){
+        String sql = "INSERT INTO "+ nombreTabla +"(nombrePropietario, contacto, direccion) VALUES (?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setInt(1, silo.getCodigoInterno());
-            consulta.setInt(2, silo.getCapacidad());
+            consulta.setString(1, tambo.getPropietario());
+            consulta.setString(2, tambo.getContacto());
+            consulta.setString(3, tambo.getDireccion());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -39,19 +42,20 @@ public class PersistenciaSilo {
         }
     }
    
-    public List listarSilos(){
-        List<Silo> lista = new ArrayList();
+    public List listarTambos(){
+        List<Tambo> lista = new ArrayList();
         String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
             while(resultado.next()){
-                Silo silo = new Silo();
-                silo.setId(resultado.getInt("idSilo"));
-                silo.setCodigoInterno(resultado.getInt("codigoSilo"));
-                silo.setCapacidad(resultado.getInt("capacidad"));
-                lista.add(silo);
+                Tambo tambo = new Tambo();
+                tambo.setId(resultado.getInt("idTambo"));
+                tambo.setPropietario(resultado.getString("nombrePropietario"));
+                tambo.setContacto(resultado.getString("contacto"));
+                tambo.setDireccion(resultado.getString("direccion"));
+                lista.add(tambo);
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
@@ -60,8 +64,8 @@ public class PersistenciaSilo {
         return lista;
     }
     
-    public boolean bajaSilo(int id){
-        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idSilo = ?";
+    public boolean bajaTambo(int id){
+        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idTambo = ?";
        
         try{
             con = conexion.obtenerConexion();
@@ -80,15 +84,15 @@ public class PersistenciaSilo {
             }
         }
     }
-    
-    public boolean modificarSilo(Silo silo){
-        String sql = "UPDATE "+ nombreTabla +" SET codigoSilo = ?, capacidad = ? WHERE idSilo = ?";
+    public boolean modificarTambo(Tambo tambo){
+        String sql = "UPDATE "+ nombreTabla +" SET nombrePropietario = ?, contacto = ?, direccion = ? WHERE idTambo = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setInt(1, silo.getCodigoInterno());
-            consulta.setInt(2, silo.getCapacidad());
-            consulta.setInt(3, silo.getId());
+            consulta.setString(1, tambo.getPropietario());
+            consulta.setString(2, tambo.getContacto());
+            consulta.setString(3, tambo.getDireccion());
+            consulta.setInt(4, tambo.getId());
             consulta.execute();
             return true;
         }catch(SQLException e){
@@ -105,19 +109,20 @@ public class PersistenciaSilo {
      
     }
         
-    public Silo buscarSilo(int id){
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idSilo =?";
+    public Tambo buscarTambo(int id){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idTambo =?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             resultado = consulta.executeQuery();     
             
-            Silo silo = new Silo();
-            silo.setId(resultado.getInt("idSilo"));
-            silo.setCodigoInterno(resultado.getInt("codigoSilo"));
-            silo.setCapacidad(resultado.getInt("capacidad"));  
-            return silo;
+            Tambo tambo = new Tambo();
+            tambo.setId(resultado.getInt("idTambo"));
+            tambo.setPropietario(resultado.getString("nombrePropietario"));
+            tambo.setContacto(resultado.getString("contacto"));  
+            tambo.setDireccion(resultado.getString("direccion"));  
+            return tambo;
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
@@ -128,5 +133,6 @@ public class PersistenciaSilo {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
-    }    
+    }
+    
 }

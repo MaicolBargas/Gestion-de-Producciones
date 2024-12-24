@@ -24,6 +24,7 @@ public class Principal extends javax.swing.JFrame {
         menuPrincipal = new javax.swing.JMenuBar();
         menuSilos = new javax.swing.JMenu();
         menuSecciones = new javax.swing.JMenu();
+        menuTambos = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -65,6 +66,19 @@ public class Principal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuSecciones);
 
+        menuTambos.setText("Tambos");
+        menuTambos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuTambosMouseClicked(evt);
+            }
+        });
+        menuTambos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTambosActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(menuTambos);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,6 +118,16 @@ public class Principal extends javax.swing.JFrame {
     private void menuSeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSeccionesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuSeccionesActionPerformed
+
+    private void menuTambosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuTambosMouseClicked
+        GestionTambo gestionTambo = new GestionTambo();
+        escritorio.add(gestionTambo);
+        gestionTambo.show();
+    }//GEN-LAST:event_menuTambosMouseClicked
+
+    private void menuTambosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTambosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuTambosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,6 +170,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu menuSecciones;
     private javax.swing.JMenu menuSilos;
+    private javax.swing.JMenu menuTambos;
     // End of variables declaration//GEN-END:variables
 
 
