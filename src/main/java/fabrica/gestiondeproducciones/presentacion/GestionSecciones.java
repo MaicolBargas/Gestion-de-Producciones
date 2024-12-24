@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package fabrica.gestiondeproducciones.presentacion;
 
-/**
- *
- * @author maico
- */
 public class GestionSecciones extends javax.swing.JInternalFrame {
 
     /**

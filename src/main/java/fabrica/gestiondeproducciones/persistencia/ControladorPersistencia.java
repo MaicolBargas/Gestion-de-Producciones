@@ -2,6 +2,7 @@
 package fabrica.gestiondeproducciones.persistencia;
 
 import fabrica.gestiondeproducciones.dominio.Silo;
+import fabrica.gestiondeproducciones.dominio.Tambo;
 import java.util.List;
 
 public class ControladorPersistencia {
@@ -25,5 +26,27 @@ public class ControladorPersistencia {
     
     public Silo buscarSilo(int id){
         return persistenciaSilo.buscarSilo(id);
+    }
+    
+    
+    PersistenciaTambo persistenciaTambo = new PersistenciaTambo();
+    public boolean altaTambo(Tambo tambo){
+       return persistenciaTambo.altaTambo(tambo);
+    }
+    
+    public List listarTambos(){
+        return persistenciaTambo.listarTambos();
+    }
+    
+    public boolean bajaTambo(int id){
+        return persistenciaTambo.bajaTambo(id);
+    }
+    
+    public boolean modificarTambo(Tambo tambo){
+       return persistenciaTambo.modificarTambo(tambo);
+    }
+    
+    public Tambo buscarTambo(int id){
+        return persistenciaTambo.buscarTambo(id);
     }
 }

@@ -19,10 +19,10 @@ public class GestionSilos extends javax.swing.JInternalFrame {
      */
     public GestionSilos() {
         initComponents();
-        listarSilos();
+        listar();
     }
     
-    private void listarSilos(){
+    private void listar(){
         limpiarTabla();
         List<Silo> lista = controlador.listarSilos();
         modelo = (DefaultTableModel) TablaSilos.getModel();
@@ -289,11 +289,11 @@ public class GestionSilos extends javax.swing.JInternalFrame {
       silo.setCodigoInterno(codigoInterno);
       silo.setCapacidad(capacidad);
       
-      boolean altaSilo = controlador.altaSilo(silo);
-      if(altaSilo){
+      boolean alta = controlador.altaSilo(silo);
+      if(alta){
         JOptionPane.showMessageDialog(null, "Silo dado de alta.");
         limpiarFormulario();
-        listarSilos();
+        listar();
       }
     }//GEN-LAST:event_btnAltaActionPerformed
 
@@ -306,11 +306,11 @@ public class GestionSilos extends javax.swing.JInternalFrame {
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean bajaSilo = controlador.bajaSilo(id);
-        if(bajaSilo){
+        boolean baja = controlador.bajaSilo(id);
+        if(baja){
             JOptionPane.showMessageDialog(null, "Silo dado de baja.");
             limpiarFormulario();
-            listarSilos();
+            listar();
         }
         
     }//GEN-LAST:event_btnBajaActionPerformed
@@ -333,7 +333,7 @@ public class GestionSilos extends javax.swing.JInternalFrame {
       if(modificarSilo){
         JOptionPane.showMessageDialog(null, "Silo modificado correctamente.");
         limpiarFormulario();
-        listarSilos();
+        listar();
       }
     }//GEN-LAST:event_btnModificarActionPerformed
 

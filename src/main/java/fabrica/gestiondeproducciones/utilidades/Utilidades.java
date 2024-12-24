@@ -24,4 +24,13 @@ public class Utilidades {
         return !valor.isEmpty();
     }
     
+    public final String sanitizarCampos(String valor, String nombre){
+        if(validarVacios(valor)){
+            return valor.replaceAll("[^\\w\\s]", "");                
+        }else{
+        JOptionPane.showMessageDialog(null, "El "+nombre+" no puede ser vacio");
+        }
+        return null;
+    }
+    
 }
