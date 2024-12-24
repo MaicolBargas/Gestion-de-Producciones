@@ -27,6 +27,25 @@ public class Controlador {
         return persistencia.buscarSilo(id);
     }
     
+    public boolean altaSeccion(Seccion seccion){
+        return persistencia.altaSeccion(seccion);
+    }
+    
+    public List listarSecciones(){
+        return persistencia.listarSecciones();
+    }
+    
+    public boolean bajaSeccion(int id){
+        return persistencia.bajaSeccion(id);
+    }
+    
+    public boolean modificarSeccion(Seccion seccion){
+       return persistencia.modificarSeccion(seccion);
+    }
+    
+    public Seccion buscarSeccion(int id){
+        return persistencia.buscarSeccion(id);
+    }
     
     
     

@@ -24,4 +24,16 @@ public class Utilidades {
         return !valor.isEmpty();
     }
     
+    public String ValidarVacioTexto(String valor,String nombre)
+    {
+       if(!valor.isEmpty()){
+        return valor;
+       }
+       else
+       {
+        JOptionPane.showMessageDialog(null, "El campo "+nombre+" no puede ser vacio");
+        return null;
+        }
+    }
+    
 }

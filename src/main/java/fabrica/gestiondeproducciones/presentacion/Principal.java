@@ -23,6 +23,7 @@ public class Principal extends javax.swing.JFrame {
         escritorio = new javax.swing.JDesktopPane();
         menuPrincipal = new javax.swing.JMenuBar();
         menuSilos = new javax.swing.JMenu();
+        menuSecciones = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -50,6 +51,19 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuPrincipal.add(menuSilos);
+
+        menuSecciones.setText("Secciones");
+        menuSecciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuSeccionesMouseClicked(evt);
+            }
+        });
+        menuSecciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSeccionesActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(menuSecciones);
 
         setJMenuBar(menuPrincipal);
 
@@ -80,6 +94,16 @@ public class Principal extends javax.swing.JFrame {
         escritorio.add(gestionSilos);
         gestionSilos.show();
     }//GEN-LAST:event_menuSilosMouseClicked
+
+    private void menuSeccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuSeccionesMouseClicked
+        GestionSecciones gestionSecciones = new GestionSecciones();
+        escritorio.add(gestionSecciones);
+        gestionSecciones.show();
+    }//GEN-LAST:event_menuSeccionesMouseClicked
+
+    private void menuSeccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSeccionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuSeccionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,6 +144,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenuBar menuPrincipal;
+    private javax.swing.JMenu menuSecciones;
     private javax.swing.JMenu menuSilos;
     // End of variables declaration//GEN-END:variables
 
