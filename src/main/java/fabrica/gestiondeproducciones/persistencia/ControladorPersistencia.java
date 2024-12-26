@@ -1,6 +1,7 @@
 
 package fabrica.gestiondeproducciones.persistencia;
 
+import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.Silo;
 
 import fabrica.gestiondeproducciones.dominio.Seccion;
@@ -56,9 +57,7 @@ public class ControladorPersistencia {
 }
     
     
-     
-    
-public boolean altaTambo(Tambo tambo){
+    public boolean altaTambo(Tambo tambo){
        return persistenciaTambo.altaTambo(tambo);
     }
     
@@ -76,6 +75,29 @@ public boolean altaTambo(Tambo tambo){
     
     public Tambo buscarTambo(int id){
         return persistenciaTambo.buscarTambo(id);
+
+    }
+    
+    
+    PersistenciaInsumo persistenciaInsumo = new PersistenciaInsumo();
+    public boolean altaInsumo(Insumo tambo){
+       return persistenciaInsumo.altaInsumo(tambo);
+    }
+    
+    public List listarInsumos(){
+        return persistenciaInsumo.listarInsumos();
+    }
+    
+    public boolean bajaInsumo(int id){
+        return persistenciaInsumo.bajaInsumo(id);
+    }
+    
+    public boolean modificarInsumo(Insumo tambo){
+       return persistenciaInsumo.modificarInsumo(tambo);
+    }
+    
+    public Insumo buscarInsumo(int id){
+        return persistenciaInsumo.buscarInsumo(id);
 
     }
 }

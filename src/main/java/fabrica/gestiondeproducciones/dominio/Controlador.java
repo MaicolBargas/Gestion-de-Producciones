@@ -68,4 +68,25 @@ public class Controlador {
     }
     
     
+    public boolean altaInsumo(Insumo tambo){
+       return persistencia.altaInsumo(tambo);
+    }
+    
+    public List listarInsumos(){
+        return persistencia.listarInsumos();
+    }
+    
+    public boolean bajaInsumo(int id){
+        return persistencia.bajaInsumo(id);
+    }
+    
+    public boolean modificarInsumo(Insumo tambo){
+       return persistencia.modificarInsumo(tambo);
+    }
+    
+    public Insumo buscarInsumo(int id){
+        return persistencia.buscarInsumo(id);
+    }
+    
+    
 }

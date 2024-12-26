@@ -31,6 +31,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuTambosActionPerformed"/>
           </Events>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="menuInsumos">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Insumos"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuInsumosMouseClicked"/>
+          </Events>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
