@@ -112,12 +112,13 @@ public class PersistenciaSeccion {
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             resultado = consulta.executeQuery();     
-            
-            Seccion seccion = new Seccion();
-            seccion.setId(resultado.getInt("idSeccion"));
-            seccion.setNombre(resultado.getString("nombre"));
-            seccion.setDescripcion(resultado.getString("descripcion"));
-            return seccion;
+            if(resultado.next()){
+                Seccion seccion = new Seccion();
+                seccion.setId(resultado.getInt("idSeccion"));
+                seccion.setNombre(resultado.getString("nombre"));
+                seccion.setDescripcion(resultado.getString("descripcion"));
+                return seccion;
+            }
         }catch(SQLException e){
             System.out.println(e.toString());
             return null;
@@ -128,6 +129,7 @@ public class PersistenciaSeccion {
             JOptionPane.showMessageDialog(null, e.toString());
             }
         }
+        return null;
     } 
     
 }

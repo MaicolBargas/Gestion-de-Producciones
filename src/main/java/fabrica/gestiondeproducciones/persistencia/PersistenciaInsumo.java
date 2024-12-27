@@ -114,12 +114,13 @@ public class PersistenciaInsumo {
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             resultado = consulta.executeQuery();     
-            
-            Insumo insumo = new Insumo();
-            insumo.setId(resultado.getInt("idInsumo"));
-            insumo.setNombre(resultado.getString("nombre"));
-            insumo.setDescripcion(resultado.getString("descripcion"));  
-            return insumo;
+            if(resultado.next()){
+                Insumo insumo = new Insumo();
+                insumo.setId(resultado.getInt("idInsumo"));
+                insumo.setNombre(resultado.getString("nombre"));
+                insumo.setDescripcion(resultado.getString("descripcion"));  
+                return insumo;
+            }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
@@ -130,6 +131,7 @@ public class PersistenciaInsumo {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
+        return null;
     }    
     
 }

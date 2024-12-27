@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class Controlador {
+    
     ControladorPersistencia persistencia = new ControladorPersistencia();
    
     public boolean altaSilo(Silo silo){
@@ -88,5 +89,29 @@ public class Controlador {
         return persistencia.buscarInsumo(id);
     }
     
+    public boolean altaEmpleado(Empleado empleado){
+       return persistencia.altaEmpleado(empleado);
+    }
     
+    public List listarEmpleados(){
+        return persistencia.listarEmpleados();
+    }
+    
+    public boolean bajaEmpleado(int id){
+        return persistencia.bajaEmpleado(id);
+    }
+    
+    public boolean modificarEmpleado(Empleado empleado){
+       return persistencia.modificarEmpleado(empleado);
+    }
+    
+    public Empleado buscarEmpleado(int id){
+        return persistencia.buscarEmpleado(id);
+    }
+    
+    public Empleado buscarEmpleadoXCi(int ci){
+        return persistencia.buscarEmpleado(ci);
+    }
+    
+
 }

@@ -1,13 +1,9 @@
 
 package fabrica.gestiondeproducciones.persistencia;
 
-import fabrica.gestiondeproducciones.dominio.Insumo;
-import fabrica.gestiondeproducciones.dominio.Silo;
-
+import fabrica.gestiondeproducciones.dominio.*;
 import fabrica.gestiondeproducciones.dominio.Seccion;
-
 import fabrica.gestiondeproducciones.dominio.Tambo;
-
 import java.util.List;
 
 public class ControladorPersistencia {
@@ -98,6 +94,30 @@ public class ControladorPersistencia {
     
     public Insumo buscarInsumo(int id){
         return persistenciaInsumo.buscarInsumo(id);
-
+    }
+    
+    PersistenciaEmpleado persistenciaEmpleado = new PersistenciaEmpleado();
+    public boolean altaEmpleado(Empleado empleado){
+       return persistenciaEmpleado.altaEmpleado(empleado);
+    }
+    
+    public List listarEmpleados(){
+        return persistenciaEmpleado.listarEmpleados();
+    }
+    
+    public boolean bajaEmpleado(int id){
+        return persistenciaEmpleado.bajaEmpleado(id);
+    }
+    
+    public boolean modificarEmpleado(Empleado empleado){
+       return persistenciaEmpleado.modificarEmpleado(empleado);
+    }
+    
+    public Empleado buscarEmpleado(int id){
+        return persistenciaEmpleado.buscarEmpleado(id);
+    }
+    
+    public Empleado buscarEmpleadoXCi(int ci){
+        return persistenciaEmpleado.buscarEmpleadoXCi(ci);
     }
 }

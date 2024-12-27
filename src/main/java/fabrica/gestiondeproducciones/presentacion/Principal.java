@@ -26,6 +26,7 @@ public class Principal extends javax.swing.JFrame {
         menuSecciones = new javax.swing.JMenu();
         menuTambos = new javax.swing.JMenu();
         menuInsumos = new javax.swing.JMenu();
+        menuEmpleados = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -88,6 +89,14 @@ public class Principal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuInsumos);
 
+        menuEmpleados.setText("Empleados");
+        menuEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuEmpleadosMouseClicked(evt);
+            }
+        });
+        menuPrincipal.add(menuEmpleados);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,6 +153,12 @@ public class Principal extends javax.swing.JFrame {
         gestionInsumos.show();
     }//GEN-LAST:event_menuInsumosMouseClicked
 
+    private void menuEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuEmpleadosMouseClicked
+        GestionEmpleados gestionEmpleados = new GestionEmpleados();
+        escritorio.add(gestionEmpleados);
+        gestionEmpleados.show();
+    }//GEN-LAST:event_menuEmpleadosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -182,6 +197,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenu menuEmpleados;
     private javax.swing.JMenu menuInsumos;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu menuSecciones;

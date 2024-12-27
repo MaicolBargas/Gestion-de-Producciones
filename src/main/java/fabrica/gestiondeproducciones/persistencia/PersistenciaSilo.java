@@ -112,12 +112,13 @@ public class PersistenciaSilo {
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             resultado = consulta.executeQuery();     
-            
-            Silo silo = new Silo();
-            silo.setId(resultado.getInt("idSilo"));
-            silo.setCodigoInterno(resultado.getInt("codigoSilo"));
-            silo.setCapacidad(resultado.getInt("capacidad"));  
-            return silo;
+            if(resultado.next()){
+                Silo silo = new Silo();
+                silo.setId(resultado.getInt("idSilo"));
+                silo.setCodigoInterno(resultado.getInt("codigoSilo"));
+                silo.setCapacidad(resultado.getInt("capacidad"));  
+                return silo;
+            }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
@@ -128,5 +129,6 @@ public class PersistenciaSilo {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
+        return null;
     }    
 }

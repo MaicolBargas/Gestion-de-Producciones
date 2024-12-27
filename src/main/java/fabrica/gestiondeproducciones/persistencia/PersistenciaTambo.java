@@ -116,13 +116,14 @@ public class PersistenciaTambo {
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             resultado = consulta.executeQuery();     
-            
-            Tambo tambo = new Tambo();
-            tambo.setId(resultado.getInt("idTambo"));
-            tambo.setPropietario(resultado.getString("nombrePropietario"));
-            tambo.setContacto(resultado.getString("contacto"));  
-            tambo.setDireccion(resultado.getString("direccion"));  
-            return tambo;
+            if(resultado.next()){           
+                Tambo tambo = new Tambo();
+                tambo.setId(resultado.getInt("idTambo"));
+                tambo.setPropietario(resultado.getString("nombrePropietario"));
+                tambo.setContacto(resultado.getString("contacto"));  
+                tambo.setDireccion(resultado.getString("direccion"));  
+                return tambo;
+            }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
@@ -133,6 +134,7 @@ public class PersistenciaTambo {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
+        return null;
     }
     
 }
