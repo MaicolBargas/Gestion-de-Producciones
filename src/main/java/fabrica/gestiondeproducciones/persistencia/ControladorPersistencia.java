@@ -10,6 +10,7 @@ public class ControladorPersistencia {
     PersistenciaSilo persistenciaSilo = new PersistenciaSilo();
     PersistenciaSeccion persistenciaSeccion = new PersistenciaSeccion();
     PersistenciaTambo persistenciaTambo = new PersistenciaTambo();
+    PersistenciaProducto persistenciaProducto= new PersistenciaProducto();
    
     public boolean altaSilo(Silo silo){
        return persistenciaSilo.altaSilo(silo);
@@ -30,6 +31,31 @@ public class ControladorPersistencia {
     public Silo buscarSilo(int id){
         return persistenciaSilo.buscarSilo(id);
     }
+    
+    
+    
+    
+     public boolean altaProducto(Producto producto){
+       return persistenciaProducto.altaProducto(producto);
+    }
+    
+    public List listarProductos(){
+        return persistenciaProducto.listarProductos();
+    }
+    
+    public boolean bajaProducto(int id){
+        return persistenciaProducto.bajaProducto(id);
+    }
+    
+    public boolean modificarProducto(Producto producto){
+       return persistenciaProducto.modificarProducto(producto);
+    }
+    
+    public Producto buscarProducto(int id){
+        return persistenciaProducto.buscarProducto(id);
+    }
+    
+    
     
 
      public boolean altaSeccion(Seccion seccion){

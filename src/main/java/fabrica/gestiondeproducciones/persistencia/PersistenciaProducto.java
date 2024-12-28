@@ -1,6 +1,7 @@
 
 package fabrica.gestiondeproducciones.persistencia;
-import fabrica.gestiondeproducciones.dominio.Seccion;
+
+import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,21 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class PersistenciaSeccion {
+public class PersistenciaProducto {
     Conexion conexion = new Conexion();
     Connection con;
     PreparedStatement consulta;
     ResultSet resultado;
-    String nombreTabla = "secciones";
+    String nombreTabla = "producto";
     
-    public boolean altaSeccion(Seccion seccion){
+    public boolean altaProducto(Producto producto){
         String sql = "INSERT INTO "+ nombreTabla +"(nombre, descripcion) VALUES (?,?)";
         
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setString(1,seccion.getNombre());
-            consulta.setString(2,seccion.getDescripcion());
+            consulta.setString(1,producto.getNombre());
+            consulta.setString(2,producto.getDescripcion());
             consulta.execute();
             return true;
         }catch(SQLException e){
@@ -40,19 +41,19 @@ public class PersistenciaSeccion {
         }
     }
     
-    public List listarSecciones(){
-        List<Seccion> lista = new ArrayList();
+    public List listarProductos(){
+        List<Producto> lista = new ArrayList();
         String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
             while(resultado.next()){
-                Seccion seccion = new Seccion();
-                seccion.setId(resultado.getInt("idSeccion"));
-                seccion.setNombre(resultado.getString("nombre"));
-                seccion.setDescripcion(resultado.getString("descripcion"));
-                lista.add(seccion);
+                Producto producto = new Producto();
+                producto.setId(resultado.getInt("id"));
+                producto.setNombre(resultado.getString("nombre"));
+                producto.setDescripcion(resultado.getString("descripcion"));
+                lista.add(producto);
             }
         }catch(SQLException e){
             System.out.println(e.toString());
@@ -62,8 +63,8 @@ public class PersistenciaSeccion {
     }
     
     
-    public boolean bajaSeccion(int id){
-        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idSeccion = ?";
+    public boolean bajaProducto(int id){
+        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE id = ?";
        
         try{
             con = conexion.obtenerConexion();
@@ -83,14 +84,14 @@ public class PersistenciaSeccion {
         }
     }
     
-     public boolean modificarSeccion(Seccion seccion){
-        String sql = "UPDATE "+ nombreTabla +" SET nombre = ?, descripcion = ? WHERE idSeccion = ?";
+     public boolean modificarProducto(Producto producto){
+        String sql = "UPDATE "+ nombreTabla +" SET nombre = ?, descripcion = ? WHERE id = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setString(1, seccion.getNombre());
-            consulta.setString(2, seccion.getDescripcion());
-            consulta.setInt(3, seccion.getId());
+            consulta.setString(1, producto.getNombre());
+            consulta.setString(2, producto.getDescripcion());
+            consulta.setInt(3, producto.getId());
             consulta.execute();
             return true;
         }catch(SQLException e){
@@ -107,19 +108,19 @@ public class PersistenciaSeccion {
      
     }
      
-     public Seccion buscarSeccion(int id){
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idSeccion =?";
+     public Producto buscarProducto(int id){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE id =?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             resultado = consulta.executeQuery();     
             if(resultado.next()){
-                Seccion seccion = new Seccion();
-                seccion.setId(resultado.getInt("idSeccion"));
-                seccion.setNombre(resultado.getString("nombre"));
-                seccion.setDescripcion(resultado.getString("descripcion"));
-                return seccion;
+                Producto producto = new Producto();
+                producto.setId(resultado.getInt("id"));
+                producto.setNombre(resultado.getString("nombre"));
+                producto.setDescripcion(resultado.getString("descripcion"));
+                return producto;
             }
         }catch(SQLException e){
             System.out.println(e.toString());
@@ -133,5 +134,6 @@ public class PersistenciaSeccion {
         }
         return null;
     } 
+    
     
 }

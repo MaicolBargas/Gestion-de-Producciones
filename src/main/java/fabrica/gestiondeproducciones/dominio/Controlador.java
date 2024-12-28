@@ -28,6 +28,29 @@ public class Controlador {
         return persistencia.buscarSilo(id);
     }
     
+    
+    public boolean altaProducto(Producto producto){
+        return persistencia.altaProducto(producto);
+    }
+    
+    public List listarProductos(){
+        return persistencia.listarProductos();
+    }
+    
+    public boolean bajaProducto (int id){
+        return persistencia.bajaProducto(id);
+    }
+    
+    public boolean modificarProducto (Producto producto ){
+       return persistencia.modificarProducto(producto);
+    }
+    
+    public Producto buscarProducto(int id){
+        return persistencia.buscarProducto(id);
+    }
+    
+    
+    
     public boolean altaSeccion(Seccion seccion){
         return persistencia.altaSeccion(seccion);
     }

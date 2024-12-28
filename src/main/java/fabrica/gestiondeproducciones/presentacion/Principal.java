@@ -27,6 +27,7 @@ public class Principal extends javax.swing.JFrame {
         menuTambos = new javax.swing.JMenu();
         menuInsumos = new javax.swing.JMenu();
         menuEmpleados = new javax.swing.JMenu();
+        menuProductos = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -97,6 +98,14 @@ public class Principal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuEmpleados);
 
+        menuProductos.setText("Productos");
+        menuProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuProductosMouseClicked(evt);
+            }
+        });
+        menuPrincipal.add(menuProductos);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,6 +168,12 @@ public class Principal extends javax.swing.JFrame {
         gestionEmpleados.show();
     }//GEN-LAST:event_menuEmpleadosMouseClicked
 
+    private void menuProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProductosMouseClicked
+       GestionProductos gestionProductos = new GestionProductos();
+        escritorio.add(gestionProductos);
+        gestionProductos.show();
+    }//GEN-LAST:event_menuProductosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -200,6 +215,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuEmpleados;
     private javax.swing.JMenu menuInsumos;
     private javax.swing.JMenuBar menuPrincipal;
+    private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuSecciones;
     private javax.swing.JMenu menuSilos;
     private javax.swing.JMenu menuTambos;

@@ -339,15 +339,15 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
       
-      int ci = utilidad.validarNumericos(txtDocumento.getText(), "Documento");
+      int ci = Integer.parseInt(utilidad.validarCi(txtDocumento.getText()));
       String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre");
       String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido");
       String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
       Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
       String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono");
-      String mail = utilidad.sanitizarCampos(txtMail.getText(), "Mail");
+      String mail =  utilidad.sanitizarCampos(txtMail.getText(), "Mail");
 
-      empleado.setCi(ci);
+      empleado.setCi(ci);   
       empleado.setNombre(nombre);
       empleado.setApellido(apellido);
       empleado.setSeccion(seccion);
