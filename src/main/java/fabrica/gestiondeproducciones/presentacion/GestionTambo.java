@@ -290,48 +290,61 @@ public class GestionTambo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre del propietario");
-      String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto");
-      String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion");
-      
-      tambo.setPropietario(propietario);
-      tambo.setContacto(contacto);
-      tambo.setDireccion(direccion);
+      try{
+        String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre del propietario", false);
+        String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
+        String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
 
-      boolean alta = controlador.altaTambo(tambo);
-      if(alta){
-        JOptionPane.showMessageDialog(null, "Tambo dado de alta.");
-        limpiarFormulario();
-        listar();
+        tambo.setPropietario(propietario);
+        tambo.setContacto(contacto);
+        tambo.setDireccion(direccion);
+
+        boolean alta = controlador.altaTambo(tambo);
+        if(alta){
+          JOptionPane.showMessageDialog(null, "Tambo dado de alta.");
+          limpiarFormulario();
+          listar();
+        }
+      }
+      catch(Exception e){
+        JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
       }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean baja = controlador.bajaTambo(id);
-        if(baja){
-            JOptionPane.showMessageDialog(null, "Tambo dado de baja.");
-            limpiarFormulario();
-            listar();
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaTambo(id);
+            if(baja){
+                JOptionPane.showMessageDialog(null, "Tambo dado de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-      int id = utilidad.validarNumericos(txtId.getText(), "Id");
-      String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre Propietario");
-      String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto");
-      String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion");
+      try{
+        int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+        String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre Propietario", false);
+        String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
+        String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
 
-      tambo.setId(id);
-      tambo.setPropietario(propietario);
-      tambo.setContacto(contacto);
-      tambo.setDireccion(direccion);
-     
-      boolean modificar = controlador.modificarTambo(tambo);
-      if(modificar){
-        JOptionPane.showMessageDialog(null, "Tambo modificado correctamente.");
-        limpiarFormulario();
-        listar();
+        tambo.setId(id);
+        tambo.setPropietario(propietario);
+        tambo.setContacto(contacto);
+        tambo.setDireccion(direccion);
+
+        boolean modificar = controlador.modificarTambo(tambo);
+        if(modificar){
+          JOptionPane.showMessageDialog(null, "Tambo modificado correctamente.");
+          limpiarFormulario();
+          listar();
+        }
+      }catch(Exception e){
+        JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
       }
     }//GEN-LAST:event_btnModificarActionPerformed
 

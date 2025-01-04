@@ -5,7 +5,10 @@ import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.Seccion;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.awt.HeadlessException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -106,6 +109,7 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Gestion de empleados");
 
         jLabel1.setText("Id:");
 
@@ -338,61 +342,75 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      
-      int ci = Integer.parseInt(utilidad.validarCi(txtDocumento.getText()));
-      String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre");
-      String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido");
-      String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
-      Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
-      String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono");
-      String mail =  utilidad.sanitizarCampos(txtMail.getText(), "Mail");
+      try{
+        int ci = utilidad.validarCi(txtDocumento.getText());
+        String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
+        String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido", false);
+        String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
+        Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
+        String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
+        String mail =  utilidad.sanitizarCampos(txtMail.getText(), "Mail", false);
 
-      empleado.setCi(ci);   
-      empleado.setNombre(nombre);
-      empleado.setApellido(apellido);
-      empleado.setSeccion(seccion);
-      empleado.setTelefono(telefono);
-      empleado.setMail(mail);
+        empleado.setCi(ci);   
+        empleado.setNombre(nombre);
+        empleado.setApellido(apellido);
+        if(seccion instanceof Seccion){
+            empleado.setSeccion(seccion);
+        }else{ throw new Exception("La seccion seleccionada no existe");}
+        
+        empleado.setTelefono(telefono);
+        empleado.setMail(mail);
 
-      boolean alta = controlador.altaEmpleado(empleado);
-      if(alta){
-        JOptionPane.showMessageDialog(null, "Empleado dado de alta.");
-        limpiarFormulario();
-        listar();
+        boolean alta = controlador.altaEmpleado(empleado);
+        if(alta){
+          JOptionPane.showMessageDialog(null, "Empleado dado de alta.");
+          limpiarFormulario();
+          listar();
+        }
+      }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
       }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean baja = controlador.bajaEmpleado(id);
-        if(baja){
-            JOptionPane.showMessageDialog(null, "Empleado dada de baja.");
-            limpiarFormulario();
-            listar();
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaEmpleado(id);
+            if(baja){
+                JOptionPane.showMessageDialog(null, "Empleado dada de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int ci = utilidad.validarNumericos(txtDocumento.getText(), "Documento");
-        String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre");
-        String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido");
-        String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
-        Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
-        String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono");
-        String mail = utilidad.sanitizarCampos(txtMail.getText(), "Mail");
+        try{
+            int ci = utilidad.validarCi(txtDocumento.getText());
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
+            String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido", false);
+            String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
+            Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
+            String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
+            String mail = utilidad.sanitizarCampos(txtMail.getText(), "Mail", false);
 
-        empleado.setCi(ci);
-        empleado.setNombre(nombre);
-        empleado.setApellido(apellido);
-        empleado.setSeccion(seccion);
-        empleado.setTelefono(telefono);
-        empleado.setMail(mail);
+            empleado.setCi(ci);
+            empleado.setNombre(nombre);
+            empleado.setApellido(apellido);
+            empleado.setSeccion(seccion);
+            empleado.setTelefono(telefono);
+            empleado.setMail(mail);
 
-        boolean modificar = controlador.modificarEmpleado(empleado);
-        if(modificar){
-            JOptionPane.showMessageDialog(null, "Empleado modificado correctamente.");
-            limpiarFormulario();
-            listar();
+            boolean modificar = controlador.modificarEmpleado(empleado);
+            if(modificar){
+                JOptionPane.showMessageDialog(null, "Empleado modificado correctamente.");
+                limpiarFormulario();
+                listar();
+            } 
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

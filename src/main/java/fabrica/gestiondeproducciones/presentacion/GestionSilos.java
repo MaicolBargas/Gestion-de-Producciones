@@ -282,19 +282,23 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodigoInternoActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+      try{
+        int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno", false);
+        int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad", false);
+
+        silo.setCodigoInterno(codigoInterno);
+        silo.setCapacidad(capacidad);
+
+        boolean alta = controlador.altaSilo(silo);
+        if(alta){
+          JOptionPane.showMessageDialog(null, "Silo dado de alta.");
+          limpiarFormulario();
+          listar();
+        }
+      }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
       
-      int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno");
-      int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad");
-      
-      silo.setCodigoInterno(codigoInterno);
-      silo.setCapacidad(capacidad);
-      
-      boolean alta = controlador.altaSilo(silo);
-      if(alta){
-        JOptionPane.showMessageDialog(null, "Silo dado de alta.");
-        limpiarFormulario();
-        listar();
-      }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void TablaSilosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaSilosMouseClicked
@@ -305,14 +309,17 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_TablaSilosMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean baja = controlador.bajaSilo(id);
-        if(baja){
-            JOptionPane.showMessageDialog(null, "Silo dado de baja.");
-            limpiarFormulario();
-            listar();
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaSilo(id);
+            if(baja){
+                JOptionPane.showMessageDialog(null, "Silo dado de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-        
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -320,21 +327,24 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-      
-      int id = utilidad.validarNumericos(txtId.getText(), "Id");
-      int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno");
-      int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad");
-      
-      silo.setId(id);
-      silo.setCodigoInterno(codigoInterno);
-      silo.setCapacidad(capacidad);
-      
-      boolean modificarSilo = controlador.modificarSilo(silo);
-      if(modificarSilo){
-        JOptionPane.showMessageDialog(null, "Silo modificado correctamente.");
-        limpiarFormulario();
-        listar();
-      }
+      try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno", false);
+            int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad", false);
+
+            silo.setId(id);
+            silo.setCodigoInterno(codigoInterno);
+            silo.setCapacidad(capacidad);
+
+            boolean modificarSilo = controlador.modificarSilo(silo);
+            if(modificarSilo){
+              JOptionPane.showMessageDialog(null, "Silo modificado correctamente.");
+              limpiarFormulario();
+              listar();
+            }
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     public void limpiarFormulario(){

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -11,10 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author MSI
- */
+
 public class GestionProductos extends javax.swing.JInternalFrame {
 
      Utilidades utilidad = new Utilidades();
@@ -68,6 +62,12 @@ private void listarProductos(){
         btnModificar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaProductos = new javax.swing.JTable();
+
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gestion Productos");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Id:");
@@ -259,46 +259,56 @@ private void listarProductos(){
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        try{
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
-        String nombre =utilidad.ValidarVacioTexto(txtNombre.getText(),"Nombre");
-        String descripcion = utilidad.ValidarVacioTexto(txtDescripcion.getText(), "Descripcion");
+            producto.setNombre(nombre);
+            producto.setDescripcion(descripcion);
 
-        producto.setNombre(nombre);
-        producto.setDescripcion(descripcion);
-
-        boolean altaProducto = controlador.altaProducto(producto);
-        if(altaProducto){
-            JOptionPane.showMessageDialog(null, "Producto dado de alta.");
-            limpiarFormulario();
-            listarProductos();
+            boolean altaProducto = controlador.altaProducto(producto);
+            if(altaProducto){
+                JOptionPane.showMessageDialog(null, "Producto dado de alta.");
+                limpiarFormulario();
+                listarProductos();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean bajaProducto = controlador.bajaProducto(id);
-        if(bajaProducto){
-            JOptionPane.showMessageDialog(null, "Producto dado de baja.");
-            limpiarFormulario();
-            listarProductos();
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean bajaProducto = controlador.bajaProducto(id);
+            if(bajaProducto){
+                JOptionPane.showMessageDialog(null, "Producto dado de baja.");
+                limpiarFormulario();
+                listarProductos();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            String nombre =utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        String nombre =utilidad.ValidarVacioTexto(txtNombre.getText(),"Nombre");
-        String descripcion = utilidad.ValidarVacioTexto(txtDescripcion.getText(), "Descripcion");
+            producto.setId(id);
+            producto.setNombre(nombre);
+            producto.setDescripcion(descripcion);
 
-        producto.setId(id);
-        producto.setNombre(nombre);
-        producto.setDescripcion(descripcion);
-
-        boolean modificarProducto = controlador.modificarProducto(producto);
-        if(modificarProducto){
-            JOptionPane.showMessageDialog(null, "Producto modificado correctamente.");
-            limpiarFormulario();
-            listarProductos();
+            boolean modificarProducto = controlador.modificarProducto(producto);
+            if(modificarProducto){
+                JOptionPane.showMessageDialog(null, "Producto modificado correctamente.");
+                limpiarFormulario();
+                listarProductos();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

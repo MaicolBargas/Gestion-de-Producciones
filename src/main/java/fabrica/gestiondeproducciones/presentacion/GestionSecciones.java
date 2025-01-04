@@ -6,19 +6,9 @@ import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Seccion;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-import javax.swing.JOptionPane;
-
-import javax.swing.JOptionPane;
-
 import java.util.List;
-
 import fabrica.gestiondeproducciones.dominio.Seccion;
-
-
-
 import javax.swing.JOptionPane;
 
 public class GestionSecciones extends javax.swing.JInternalFrame {
@@ -82,6 +72,10 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaSecciones = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Gestion de Secciones");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -290,47 +284,56 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        try{
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
-        String nombre =utilidad.ValidarVacioTexto(txtNombre.getText(),"Nombre");
-      String descripcion = utilidad.ValidarVacioTexto(txtDescripcion.getText(), "Descripcion");
-      
-      seccion.setNombre(nombre);
-      seccion.setDescripcion(descripcion);
-      
-      boolean altaSeccion = controlador.altaSeccion(seccion);
-      if(altaSeccion){
-        JOptionPane.showMessageDialog(null, "Seccion dada de alta.");
-        limpiarFormulario();
-        listarSecciones();
-      }
+            seccion.setNombre(nombre);
+            seccion.setDescripcion(descripcion);
+
+            boolean altaSeccion = controlador.altaSeccion(seccion);
+            if(altaSeccion){
+              JOptionPane.showMessageDialog(null, "Seccion dada de alta.");
+              limpiarFormulario();
+              listarSecciones();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean bajaSeccion = controlador.bajaSeccion(id);
-        if(bajaSeccion){
-            JOptionPane.showMessageDialog(null, "Seccion dada de baja.");
-            limpiarFormulario();
-            listarSecciones();
-        }
-
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id",false);
+            boolean bajaSeccion = controlador.bajaSeccion(id);
+            if(bajaSeccion){
+                JOptionPane.showMessageDialog(null, "Seccion dada de baja.");
+                limpiarFormulario();
+                listarSecciones();
+            }
+        }catch (Exception ex) {
+                  JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        String nombre =utilidad.ValidarVacioTexto(txtNombre.getText(),"Nombre");
-      String descripcion = utilidad.ValidarVacioTexto(txtDescripcion.getText(), "Descripcion");
+            seccion.setId(id);
+            seccion.setNombre(nombre);
+            seccion.setDescripcion(descripcion);
 
-        seccion.setId(id);
-        seccion.setNombre(nombre);
-        seccion.setDescripcion(descripcion);
-
-        boolean modificarSeccion = controlador.modificarSeccion(seccion);
-        if(modificarSeccion){
-            JOptionPane.showMessageDialog(null, "Seccion modificada correctamente.");
-            limpiarFormulario();
-            listarSecciones();
+            boolean modificarSeccion = controlador.modificarSeccion(seccion);
+            if(modificarSeccion){
+                JOptionPane.showMessageDialog(null, "Seccion modificada correctamente.");
+                limpiarFormulario();
+                listarSecciones();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

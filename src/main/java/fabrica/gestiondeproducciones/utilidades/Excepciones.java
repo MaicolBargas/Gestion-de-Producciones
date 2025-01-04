@@ -12,7 +12,7 @@ public class Excepciones {
     static{
         excepcionesMsj.put("DB001", "Error al conectarse a la Base de Datos, vuelva a intentarlo.");
         excepcionesMsj.put("1062", "Ya existe un registro con este codigo");
-
+            
     }
     
     public static String excepcionBDD(Exception e){

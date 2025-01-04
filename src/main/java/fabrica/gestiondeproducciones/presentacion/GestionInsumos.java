@@ -75,6 +75,12 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaInsumos = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gestion de insumos");
+
         jLabel1.setText("Id:");
 
         jLabel2.setText("Nombre:");
@@ -276,45 +282,57 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre");
-      String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion");
-      
-      insumo.setNombre(nombre);
-      insumo.setDescripcion(descripcion);
-      
-      boolean alta = controlador.altaInsumo(insumo);
-      if(alta){
-        JOptionPane.showMessageDialog(null, "Insumo dado de alta.");
-        limpiarFormulario();
-        listar();
+      try{
+          String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
+          String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
+
+          insumo.setNombre(nombre);
+          insumo.setDescripcion(descripcion);
+
+          boolean alta = controlador.altaInsumo(insumo);
+          if(alta){
+            JOptionPane.showMessageDialog(null, "Insumo dado de alta.");
+            limpiarFormulario();
+            listar();
+          }
+      }catch(Exception e){
+        JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
       }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        boolean baja = controlador.bajaInsumo(id);
-        if(baja){
-            JOptionPane.showMessageDialog(null, "Insumo dado de baja.");
-            limpiarFormulario();
-            listar();
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaInsumo(id);
+            if(baja){
+                JOptionPane.showMessageDialog(null, "Insumo dado de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        }catch (Exception ex) {
+          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int id = utilidad.validarNumericos(txtId.getText(), "Id");
-        String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre");
-        String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion");
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
-        insumo.setId(id);
-        insumo.setNombre(nombre);
-        insumo.setDescripcion(descripcion);
+            insumo.setId(id);
+            insumo.setNombre(nombre);
+            insumo.setDescripcion(descripcion);
 
-        boolean modificar = controlador.modificarInsumo(insumo);
-        if(modificar){
-          JOptionPane.showMessageDialog(null, "Insumo modificado correctamente.");
-          limpiarFormulario();
-          listar();
-        }
+            boolean modificar = controlador.modificarInsumo(insumo);
+            if(modificar){
+              JOptionPane.showMessageDialog(null, "Insumo modificado correctamente.");
+              limpiarFormulario();
+              listar();
+            }
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+      }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tablaInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInsumosMouseClicked

@@ -1,62 +1,49 @@
 
 package fabrica.gestiondeproducciones.utilidades;
 
-import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
-
-
 public class Utilidades {
     
-    public Integer validarNumericos(String valor, String nombre){
-        if(validarVacios(valor)){
-           try{
-            Integer numero = Integer.valueOf(valor);
-            return numero;
-           }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "El campo "+nombre+" no es numerico, por favor verifique.");
-           }
-        }else{
-        JOptionPane.showMessageDialog(null, "El campo "+nombre+" no puede ser vacio");
-        }
-        return null;
-    }
-    
-    public final boolean validarVacios(String valor){
-        return !valor.isEmpty();
-    }
-    
 
-    public String ValidarVacioTexto(String valor,String nombre)
-    {
-       if(!valor.isEmpty()){
-        return valor;
-       }
-       else
-       {
-        JOptionPane.showMessageDialog(null, "El campo "+nombre+" no puede ser vacio");
-        return null;
+    public Integer validarNumericos(String valor, String nombre, Boolean permiteVacios) throws Exception{
+        try{
+            if(!valor.isEmpty() || permiteVacios){
+               try{
+                Integer numero = Integer.valueOf(valor);
+                return numero;
+               }catch(NumberFormatException e){
+                throw new Exception("El campo "+nombre+" no es numerico, por favor verifique.");
+               }
+            }else{
+                throw new Exception("El campo "+nombre+" no puede ser vacio");
+            }
+        }catch(Exception e){ 
+           throw new Exception(e.getMessage());
         }
     }
-    public  String sanitizarCampos(String valor, String nombre){
-        if(validarVacios(valor)){
-            return valor.replaceAll("[^\\w\\s]", "");                
-        }else{
-        JOptionPane.showMessageDialog(null, "El "+nombre+" no puede ser vacio");
+    
+    
+    public String sanitizarCampos(String valor, String nombre, Boolean permiteVacios) throws Exception{
+        try{
+            if(!valor.isEmpty() || permiteVacios){
+                return valor.replaceAll("[^\\w\\s]", "");                
+            }else{
+                throw new Exception("El campo "+nombre+" no puede ser vacio");
+            }
+        }catch(Exception e){ 
+            throw new Exception(e.getMessage());               
         }
-        return null;
-
     }
     
     
     
-   public String validarCi(final String ci) {
+   public Integer validarCi(final String ci) throws Exception {
     final int MINIMO_DIGITOS = 7;
     final String ciFixed;
     
     if (ci.length() <= MINIMO_DIGITOS) {
         // El algoritmo está hecho para 8 dígitos, se completa con 0 las cédulas de 7 dígitos o menos
         final String DEFAULT_DIGITOS_FORMAT = "%08d";
-        ciFixed = String.format(DEFAULT_DIGITOS_FORMAT, Integer.parseInt(ci));
+        ciFixed = String.format(DEFAULT_DIGITOS_FORMAT, Integer.valueOf(ci));
     } else {
         ciFixed = ci;
     }
@@ -74,10 +61,9 @@ public class Utilidades {
     
     
    if (digitoOriginal == digitoCalculado) {
-        return ci;
+        return Integer.valueOf(ci);
     } else {
-       JOptionPane.showMessageDialog(null, "La Cedula de identidad ingresada no es correcta.");
-        return null;
+       throw new Exception("La Cedula de identidad ingresada no es correcta.");
     }
 }
 

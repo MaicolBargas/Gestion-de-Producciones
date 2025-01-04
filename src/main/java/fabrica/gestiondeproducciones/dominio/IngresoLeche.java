@@ -1,8 +1,5 @@
 package fabrica.gestiondeproducciones.dominio;
 
-import fabrica.gestiondeproducciones.dominio.Tambo;
-import fabrica.gestiondeproducciones.dominio.Silo;
-
 import java.sql.Date;
 
 public class IngresoLeche {
