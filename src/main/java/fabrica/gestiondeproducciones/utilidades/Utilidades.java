@@ -1,6 +1,9 @@
 
 package fabrica.gestiondeproducciones.utilidades;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Utilidades {
     
 
@@ -34,46 +37,60 @@ public class Utilidades {
         }
     }
     
-    
+    public String controlarFechas(String fecha) throws Exception{
+        String regex = "^\\d{2}/\\d{2}/\\d{4}$";
+        try{
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(fecha);
+
+        if (matcher.matches()) {
+            return fecha;
+        } else {
+            throw new Exception("La fecha tiene un formato incorecto. Formato esperado dd/mm/aaaa");
+        }
+        }catch(Exception e){
+            throw new Exception(e.getMessage());               
+        }
+    }            
     
    public Integer validarCi(final String ci) throws Exception {
-    final int MINIMO_DIGITOS = 7;
-    final String ciFixed;
-    
-    if (ci.length() <= MINIMO_DIGITOS) {
-        // El algoritmo está hecho para 8 dígitos, se completa con 0 las cédulas de 7 dígitos o menos
-        final String DEFAULT_DIGITOS_FORMAT = "%08d";
-        ciFixed = String.format(DEFAULT_DIGITOS_FORMAT, Integer.valueOf(ci));
-    } else {
-        ciFixed = ci;
-    }
-    
-    final int[] ciNumeric = toIntArray(ciFixed);
-    final int digitoOriginal = ciNumeric[ciNumeric.length - 1];
-    final int[] COEFICIENTES_ALGORITMO = {2, 9, 8, 7, 6, 3, 4};
-    int suma = 0;
-    
-    for (int i = 0; i < 7; i++) {
-        suma += ciNumeric[i] * COEFICIENTES_ALGORITMO[i] % 10;
-    }
-    
-    final int digitoCalculado = (suma % 10 == 0) ? 0 : 10 - (suma % 10);
-    
-    
-   if (digitoOriginal == digitoCalculado) {
-        return Integer.valueOf(ci);
-    } else {
-       throw new Exception("La Cedula de identidad ingresada no es correcta.");
-    }
-}
+        final int MINIMO_DIGITOS = 7;
+        final String ciFixed;
 
-private int[] toIntArray(String text) {
-    int[] array = new int[text.length()];
-    for (int i = 0; i < array.length; i++) {
-        array[i] = Character.getNumericValue(text.charAt(i));
+        if (ci.length() <= MINIMO_DIGITOS) {
+            // El algoritmo está hecho para 8 dígitos, se completa con 0 las cédulas de 7 dígitos o menos
+            final String DEFAULT_DIGITOS_FORMAT = "%08d";
+            ciFixed = String.format(DEFAULT_DIGITOS_FORMAT, Integer.valueOf(ci));
+        } else {
+            ciFixed = ci;
+        }
+
+        final int[] ciNumeric = toIntArray(ciFixed);
+        final int digitoOriginal = ciNumeric[ciNumeric.length - 1];
+        final int[] COEFICIENTES_ALGORITMO = {2, 9, 8, 7, 6, 3, 4};
+        int suma = 0;
+
+        for (int i = 0; i < 7; i++) {
+            suma += ciNumeric[i] * COEFICIENTES_ALGORITMO[i] % 10;
+        }
+
+        final int digitoCalculado = (suma % 10 == 0) ? 0 : 10 - (suma % 10);
+
+
+       if (digitoOriginal == digitoCalculado) {
+            return Integer.valueOf(ci);
+        } else {
+           throw new Exception("La Cedula de identidad ingresada no es correcta.");
+        }
     }
-    return array;
-}
+
+    private int[] toIntArray(String text) {
+        int[] array = new int[text.length()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = Character.getNumericValue(text.charAt(i));
+        }
+        return array;
+    }
 
 
 }

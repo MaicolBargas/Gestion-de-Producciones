@@ -28,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
         menuInsumos = new javax.swing.JMenu();
         menuEmpleados = new javax.swing.JMenu();
         menuProductos = new javax.swing.JMenu();
+        menuIngresos = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -106,6 +107,15 @@ public class Principal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuProductos);
 
+        menuIngresos.setText("Ingreso de Leche");
+        menuIngresos.setToolTipText("");
+        menuIngresos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuIngresosMouseClicked(evt);
+            }
+        });
+        menuPrincipal.add(menuIngresos);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -174,6 +184,11 @@ public class Principal extends javax.swing.JFrame {
         gestionProductos.show();
     }//GEN-LAST:event_menuProductosMouseClicked
 
+    private void menuIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuIngresosMouseClicked
+        GestionIngresoLeche gestionIngreso = new GestionIngresoLeche(); 
+        escritorio.add(gestionIngreso);
+             gestionIngreso.show();    }//GEN-LAST:event_menuIngresosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -213,6 +228,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu menuEmpleados;
+    private javax.swing.JMenu menuIngresos;
     private javax.swing.JMenu menuInsumos;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu menuProductos;

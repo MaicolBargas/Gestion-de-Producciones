@@ -130,5 +130,32 @@ public class PersistenciaSilo {
             }
         }
         return null;
-    }    
+    }   
+    
+        public Silo buscarSiloXCodigo(int codigo){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE codigoSilo =?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, codigo);
+            resultado = consulta.executeQuery();     
+            if(resultado.next()){
+                Silo silo = new Silo();
+                silo.setId(resultado.getInt("idSilo"));
+                silo.setCodigoInterno(resultado.getInt("codigoSilo"));
+                silo.setCapacidad(resultado.getInt("capacidad"));  
+                return silo;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+        return null;
+    } 
 }

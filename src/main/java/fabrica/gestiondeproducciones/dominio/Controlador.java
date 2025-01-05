@@ -28,6 +28,9 @@ public class Controlador {
         return persistencia.buscarSilo(id);
     }
     
+    public Silo buscarSiloXCodigo(int codigo){
+        return persistencia.buscarSiloXCodigo(codigo);
+    }
     
     public boolean altaProducto(Producto producto){
         return persistencia.altaProducto(producto);
@@ -136,5 +139,24 @@ public class Controlador {
         return persistencia.buscarEmpleado(ci);
     }
     
-
+    public boolean altaIngreso(IngresoLeche ingreso){
+       return persistencia.altaIngreso(ingreso);
+    }
+    
+    public List listarIngresos(){
+        return persistencia.listarIngresos();
+    }
+    
+    public boolean bajaIngreso(int id){
+        return persistencia.bajaIngreso(id);
+    }
+    
+    public boolean modificarIngreso(IngresoLeche ingreso){
+       return persistencia.modificarIngreso(ingreso);
+    }
+    
+    public IngresoLeche buscarIngreso(int id){
+        return persistencia.buscarIngreso(id);
+    }
+   
 }

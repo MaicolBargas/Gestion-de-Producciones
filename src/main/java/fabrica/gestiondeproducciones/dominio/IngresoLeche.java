@@ -8,13 +8,13 @@ public class IngresoLeche {
     private Tambo tambo;
     private int litros;
     private Silo silo;
-    private Date fecha;
+    private String fecha;
     private boolean activo;
 
     public IngresoLeche() {
     }
 
-    public IngresoLeche(int idIngreso, Tambo tambo, int litros, Silo silo, Date fecha, boolean activo) {
+    public IngresoLeche(int idIngreso, Tambo tambo, int litros, Silo silo, String fecha, boolean activo) {
         this.idIngreso = idIngreso;
         this.tambo = tambo;
         this.litros = litros;
@@ -55,11 +55,11 @@ public class IngresoLeche {
         this.silo = silo;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

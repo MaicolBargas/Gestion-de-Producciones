@@ -12,7 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PersistenciaInsumo {
-     Conexion conexion = new Conexion();
+    Conexion conexion = new Conexion();
     Connection con;
     PreparedStatement consulta;
     ResultSet resultado;
