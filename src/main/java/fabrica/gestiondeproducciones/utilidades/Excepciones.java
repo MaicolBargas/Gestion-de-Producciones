@@ -16,11 +16,11 @@ public class Excepciones {
     }
     
     public static String excepcionBDD(Exception e){
-      return excepcionesMsj.getOrDefault(((SQLException) e).getErrorCode(),"Error al conectarse a la Base de Datos, vuelva a intentarlo.");
+      return excepcionesMsj.getOrDefault(((SQLException) e).getErrorCode(),e.getMessage()); //"Error al conectarse a la Base de Datos, vuelva a intentarlo."
     }
     
     public static String excepcionGeneral(Exception e){  
-      return excepcionesMsj.getOrDefault(((SQLException) e).getErrorCode(),"Error al conectarse a la Base de Datos, vuelva a intentarlo.");
+      return excepcionesMsj.getOrDefault(((SQLException) e).getErrorCode(),e.getMessage());
     }
     
     public static String controlaExepciones(Exception e){

@@ -6,8 +6,6 @@ import fabrica.gestiondeproducciones.dominio.IngresoLeche;
 import fabrica.gestiondeproducciones.dominio.Silo;
 import fabrica.gestiondeproducciones.dominio.Tambo;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -20,8 +18,8 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     Utilidades utilidad = new Utilidades();
     IngresoLeche ingreso = new IngresoLeche();
     Controlador controlador = new Controlador();
-    DefaultTableModel modelo = new DefaultTableModel();;
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    DefaultTableModel modelo = new DefaultTableModel();
+    
     /**
      * Creates new form GestionIngresoLeche
      */
@@ -43,7 +41,7 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
             objeto[1] = lista.get(i).getTambo().getId() + " - " + lista.get(i).getTambo().getPropietario();
             objeto[2] = lista.get(i).getLitros();
             objeto[3] = lista.get(i).getSilo().getCodigoInterno();
-            objeto[4] = lista.get(i).getFecha().toString();
+            objeto[4] = lista.get(i).getFecha();
             modelo.addRow(objeto);
         }
         tablaIngresos.setModel(modelo);
@@ -257,7 +255,7 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -361,11 +359,11 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
             ingreso.setTambo(tambo);
         }else{ throw new Exception("El tambo seleccionado no existe");}  
         ingreso.setLitros(litros);
-        
+        ingreso.setLitrosDisponibles(litros);        
         if(silo instanceof Silo){
             ingreso.setSilo(silo);
         }else{ throw new Exception("El silo seleccionado no existe");}
-        
+
         ingreso.setFecha(fecha);
         
         boolean alta = controlador.altaIngreso(ingreso);
@@ -409,7 +407,7 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
                 ingreso.setTambo(tambo);
             }else{ throw new Exception("El tambo seleccionado no existe");}  
             ingreso.setLitros(litros);
-
+            ingreso.setLitrosDisponibles(litros);
             if(silo instanceof Silo){
                 ingreso.setSilo(silo);
             }else{ throw new Exception("El silo seleccionado no existe");}

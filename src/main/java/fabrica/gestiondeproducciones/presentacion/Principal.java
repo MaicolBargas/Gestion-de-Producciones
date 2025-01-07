@@ -28,7 +28,9 @@ public class Principal extends javax.swing.JFrame {
         menuInsumos = new javax.swing.JMenu();
         menuEmpleados = new javax.swing.JMenu();
         menuProductos = new javax.swing.JMenu();
-        menuIngresos = new javax.swing.JMenu();
+        menuLeche = new javax.swing.JMenu();
+        menuIngresos = new javax.swing.JMenuItem();
+        menuPasteurizados = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -107,14 +109,25 @@ public class Principal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuProductos);
 
-        menuIngresos.setText("Ingreso de Leche");
-        menuIngresos.setToolTipText("");
-        menuIngresos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuIngresosMouseClicked(evt);
+        menuLeche.setText("Leche");
+
+        menuIngresos.setText("Ingresos de Leche");
+        menuIngresos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuIngresosActionPerformed(evt);
             }
         });
-        menuPrincipal.add(menuIngresos);
+        menuLeche.add(menuIngresos);
+
+        menuPasteurizados.setText("Pasteurizar Leche");
+        menuPasteurizados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPasteurizadosActionPerformed(evt);
+            }
+        });
+        menuLeche.add(menuPasteurizados);
+
+        menuPrincipal.add(menuLeche);
 
         setJMenuBar(menuPrincipal);
 
@@ -184,10 +197,17 @@ public class Principal extends javax.swing.JFrame {
         gestionProductos.show();
     }//GEN-LAST:event_menuProductosMouseClicked
 
-    private void menuIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuIngresosMouseClicked
-        GestionIngresoLeche gestionIngreso = new GestionIngresoLeche(); 
-        escritorio.add(gestionIngreso);
-             gestionIngreso.show();    }//GEN-LAST:event_menuIngresosMouseClicked
+    private void menuIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIngresosActionPerformed
+        GestionIngresoLeche gestionIngresoLeche = new GestionIngresoLeche();
+        escritorio.add(gestionIngresoLeche);
+        gestionIngresoLeche.show();
+    }//GEN-LAST:event_menuIngresosActionPerformed
+
+    private void menuPasteurizadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPasteurizadosActionPerformed
+        GestionPasteurizados gestionPasteurizados = new GestionPasteurizados();
+        escritorio.add(gestionPasteurizados);
+        gestionPasteurizados.show();
+    }//GEN-LAST:event_menuPasteurizadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,8 +248,10 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu menuEmpleados;
-    private javax.swing.JMenu menuIngresos;
+    private javax.swing.JMenuItem menuIngresos;
     private javax.swing.JMenu menuInsumos;
+    private javax.swing.JMenu menuLeche;
+    private javax.swing.JMenuItem menuPasteurizados;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuSecciones;

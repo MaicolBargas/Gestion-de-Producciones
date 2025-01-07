@@ -170,4 +170,25 @@ public class ControladorPersistencia {
         return persistenciaIngreso.buscarIngreso(id);
     }
     
+    PersistenciaPasteurizado persistenciaPasteurizado = new PersistenciaPasteurizado();
+    public boolean altaPasteurizado(LechePasteurizada lecheP){
+       return persistenciaPasteurizado.altaPasteurizado(lecheP);
+    }
+    
+    public List listarPasteurizados(){
+        return persistenciaPasteurizado.listarPasteurizados();
+    }
+    
+    public boolean bajaPasteurizado(int id){
+        return persistenciaPasteurizado.bajaPasteurizado(id);
+    }
+    
+    public boolean modificarPasteurizado(LechePasteurizada lecheP){
+       return persistenciaPasteurizado.modificarPasteurizado(lecheP);
+    }
+    
+    public LechePasteurizada buscarPasteurizado(int id){
+        return persistenciaPasteurizado.buscarPasteurizado(id);
+    }
+    
 }

@@ -24,7 +24,7 @@ public class PersistenciaIngresoLeche {
     PersistenciaSilo persSilo = new PersistenciaSilo();
 
     public boolean altaIngreso(IngresoLeche ingreso){
-        String sql = "INSERT INTO "+ nombreTabla +"(idTambo, litros, idSilo, fecha) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(idTambo, litros, litrosDisponibles, idSilo, fecha) VALUES (?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -35,13 +35,15 @@ public class PersistenciaIngresoLeche {
                 throw new SQLException("El tambo seleccionado no existe, prueba darlo de alta primero.");
             } 
             
-            consulta.setInt(2, ingreso.getLitros());                     
+            consulta.setInt(2, ingreso.getLitros());    
+            consulta.setInt(3, ingreso.getLitrosDisponibles());                     
+
             if(ingreso.getSilo() instanceof Silo){
-                consulta.setInt(3, ingreso.getSilo().getId());
+                consulta.setInt(4, ingreso.getSilo().getId());
             }else{
                 throw new SQLException("El silo seleccionado no existe, prueba darlo de alta primero.");
             }           
-            consulta.setString(4, ingreso.getFecha());         
+            consulta.setString(5, ingreso.getFecha());         
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -73,7 +75,8 @@ public class PersistenciaIngresoLeche {
                 }
                             
                 ingreso.setLitros(resultado.getInt("litros"));
-                
+                ingreso.setLitrosDisponibles(resultado.getInt("litrosDisponibles"));
+
                 Silo silo = persSilo.buscarSilo(resultado.getInt("idSilo"));
                 if(silo instanceof Silo){
                     ingreso.setSilo(silo);
@@ -111,15 +114,16 @@ public class PersistenciaIngresoLeche {
     }
     
     public boolean modificarIngreso(IngresoLeche ingreso){
-        String sql = "UPDATE "+ nombreTabla +" SET idTambo = ?, litros = ?, idSilo = ?, fecha = ? WHERE idIngreso = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET idTambo = ?, litros = ?, litrosDisponibles = ?, idSilo = ?, fecha = ? WHERE idIngreso = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, ingreso.getTambo().getId());
             consulta.setInt(2, ingreso.getLitros());
-            consulta.setInt(3, ingreso.getSilo().getId());
-            consulta.setString(4, ingreso.getFecha());
-            consulta.setInt(5, ingreso.getIdIngreso());
+            consulta.setInt(3, ingreso.getLitrosDisponibles());
+            consulta.setInt(4, ingreso.getSilo().getId());
+            consulta.setString(5, ingreso.getFecha());
+            consulta.setInt(6, ingreso.getIdIngreso());
             consulta.execute();
             return true;
         }catch(SQLException e){
@@ -151,7 +155,8 @@ public class PersistenciaIngresoLeche {
                 }
                             
                 ingreso.setLitros(resultado.getInt("litros"));
-                
+                ingreso.setLitrosDisponibles(resultado.getInt("litrosDisponibles"));
+
                 Silo silo = persSilo.buscarSilo(resultado.getInt("idSilo"));
                 if(silo instanceof Silo){
                     ingreso.setSilo(silo);
