@@ -19,13 +19,15 @@ public class PersistenciaInsumo {
     String nombreTabla = "insumo";
     
     public boolean altaInsumo(Insumo insumo){
-        String sql = "INSERT INTO "+ nombreTabla +"(nombre, descripcion) VALUES (?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(nombre, descripcion, unidad) VALUES (?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setString(1, insumo.getNombre());
             consulta.setString(2, insumo.getDescripcion());
+            consulta.setString(3, insumo.getUnidad());
+
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -53,6 +55,8 @@ public class PersistenciaInsumo {
                 insumo.setId(resultado.getInt("idInsumo"));
                 insumo.setNombre(resultado.getString("nombre"));
                 insumo.setDescripcion(resultado.getString("descripcion"));
+                insumo.setUnidad(resultado.getString("unidad"));
+
                 lista.add(insumo);
             }
         }catch(SQLException e){
@@ -84,13 +88,14 @@ public class PersistenciaInsumo {
     }
     
     public boolean modificarInsumo(Insumo insumo){
-        String sql = "UPDATE "+ nombreTabla +" SET nombre = ?, descripcion = ? WHERE idInsumo = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET nombre = ?, descripcion = ?, unidad = ? WHERE idInsumo = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setString(1, insumo.getNombre());
             consulta.setString(2, insumo.getDescripcion());
-            consulta.setInt(3, insumo.getId());
+            consulta.setString(3, insumo.getUnidad());            
+            consulta.setInt(4, insumo.getId());
             consulta.execute();
             return true;
         }catch(SQLException e){
@@ -118,7 +123,8 @@ public class PersistenciaInsumo {
                 Insumo insumo = new Insumo();
                 insumo.setId(resultado.getInt("idInsumo"));
                 insumo.setNombre(resultado.getString("nombre"));
-                insumo.setDescripcion(resultado.getString("descripcion"));  
+                insumo.setDescripcion(resultado.getString("descripcion")); 
+                insumo.setUnidad(resultado.getString("unidad"));                
                 return insumo;
             }
         }catch(SQLException e){

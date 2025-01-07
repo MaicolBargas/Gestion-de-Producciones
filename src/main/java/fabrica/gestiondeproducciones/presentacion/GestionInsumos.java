@@ -25,11 +25,13 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         limpiarTabla();
         List<Insumo> lista = controlador.listarInsumos();
         modelo = (DefaultTableModel) tablaInsumos.getModel();
-        Object[] objeto = new Object[3];
+        Object[] objeto = new Object[4];
         for(int i = 0; i < lista.size(); i++){
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getNombre();
             objeto[2] = lista.get(i).getDescripcion();
+            objeto[3] = lista.get(i).getUnidad();
+
             modelo.addRow(objeto);
         }
         tablaInsumos.setModel(modelo);
@@ -46,6 +48,7 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         txtId.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
+        cxbUnidad.setSelectedIndex(-1);
     }
     
     /**
@@ -67,6 +70,8 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescripcion = new javax.swing.JTextPane();
+        jLabel4 = new javax.swing.JLabel();
+        cxbUnidad = new javax.swing.JComboBox<>();
         btnLimpiar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnAlta = new javax.swing.JButton();
@@ -91,6 +96,10 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(txtDescripcion);
 
+        jLabel4.setText("Unidad de medida:");
+
+        cxbUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "L", "g", "UF" }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -98,14 +107,20 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cxbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(17, 17, 17))
         );
         jPanel3Layout.setVerticalGroup(
@@ -123,7 +138,11 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cxbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         btnLimpiar.setText("Limpiar");
@@ -201,7 +220,7 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnLimpiar))
-                        .addGap(0, 14, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -210,14 +229,14 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Descripcion:"
+                "Id", "Nombre", "Descripcion:", "Unidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -252,10 +271,9 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,10 +303,10 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
       try{
           String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
           String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
-
+          String unidad = utilidad.sanitizarCampos(cxbUnidad.getSelectedItem().toString(), "Descripcion", false);
           insumo.setNombre(nombre);
           insumo.setDescripcion(descripcion);
-
+          insumo.setUnidad(unidad);
           boolean alta = controlador.altaInsumo(insumo);
           if(alta){
             JOptionPane.showMessageDialog(null, "Insumo dado de alta.");
@@ -319,10 +337,12 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
+            String unidad = utilidad.sanitizarCampos(cxbUnidad.getSelectedItem().toString(), "Descripcion", false);
 
             insumo.setId(id);
             insumo.setNombre(nombre);
             insumo.setDescripcion(descripcion);
+            insumo.setUnidad(unidad);
 
             boolean modificar = controlador.modificarInsumo(insumo);
             if(modificar){
@@ -340,6 +360,7 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         txtId.setText(tablaInsumos.getValueAt(fila, 0).toString());
         txtNombre.setText(tablaInsumos.getValueAt(fila, 1).toString());
         txtDescripcion.setText(tablaInsumos.getValueAt(fila, 2).toString());
+        cxbUnidad.setSelectedItem(tablaInsumos.getValueAt(fila, 3));
     }//GEN-LAST:event_tablaInsumosMouseClicked
 
 
@@ -348,9 +369,11 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBaja;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> cxbUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
