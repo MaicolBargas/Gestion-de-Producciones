@@ -31,6 +31,8 @@ public class Principal extends javax.swing.JFrame {
         menuLeche = new javax.swing.JMenu();
         menuIngresos = new javax.swing.JMenuItem();
         menuPasteurizados = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuAnalisisLeche = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -129,6 +131,18 @@ public class Principal extends javax.swing.JFrame {
 
         menuPrincipal.add(menuLeche);
 
+        jMenu1.setText("Analisis");
+
+        menuAnalisisLeche.setText("Analisis de Leche");
+        menuAnalisisLeche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAnalisisLecheActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuAnalisisLeche);
+
+        menuPrincipal.add(jMenu1);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,6 +223,12 @@ public class Principal extends javax.swing.JFrame {
         gestionPasteurizados.show();
     }//GEN-LAST:event_menuPasteurizadosActionPerformed
 
+    private void menuAnalisisLecheActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisLecheActionPerformed
+        GestionAnalisisLeche gestionAnalisisLeche = new GestionAnalisisLeche();
+        escritorio.add(gestionAnalisisLeche);
+        gestionAnalisisLeche.show();
+    }//GEN-LAST:event_menuAnalisisLecheActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -247,6 +267,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem menuAnalisisLeche;
     private javax.swing.JMenu menuEmpleados;
     private javax.swing.JMenuItem menuIngresos;
     private javax.swing.JMenu menuInsumos;

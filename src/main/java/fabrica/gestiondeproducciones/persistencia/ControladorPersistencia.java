@@ -191,4 +191,25 @@ public class ControladorPersistencia {
         return persistenciaPasteurizado.buscarPasteurizado(id);
     }
     
+    PersistenciaAnalisis persistenciaAnalisis = new PersistenciaAnalisis();
+    public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
+       return persistenciaAnalisis.altaAnalisisIngreso(analisis);
+    }
+    
+    public List listarAnalisisIngreso(){
+        return persistenciaAnalisis.listarAnalisisIngreso();
+    }
+    
+    public boolean bajaAnalisis(int id){
+        return persistenciaAnalisis.bajaAnalisis(id);
+    }
+    
+    public boolean modificarAnalisisIngreso(AnalisisIngreso analisis){
+       return persistenciaAnalisis.modificarAnalisisIngreso(analisis);
+    }
+    
+    public AnalisisIngreso buscarAnalisisIngreso(int id){
+        return persistenciaAnalisis.buscarAnalisisIngreso(id);
+    }
+    
 }

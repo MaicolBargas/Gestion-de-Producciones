@@ -178,5 +178,26 @@ public class Controlador {
     public LechePasteurizada buscarPasteurizado(int id){
         return persistencia.buscarPasteurizado(id);
     }
+    
+    
+    public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
+       return persistencia.altaAnalisisIngreso(analisis);
+    }
+    
+    public List listarAnalisisIngreso(){
+        return persistencia.listarAnalisisIngreso();
+    }
+    
+    public boolean bajaAnalisis(int id){
+        return persistencia.bajaAnalisis(id);
+    }
+    
+    public boolean modificarAnalisisIngreso(AnalisisIngreso analisis){
+       return persistencia.modificarAnalisisIngreso(analisis);
+    }
+    
+    public AnalisisIngreso buscarAnalisisIngreso(int id){
+        return persistencia.buscarAnalisisIngreso(id);
+    }
    
 }

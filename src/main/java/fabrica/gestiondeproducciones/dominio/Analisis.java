@@ -5,6 +5,7 @@ package fabrica.gestiondeproducciones.dominio;
 public class Analisis {
     private int id;
     private int codigo;
+    private Empleado encargado;
     private String fecha;
     private int levadura;
     private int mos;
@@ -15,9 +16,10 @@ public class Analisis {
     public Analisis() {
     }
 
-    public Analisis(int id, int codigo, String fecha, int levadura, int mos, int poliformosTotales, int poliformosFecales, String tipo) {
+    public Analisis(int id, int codigo, Empleado encargado, String fecha, int levadura, int mos, int poliformosTotales, int poliformosFecales, String tipo) {
         this.id = id;
         this.codigo = codigo;
+        this.encargado = encargado;
         this.fecha = fecha;
         this.levadura = levadura;
         this.mos = mos;
@@ -40,6 +42,14 @@ public class Analisis {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    public Empleado getEncargado() {
+        return encargado;
+    }
+
+    public void setEncargado(Empleado encargado) {
+        this.encargado = encargado;
     }
 
     public String getFecha() {
@@ -89,6 +99,8 @@ public class Analisis {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+
     
     
     
