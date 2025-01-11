@@ -3,10 +3,8 @@ package fabrica.gestiondeproducciones.persistencia;
 
 import fabrica.gestiondeproducciones.dominio.Analisis;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
-import fabrica.gestiondeproducciones.dominio.AnalisisLeche;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
-import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -75,7 +73,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(10, analisis.getProteina());
             consulta.setInt(11, analisis.getAgua());
             consulta.setInt(12, analisis.getIngreso().getIdIngreso());
-            consulta.setInt(12, analisis.getId());
+            consulta.setInt(13, analisis.getId());
 
             consulta.execute();
             return true;
@@ -93,7 +91,7 @@ public class PersistenciaAnalisis {
     
     public List listarAnalisisIngreso() {
         List<AnalisisIngreso> lista = new ArrayList();
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'ingreso'";
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'ingreso' AND activo = '1'";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);

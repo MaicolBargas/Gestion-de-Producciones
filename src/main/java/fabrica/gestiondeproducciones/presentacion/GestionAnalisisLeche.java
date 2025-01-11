@@ -3,12 +3,12 @@ package fabrica.gestiondeproducciones.presentacion;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
-import fabrica.gestiondeproducciones.dominio.AnalisisLeche;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +33,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
      private void listar(){
         limpiarTabla();
         listarIngresos();
+        cargarFecha();
         List<AnalisisIngreso> lista = controlador.listarAnalisisIngreso();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
         Object[] objeto = new Object[12];
@@ -85,6 +86,13 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         }
     }
     
+    private void cargarFecha(){
+        LocalDate fechaHoy = LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String fecha = fechaHoy.format(format);
+        txtFecha.setText(fecha);
+    }
+        
     public void limpiarFormulario(){
         txtId.setText("");
         txtCodigo.setText("");
@@ -372,55 +380,57 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel4)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtMos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtLevadura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel2))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtEncargado, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel8))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPFecales)
-                                .addComponent(txtPTotales)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel14))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtProteina)
-                                .addComponent(txtGrasa)))
-                        .addComponent(jLabel15))
-                    .addComponent(txtAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPTotales)
+                            .addComponent(txtPFecales)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel14))
+                        .addGap(59, 59, 59)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtGrasa)
+                            .addComponent(txtProteina)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLevadura, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                            .addComponent(txtMos))))
+                .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(74, 74, 74)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGap(18, 84, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,7 +450,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                             .addComponent(jLabel3)
                             .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnBuscar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -488,7 +498,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false
@@ -508,6 +518,9 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(tablaAnalisis);
+        if (tablaAnalisis.getColumnModel().getColumnCount() > 0) {
+            tablaAnalisis.getColumnModel().getColumn(10).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -569,7 +582,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);  
             
             analisis.setCodigo(codigo);   
-
+            analisis.setTipo("ingreso");
             if(encargado instanceof Empleado){
                 analisis.setEncargado(encargado);
             }else{throw new Exception("Debe seleccionar un empleado habilitado");}
@@ -678,29 +691,45 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         int fila = tablaAnalisis.rowAtPoint(evt.getPoint());       
         txtId.setText(tablaAnalisis.getValueAt(fila, 0).toString());
         txtCodigo.setText(tablaAnalisis.getValueAt(fila, 1).toString());
-        txtLitros.setText(tablaAnalisis.getValueAt(fila, 2).toString());  
-        txtEncargado.setText(tablaAnalisis.getValueAt(fila,3).toString());
-        txtFecha.setText(tablaAnalisis.getValueAt(fila, 4).toString());
-        txtLevadura.setText(tablaAnalisis.getValueAt(fila,5).toString());
-        txtMos.setText(tablaAnalisis.getValueAt(fila, 5).toString());
-        txtPTotales.setText(tablaAnalisis.getValueAt(fila,6).toString());
-        txtPFecales.setText(tablaAnalisis.getValueAt(fila, 7).toString());
+        txtEncargado.setText(tablaAnalisis.getValueAt(fila, 2).toString());  
+        txtFecha.setText(tablaAnalisis.getValueAt(fila,3).toString());
+        txtLevadura.setText(tablaAnalisis.getValueAt(fila, 4).toString());
+        txtMos.setText(tablaAnalisis.getValueAt(fila,5).toString());
+        txtPTotales.setText(tablaAnalisis.getValueAt(fila, 6).toString());
+        txtPFecales.setText(tablaAnalisis.getValueAt(fila,7).toString());
         txtGrasa.setText(tablaAnalisis.getValueAt(fila, 8).toString());
         txtProteina.setText(tablaAnalisis.getValueAt(fila, 9).toString());
         txtAgua.setText(tablaAnalisis.getValueAt(fila, 10).toString());
+        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 11).toString());
+        IngresoLeche ingreso = controlador.buscarIngreso(id);
+        if(ingreso instanceof IngresoLeche){
+            txtIdIngreso.setText(tablaAnalisis.getValueAt(fila, 11).toString());
+            txtTambo.setText(ingreso.getTambo().getPropietario());
+            txtLitros.setText(ingreso.getLitros()+"");
+            txtSilo.setText(ingreso.getSilo().getCodigoInterno()+"");
+        }
+        
     }//GEN-LAST:event_tablaAnalisisMouseClicked
 
     private Empleado buscarEncargado() throws Exception{
-        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Descripcion", false);
-        String[] nombreCompleto = valor.split(" - ");
+        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
+        String[] nombreCompleto = valor.split(" ");        
         List<Empleado> empleados = controlador.listarEmpleados();
         
         for(Empleado empleado : empleados){
-            if(Integer.valueOf(valor).equals(empleado.getCi()) ||
-               empleado.getNombre().equals(valor) ||
-               empleado.getApellido().equals(valor) ||
-               empleado.getNombre().equals(nombreCompleto[0]) ||
-               empleado.getApellido().equals(nombreCompleto[1])){
+            try{
+                Integer ci = Integer.valueOf(valor);
+                if(ci.equals(empleado.getCi())){
+                    return empleado;
+                }
+            }catch(NumberFormatException e){
+                
+            }                                    
+            if(empleado.getNombre().equalsIgnoreCase(valor) ||
+               empleado.getApellido().equalsIgnoreCase(valor) ||
+               Arrays.asList(nombreCompleto).contains(empleado.getNombre())||
+               Arrays.asList(nombreCompleto).contains(empleado.getApellido())
+               ){
                 return empleado;              
             }                         
         }
