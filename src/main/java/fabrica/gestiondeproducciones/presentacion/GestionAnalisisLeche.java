@@ -581,6 +581,9 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);  
             
+            if(pFecales > pTotales){
+                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+            }
             analisis.setCodigo(codigo);   
             analisis.setTipo("ingreso");
             if(encargado instanceof Empleado){
@@ -648,6 +651,10 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);  
+            
+            if(pFecales > pTotales){
+                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+            }
             
             analisis.setCodigo(codigo);   
 
