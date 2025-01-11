@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2025 a las 01:36:16
+-- Tiempo de generación: 11-01-2025 a las 16:00:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `empleado` (
 
 INSERT INTO `empleado` (`idEmpleado`, `ci`, `nombre`, `apellido`, `idSeccion`, `telefono`, `mail`, `activo`) VALUES
 (1, 6415465, 'dfsqdas', 'adsadasda', 2, 99788441, 'tesadsfa', 1),
-(2, 156465, 'asdsadsad', 'adssadasd', 1, 655333, 'sadsadas', 1);
+(2, 156465, 'asdsadsad', 'adssadasd', 1, 655333, 'sadsadas', 1),
+(3, 52397633, 'Maicol', 'Bargas', 2, 99392612, 'maicolgmailcom', 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +178,7 @@ ALTER TABLE `tambo`
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `idEmpleado` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idEmpleado` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `insumo`
