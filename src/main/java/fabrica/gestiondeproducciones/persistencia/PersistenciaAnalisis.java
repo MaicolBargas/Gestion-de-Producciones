@@ -24,6 +24,7 @@ public class PersistenciaAnalisis {
     PersistenciaIngresoLeche persIngreso = new PersistenciaIngresoLeche();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
 
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
         String sql = "INSERT INTO "+ nombreTabla +"(codigo,tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
@@ -175,6 +176,8 @@ public class PersistenciaAnalisis {
         }
         return null;
     }
+    
+    // </editor-fold>  
     
     private void altaAnalisisProduccion(Analisis analisis, PreparedStatement consulta){
             
