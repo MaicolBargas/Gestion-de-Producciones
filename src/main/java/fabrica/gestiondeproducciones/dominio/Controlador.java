@@ -7,7 +7,7 @@ import java.util.List;
 public class Controlador {
     
     ControladorPersistencia persistencia = new ControladorPersistencia();
-   
+    // <editor-fold defaultstate="collapsed" desc="Silo">
     public boolean altaSilo(Silo silo){
         return persistencia.altaSilo(silo);
     }
@@ -32,6 +32,9 @@ public class Controlador {
         return persistencia.buscarSiloXCodigo(codigo);
     }
     
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Producto">
     public boolean altaProducto(Producto producto){
         return persistencia.altaProducto(producto);
     }
@@ -52,8 +55,9 @@ public class Controlador {
         return persistencia.buscarProducto(id);
     }
     
+    // </editor-fold> 
     
-    
+    // <editor-fold defaultstate="collapsed" desc="Seccion">
     public boolean altaSeccion(Seccion seccion){
         return persistencia.altaSeccion(seccion);
     }
@@ -74,6 +78,9 @@ public class Controlador {
         return persistencia.buscarSeccion(id);
     }
     
+      // </editor-fold> 
+    
+    // <editor-fold defaultstate="collapsed" desc="Tambo">
     public boolean altaTambo(Tambo tambo){
         return persistencia.altaTambo(tambo);
     }
@@ -93,8 +100,9 @@ public class Controlador {
     public Tambo buscarTambo(int id){
         return persistencia.buscarTambo(id);
     }
+   // </editor-fold>   
     
-    
+    // <editor-fold defaultstate="collapsed" desc="Insumo">
     public boolean altaInsumo(Insumo tambo){
        return persistencia.altaInsumo(tambo);
     }
@@ -114,7 +122,9 @@ public class Controlador {
     public Insumo buscarInsumo(int id){
         return persistencia.buscarInsumo(id);
     }
+    // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Empleado">
     public boolean altaEmpleado(Empleado empleado){
        return persistencia.altaEmpleado(empleado);
     }
@@ -138,7 +148,9 @@ public class Controlador {
     public Empleado buscarEmpleadoXCi(int ci){
         return persistencia.buscarEmpleado(ci);
     }
+    // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Ingreso Leche">
     public boolean altaIngreso(IngresoLeche ingreso){
        return persistencia.altaIngreso(ingreso);
     }
@@ -158,8 +170,10 @@ public class Controlador {
     public IngresoLeche buscarIngreso(int id){
         return persistencia.buscarIngreso(id);
     }
+    // </editor-fold> 
     
-        public boolean altaPasteurizado(LechePasteurizada lecheP){
+    // <editor-fold defaultstate="collapsed" desc="Leche Pasteurizada">
+    public boolean altaPasteurizado(LechePasteurizada lecheP){
        return persistencia.altaPasteurizado(lecheP);
     }
     
@@ -179,7 +193,9 @@ public class Controlador {
         return persistencia.buscarPasteurizado(id);
     }
     
+    // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis Ingreso Leche">
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
        return persistencia.altaAnalisisIngreso(analisis);
     }
@@ -199,5 +215,28 @@ public class Controlador {
     public AnalisisIngreso buscarAnalisisIngreso(int id){
         return persistencia.buscarAnalisisIngreso(id);
     }
+    // </editor-fold> 
+        
+    // <editor-fold defaultstate="collapsed" desc="Analisis Leche Pasteurizada">
+    public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
+       return persistencia.altaAnalisisLechePast(analisisLechePast);
+    }
+    
+    public List listarAnalisisLechePast(){
+        return persistencia.listarAnalisisLechePast();
+    }
+    
+   
+    
+    public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
+       return persistencia.modificarAnalisisLechePast(analisisLechePast);
+    }
+    
+    public AnalisisLechePasteurizada buscarAnalisisLechePast(int id){
+        return persistencia.buscarAnalisisLechePast(id);
+    }
+    // </editor-fold> 
+    
+    
    
 }

@@ -171,6 +171,7 @@ public class ControladorPersistencia {
     }
     
     PersistenciaPasteurizado persistenciaPasteurizado = new PersistenciaPasteurizado();
+    
     public boolean altaPasteurizado(LechePasteurizada lecheP){
        return persistenciaPasteurizado.altaPasteurizado(lecheP);
     }
@@ -191,6 +192,8 @@ public class ControladorPersistencia {
         return persistenciaPasteurizado.buscarPasteurizado(id);
     }
     
+    
+    
     PersistenciaAnalisis persistenciaAnalisis = new PersistenciaAnalisis();
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
        return persistenciaAnalisis.altaAnalisisIngreso(analisis);
@@ -210,6 +213,25 @@ public class ControladorPersistencia {
     
     public AnalisisIngreso buscarAnalisisIngreso(int id){
         return persistenciaAnalisis.buscarAnalisisIngreso(id);
+    }
+    
+    
+    public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
+       return persistenciaAnalisis.altaAnalisisLechePast(analisisLechePast);
+    }
+    
+    public List listarAnalisisLechePast(){
+        return persistenciaAnalisis.listarAnalisisLechePast();
+    }
+    
+    
+    
+    public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
+       return persistenciaAnalisis.modificarAnalisisLechePast(analisisLechePast);
+    }
+    
+    public AnalisisLechePasteurizada buscarAnalisisLechePast(int id){
+        return persistenciaAnalisis.buscarAnalisisLechePast(id);
     }
     
 }

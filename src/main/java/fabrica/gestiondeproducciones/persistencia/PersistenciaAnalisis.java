@@ -3,8 +3,10 @@ package fabrica.gestiondeproducciones.persistencia;
 
 import fabrica.gestiondeproducciones.dominio.Analisis;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
+import fabrica.gestiondeproducciones.dominio.AnalisisLechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
+import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,6 +25,7 @@ public class PersistenciaAnalisis {
     String nombreTabla = "analisis";
     PersistenciaIngresoLeche persIngreso = new PersistenciaIngresoLeche();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
+    PersistenciaPasteurizado persLechePast=new PersistenciaPasteurizado();
 
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
@@ -163,6 +166,162 @@ public class PersistenciaAnalisis {
                     analisis.setIngreso(ingreso);
                 }   
                 return analisis;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+        return null;
+    }
+    
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Leche Pasteurizada">  
+    public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
+        String sql = "INSERT INTO "+ nombreTabla +"(codigo,tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);          
+            consulta.setInt(1, analisisLechePast.getCodigo());
+            consulta.setString(2, analisisLechePast.getTipo());
+            consulta.setInt(3, analisisLechePast.getEncargado().getId());
+            consulta.setString(4, analisisLechePast.getFecha());
+            consulta.setInt(5, analisisLechePast.getLevadura());
+            consulta.setInt(6, analisisLechePast.getMos());
+            consulta.setInt(7, analisisLechePast.getPoliformosTotales());
+            consulta.setInt(8, analisisLechePast.getPoliformosFecales());           
+            consulta.setInt(9, analisisLechePast.getGrasa());
+            consulta.setInt(10, analisisLechePast.getProteina());
+            consulta.setInt(11, analisisLechePast.getAgua());
+            consulta.setInt(12, analisisLechePast.getLechePast().getId());
+            consulta.execute();
+            return true;
+        }catch(SQLException e){            
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+               JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
+        String sql = "UPDATE "+ nombreTabla +" SET codigo = ?, tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idPasteurizada = ? WHERE idAnalisis = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, analisisLechePast.getCodigo());
+            consulta.setString(2, analisisLechePast.getTipo());
+            consulta.setInt(3, analisisLechePast.getEncargado().getId());
+            consulta.setString(4, analisisLechePast.getFecha());
+            consulta.setInt(5, analisisLechePast.getLevadura());
+            consulta.setInt(6, analisisLechePast.getMos());
+            consulta.setInt(7, analisisLechePast.getPoliformosTotales());
+            consulta.setInt(8, analisisLechePast.getPoliformosFecales());           
+            consulta.setInt(9, analisisLechePast.getGrasa());
+            consulta.setInt(10, analisisLechePast.getProteina());
+            consulta.setInt(11, analisisLechePast.getAgua());
+            consulta.setInt(12, analisisLechePast.getLechePast().getId());
+           
+
+            consulta.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public List listarAnalisisLechePast() {
+        List<AnalisisLechePasteurizada> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'leche pasteurizada' AND activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                AnalisisLechePasteurizada analisisLechePast = new AnalisisLechePasteurizada();
+                analisisLechePast.setId(resultado.getInt("idAnalisis"));
+                analisisLechePast.setCodigo(resultado.getInt("codigo"));
+                analisisLechePast.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisisLechePast.setEncargado(encargado);
+                } 
+                
+               
+                analisisLechePast.setFecha(resultado.getString("fecha"));
+                analisisLechePast.setLevadura(resultado.getInt("levadura"));
+                analisisLechePast.setMos(resultado.getInt("mos"));
+                analisisLechePast.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisisLechePast.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                analisisLechePast.setGrasa(resultado.getInt("grasa"));
+                analisisLechePast.setProteina(resultado.getInt("proteina"));
+                analisisLechePast.setAgua(resultado.getInt("agua"));
+
+                LechePasteurizada LechePast = persLechePast.buscarPasteurizado(resultado.getInt("idPasteurizada"));
+                if(LechePast instanceof LechePasteurizada){
+                    analisisLechePast.setLechePast(LechePast);
+                }   
+                
+                lista.add(analisisLechePast);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    public AnalisisLechePasteurizada buscarAnalisisLechePast(int id){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idAnalisis =?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            resultado = consulta.executeQuery();     
+            if(resultado.next()){
+               AnalisisLechePasteurizada analisisLechePast = new AnalisisLechePasteurizada();
+                analisisLechePast.setId(resultado.getInt("idAnalisis"));
+                analisisLechePast.setCodigo(resultado.getInt("codigo"));
+                analisisLechePast.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisisLechePast.setEncargado(encargado);
+                } 
+                
+                analisisLechePast.setFecha(resultado.getString("fecha"));
+                analisisLechePast.setLevadura(resultado.getInt("levadura"));
+                analisisLechePast.setMos(resultado.getInt("mos"));
+                analisisLechePast.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisisLechePast.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                analisisLechePast.setGrasa(resultado.getInt("grasa"));
+                analisisLechePast.setProteina(resultado.getInt("proteina"));
+                analisisLechePast.setAgua(resultado.getInt("agua"));
+
+                LechePasteurizada LechePast = persLechePast.buscarPasteurizado(resultado.getInt("idPasteurizada"));
+                if(LechePast instanceof LechePasteurizada){
+                    analisisLechePast.setLechePast(LechePast);
+                }   
+                return analisisLechePast;
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
