@@ -7,6 +7,7 @@ import java.util.List;
 public class Controlador {
     
     ControladorPersistencia persistencia = new ControladorPersistencia();
+    
     // <editor-fold defaultstate="collapsed" desc="Silo">
     public boolean altaSilo(Silo silo){
         return persistencia.altaSilo(silo);
@@ -159,6 +160,10 @@ public class Controlador {
         return persistencia.listarIngresos();
     }
     
+    public List listarIngresosPendientesAnalizar(){
+        return persistencia.listarIngresosPendientesAnalizar();
+    }
+    
     public boolean bajaIngreso(int id){
         return persistencia.bajaIngreso(id);
     }
@@ -177,10 +182,13 @@ public class Controlador {
        return persistencia.altaPasteurizado(lecheP);
     }
     
+    public List listarPasteurizadosPendientesAnalizar(){
+        return persistencia.listarPasteurizadosPendientesAnalizar();
+    }
+    
     public List listarPasteurizados(){
         return persistencia.listarPasteurizados();
     }
-    
     public boolean bajaPasteurizado(int id){
         return persistencia.bajaPasteurizado(id);
     }

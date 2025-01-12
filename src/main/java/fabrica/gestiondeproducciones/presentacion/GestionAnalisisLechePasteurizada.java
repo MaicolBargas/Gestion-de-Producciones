@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
+
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
@@ -17,10 +14,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author MSI
- */
 public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame {
 
     Utilidades utilidad = new Utilidades();
@@ -30,7 +23,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     LechePasteurizada lechePast= new LechePasteurizada();
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloIngresos = new DefaultTableModel();
-    String tipoAnalisis = "leche pasteurizada";
+    String tipoAnalisis = "pasteurizada";
     
     public GestionAnalisisLechePasteurizada() {
         initComponents();
@@ -86,7 +79,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     }
   private void listarLechePasteurizada(){     
         limpiarTablaIngresos();
-        List<LechePasteurizada> lista = controlador.listarPasteurizados();
+        List<LechePasteurizada> lista = controlador.listarPasteurizadosPendientesAnalizar();
         modeloIngresos = (DefaultTableModel) tablaIngresos.getModel();
         Object[] objeto = new Object[6];
         for(int i = 0; i < lista.size(); i++){
@@ -240,7 +233,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel9.setText("Id Ingreso:");
+        jLabel9.setText("Id Pasteurizada:");
 
         jLabel10.setText("Temperatura:");
 
@@ -546,7 +539,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
             },
             new String [] {
-                "Id", "Codigo", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "Ingreso"
+                "Id", "Codigo", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "Pasteurizada"
             }
         ) {
             Class[] types = new Class [] {

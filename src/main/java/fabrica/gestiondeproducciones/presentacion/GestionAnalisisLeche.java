@@ -40,7 +40,9 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         for(int i = 0; i < lista.size(); i++){
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getCodigo();
-            objeto[2] = lista.get(i).getEncargado().getNombre();
+            if(lista.get(i).getEncargado() instanceof Empleado){
+                objeto[2] = lista.get(i).getEncargado().getNombre();
+            }
             objeto[3] = lista.get(i).getFecha();
             objeto[4] = lista.get(i).getLevadura();
             objeto[5] = lista.get(i).getMos();
@@ -58,7 +60,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         
     private void listarIngresos(){     
         limpiarTablaIngresos();
-        List<IngresoLeche> lista = controlador.listarIngresos();
+        List<IngresoLeche> lista = controlador.listarIngresosPendientesAnalizar();
         modeloIngresos = (DefaultTableModel) tablaIngresos.getModel();
         Object[] objeto = new Object[5];
         for(int i = 0; i < lista.size(); i++){

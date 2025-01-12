@@ -178,4 +178,40 @@ public class PersistenciaIngresoLeche {
         return null;
     }
     
+        public List listarIngresosPendientesAnalizar(){
+        List<IngresoLeche> lista = new ArrayList();
+        String sql = "SELECT i.* FROM ingresos i LEFT JOIN analisis a ON i.idIngreso = a.idIngreso WHERE i.activo = '1' AND a.idIngreso IS NULL";
+
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                IngresoLeche ingreso = new IngresoLeche();
+                ingreso.setIdIngreso(resultado.getInt("idIngreso"));
+                
+                Tambo tambo = persTambo.buscarTambo(resultado.getInt("idTambo"));
+                if(tambo instanceof Tambo){
+                    ingreso.setTambo(tambo);
+                }
+                            
+                ingreso.setLitros(resultado.getInt("litros"));
+                ingreso.setLitrosDisponibles(resultado.getInt("litrosDisponibles"));
+
+                Silo silo = persSilo.buscarSilo(resultado.getInt("idSilo"));
+                if(silo instanceof Silo){
+                    ingreso.setSilo(silo);
+                }              
+                
+                ingreso.setFecha(resultado.getString("fecha"));
+                lista.add(ingreso);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    
 }

@@ -77,6 +77,34 @@ public class PersistenciaPasteurizado {
         return lista;
     }
     
+        public List listarPasteurizadosPendientesAnalizar(){
+        List<LechePasteurizada> lista = new ArrayList();
+        String sql = "SELECT p.* FROM pasteurizadas p LEFT JOIN analisis a ON p.idLecheP = a.idPasteurizada WHERE p.activo = '1' AND a.idPasteurizada IS NULL";
+
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                LechePasteurizada lecheP = new LechePasteurizada();
+                lecheP.setId(resultado.getInt("idLecheP"));
+                lecheP.setTemperatura(resultado.getInt("temperatura"));
+                lecheP.setLitros(resultado.getInt("litros"));
+                IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
+                if(ingreso instanceof IngresoLeche){
+                    lecheP.setIngreso(ingreso);
+                }              
+                lecheP.setDescremado(resultado.getBoolean("descremado"));
+                lecheP.setCrema(resultado.getInt("cremaObtenida"));
+                lista.add(lecheP);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
     public boolean bajaPasteurizado(int id){
         String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idLecheP = ?";
        

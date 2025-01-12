@@ -250,7 +250,7 @@ public class PersistenciaAnalisis {
     
     public List listarAnalisisLechePast() {
         List<AnalisisLechePasteurizada> lista = new ArrayList();
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'leche pasteurizada' AND activo = '1'";
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'pasteurizada' AND activo = '1'";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
