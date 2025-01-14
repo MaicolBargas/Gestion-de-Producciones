@@ -84,7 +84,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="txtId" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtId" min="-2" pref="73" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -93,10 +93,7 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtCodigo" min="-2" pref="101" max="-2" attributes="0"/>
-                                      <Component id="txtFecha" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="txtFecha" min="-2" pref="101" max="-2" attributes="0"/>
                                   <Component id="txtEncargado" min="-2" pref="113" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -138,6 +135,7 @@
                                   <Component id="txtMos" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="txtCodigo" alignment="1" min="-2" pref="101" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" pref="72" max="-2" attributes="0"/>
@@ -279,6 +277,9 @@
               <Properties>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtEncargadoKeyPressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFecha">
               <Properties>
@@ -406,7 +407,7 @@
                     <Component class="javax.swing.JTable" name="tablaIngresos">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="4">
+                          <Table columnCount="4" rowCount="0">
                             <Column editable="false" title="Id" type="java.lang.Integer"/>
                             <Column editable="false" title="Tambo" type="java.lang.String"/>
                             <Column editable="false" title="Litros" type="java.lang.Integer"/>

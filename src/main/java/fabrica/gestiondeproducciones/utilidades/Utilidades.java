@@ -51,9 +51,21 @@ public class Utilidades {
         }catch(Exception e){
             throw new Exception(e.getMessage());               
         }
-    }            
+    }
     
-   public Integer validarCi(final String ci) throws Exception {
+    public String validarVacios(String valor, String nombre) throws Exception{
+        try{
+            if(!valor.isEmpty()){
+                return valor;
+            }else{
+                throw new Exception("El campo "+nombre+" no puede ser vacio");
+            }
+        }catch(Exception e){ 
+            throw new Exception(e.getMessage());               
+        }
+    }
+    
+    public Integer validarCi(final String ci) throws Exception {
         final int MINIMO_DIGITOS = 7;
         final String ciFixed;
 

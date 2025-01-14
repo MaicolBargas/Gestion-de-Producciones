@@ -41,7 +41,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getCodigo();
             if(lista.get(i).getEncargado() instanceof Empleado){
-                objeto[2] = lista.get(i).getEncargado().getNombre();
+                objeto[2] = lista.get(i).getEncargado().getId() +" - "+lista.get(i).getEncargado().getNombre();
             }
             objeto[3] = lista.get(i).getFecha();
             objeto[4] = lista.get(i).getLevadura();
@@ -197,6 +197,11 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         txtCodigo.setToolTipText("");
 
         txtEncargado.setToolTipText("");
+        txtEncargado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEncargadoKeyPressed(evt);
+            }
+        });
 
         txtFecha.setToolTipText("");
 
@@ -216,10 +221,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
 
         tablaIngresos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Id", "Tambo", "Litros", "Silo"
@@ -387,16 +389,14 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,7 +425,8 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtLevadura, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                            .addComponent(txtMos))))
+                            .addComponent(txtMos)))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74)
@@ -582,14 +583,18 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);  
+            String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
+            Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
             
             if(pFecales > pTotales){
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
+            
             analisis.setCodigo(codigo);   
             analisis.setTipo("ingreso");
-            if(encargado instanceof Empleado){
-                analisis.setEncargado(encargado);
+            
+            if(empleado instanceof Empleado){
+                analisis.setEncargado(empleado);
             }else{throw new Exception("Debe seleccionar un empleado habilitado");}
             
            analisis.setFecha(fecha);
@@ -654,14 +659,17 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);  
             
+            String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
+            Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
+            
             if(pFecales > pTotales){
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
             
             analisis.setCodigo(codigo);   
 
-            if(encargado instanceof Empleado){
-                analisis.setEncargado(encargado);
+            if(empleado instanceof Empleado){
+                analisis.setEncargado(empleado);
             }else{throw new Exception("Debe seleccionar un empleado habilitado");}
             
            analisis.setFecha(fecha);
@@ -719,6 +727,10 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_tablaAnalisisMouseClicked
+
+    private void txtEncargadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEncargadoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEncargadoKeyPressed
 
     private Empleado buscarEncargado() throws Exception{
         String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        

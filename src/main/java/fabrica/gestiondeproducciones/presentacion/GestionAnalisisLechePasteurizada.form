@@ -611,7 +611,7 @@
                 <Column editable="false" title="Grasa" type="java.lang.Integer"/>
                 <Column editable="false" title="Proteina" type="java.lang.Integer"/>
                 <Column editable="false" title="Agua" type="java.lang.Integer"/>
-                <Column editable="false" title="Pasteurizada" type="java.lang.Integer"/>
+                <Column editable="false" title="Pasteurizada" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
