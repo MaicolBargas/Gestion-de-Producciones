@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-01-2025 a las 19:11:35
+-- Tiempo de generación: 15-01-2025 a las 23:50:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,6 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `analisis`
+--
+
+CREATE TABLE `analisis` (
+  `idAnalisis` int(11) NOT NULL,
+  `tipo` varchar(15) NOT NULL,
+  `empleado` int(11) NOT NULL,
+  `fecha` varchar(15) NOT NULL,
+  `levadura` int(11) NOT NULL,
+  `mos` int(11) NOT NULL,
+  `poliformosTotales` int(11) NOT NULL,
+  `poliformosFecales` int(11) NOT NULL,
+  `grasa` int(11) DEFAULT NULL,
+  `proteina` int(11) DEFAULT NULL,
+  `agua` int(11) DEFAULT NULL,
+  `idProduccion` int(11) DEFAULT NULL,
+  `idIngreso` int(11) DEFAULT NULL,
+  `idPasteurizada` int(11) DEFAULT NULL,
+  `humedad` int(11) DEFAULT NULL,
+  `sal` int(11) DEFAULT NULL,
+  `ph` int(11) DEFAULT NULL,
+  `acides` int(11) DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empleado`
 --
 
@@ -38,14 +66,21 @@ CREATE TABLE `empleado` (
   `activo` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `empleado`
+-- Estructura de tabla para la tabla `ingresos`
 --
 
-INSERT INTO `empleado` (`idEmpleado`, `ci`, `nombre`, `apellido`, `idSeccion`, `telefono`, `mail`, `activo`) VALUES
-(1, 6415465, 'dfsqdas', 'adsadasda', 2, 99788441, 'tesadsfa', 1),
-(2, 156465, 'asdsadsad', 'adssadasd', 1, 655333, 'sadsadas', 1),
-(3, 52397633, 'Maicol', 'Bargas', 2, 99392612, 'maicolgmailcom', 1);
+CREATE TABLE `ingresos` (
+  `idIngreso` int(4) NOT NULL,
+  `idTambo` int(3) NOT NULL,
+  `litros` int(6) NOT NULL,
+  `litrosDisponibles` int(6) NOT NULL,
+  `idSilo` int(2) NOT NULL,
+  `fecha` varchar(15) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -61,14 +96,34 @@ CREATE TABLE `insumo` (
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `insumo`
+-- Estructura de tabla para la tabla `pasteurizadas`
 --
 
-INSERT INTO `insumo` (`idInsumo`, `nombre`, `descripcion`, `unidad`, `activo`) VALUES
-(1, 'Ejemplo 1', 'Esto es un insumo de Ejemplo', '', 1),
-(2, 'Ejemplo 2', 'Esto es otro insumo de prueba para comprobar el flujo completo Verificar Descripcion', '', 0),
-(3, 'Insumo de prueba', 'Insumo de prueba en el cual verifico que funcione bien la unidad', 'Kg', 0);
+CREATE TABLE `pasteurizadas` (
+  `idLecheP` int(11) NOT NULL,
+  `temperatura` int(11) NOT NULL,
+  `litros` int(11) NOT NULL,
+  `idIngreso` int(11) NOT NULL,
+  `descremado` varchar(20) NOT NULL,
+  `cremaObtenida` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE `producto` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -83,14 +138,6 @@ CREATE TABLE `secciones` (
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `secciones`
---
-
-INSERT INTO `secciones` (`idSeccion`, `nombre`, `descripcion`, `activo`) VALUES
-(1, 'Laboratorio', 'Descripcion de laboratorio', 1),
-(2, 'Queseria', 'Descripcion de queseria', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -103,15 +150,6 @@ CREATE TABLE `silos` (
   `capacidad` int(8) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `silos`
---
-
-INSERT INTO `silos` (`IdSilo`, `codigoSilo`, `capacidad`, `activo`) VALUES
-(1, '5', 540000, 1),
-(5, '2', 5000, 1),
-(6, '46', 78, 1);
 
 -- --------------------------------------------------------
 
@@ -128,16 +166,15 @@ CREATE TABLE `tambo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `tambo`
---
-
-INSERT INTO `tambo` (`idTambo`, `nombrePropietario`, `contacto`, `direccion`, `activo`) VALUES
-(1, 'Maicol', '098 997 887', 'Cno Cibilis', 1),
-(2, 'Maicol', '098 999 999', 'Av Artigas 2748', 0);
-
---
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `analisis`
+--
+ALTER TABLE `analisis`
+  ADD PRIMARY KEY (`idAnalisis`),
+  ADD KEY `tipo` (`tipo`);
 
 --
 -- Indices de la tabla `empleado`
@@ -146,10 +183,22 @@ ALTER TABLE `empleado`
   ADD PRIMARY KEY (`idEmpleado`);
 
 --
+-- Indices de la tabla `ingresos`
+--
+ALTER TABLE `ingresos`
+  ADD PRIMARY KEY (`idIngreso`);
+
+--
 -- Indices de la tabla `insumo`
 --
 ALTER TABLE `insumo`
   ADD PRIMARY KEY (`idInsumo`);
+
+--
+-- Indices de la tabla `pasteurizadas`
+--
+ALTER TABLE `pasteurizadas`
+  ADD PRIMARY KEY (`idLecheP`);
 
 --
 -- Indices de la tabla `secciones`
@@ -175,34 +224,52 @@ ALTER TABLE `tambo`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `analisis`
+--
+ALTER TABLE `analisis`
+  MODIFY `idAnalisis` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `idEmpleado` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEmpleado` int(4) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `ingresos`
+--
+ALTER TABLE `ingresos`
+  MODIFY `idIngreso` int(4) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `insumo`
 --
 ALTER TABLE `insumo`
-  MODIFY `idInsumo` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idInsumo` int(2) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `pasteurizadas`
+--
+ALTER TABLE `pasteurizadas`
+  MODIFY `idLecheP` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `secciones`
 --
 ALTER TABLE `secciones`
-  MODIFY `idSeccion` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idSeccion` int(3) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `silos`
 --
 ALTER TABLE `silos`
-  MODIFY `IdSilo` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `IdSilo` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tambo`
 --
 ALTER TABLE `tambo`
-  MODIFY `idTambo` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idTambo` int(3) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
