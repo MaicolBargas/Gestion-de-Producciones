@@ -29,23 +29,22 @@ public class PersistenciaAnalisis {
 
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
-        String sql = "INSERT INTO "+ nombreTabla +"(codigo,tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);          
-            consulta.setInt(1, analisis.getCodigo());
-            consulta.setString(2, analisis.getTipo());
-            consulta.setInt(3, analisis.getEncargado().getId());
-            consulta.setString(4, analisis.getFecha());
-            consulta.setInt(5, analisis.getLevadura());
-            consulta.setInt(6, analisis.getMos());
-            consulta.setInt(7, analisis.getPoliformosTotales());
-            consulta.setInt(8, analisis.getPoliformosFecales());           
-            consulta.setInt(9, analisis.getGrasa());
-            consulta.setInt(10, analisis.getProteina());
-            consulta.setInt(11, analisis.getAgua());
-            consulta.setInt(12, analisis.getIngreso().getIdIngreso());
+            consulta.setString(1, analisis.getTipo());
+            consulta.setInt(2, analisis.getEncargado().getId());
+            consulta.setString(3, analisis.getFecha());
+            consulta.setInt(4, analisis.getLevadura());
+            consulta.setInt(5, analisis.getMos());
+            consulta.setInt(6, analisis.getPoliformosTotales());
+            consulta.setInt(7, analisis.getPoliformosFecales());           
+            consulta.setInt(8, analisis.getGrasa());
+            consulta.setInt(9, analisis.getProteina());
+            consulta.setInt(10, analisis.getAgua());
+            consulta.setInt(11, analisis.getIngreso().getIdIngreso());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -61,23 +60,22 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisIngreso(AnalisisIngreso analisis){
-        String sql = "UPDATE "+ nombreTabla +" SET codigo = ?, tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idIngreso = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idIngreso = ? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setInt(1, analisis.getCodigo());
-            consulta.setString(2, analisis.getTipo());
-            consulta.setInt(3, analisis.getEncargado().getId());
-            consulta.setString(4, analisis.getFecha());
-            consulta.setInt(5, analisis.getLevadura());
-            consulta.setInt(6, analisis.getMos());
-            consulta.setInt(7, analisis.getPoliformosTotales());
-            consulta.setInt(8, analisis.getPoliformosFecales());           
-            consulta.setInt(9, analisis.getGrasa());
-            consulta.setInt(10, analisis.getProteina());
-            consulta.setInt(11, analisis.getAgua());
-            consulta.setInt(12, analisis.getIngreso().getIdIngreso());
-            consulta.setInt(13, analisis.getId());
+            consulta.setString(1, analisis.getTipo());
+            consulta.setInt(2, analisis.getEncargado().getId());
+            consulta.setString(3, analisis.getFecha());
+            consulta.setInt(4, analisis.getLevadura());
+            consulta.setInt(5, analisis.getMos());
+            consulta.setInt(6, analisis.getPoliformosTotales());
+            consulta.setInt(7, analisis.getPoliformosFecales());           
+            consulta.setInt(8, analisis.getGrasa());
+            consulta.setInt(9, analisis.getProteina());
+            consulta.setInt(10, analisis.getAgua());
+            consulta.setInt(11, analisis.getIngreso().getIdIngreso());
+            consulta.setInt(12, analisis.getId());
 
             consulta.execute();
             return true;
@@ -103,7 +101,6 @@ public class PersistenciaAnalisis {
             while(resultado.next()){
                 AnalisisIngreso analisis = new AnalisisIngreso();
                 analisis.setId(resultado.getInt("idAnalisis"));
-                analisis.setCodigo(resultado.getInt("codigo"));
                 analisis.setTipo(resultado.getString("tipo"));
                 
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
@@ -144,7 +141,6 @@ public class PersistenciaAnalisis {
             if(resultado.next()){
                AnalisisIngreso analisis = new AnalisisIngreso();
                 analisis.setId(resultado.getInt("idAnalisis"));
-                analisis.setCodigo(resultado.getInt("codigo"));
                 analisis.setTipo(resultado.getString("tipo"));
                 
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
@@ -184,23 +180,22 @@ public class PersistenciaAnalisis {
     
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Leche Pasteurizada">  
     public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-        String sql = "INSERT INTO "+ nombreTabla +"(codigo,tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);          
-            consulta.setInt(1, analisisLechePast.getCodigo());
-            consulta.setString(2, analisisLechePast.getTipo());
-            consulta.setInt(3, analisisLechePast.getEncargado().getId());
-            consulta.setString(4, analisisLechePast.getFecha());
-            consulta.setInt(5, analisisLechePast.getLevadura());
-            consulta.setInt(6, analisisLechePast.getMos());
-            consulta.setInt(7, analisisLechePast.getPoliformosTotales());
-            consulta.setInt(8, analisisLechePast.getPoliformosFecales());           
-            consulta.setInt(9, analisisLechePast.getGrasa());
-            consulta.setInt(10, analisisLechePast.getProteina());
-            consulta.setInt(11, analisisLechePast.getAgua());
-            consulta.setInt(12, analisisLechePast.getLechePast().getId());
+            consulta.setString(1, analisisLechePast.getTipo());
+            consulta.setInt(2, analisisLechePast.getEncargado().getId());
+            consulta.setString(3, analisisLechePast.getFecha());
+            consulta.setInt(4, analisisLechePast.getLevadura());
+            consulta.setInt(5, analisisLechePast.getMos());
+            consulta.setInt(6, analisisLechePast.getPoliformosTotales());
+            consulta.setInt(7, analisisLechePast.getPoliformosFecales());           
+            consulta.setInt(8, analisisLechePast.getGrasa());
+            consulta.setInt(9, analisisLechePast.getProteina());
+            consulta.setInt(10, analisisLechePast.getAgua());
+            consulta.setInt(11, analisisLechePast.getLechePast().getId());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -220,18 +215,17 @@ public class PersistenciaAnalisis {
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setInt(1, analisisLechePast.getCodigo());
-            consulta.setString(2, analisisLechePast.getTipo());
-            consulta.setInt(3, analisisLechePast.getEncargado().getId());
-            consulta.setString(4, analisisLechePast.getFecha());
-            consulta.setInt(5, analisisLechePast.getLevadura());
-            consulta.setInt(6, analisisLechePast.getMos());
-            consulta.setInt(7, analisisLechePast.getPoliformosTotales());
-            consulta.setInt(8, analisisLechePast.getPoliformosFecales());           
-            consulta.setInt(9, analisisLechePast.getGrasa());
-            consulta.setInt(10, analisisLechePast.getProteina());
-            consulta.setInt(11, analisisLechePast.getAgua());
-            consulta.setInt(12, analisisLechePast.getLechePast().getId());
+            consulta.setString(1, analisisLechePast.getTipo());
+            consulta.setInt(2, analisisLechePast.getEncargado().getId());
+            consulta.setString(3, analisisLechePast.getFecha());
+            consulta.setInt(4, analisisLechePast.getLevadura());
+            consulta.setInt(5, analisisLechePast.getMos());
+            consulta.setInt(6, analisisLechePast.getPoliformosTotales());
+            consulta.setInt(7, analisisLechePast.getPoliformosFecales());           
+            consulta.setInt(8, analisisLechePast.getGrasa());
+            consulta.setInt(9, analisisLechePast.getProteina());
+            consulta.setInt(10, analisisLechePast.getAgua());
+            consulta.setInt(11, analisisLechePast.getLechePast().getId());
            
 
             consulta.execute();
@@ -258,7 +252,6 @@ public class PersistenciaAnalisis {
             while(resultado.next()){
                 AnalisisLechePasteurizada analisisLechePast = new AnalisisLechePasteurizada();
                 analisisLechePast.setId(resultado.getInt("idAnalisis"));
-                analisisLechePast.setCodigo(resultado.getInt("codigo"));
                 analisisLechePast.setTipo(resultado.getString("tipo"));
                 
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
@@ -300,7 +293,6 @@ public class PersistenciaAnalisis {
             if(resultado.next()){
                AnalisisLechePasteurizada analisisLechePast = new AnalisisLechePasteurizada();
                 analisisLechePast.setId(resultado.getInt("idAnalisis"));
-                analisisLechePast.setCodigo(resultado.getInt("codigo"));
                 analisisLechePast.setTipo(resultado.getString("tipo"));
                 
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
