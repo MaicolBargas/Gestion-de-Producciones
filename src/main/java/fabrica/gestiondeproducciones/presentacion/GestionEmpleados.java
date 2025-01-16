@@ -5,10 +5,7 @@ import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.Seccion;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
-import java.awt.HeadlessException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -58,7 +55,7 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         txtDocumento.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
-        cbxSeccion.setSelectedIndex(-1);
+        cbxSeccion.setSelectedIndex(0);
         txtTelefono.setText("");
         txtMail.setText("");
 
@@ -350,7 +347,12 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
         String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
         String mail =  utilidad.sanitizarCampos(txtMail.getText(), "Mail", false);
-
+        
+        Empleado e = controlador.buscarEmpleadoXCi(ci);
+        if(e instanceof Empleado){
+            throw new Exception("Ya existe un empleado con esta CI : " + e.getNombre() +" "+ e.getApellido());
+        }
+        
         empleado.setCi(ci);   
         empleado.setNombre(nombre);
         empleado.setApellido(apellido);

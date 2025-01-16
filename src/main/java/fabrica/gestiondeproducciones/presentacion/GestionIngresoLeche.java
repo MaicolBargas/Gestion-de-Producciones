@@ -56,9 +56,9 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     
     public void limpiarFormulario(){
         txtId.setText("");
-        cbxTambo.setSelectedIndex(-1);
+        cbxTambo.setSelectedIndex(0);
         txtLitros.setText("");
-        cbxSilo.setSelectedIndex(-1);
+        cbxSilo.setSelectedIndex(0);
         txtFecha.setText("");
 
     }

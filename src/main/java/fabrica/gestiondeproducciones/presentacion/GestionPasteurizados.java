@@ -53,12 +53,14 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         modeloIngresos = (DefaultTableModel) tablaIngresos.getModel();
         Object[] objeto = new Object[5];
         for(int i = 0; i < lista.size(); i++){
-            objeto[0] = lista.get(i).getIdIngreso();
-            objeto[1] = lista.get(i).getTambo().getPropietario();
-            objeto[2] = lista.get(i).getLitrosDisponibles();
-            objeto[3] = lista.get(i).getSilo().getCodigoInterno();
-            objeto[4] = lista.get(i).getFecha();
-            modeloIngresos.addRow(objeto);
+            if(lista.get(i).getLitrosDisponibles() > 0){
+                objeto[0] = lista.get(i).getIdIngreso();
+                objeto[1] = lista.get(i).getTambo().getPropietario();
+                objeto[2] = lista.get(i).getLitrosDisponibles();
+                objeto[3] = lista.get(i).getSilo().getCodigoInterno();
+                objeto[4] = lista.get(i).getFecha();
+                modeloIngresos.addRow(objeto);
+            }
         }
         tablaIngresos.setModel(modeloIngresos);
     }

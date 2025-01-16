@@ -48,7 +48,7 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         txtId.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
-        cxbUnidad.setSelectedIndex(-1);
+        cxbUnidad.setSelectedIndex(0);
     }
     
     /**

@@ -17,7 +17,7 @@ public class Silo {
         this.capacidad = capacidad;
         this.activo = activo;
     }
-
+    
     public int getId() {
         return id;
     }

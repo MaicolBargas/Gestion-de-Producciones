@@ -180,7 +180,7 @@ public class PersistenciaAnalisis {
     
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Leche Pasteurizada">  
     public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -211,7 +211,7 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-        String sql = "UPDATE "+ nombreTabla +" SET codigo = ?, tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idPasteurizada = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idPasteurizada = ? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
