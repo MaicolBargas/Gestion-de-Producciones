@@ -1,14 +1,29 @@
 
 package fabrica.gestiondeproducciones.presentacion;
 
+import fabrica.gestiondeproducciones.dominio.Controlador;
+import fabrica.gestiondeproducciones.dominio.Empleado;
+import fabrica.gestiondeproducciones.dominio.Insumo;
+import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.Produccion;
+import fabrica.gestiondeproducciones.dominio.Producto;
+import fabrica.gestiondeproducciones.persistencia.PersistenciaProduccion;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
+    
+    
     public Principal() {
         initComponents();
+        
+        
+        
     }
 
     /**
@@ -34,6 +49,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuAnalisisLeche = new javax.swing.JMenuItem();
         menuAnalisisLeche1 = new javax.swing.JMenuItem();
+        jMenuProducciones = new javax.swing.JMenu();
+        menuProduccionesManteca = new javax.swing.JMenuItem();
+        menuAnalisisLeche3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -152,6 +170,26 @@ public class Principal extends javax.swing.JFrame {
 
         menuPrincipal.add(jMenu1);
 
+        jMenuProducciones.setText("Producciones");
+
+        menuProduccionesManteca.setText("Produccion de Mantexa");
+        menuProduccionesManteca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuProduccionesMantecaActionPerformed(evt);
+            }
+        });
+        jMenuProducciones.add(menuProduccionesManteca);
+
+        menuAnalisisLeche3.setText("Analisis de Leche Pasteurizada");
+        menuAnalisisLeche3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAnalisisLeche3ActionPerformed(evt);
+            }
+        });
+        jMenuProducciones.add(menuAnalisisLeche3);
+
+        menuPrincipal.add(jMenuProducciones);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -244,6 +282,16 @@ public class Principal extends javax.swing.JFrame {
        gest.show();
     }//GEN-LAST:event_menuAnalisisLeche1ActionPerformed
 
+    private void menuProduccionesMantecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProduccionesMantecaActionPerformed
+        GestionProduccionManteca gestionProduccion= new GestionProduccionManteca();
+        escritorio.add(gestionProduccion);
+        gestionProduccion.show();
+    }//GEN-LAST:event_menuProduccionesMantecaActionPerformed
+
+    private void menuAnalisisLeche3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisLeche3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuAnalisisLeche3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -283,14 +331,17 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenuProducciones;
     private javax.swing.JMenuItem menuAnalisisLeche;
     private javax.swing.JMenuItem menuAnalisisLeche1;
+    private javax.swing.JMenuItem menuAnalisisLeche3;
     private javax.swing.JMenu menuEmpleados;
     private javax.swing.JMenuItem menuIngresos;
     private javax.swing.JMenu menuInsumos;
     private javax.swing.JMenu menuLeche;
     private javax.swing.JMenuItem menuPasteurizados;
     private javax.swing.JMenuBar menuPrincipal;
+    private javax.swing.JMenuItem menuProduccionesManteca;
     private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuSecciones;
     private javax.swing.JMenu menuSilos;

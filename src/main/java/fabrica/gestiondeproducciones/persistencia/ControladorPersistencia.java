@@ -262,5 +262,22 @@ public class ControladorPersistencia {
         return persistenciaAnalisis.buscarAnalisisLechePast(id);
     }
      // </editor-fold> 
+    
+   // <editor-fold defaultstate="collapsed" desc="Produccion">
+    
+    PersistenciaProduccion persistenciaProduccion= new PersistenciaProduccion();
+    PersistenciaProduccionManteca persistenciaProduccionManteca= new PersistenciaProduccionManteca();
+    
+    public boolean altaProduccion(Produccion produccion){
+        return persistenciaProduccion.altaProduccion(produccion);
+    }
+    
+    public boolean altaProduccionManteca(ProduccionManteca produccion)
+    {
+        return persistenciaProduccionManteca.altaProduccionManteca(produccion);
+    }
+    
+    
+   // </editor-fold>  
    
 }

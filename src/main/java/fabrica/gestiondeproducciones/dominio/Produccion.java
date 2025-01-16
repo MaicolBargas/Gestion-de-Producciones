@@ -1,13 +1,157 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package fabrica.gestiondeproducciones.dominio;
 
-/**
- *
- * @author MSI
- */
+import java.util.List;
+
+
 public class Produccion {
+    private int idProduccion;
+    private String codInterno;
+    private List<Insumo> listaInsumos;
+    private List<Empleado> listaEmpleados;
+    private LechePasteurizada lechep;
+    private Producto producto;
+    private int rendimiento;
+    private int kgLtsObt;
+    private String fecha;
+    private Empleado encargado;
+    private String horaInicio;
+    private String horaFin;
+    private String tiempoTrabajado;
+    private int nroTacho;
+
+    public void setIdProduccion(int idProduccion) {
+        this.idProduccion = idProduccion;
+    }
+
+    public void setCodInterno(String codInterno) {
+        this.codInterno = codInterno;
+    }
+
+    public void setListaInsumos(List<Insumo> listaInsumos) {
+        this.listaInsumos = listaInsumos;
+    }
+
+    public void setListaEmpleados(List<Empleado> listaEmpleados) {
+        this.listaEmpleados = listaEmpleados;
+    }
+
+    public void setLechep(LechePasteurizada lechep) {
+        this.lechep = lechep;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public void setRendimiento(int rendimiento) {
+        this.rendimiento = rendimiento;
+    }
+
+    public void setKgLtsObt(int kgLtsObt) {
+        this.kgLtsObt = kgLtsObt;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setEncargado(Empleado encargado) {
+        this.encargado = encargado;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public void setTiempoTrabajado(String tiempoTrabajado) {
+        this.tiempoTrabajado = tiempoTrabajado;
+    }
+
+    public void setNroTacho(int nroTacho) {
+        this.nroTacho = nroTacho;
+    }
+
+    public int getIdProduccion() {
+        return idProduccion;
+    }
+
+    public String getCodInterno() {
+        return codInterno;
+    }
+
+    public List<Insumo> getListaInsumos() {
+        return listaInsumos;
+    }
+
+    public List<Empleado> getListaEmpleados() {
+        return listaEmpleados;
+    }
+
+    public LechePasteurizada getLechep() {
+        return lechep;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public int getRendimiento() {
+        return rendimiento;
+    }
+
+    public int getKgLtsObt() {
+        return kgLtsObt;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public Empleado getEncargado() {
+        return encargado;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+
+    public String getTiempoTrabajado() {
+        return tiempoTrabajado;
+    }
+
+    public int getNroTacho() {
+        return nroTacho;
+    }
+
+    public Produccion() {
+    }
+
+    public Produccion(int idProduccion, String codInterno, List<Insumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+        this.idProduccion = idProduccion;
+        this.codInterno = codInterno;
+        this.listaInsumos = listaInsumos;
+        this.listaEmpleados = listaEmpleados;
+        this.lechep = lechep;
+        this.producto = producto;
+        this.rendimiento = rendimiento;
+        this.kgLtsObt = kgLtsObt;
+        this.fecha = fecha;
+        this.encargado = encargado;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.tiempoTrabajado = tiempoTrabajado;
+        this.nroTacho = nroTacho;
+    }
+    
+    
     
 }

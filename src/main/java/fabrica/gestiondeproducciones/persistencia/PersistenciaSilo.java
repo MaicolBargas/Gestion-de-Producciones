@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,7 +18,7 @@ public class PersistenciaSilo {
     ResultSet resultado;
     String nombreTabla = "silos";
     
-    public boolean altaSilo(Silo silo){
+ public boolean altaSilo(Silo silo){
         String sql = "INSERT INTO "+ nombreTabla +"(codigoSilo, capacidad) VALUES (?,?)";
         
         try{
@@ -38,6 +39,7 @@ public class PersistenciaSilo {
             }
         }
     }
+
    
     public List listarSilos(){
         List<Silo> lista = new ArrayList();

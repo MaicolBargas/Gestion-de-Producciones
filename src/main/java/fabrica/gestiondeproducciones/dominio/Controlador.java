@@ -245,6 +245,13 @@ public class Controlador {
     }
     // </editor-fold> 
     
-    
+    public boolean altaProduccion(Produccion produccion){
+        return persistencia.altaProduccion(produccion);
+    }
+    public boolean altaProduccionManteca(ProduccionManteca produccionManteca){
+        return persistencia.altaProduccionManteca(produccionManteca);
+    }
    
+       
+      
 }
