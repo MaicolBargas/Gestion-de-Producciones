@@ -50,7 +50,7 @@ public class ProduccionManteca extends Produccion {
         this.cantidad = cantidad;
     }
     
-     public ProduccionManteca(String horaComienzoBatido, String horaFinBatido, String tiempoTotalBatido, int cantidad, int idProduccion, String codInterno, List<Insumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+     public ProduccionManteca(String horaComienzoBatido, String horaFinBatido, String tiempoTotalBatido, int cantidad, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
         super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
         this.horaComienzoBatido = horaComienzoBatido;
         this.horaFinBatido = horaFinBatido;

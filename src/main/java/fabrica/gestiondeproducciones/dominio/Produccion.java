@@ -7,7 +7,7 @@ import java.util.List;
 public class Produccion {
     private int idProduccion;
     private String codInterno;
-    private List<Insumo> listaInsumos;
+    private List<LineaInsumo> listaInsumos;
     private List<Empleado> listaEmpleados;
     private LechePasteurizada lechep;
     private Producto producto;
@@ -28,7 +28,7 @@ public class Produccion {
         this.codInterno = codInterno;
     }
 
-    public void setListaInsumos(List<Insumo> listaInsumos) {
+    public void setListaInsumos(List<LineaInsumo> listaInsumos) {
         this.listaInsumos = listaInsumos;
     }
 
@@ -84,7 +84,7 @@ public class Produccion {
         return codInterno;
     }
 
-    public List<Insumo> getListaInsumos() {
+    public List<LineaInsumo> getListaInsumos() {
         return listaInsumos;
     }
 
@@ -135,7 +135,7 @@ public class Produccion {
     public Produccion() {
     }
 
-    public Produccion(int idProduccion, String codInterno, List<Insumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+    public Produccion(int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
         this.idProduccion = idProduccion;
         this.codInterno = codInterno;
         this.listaInsumos = listaInsumos;

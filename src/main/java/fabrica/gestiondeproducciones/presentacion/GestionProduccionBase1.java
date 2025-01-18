@@ -9,6 +9,7 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
 import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.Produccion;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.dominio.Tambo;
@@ -556,7 +557,7 @@ public class GestionProduccionBase1 extends javax.swing.JInternalFrame {
             
             List<Empleado> listaEmpleados= new ArrayList();
             listaEmpleados=controlador.listarEmpleados();
-            List<Insumo> listaInsumos= new ArrayList();
+            List<LineaInsumo> listaInsumos= new ArrayList();
             listaInsumos=controlador.listarInsumos();
             
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");

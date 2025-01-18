@@ -28,6 +28,7 @@ public class PersistenciaProduccionManteca {
         "(idProduccion, comienzoBatido, finBatido, totalBatido, ormas) " + 
         "VALUES (?, ?, ?, ?, ?)";
     String sqlAgregarEmpleados = "INSERT INTO produccion_empleados" +"(idProduccion,idEmpleado) VALUES (?,?)";
+    String sqlAgregarInsumo = "INSERT INTO linea_insumos" +"(idProduccion,idInsumo,cantidad) VALUES (?,?,?)";
 
     try {
         con = conexion.obtenerConexion();
@@ -74,6 +75,15 @@ public class PersistenciaProduccionManteca {
         consulta = con.prepareStatement(sqlAgregarEmpleados);
             consulta.setInt(1, idProduccion);
             consulta.setInt(2, produccion.getListaEmpleados().get(i).getId());
+            consulta.executeUpdate();}
+        
+      
+        consulta.executeUpdate();
+        for(int i=0;i<produccion.getListaInsumos().size();i++){
+        consulta = con.prepareStatement(sqlAgregarInsumo);
+            consulta.setInt(1, idProduccion);
+            consulta.setInt(2, produccion.getListaInsumos().get(i).getId());
+            consulta.setInt(3, produccion.getListaInsumos().get(i).getCantidad());
             consulta.executeUpdate();}
 
         return true;

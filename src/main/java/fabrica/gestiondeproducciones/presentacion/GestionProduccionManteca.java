@@ -6,12 +6,14 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
 import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.Produccion;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.dominio.Tambo;
 import fabrica.gestiondeproducciones.persistencia.PersistenciaProduccion;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -26,13 +28,16 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     DefaultTableModel modeloEmpleadosAgregar = new DefaultTableModel();
      DefaultTableModel modeloEmpleadosTrabajaron = new DefaultTableModel();
     DefaultTableModel modeloInsumosAgregar = new DefaultTableModel();
+    DefaultTableModel modeloInsumosUtilizados = new DefaultTableModel();
     Utilidades utilidad= new Utilidades();
     ProduccionManteca produccion= new ProduccionManteca();
     List <Empleado> listaEmpleados= new ArrayList<>();
+    List<LineaInsumo> listaInsumosLinea= new ArrayList<>();
     int idEncargadoobtener;
     int idEmpleadoObtener;
     int idEncargado;
     int idEmpleado;
+    int idInsumo;
     
     
     
@@ -47,7 +52,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private void listarLeche(){      
         List<LechePasteurizada> leche = controlador.listarPasteurizados();
         for(LechePasteurizada t : leche){        
-            cbxLeche.addItem(t.getId() + " - Tambo de Origen: " +t.getIngreso().getTambo());
+            cbxLeche.addItem(t.getId() + " - Tambo de Origen: " +t.getIngreso().getTambo().getPropietario());
         }
     }
     
@@ -122,6 +127,28 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             i =- 1;
         }
     }
+    
+    private void listarLineaInsumos(List <LineaInsumo> lista){     
+        limpiarTablaInsumosUtilizados();
+        
+        modeloInsumosUtilizados = (DefaultTableModel) tablaInsumosAgregados.getModel();
+        Object[] objeto = new Object[4];
+        for(int i = 0; i < lista.size(); i++){
+            objeto[0] = lista.get(i).getInsumo().getId();
+            objeto[1] = lista.get(i).getInsumo().getNombre();
+            objeto[2] = lista.get(i).getInsumo().getDescripcion();
+            objeto[3]= lista.get(i).getCantidad()+" "+lista.get(i).getInsumo().getUnidad();
+            modeloInsumosUtilizados.addRow(objeto);
+        }
+        tablaInsumosAgregados.setModel(modeloInsumosUtilizados);
+    }
+    private void limpiarTablaInsumosUtilizados(){
+        for(int i = 0; i < modeloInsumosUtilizados.getRowCount(); i++){
+            modeloInsumosUtilizados.removeRow(i);
+            i =- 1;
+        }
+    }
+    
     private void limpiarFormulario(){
     this.txtCantidadInsumo.setText("");
     this.txtCodigoInterno.setText("");
@@ -142,6 +169,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     idEncargadoobtener=-1;
     idEmpleado=-1;
     idEmpleadoObtener=-1;
+    idInsumo=-1;
     
     }
     
@@ -200,7 +228,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         btnLimpiar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaInsumosAgregados = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
         tablaAgregarInsumos = new javax.swing.JTable();
@@ -343,9 +371,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                             .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTiempoTrabajado)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel41)
@@ -530,9 +556,9 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel29))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -589,7 +615,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 .addGap(17, 17, 17))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInsumosAgregados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -597,10 +623,23 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id Insumo", "Nombre", "Descripcion", "Cantidad"
             }
-        ));
-        jScrollPane7.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tablaInsumosAgregados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInsumosAgregadosMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tablaInsumosAgregados);
 
         jLabel8.setText("Insumos Utilizados");
 
@@ -623,6 +662,11 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
+        tablaAgregarInsumos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAgregarInsumosMouseClicked(evt);
+            }
+        });
         jScrollPane9.setViewportView(tablaAgregarInsumos);
 
         jLabel30.setText("Agregar Insumos");
@@ -632,6 +676,11 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         txtCantidadInsumo.setToolTipText("");
 
         btnAgregarInsumo.setText("Agregar Insumo");
+        btnAgregarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarInsumoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -735,14 +784,14 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try{
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            
             int rendimiento = 1;
             int kgObtenidos = utilidad.validarNumericos(txtObtenidos.getText(), "Kg Obtenidos", false);
             String horaInicio = utilidad.sanitizarCampos(txtHoraInicio.getText(),"Hora Inicio",false);
             String horaFin = utilidad.sanitizarCampos(txtHoraFin.getText(),"Hora Fin",false);
             String TiempoTrabajado = "TIME";
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
-            String CodigoInterno = "M"+txtFecha.getText()+txtOrmas.getText()+txtNroTacho.getText();
+            String[] partesFecha= txtFecha.getText().split("/");
+            String CodigoInterno = "M"+partesFecha[0]+partesFecha[1]+partesFecha[2]+txtOrmas.getText()+txtNroTacho.getText();
             String InicioBatido=txtComienzoBatido.getText();
             String FinBatido=txtFinBatido.getText();
             String totalBatido=txtTotalBatido.getText();
@@ -759,10 +808,8 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
             
-            List<Empleado> listaEmpleados= new ArrayList();
-            listaEmpleados=controlador.listarEmpleados();
-            List<Insumo> listaInsumos= new ArrayList();
-            listaInsumos=controlador.listarInsumos();
+            
+            
             
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep= controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
@@ -771,7 +818,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             Producto producto= controlador.buscarProducto(Integer.parseInt(partes[0]));
             
             produccion.setCodInterno(CodigoInterno);
-            produccion.setListaInsumos(listaInsumos);
+            produccion.setListaInsumos(listaInsumosLinea);
             produccion.setListaEmpleados(listaEmpleados);
             produccion.setLechep(lechep);
             produccion.setProducto(producto);
@@ -787,6 +834,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             produccion.setTiempoTotalBatido(TiempoTrabajado);
             produccion.setCantidad(ormas);
             produccion.setListaEmpleados(listaEmpleados);
+            
             
             
          
@@ -835,6 +883,30 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         System.out.println(idEmpleado);
     }//GEN-LAST:event_btnAgregarEmpleadoActionPerformed
 
+    private void btnAgregarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumoActionPerformed
+         System.out.println(listaInsumosLinea.size());
+        Insumo insumo= new Insumo();
+        insumo=controlador.buscarInsumo(idInsumo);
+        int cantidad= Integer.parseInt(txtCantidadInsumo.getText());
+        
+        LineaInsumo insumoLinea= new LineaInsumo(insumo,cantidad);
+        System.out.println("ID INSUMO  "+idInsumo);
+        listaInsumosLinea.add(insumoLinea);
+        listarLineaInsumos(listaInsumosLinea);
+       
+        
+    }//GEN-LAST:event_btnAgregarInsumoActionPerformed
+
+    private void tablaInsumosAgregadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInsumosAgregadosMouseClicked
+        
+    }//GEN-LAST:event_tablaInsumosAgregadosMouseClicked
+
+    private void tablaAgregarInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarInsumosMouseClicked
+        int fila = tablaAgregarInsumos.rowAtPoint(evt.getPoint());
+        idInsumo=(int) tablaAgregarInsumos.getValueAt(fila, 0);
+        
+    }//GEN-LAST:event_tablaAgregarInsumosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEmpleado;
@@ -876,11 +948,11 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable tablaAgregarEmpleados;
     private javax.swing.JTable tablaAgregarInsumos;
     private javax.swing.JTable tablaEmpleadosTrabajaron;
     private javax.swing.JTable tablaIngresos6;
+    private javax.swing.JTable tablaInsumosAgregados;
     private javax.swing.JTextField txtCantidadInsumo;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtComienzoBatido;
