@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-01-2025 a las 23:50:07
+-- Tiempo de generación: 20-01-2025 a las 03:19:26
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -99,6 +99,20 @@ CREATE TABLE `insumo` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `linea_insumos`
+--
+
+CREATE TABLE `linea_insumos` (
+  `idLinea` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `idInsumo` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pasteurizadas`
 --
 
@@ -109,6 +123,57 @@ CREATE TABLE `pasteurizadas` (
   `idIngreso` int(11) NOT NULL,
   `descremado` varchar(20) NOT NULL,
   `cremaObtenida` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produccion`
+--
+
+CREATE TABLE `produccion` (
+  `idProduccion` int(11) NOT NULL,
+  `codInterno` varchar(50) NOT NULL,
+  `idLechePast` int(11) NOT NULL,
+  `idProducto` int(11) NOT NULL,
+  `rendimiento` int(11) NOT NULL,
+  `kgLtsObt` int(11) NOT NULL,
+  `fecha` varchar(10) NOT NULL,
+  `encargadoId` int(11) NOT NULL,
+  `horaInicio` varchar(5) NOT NULL,
+  `horaFin` varchar(5) NOT NULL,
+  `tiempoTrabajado` varchar(5) NOT NULL,
+  `nroTacho` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produccion_empleados`
+--
+
+CREATE TABLE `produccion_empleados` (
+  `id` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produccion_manteca`
+--
+
+CREATE TABLE `produccion_manteca` (
+  `id` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `comienzoBatido` varchar(5) NOT NULL,
+  `finBatido` varchar(5) NOT NULL,
+  `totalBatido` varchar(5) NOT NULL,
+  `ormas` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -180,7 +245,8 @@ ALTER TABLE `analisis`
 -- Indices de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  ADD PRIMARY KEY (`idEmpleado`);
+  ADD PRIMARY KEY (`idEmpleado`),
+  ADD UNIQUE KEY `ci` (`ci`);
 
 --
 -- Indices de la tabla `ingresos`
@@ -195,10 +261,40 @@ ALTER TABLE `insumo`
   ADD PRIMARY KEY (`idInsumo`);
 
 --
+-- Indices de la tabla `linea_insumos`
+--
+ALTER TABLE `linea_insumos`
+  ADD PRIMARY KEY (`idLinea`);
+
+--
 -- Indices de la tabla `pasteurizadas`
 --
 ALTER TABLE `pasteurizadas`
   ADD PRIMARY KEY (`idLecheP`);
+
+--
+-- Indices de la tabla `produccion`
+--
+ALTER TABLE `produccion`
+  ADD PRIMARY KEY (`idProduccion`);
+
+--
+-- Indices de la tabla `produccion_empleados`
+--
+ALTER TABLE `produccion_empleados`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `produccion_manteca`
+--
+ALTER TABLE `produccion_manteca`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `secciones`
@@ -248,10 +344,40 @@ ALTER TABLE `insumo`
   MODIFY `idInsumo` int(2) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `linea_insumos`
+--
+ALTER TABLE `linea_insumos`
+  MODIFY `idLinea` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `pasteurizadas`
 --
 ALTER TABLE `pasteurizadas`
   MODIFY `idLecheP` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `produccion`
+--
+ALTER TABLE `produccion`
+  MODIFY `idProduccion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `produccion_empleados`
+--
+ALTER TABLE `produccion_empleados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `produccion_manteca`
+--
+ALTER TABLE `produccion_manteca`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `secciones`

@@ -263,7 +263,7 @@ public class ControladorPersistencia {
     }
      // </editor-fold> 
     
-   // <editor-fold defaultstate="collapsed" desc="Produccion">
+    // <editor-fold defaultstate="collapsed" desc="Produccion">
     
     PersistenciaProduccion persistenciaProduccion= new PersistenciaProduccion();
     PersistenciaProduccionManteca persistenciaProduccionManteca= new PersistenciaProduccionManteca();
@@ -277,6 +277,9 @@ public class ControladorPersistencia {
         return persistenciaProduccionManteca.altaProduccionManteca(produccion);
     }
     
+    public List listarProduccionesManteca(){
+        return persistenciaProduccionManteca.listarProduccionesManteca();
+    }
     
    // </editor-fold>  
    

@@ -1,11 +1,17 @@
 
 package fabrica.gestiondeproducciones.dominio;
 
+import java.util.Objects;
+
 public class LineaInsumo {
     private int id;
     private Insumo insumo;
     private int cantidad;
 
+    public LineaInsumo() {
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -38,7 +44,31 @@ public class LineaInsumo {
 
     public LineaInsumo(Insumo insumo, int cantidad) {
          this.insumo = insumo;
-        this.cantidad = cantidad;
+         this.cantidad = cantidad;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.insumo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LineaInsumo other = (LineaInsumo) obj;
+        return Objects.equals(this.insumo, other.insumo);
+    }
+    
+    
     
 }

@@ -245,6 +245,8 @@ public class Controlador {
     }
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Produccion">
+
     public boolean altaProduccion(Produccion produccion){
         return persistencia.altaProduccion(produccion);
     }
@@ -252,6 +254,10 @@ public class Controlador {
         return persistencia.altaProduccionManteca(produccionManteca);
     }
    
+    public List listarProduccionesManteca(){
+        return persistencia.listarProduccionesManteca();
+    }
        
-      
+    // </editor-fold>  
+
 }

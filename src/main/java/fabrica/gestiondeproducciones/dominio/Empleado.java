@@ -80,6 +80,36 @@ public class Empleado {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + this.id;
+        hash = 17 * hash + this.ci;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Empleado other = (Empleado) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return this.ci == other.ci;
+    }
+    
+    public String getNombreCompleto(){
+        return this.nombre + " " + this.apellido;
+    }
     
     
 }
