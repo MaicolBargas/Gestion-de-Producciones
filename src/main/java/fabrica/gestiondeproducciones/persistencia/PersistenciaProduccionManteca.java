@@ -38,8 +38,8 @@ public class PersistenciaProduccionManteca {
     
     public boolean altaProduccionManteca(ProduccionManteca produccion) {
     String sqlProduccion = "INSERT INTO produccion " + 
-        "(codInterno, idLechePast, idProducto, rendimiento, kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho) " + 
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "(codInterno, idLechePast,litros, idProducto, rendimiento, kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho) " + 
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
     String sqlProduccionManteca = "INSERT INTO produccion_manteca " + 
         "(idProduccion, comienzoBatido, finBatido, totalBatido, ormas) " + 
         "VALUES (?, ?, ?, ?, ?)";
@@ -53,15 +53,16 @@ public class PersistenciaProduccionManteca {
         consulta = con.prepareStatement(sqlProduccion, Statement.RETURN_GENERATED_KEYS);
         consulta.setString(1, produccion.getCodInterno());
         consulta.setInt(2, produccion.getLechep().getId());
-        consulta.setInt(3, produccion.getProducto().getId());
-        consulta.setInt(4, produccion.getRendimiento());
-        consulta.setInt(5, produccion.getKgLtsObt());
-        consulta.setString(6, produccion.getFecha());
-        consulta.setInt(7, produccion.getEncargado().getId());
-        consulta.setString(8, produccion.getHoraInicio());
-        consulta.setString(9, produccion.getHoraFin());
-        consulta.setString(10, produccion.getTiempoTrabajado());
-        consulta.setInt(11, produccion.getNroTacho());
+        consulta.setInt(3,produccion.getLitros());
+        consulta.setInt(4, produccion.getProducto().getId());
+        consulta.setInt(5, produccion.getRendimiento());
+        consulta.setInt(6, produccion.getKgLtsObt());
+        consulta.setString(7, produccion.getFecha());
+        consulta.setInt(8, produccion.getEncargado().getId());
+        consulta.setString(9, produccion.getHoraInicio());
+        consulta.setString(10, produccion.getHoraFin());
+        consulta.setString(11, produccion.getTiempoTrabajado());
+        consulta.setInt(12, produccion.getNroTacho());
         
         // Ejecutar el primer insert
         consulta.executeUpdate();

@@ -10,6 +10,7 @@ public class Produccion {
     private List<LineaInsumo> listaInsumos;
     private List<Empleado> listaEmpleados;
     private LechePasteurizada lechep;
+    private int litros;
     private Producto producto;
     private int rendimiento;
     private int kgLtsObt;
@@ -26,6 +27,14 @@ public class Produccion {
 
     public void setCodInterno(String codInterno) {
         this.codInterno = codInterno;
+    }
+
+    public int getLitros() {
+        return litros;
+    }
+
+    public void setLitros(int litros) {
+        this.litros = litros;
     }
 
     public void setListaInsumos(List<LineaInsumo> listaInsumos) {
@@ -135,12 +144,13 @@ public class Produccion {
     public Produccion() {
     }
 
-    public Produccion(int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+    public Produccion(int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep,int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
         this.idProduccion = idProduccion;
         this.codInterno = codInterno;
         this.listaInsumos = listaInsumos;
         this.listaEmpleados = listaEmpleados;
         this.lechep = lechep;
+        this.litros=litros;
         this.producto = producto;
         this.rendimiento = rendimiento;
         this.kgLtsObt = kgLtsObt;
