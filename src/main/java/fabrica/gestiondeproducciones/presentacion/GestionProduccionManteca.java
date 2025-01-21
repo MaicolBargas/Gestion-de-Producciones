@@ -205,7 +205,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     this.txtCantidadInsumo.setText("");
     this.txtCodigoInterno.setText("");
     this.txtEncargado.setText("");
-    this.txtFecha.setText("");
     this.txtHoraFin.setText("");
     this.txtHoraInicio.setText("");
     this.txtIRendimiento.setText("");
@@ -765,10 +764,20 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         });
 
         btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -997,7 +1006,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(378, Short.MAX_VALUE))))
+                        .addContainerGap(118, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1022,7 +1031,35 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tablaProduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProduccionesMouseClicked
-       
+        int fila = tablaProducciones.rowAtPoint(evt.getPoint());
+        int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
+        
+        ProduccionManteca prod = controlador.buscarProduccionManteca(id);        
+        txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
+        txtCodigoInterno.setText(prod.getCodInterno());
+        if(prod.getLechep() instanceof LechePasteurizada){
+            cbxLeche.setSelectedIndex(prod.getLechep().getId() - 1);
+        }
+        txtLitros.setText(prod.getLitros()+"");
+        if(prod.getProducto() instanceof Producto){
+            cbxProducto.setSelectedIndex(prod.getProducto().getId() - 1);
+        }
+        txtObtenidos.setText(prod.getKgLtsObt()+"");
+        txtFecha.setText(prod.getFecha());
+        if(prod.getEncargado() instanceof Empleado){
+            txtEncargado.setText(prod.encargadoToString());        
+        }
+        txtHoraInicio.setText(prod.getHoraInicio());
+        txtHoraFin.setText(prod.getHoraFin());
+        txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
+        txtNroTacho.setText(prod.getNroTacho()+"");
+        txtComienzoBatido.setText(prod.getHoraComienzoBatido());
+        txtFinBatido.setText(prod.getHoraFinBatido());
+        txtTotalBatido.setText(prod.getTiempoTotalBatido());
+        txtOrmas.setText(prod.getCantidad()+"");
+
+        listarEmpleados(prod.getListaEmpleados());
+        listarLineaInsumos(prod.getListaInsumos());
     }//GEN-LAST:event_tablaProduccionesMouseClicked
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
@@ -1114,8 +1151,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
       }
       
     }//GEN-LAST:event_btnAltaActionPerformed
-
-    
     
     private void tablaAgregarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarEmpleadosMouseClicked
         
@@ -1224,6 +1259,24 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
         }   
     }//GEN-LAST:event_btnEliminarInsumoActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarFormulario();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        try{
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaProduccion(id, "produccion_manteca");
+            if(baja){
+                JOptionPane.showMessageDialog(null, "Produccion dada de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBajaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

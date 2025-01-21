@@ -27,7 +27,7 @@ public class PersistenciaProduccionManteca {
     Conexion conexion = new Conexion();
     Connection con;
     PreparedStatement consulta;
-    PersistenciaProduccion p= new PersistenciaProduccion();
+    PersistenciaProduccion persProduccion = new PersistenciaProduccion();
     PersistenciaPasteurizado persLecheP = new PersistenciaPasteurizado();
     PersistenciaInsumo persInsumo = new PersistenciaInsumo();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
@@ -99,7 +99,7 @@ public class PersistenciaProduccionManteca {
         for(int i=0;i<produccion.getListaInsumos().size();i++){
         consulta = con.prepareStatement(sqlAgregarInsumo);
             consulta.setInt(1, idProduccion);
-            consulta.setInt(2, produccion.getListaInsumos().get(i).getId());
+            consulta.setInt(2, produccion.getListaInsumos().get(i).getInsumo().getId());
             consulta.setInt(3, produccion.getListaInsumos().get(i).getCantidad());
             consulta.executeUpdate();}
 
@@ -119,7 +119,7 @@ public class PersistenciaProduccionManteca {
 }
 
     
- public boolean agregarEmpleado(int idProd,int idEmpleado){
+    public boolean agregarEmpleado(int idProd,int idEmpleado){
         String sqlAgregarEmpleados = "INSERT INTO produccion_empleados" +"(idProduccion,idEmpleado) VALUES (?,?)";
         
         try{
@@ -276,4 +276,57 @@ public class PersistenciaProduccionManteca {
         }
         return lista;
     }
+    
+    public ProduccionManteca buscarProduccionManteca(int id){
+        String sql = "SELECT * FROM produccion WHERE idProduccion = ? AND activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            resultado = consulta.executeQuery();
+            
+            while(resultado.next()){
+                ProduccionManteca produccion = new ProduccionManteca();
+                produccion.setIdProduccion(id);
+                produccion.setCodInterno(resultado.getString("codInterno"));
+                LechePasteurizada lecheP = persLecheP.buscarPasteurizado(resultado.getInt("idLechePast"));
+                
+                if(lecheP instanceof LechePasteurizada){
+                       produccion.setLechep(lecheP); 
+                }
+                
+                Producto producto = persProducto.buscarProducto(resultado.getInt("idProducto"));
+                if(producto instanceof Producto){
+                       produccion.setProducto(producto); 
+                }
+                
+                produccion.setRendimiento(resultado.getInt("rendimiento"));
+                produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
+                produccion.setFecha(resultado.getString("fecha"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
+                if(encargado instanceof Empleado){
+                    produccion.setEncargado(encargado);
+                } 
+                produccion.setHoraInicio(resultado.getString("horaInicio"));
+                produccion.setHoraFin(resultado.getString("horaFin"));
+                produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
+                produccion.setNroTacho(resultado.getInt("NroTacho"));
+               
+                listarInfoEspecifica(produccion);     
+                
+                List<Empleado> empleados = listarEmpleadosXProduccion(id);                
+                produccion.setListaEmpleados(empleados);
+                
+                List<LineaInsumo> insumos = listarInsumoXProduccion(id);
+                produccion.setListaInsumos(insumos);
+                return produccion;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return null;
+    }
+    
 }

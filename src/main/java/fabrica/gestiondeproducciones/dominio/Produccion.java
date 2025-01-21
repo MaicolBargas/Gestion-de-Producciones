@@ -162,6 +162,8 @@ public class Produccion {
         this.nroTacho = nroTacho;
     }
     
-    
+    public String encargadoToString(){
+        return this.encargado.getId() +"-"+ this.encargado.getNombre() +" "+ this.encargado.getApellido();
+    }
     
 }

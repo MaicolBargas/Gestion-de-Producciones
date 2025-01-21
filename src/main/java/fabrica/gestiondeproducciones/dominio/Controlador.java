@@ -258,6 +258,13 @@ public class Controlador {
         return persistencia.listarProduccionesManteca();
     }
        
+    public ProduccionManteca buscarProduccionManteca(int id){
+        return persistencia.buscarProduccionManteca(id);
+    }
+    
+    public boolean bajaProduccion(int id, String tabla) throws Exception{
+        return persistencia.bajaProduccion(id, tabla);
+    }
     // </editor-fold>  
 
 }

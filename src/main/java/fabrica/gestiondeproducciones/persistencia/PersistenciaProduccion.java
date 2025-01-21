@@ -129,4 +129,49 @@ public class PersistenciaProduccion {
         }
     }
     
+    public boolean bajaProduccion(int id, String tabla) throws Exception{
+        String sql = "UPDATE produccion SET activo = 0 WHERE idProduccion = ?";       
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            consulta.execute();
+            bajaProduccionEspecifica(id,"produccion_empleados");     
+            bajaProduccionEspecifica(id,"linea_insumos");     
+            bajaProduccionEspecifica(id,tabla);     
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+        
+    }
+    
+    private boolean bajaProduccionEspecifica(int id, String tabla) throws Exception{        
+        String sql = "UPDATE "+tabla+" SET activo = 0 WHERE idProduccion = ?";
+       
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            consulta.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
 }
