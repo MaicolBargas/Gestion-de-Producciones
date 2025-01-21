@@ -364,6 +364,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtObtenidos">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>

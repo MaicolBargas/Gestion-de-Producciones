@@ -21,7 +21,7 @@ public class PersistenciaPasteurizado {
     PersistenciaIngresoLeche persIngreso = new PersistenciaIngresoLeche();
     
     public boolean altaPasteurizado(LechePasteurizada lecheP){
-        String sql = "INSERT INTO "+ nombreTabla +"(temperatura, litros, idIngreso, descremado, cremaObtenida) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(temperatura, litros, idIngreso, descremado, cremaObtenida,cremaDisponible) VALUES (?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -35,6 +35,7 @@ public class PersistenciaPasteurizado {
             } 
             consulta.setBoolean(4, lecheP.getDescremado());                   
             consulta.setInt(5, lecheP.getCrema());
+            consulta.setInt(6, lecheP.getCremaDisponible());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -68,6 +69,7 @@ public class PersistenciaPasteurizado {
                 }              
                 lecheP.setDescremado(resultado.getBoolean("descremado"));
                 lecheP.setCrema(resultado.getInt("cremaObtenida"));
+                lecheP.setCremaDisponible(resultado.getInt("cremaDisponible"));
                 lista.add(lecheP);
             }
         }catch(SQLException e){
@@ -96,6 +98,7 @@ public class PersistenciaPasteurizado {
                 }              
                 lecheP.setDescremado(resultado.getBoolean("descremado"));
                 lecheP.setCrema(resultado.getInt("cremaObtenida"));
+                lecheP.setCrema(resultado.getInt("cremaDisponible"));
                 lista.add(lecheP);
             }
         }catch(SQLException e){
@@ -127,7 +130,7 @@ public class PersistenciaPasteurizado {
     }
     
      public boolean modificarPasteurizado(LechePasteurizada lecheP){
-        String sql = "UPDATE "+ nombreTabla +" SET temperatura = ?, litros = ?, idIngreso = ?, descremado = ?, cremaObtenida = ? WHERE idLecheP = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET temperatura = ?, litros = ?, idIngreso = ?, descremado = ?, cremaObtenida = ?, cremaDisponible=? WHERE idLecheP = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -136,7 +139,8 @@ public class PersistenciaPasteurizado {
             consulta.setInt(3, lecheP.getIngreso().getIdIngreso());
             consulta.setBoolean(4, lecheP.getDescremado());
             consulta.setInt(5, lecheP.getCrema());
-            consulta.setInt(6, lecheP.getId());
+            consulta.setInt(6, lecheP.getCremaDisponible());
+            consulta.setInt(7, lecheP.getId());
             consulta.execute();
             return true;
         }catch(SQLException e){
@@ -169,6 +173,7 @@ public class PersistenciaPasteurizado {
                 }              
                 lecheP.setDescremado(resultado.getBoolean("descremado"));
                 lecheP.setCrema(resultado.getInt("cremaObtenida"));
+                lecheP.setCremaDisponible(resultado.getInt("cremaDisponible"));
                 return lecheP;
             }
         }catch(SQLException e){

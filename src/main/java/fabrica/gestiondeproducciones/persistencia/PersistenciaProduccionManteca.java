@@ -55,7 +55,7 @@ public class PersistenciaProduccionManteca {
         consulta.setInt(2, produccion.getLechep().getId());
         consulta.setInt(3,produccion.getLitros());
         consulta.setInt(4, produccion.getProducto().getId());
-        consulta.setInt(5, produccion.getRendimiento());
+        consulta.setFloat(5, produccion.getRendimiento());
         consulta.setInt(6, produccion.getKgLtsObt());
         consulta.setString(7, produccion.getFecha());
         consulta.setInt(8, produccion.getEncargado().getId());

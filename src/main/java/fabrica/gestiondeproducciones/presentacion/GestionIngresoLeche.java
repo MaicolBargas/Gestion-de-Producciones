@@ -72,8 +72,13 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     
     private void listarSilos(){      
         List<Silo> silos = controlador.listarSilos();
-        for(Silo s : silos){        
-            cbxSilo.addItem(""+s.getCodigoInterno());
+        for(Silo s : silos){    
+            if(s.getCodigoInterno()==0){
+                cbxSilo.addItem("Pasteurizacion Directa- cod: "+s.getCodigoInterno());
+            }
+            else
+            {
+            cbxSilo.addItem(""+s.getCodigoInterno());}
         }
     }
     

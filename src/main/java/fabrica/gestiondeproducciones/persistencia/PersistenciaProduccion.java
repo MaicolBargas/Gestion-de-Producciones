@@ -42,7 +42,7 @@ public class PersistenciaProduccion {
         consulta.setString(1, produccion.getCodInterno());
         consulta.setInt(2, produccion.getLechep().getId());
         consulta.setInt(3, produccion.getProducto().getId());
-        consulta.setInt(4, produccion.getRendimiento());
+        consulta.setFloat(4, produccion.getRendimiento());
         consulta.setInt(5, produccion.getKgLtsObt());
         consulta.setString(6, produccion.getFecha());
         consulta.setInt(7, produccion.getEncargado().getId());

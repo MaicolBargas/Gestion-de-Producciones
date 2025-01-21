@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -26,20 +25,18 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class GestionProduccionManteca extends javax.swing.JInternalFrame {
 
-  
-    Controlador controlador= new Controlador();
+    Controlador controlador = new Controlador();
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloEmpleadosAgregar = new DefaultTableModel();
     DefaultTableModel modeloEmpleadosTrabajaron = new DefaultTableModel();
     DefaultTableModel modeloInsumosAgregar = new DefaultTableModel();
     DefaultTableModel modeloInsumosUtilizados = new DefaultTableModel();
-    Utilidades utilidad= new Utilidades();
-    ProduccionManteca produccion= new ProduccionManteca();
-    List <Empleado> listaEmpleados= new ArrayList<>();
-    List<LineaInsumo> listaInsumosLinea= new ArrayList<>();
+    Utilidades utilidad = new Utilidades();
+    ProduccionManteca produccion = new ProduccionManteca();
+    List<Empleado> listaEmpleados = new ArrayList<>();
+    List<LineaInsumo> listaInsumosLinea = new ArrayList<>();
     int idEncargadoobtener;
     int idEmpleadoObtener;
     int idEncargado;
@@ -50,7 +47,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
 
-    
     public GestionProduccionManteca() {
         initComponents();
         listar();
@@ -59,17 +55,18 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         listarAgregarEmpleado();
         listarAgregarInsumo();
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
-        agregarFiltros(txtFiltroInsumos,filtroFilaInsumos );
+        agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
 
     }
 
-    private void listar(){
+    private void listar() {
+
         limpiarTabla();
         cargarFecha();
         List<ProduccionManteca> lista = controlador.listarProduccionesManteca();
         modelo = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto = new Object[5];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getIdProduccion();
             objeto[1] = lista.get(i).getCodInterno();
             objeto[2] = lista.get(i).getFecha();
@@ -78,154 +75,158 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         }
         tablaProducciones.setModel(modelo);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void listarLeche(){      
+
+    private void listarLeche() {
         List<LechePasteurizada> leche = controlador.listarPasteurizados();
-        for(LechePasteurizada t : leche){        
-            cbxLeche.addItem(t.getId() + " - Tambo de : " +t.getIngreso().getTambo().getPropietario()+" -Cant Crema: "+ t.getCrema()+"l");
+        for (LechePasteurizada t : leche) {
+            cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Cant Crema: "
+                    + "" + t.getCremaDisponible() + "l");
         }
     }
-    
-    private void listarProductos(){      
+
+    private void listarProductos() {
         List<Producto> productos = controlador.listarProductos();
-        for(Producto t : productos){        
-            cbxProducto.addItem(t.getId() + " - " +t.getNombre());
+        for (Producto t : productos) {
+            cbxProducto.addItem(t.getId() + " - " + t.getNombre());
         }
     }
-    
-    private void listarAgregarEmpleado(){     
+
+    private void listarAgregarEmpleado() {
         limpiarTablaEmpleados();
         List<Empleado> lista = controlador.listarEmpleados();
         modeloEmpleadosAgregar = (DefaultTableModel) tablaAgregarEmpleados.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getCi();
             objeto[2] = lista.get(i).getNombre();
-            
+
             modeloEmpleadosAgregar.addRow(objeto);
         }
         tablaAgregarEmpleados.setModel(modeloEmpleadosAgregar);
-        
+
         filtroFilaEmpleados = new TableRowSorter<>(modeloEmpleadosAgregar);
         tablaAgregarEmpleados.setRowSorter(filtroFilaEmpleados);
     }
-    
-    private void limpiarTablaEmpleados(){
-        for(int i = 0; i < modeloEmpleadosAgregar.getRowCount(); i++){
+
+    private void limpiarTablaEmpleados() {
+        for (int i = 0; i < modeloEmpleadosAgregar.getRowCount(); i++) {
             modeloEmpleadosAgregar.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFecha.setText(fecha);
     }
-    
-    private void listarEmpleados(List <Empleado> lista){     
+
+    private void listarEmpleados(List<Empleado> lista) {
         limpiarTablaEmpleadosTrabajaron();
-        
+
         modeloEmpleadosTrabajaron = (DefaultTableModel) tablaEmpleadosTrabajaron.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getCi();
             objeto[2] = lista.get(i).getNombre();
-            
+
             modeloEmpleadosTrabajaron.addRow(objeto);
         }
         tablaEmpleadosTrabajaron.setModel(modeloEmpleadosTrabajaron);
     }
-    
-    private void limpiarTablaEmpleadosTrabajaron(){
-        for(int i = 0; i < modeloEmpleadosTrabajaron.getRowCount(); i++){
+
+    private void limpiarTablaEmpleadosTrabajaron() {
+        for (int i = 0; i < modeloEmpleadosTrabajaron.getRowCount(); i++) {
             modeloEmpleadosTrabajaron.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void listarAgregarInsumo(){     
+
+    private void listarAgregarInsumo() {
         limpiarTablaAgregarInsumos();
         List<Insumo> lista = controlador.listarInsumos();
         modeloInsumosAgregar = (DefaultTableModel) tablaAgregarInsumos.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getNombre();
             objeto[2] = lista.get(i).getDescripcion();
-          
-            
+
             modeloInsumosAgregar.addRow(objeto);
         }
         tablaAgregarInsumos.setModel(modeloInsumosAgregar);
         filtroFilaInsumos = new TableRowSorter<>(modeloInsumosAgregar);
         tablaAgregarInsumos.setRowSorter(filtroFilaInsumos);
     }
-    
-    private void limpiarTablaAgregarInsumos(){
-        for(int i = 0; i < modeloInsumosAgregar.getRowCount(); i++){
+
+    private void limpiarTablaAgregarInsumos() {
+        for (int i = 0; i < modeloInsumosAgregar.getRowCount(); i++) {
             modeloInsumosAgregar.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void listarLineaInsumos(List <LineaInsumo> lista){     
+
+    private void listarLineaInsumos(List<LineaInsumo> lista) {
         limpiarTablaInsumosUtilizados();
-        
+
         modeloInsumosUtilizados = (DefaultTableModel) tablaInsumosAgregados.getModel();
         Object[] objeto = new Object[4];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getInsumo().getId();
             objeto[1] = lista.get(i).getInsumo().getNombre();
             objeto[2] = lista.get(i).getInsumo().getDescripcion();
-            objeto[3]= lista.get(i).getCantidad()+" "+lista.get(i).getInsumo().getUnidad();
+            objeto[3] = lista.get(i).getCantidad() + " " + lista.get(i).getInsumo().getUnidad();
             modeloInsumosUtilizados.addRow(objeto);
         }
         tablaInsumosAgregados.setModel(modeloInsumosUtilizados);
     }
-    
-    private void limpiarTablaInsumosUtilizados(){
-        for(int i = 0; i < modeloInsumosUtilizados.getRowCount(); i++){
+
+    private void limpiarTablaInsumosUtilizados() {
+        for (int i = 0; i < modeloInsumosUtilizados.getRowCount(); i++) {
             modeloInsumosUtilizados.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void limpiarFormulario(){
-    this.txtCantidadInsumo.setText("");
-    this.txtCodigoInterno.setText("");
-    this.txtEncargado.setText("");
-    this.txtHoraFin.setText("");
-    this.txtHoraInicio.setText("");
-    this.txtIRendimiento.setText("");
-    this.txtId.setText("");
-    this.txtNroTacho.setText("");
-    this.txtTiempoTrabajado.setText("");
-    this.txtObtenidos.setText("");
-    this.txtComienzoBatido.setText("");
-    this.txtFinBatido.setText("");
-    this.txtTotalBatido.setText("");
-    this.txtOrmas.setText("");
-    this.txtLitros.setText("");
-    idEncargado=-1;
-    idEncargadoobtener=-1;
-    idEmpleado=-1;
-    idEmpleadoObtener=-1;
-    idInsumo=-1;
-    
+
+    private void limpiarFormulario() {
+        this.txtCantidadInsumo.setText("");
+        this.txtCodigoInterno.setText("");
+        this.txtEncargado.setText("");
+        this.txtHoraFin.setText("");
+        this.txtHoraInicio.setText("");
+        this.txtIRendimiento.setText("");
+        this.txtId.setText("");
+        this.txtNroTacho.setText("");
+        this.txtTiempoTrabajado.setText("");
+        this.txtObtenidos.setText("");
+        this.txtComienzoBatido.setText("");
+        this.txtFinBatido.setText("");
+        this.txtTotalBatido.setText("");
+        this.txtOrmas.setText("");
+        this.txtLitros.setText("");
+        idEncargado = -1;
+        idEncargadoobtener = -1;
+        idEmpleado = -1;
+        idEmpleadoObtener = -1;
+        idInsumo = -1;
+        limpiarTablaEmpleadosTrabajaron();
+        limpiarTablaInsumosUtilizados();
+        listaEmpleados.clear();
+        listaInsumosLinea.clear();
+
     }
-    
-    private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila){
+
+    private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -242,12 +243,12 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 applyFilter(campo, fila);
             }
         });
-      
+
     }
-            
-     private void applyFilter(javax.swing.JTextField campo, TableRowSorter fila) {
+
+    private void applyFilter(javax.swing.JTextField campo, TableRowSorter fila) {
         RowFilter<TableModel, Object> rf;
-        
+
         // Si el filtro está vacío, mostrar todas las filas
         if (campo.getText().length() == 0) {
             rf = RowFilter.regexFilter(".*");
@@ -257,7 +258,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-     
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -390,6 +391,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
 
         jLabel45.setText("Kg/L Obtenidos:");
 
+        txtObtenidos.setEditable(false);
         txtObtenidos.setToolTipText("");
 
         jLabel50.setText("Fecha:");
@@ -1033,97 +1035,92 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private void tablaProduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProduccionesMouseClicked
         int fila = tablaProducciones.rowAtPoint(evt.getPoint());
         int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
-        
-        ProduccionManteca prod = controlador.buscarProduccionManteca(id);        
+
+        ProduccionManteca prod = controlador.buscarProduccionManteca(id);
         txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
         txtCodigoInterno.setText(prod.getCodInterno());
-        if(prod.getLechep() instanceof LechePasteurizada){
+        if (prod.getLechep() instanceof LechePasteurizada) {
             cbxLeche.setSelectedIndex(prod.getLechep().getId() - 1);
         }
-        txtLitros.setText(prod.getLitros()+"");
-        if(prod.getProducto() instanceof Producto){
+        txtLitros.setText(prod.getLitros() + "");
+        if (prod.getProducto() instanceof Producto) {
             cbxProducto.setSelectedIndex(prod.getProducto().getId() - 1);
         }
-        txtObtenidos.setText(prod.getKgLtsObt()+"");
+        txtObtenidos.setText(prod.getKgLtsObt() + "");
         txtFecha.setText(prod.getFecha());
-        if(prod.getEncargado() instanceof Empleado){
-            txtEncargado.setText(prod.encargadoToString());        
+        if (prod.getEncargado() instanceof Empleado) {
+            txtEncargado.setText(prod.encargadoToString());
         }
         txtHoraInicio.setText(prod.getHoraInicio());
         txtHoraFin.setText(prod.getHoraFin());
         txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
-        txtNroTacho.setText(prod.getNroTacho()+"");
+        txtNroTacho.setText(prod.getNroTacho() + "");
         txtComienzoBatido.setText(prod.getHoraComienzoBatido());
         txtFinBatido.setText(prod.getHoraFinBatido());
         txtTotalBatido.setText(prod.getTiempoTotalBatido());
-        txtOrmas.setText(prod.getCantidad()+"");
+        txtOrmas.setText(prod.getCantidad() + "");
 
         listarEmpleados(prod.getListaEmpleados());
         listarLineaInsumos(prod.getListaInsumos());
     }//GEN-LAST:event_tablaProduccionesMouseClicked
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try{
+        try {
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            
-            int kgObtenidos = utilidad.validarNumericos(txtObtenidos.getText(), "Kg Obtenidos", false);
-            String horaInicio = utilidad.validarHora(txtHoraInicio.getText(),"Hora de Inicio");
-            String horaFin = utilidad.validarHora(txtHoraFin.getText(),"Hora de Finalizacion");
-            utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin","Inicio de Produccion ","Fin de Produccion");
-            String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio,horaFin);
-            System.out.println(TiempoTrabajado);
+
+            String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
+            String horaFin = utilidad.validarHora(txtHoraFin.getText(), "Hora de Finalizacion");
+            String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
-            String[] partesFecha= txtFecha.getText().split("/");
-            String CodigoInterno = "M"+partesFecha[0]+partesFecha[1]+partesFecha[2]+txtOrmas.getText()+txtNroTacho.getText();
-            String InicioBatido=utilidad.validarHora(txtComienzoBatido.getText(),"Hora de Inicio de Batido");
-            String FinBatido=utilidad.validarHora(txtFinBatido.getText(),"Hora de Finalizacion de Batido");
-            utilidad.validarHoraNoMayor(InicioBatido, FinBatido, "Hora de Inicio de Batido y Hora de Fin de Batido","Inicio ","Fin ");
+            String[] partesFecha = txtFecha.getText().split("/");
+            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtOrmas.getText() + txtNroTacho.getText();
+            String InicioBatido = utilidad.validarHora(txtComienzoBatido.getText(), "Hora de Inicio de Batido");
+            String FinBatido = utilidad.validarHora(txtFinBatido.getText(), "Hora de Finalizacion de Batido");
+            String totalBatido = utilidad.calcularDiferenciaHoras(InicioBatido, FinBatido);
+            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros de Leche Pasteurizada", false);
+            int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
+            int kgObtenidos = ormas * 5;
+            float rendimiento = (100 / Integer.parseInt(txtLitros.getText())) * kgObtenidos;
+
+            utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
+            utilidad.validarHoraNoMayor(InicioBatido, FinBatido, "Hora de Inicio de Batido y Hora de Fin de Batido", "Inicio ", "Fin ");
             utilidad.validarHoraNoMayor(horaInicio, InicioBatido, "Hora de Inicio de Produccion y Hora de Inicio de Batido", "Inicio de Produccion", "Inicio de Batido");
-            utilidad.validarHoraNoMayor(FinBatido,horaFin, "Hora de Finalizacion de Batido y Hora de Finalizacion de Produccion", "Fin de Produccion", "Fin de Batido");
-            String totalBatido=utilidad.calcularDiferenciaHoras(InicioBatido,FinBatido);
-            int litros= utilidad.validarNumericos(txtLitros.getText(),"Litros de Leche Pasteurizada",false);
-            
-            int rendimiento = (100/Integer.parseInt(txtLitros.getText()))*kgObtenidos;
-            
-            int ormas=utilidad.validarNumericos(txtOrmas.getText(),"Ormas",false);
-            try{
-                
+            utilidad.validarHoraNoMayor(FinBatido, horaFin, "Hora de Finalizacion de Batido y Hora de Finalizacion de Produccion", "Fin de Produccion", "Fin de Batido");
+
+            try {
                 Empleado empleado = controlador.buscarEmpleado(idEncargado);
                 System.out.println(empleado.getNombre());
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     produccion.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un Encargado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
+            }
+
+            String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
+            LechePasteurizada lechep = new LechePasteurizada();
+            lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
+            utilidad.validarCantidadCrema(litros, Integer.parseInt(partes[0]));
+            if (lechep instanceof LechePasteurizada) {
+
+                produccion.setLitros(litros);
+            } else {
+                throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
             
             
-            
-            
-            String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
-            LechePasteurizada lechep= new LechePasteurizada();
-            lechep= controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            
-            if( lechep instanceof LechePasteurizada){
-                if(litros > lechep.getCrema()){
-                    throw new Exception("El Pasteurizado de leche seleccionado no tiene los suficientes litros de Crema que desea Ingresar");
-                }
-                produccion.setLitros(litros);
-            }else{ throw new Exception("El Pasteurizado seleccionado ya no esta disponible");}
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
-            Producto producto= controlador.buscarProducto(Integer.parseInt(partes[0]));
-            
+            Producto producto = controlador.buscarProducto(Integer.parseInt(partes[0]));
             produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
             produccion.setListaEmpleados(listaEmpleados);
             produccion.setLechep(lechep);
-            
             produccion.setProducto(producto);
             produccion.setRendimiento(rendimiento);
             produccion.setKgLtsObt(kgObtenidos);
-            produccion.setFecha(fecha);            
+            produccion.setFecha(fecha);
             produccion.setHoraInicio(horaInicio);
             produccion.setHoraFin(horaFin);
             produccion.setTiempoTrabajado(TiempoTrabajado);
@@ -1131,41 +1128,45 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             produccion.setHoraComienzoBatido(InicioBatido);
             produccion.setHoraFinBatido(FinBatido);
             produccion.setTiempoTotalBatido(totalBatido);
-            produccion.setCantidad(ormas);
-            
-            
-            
-            
-         
-            boolean alta=controlador.altaProduccionManteca(produccion);
-            if(alta ){
-               
-              JOptionPane.showMessageDialog(null, "Produccion dada de alta.");
-             
-              limpiarFormulario();
-              
-              //listar();
+            if(ormas*5<=litros)
+            {
+                produccion.setCantidad(ormas);
+            }
+            else
+            {
+                throw new Exception("Verifique cantidad de ormas o Litros de Crema utilizados,"
+                        + "dicha cantidad de ormas daria como resultado una obtencion de materia prima mayor a la cantidad de crema utilizada");
+            }
+
+            boolean alta = controlador.altaProduccionManteca(produccion);
+            if (alta) {
+
+                JOptionPane.showMessageDialog(null, "Produccion dada de alta.");
+                actualizarLitros(lechep, litros);
+                limpiarFormulario();
+                listar();
+                listarLeche();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
-      
+
     }//GEN-LAST:event_btnAltaActionPerformed
-    
+
     private void tablaAgregarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarEmpleadosMouseClicked
-        
+
         int fila = tablaAgregarEmpleados.rowAtPoint(evt.getPoint());
-        idEncargadoobtener=(int) tablaAgregarEmpleados.getValueAt(fila, 0);
-        idEmpleadoObtener=(int) tablaAgregarEmpleados.getValueAt(fila, 0);
-        
+        idEncargadoobtener = (int) tablaAgregarEmpleados.getValueAt(fila, 0);
+        idEmpleadoObtener = (int) tablaAgregarEmpleados.getValueAt(fila, 0);
+
     }//GEN-LAST:event_tablaAgregarEmpleadosMouseClicked
 
     private void btnSeleccionarEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarEncargadoActionPerformed
-       
-        idEncargado=idEncargadoobtener;
-        Empleado empleado = controlador.buscarEmpleado(idEncargado);        
-        txtEncargado.setText(empleado.getId()+"-"+empleado.getNombre());
-        
+
+        idEncargado = idEncargadoobtener;
+        Empleado empleado = controlador.buscarEmpleado(idEncargado);
+        txtEncargado.setText(empleado.getId() + "-" + empleado.getNombre());
+
     }//GEN-LAST:event_btnSeleccionarEncargadoActionPerformed
 
     private void txtOrmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrmasActionPerformed
@@ -1173,41 +1174,44 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtOrmasActionPerformed
 
     private void btnAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadoActionPerformed
-        try{            
-            idEmpleado=idEmpleadoObtener; 
-            System.out.println("ID EMPLEADOOOOO"+idEmpleado);
+        try {
+            idEmpleado = idEmpleadoObtener;
             Empleado unEmpleado = controlador.buscarEmpleado(idEmpleado);
-            if(unEmpleado instanceof Empleado){
+            if (unEmpleado instanceof Empleado) {
                 if (!listaEmpleados.contains(unEmpleado)) {
                     System.out.println(unEmpleado.getNombre());
                     listaEmpleados.add(unEmpleado);
-                } else { throw new Exception("El Empleado ya se encuentra agregado a la lista");}
+                } else {
+                    throw new Exception("El Empleado ya se encuentra agregado a la lista");
+                }
                 listarEmpleados(listaEmpleados);
-            }else{
+            } else {
                 throw new Exception("Debe seleccionar un empleado de la lista");
-            }            
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarEmpleadoActionPerformed
 
     private void btnAgregarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumoActionPerformed
-        try{            
+        try {
             Insumo insumo = controlador.buscarInsumo(idInsumo);
-            int cantidad= Integer.parseInt(txtCantidadInsumo.getText());
+            int cantidad = Integer.parseInt(txtCantidadInsumo.getText());
 
-            LineaInsumo insumoLinea= new LineaInsumo(insumo,cantidad);
-            if(insumo instanceof Insumo && insumoLinea instanceof LineaInsumo){
-                if(!listaInsumosLinea.contains(insumoLinea)){
-                listaInsumosLinea.add(insumoLinea);            
-                } else { throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");}
+            LineaInsumo insumoLinea = new LineaInsumo(insumo, cantidad);
+            if (insumo instanceof Insumo && insumoLinea instanceof LineaInsumo) {
+                if (!listaInsumosLinea.contains(insumoLinea)) {
+                    listaInsumosLinea.add(insumoLinea);
+                } else {
+                    throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
+                }
                 listarLineaInsumos(listaInsumosLinea);
-            }else{
+            } else {
                 throw new Exception("Debe seleccionar un empleado de la lista");
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-        }        
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAgregarInsumoActionPerformed
 
     private void tablaInsumosAgregadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInsumosAgregadosMouseClicked
@@ -1217,8 +1221,8 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
 
     private void tablaAgregarInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarInsumosMouseClicked
         int fila = tablaAgregarInsumos.rowAtPoint(evt.getPoint());
-        idInsumo=(int) tablaAgregarInsumos.getValueAt(fila, 0);
-        
+        idInsumo = (int) tablaAgregarInsumos.getValueAt(fila, 0);
+
     }//GEN-LAST:event_tablaAgregarInsumosMouseClicked
 
     private void tablaEmpleadosTrabajaronMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosTrabajaronMouseClicked
@@ -1227,37 +1231,41 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablaEmpleadosTrabajaronMouseClicked
 
     private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
-        try{
+        try {
             idEmpleado = idEmpleadoEliminar;
             Empleado empleadoEliminar = controlador.buscarEmpleado(idEmpleado);
             if (listaEmpleados.contains(empleadoEliminar)) {
-                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar a "+empleadoEliminar.getNombreCompleto()+ " de la lista?");
-                if(respuesta == JOptionPane.YES_OPTION){
+                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar a " + empleadoEliminar.getNombreCompleto() + " de la lista?");
+                if (respuesta == JOptionPane.YES_OPTION) {
                     listaEmpleados.remove(empleadoEliminar);
                 }
-            } else { throw new Exception("Debe seleccionar un cliente a eliminar");}
+            } else {
+                throw new Exception("Debe seleccionar un cliente a eliminar");
+            }
             listarEmpleados(listaEmpleados);
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-        }   
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
     private void btnEliminarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarInsumoActionPerformed
-        try{
+        try {
             idInsumo = idInsumoEliminar;
             Insumo insumo = controlador.buscarInsumo(idInsumo);
             LineaInsumo lineaInsumo = new LineaInsumo();
             lineaInsumo.setInsumo(insumo);
             if (listaInsumosLinea.contains(lineaInsumo)) {
-                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar "+insumo.getNombre()+ " de la lista?");
-                if(respuesta == JOptionPane.YES_OPTION){
-                    listaInsumosLinea.remove(lineaInsumo);                    
+                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar " + insumo.getNombre() + " de la lista?");
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    listaInsumosLinea.remove(lineaInsumo);
                 }
-            } else { throw new Exception("Debe seleccionar un insumo a eliminar");}
+            } else {
+                throw new Exception("Debe seleccionar un insumo a eliminar");
+            }
             listarLineaInsumos(listaInsumosLinea);
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-        }   
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarInsumoActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -1265,19 +1273,24 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaProduccion(id, "produccion_manteca");
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Produccion dada de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
+    private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
+        int litrosDisponibles = lecheP.getCremaDisponible();
+        lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
+        controlador.modificarPasteurizado(lecheP);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarEmpleado;

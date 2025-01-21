@@ -8,17 +8,27 @@ public class LechePasteurizada {
     private IngresoLeche ingreso;
     private boolean descremado;
     private int crema;
+    private int cremaDisponible;
+
+    public int getCremaDisponible() {
+        return cremaDisponible;
+    }
+
+    public void setCremaDisponible(int cremaDisponible) {
+        this.cremaDisponible = cremaDisponible;
+    }
 
     public LechePasteurizada() {
     }
 
-    public LechePasteurizada(int id, int temperatura, int litros, IngresoLeche ingreso, boolean descremado, int crema) {
+    public LechePasteurizada(int id, int temperatura, int litros, IngresoLeche ingreso, boolean descremado, int crema,int cremaDisponible) {
         this.id = id;
         this.temperatura = temperatura;
         this.litros = litros;
         this.ingreso = ingreso;
         this.descremado = descremado;
         this.crema = crema;
+        this.cremaDisponible=cremaDisponible;
     }
 
     public int getId() {

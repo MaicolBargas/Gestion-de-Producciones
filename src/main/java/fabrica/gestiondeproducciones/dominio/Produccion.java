@@ -12,7 +12,7 @@ public class Produccion {
     private LechePasteurizada lechep;
     private int litros;
     private Producto producto;
-    private int rendimiento;
+    private float rendimiento;
     private int kgLtsObt;
     private String fecha;
     private Empleado encargado;
@@ -53,7 +53,7 @@ public class Produccion {
         this.producto = producto;
     }
 
-    public void setRendimiento(int rendimiento) {
+    public void setRendimiento(float rendimiento) {
         this.rendimiento = rendimiento;
     }
 
@@ -109,7 +109,7 @@ public class Produccion {
         return producto;
     }
 
-    public int getRendimiento() {
+    public float getRendimiento() {
         return rendimiento;
     }
 

@@ -34,7 +34,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         listarIngresos();
         List<LechePasteurizada> lista = controlador.listarPasteurizados();
         modelo = (DefaultTableModel) tablaPasteurizados.getModel();
-        Object[] objeto = new Object[6];
+        Object[] objeto = new Object[7];
         for(int i = 0; i < lista.size(); i++){
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getTemperatura();
@@ -42,6 +42,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             objeto[3] = lista.get(i).getIngreso().getIdIngreso() + " - " +lista.get(i).getIngreso().getTambo().getPropietario()+ " - " +lista.get(i).getIngreso().getLitrosDisponibles()+ " L";
             objeto[4] = lista.get(i).getDescremado();
             objeto[5] = lista.get(i).getCrema();
+            objeto[6]=lista.get(i).getCremaDisponible();
+            System.out.println(objeto[6]);
             modelo.addRow(objeto);
         }
         tablaPasteurizados.setModel(modelo);
@@ -112,6 +114,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         txtCrema = new javax.swing.JTextField();
         txtIngreso = new javax.swing.JTextField();
         chkDescremada = new javax.swing.JCheckBox();
+        txtCremaDisponible = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         btnLimpiar = new javax.swing.JButton();
         btnAlta = new javax.swing.JButton();
@@ -162,6 +166,10 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             }
         });
 
+        txtCremaDisponible.setEditable(false);
+
+        jLabel5.setText("Crema Disponible:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -183,7 +191,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
                             .addComponent(txtTemperatura)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(txtIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(87, 87, 87)
@@ -192,7 +200,11 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtCremaDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -220,6 +232,10 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCrema)
                     .addComponent(txtCrema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCremaDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -351,14 +367,14 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         tablaPasteurizados.setModel(new javax.swing.table.DefaultTableModel(
@@ -366,14 +382,14 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Temperatura", "Litros", "Ingreso de leche utilizado", "Descremado", "Crema obtenida"
+                "Id", "Temperatura", "Litros", "Ingreso de leche utilizado", "Descremado", "Crema obtenida", "Crema Disponible"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -408,8 +424,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -464,6 +480,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
 
             lecheP.setDescremado(esDescremada);
             lecheP.setCrema(crema);
+            lecheP.setCremaDisponible(crema);
+            
 
             boolean alta = controlador.altaPasteurizado(lecheP);
             if(alta){
@@ -493,24 +511,49 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try{
+            int id= Integer.parseInt(txtId.getText());
             int temperatura = utilidad.validarNumericos(txtTemperatura.getText(), "Temperatura", false);
             int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);           
             String[] partes = txtIngreso.getText().split(" - ");
             IngresoLeche ingreso = controlador.buscarIngreso(Integer.parseInt(partes[0]));
             boolean esDescremada = chkDescremada.isSelected();
-            int crema = 0;
+            int crema = utilidad.validarNumericos(txtLitros.getText(),"Cant Crema", false);
             if(esDescremada){
                crema = utilidad.validarNumericos(txtCrema.getText(), "Crema", true);           
             }
-                      
+                 
             lecheP.setTemperatura(temperatura);   
             lecheP.setLitros(litros);
             if(ingreso instanceof IngresoLeche){                
                 lecheP.setIngreso(ingreso);
             }else{ throw new Exception("El ingreso seleccionado ya no esta disponible");}
-
+            
+            int diferencia;
+            LechePasteurizada p= new LechePasteurizada();
+            Controlador c= new Controlador();
+            p=c.buscarPasteurizado(id);
+            int actual=p.getCrema();
+            if(p.getCrema()<=crema){
+                diferencia=crema-actual;
+                lecheP.setCremaDisponible(p.getCrema()+diferencia);
+                System.out.println(diferencia+" DIFERENCIA 1"+" ACTUAL "+ actual +" Nuevo "+ crema);
+            }
+            if(p.getCrema()>crema){
+                diferencia=actual-crema;
+                if(diferencia<=p.getCremaDisponible()){
+                lecheP.setCremaDisponible(p.getCrema()-diferencia);
+                    System.out.println(diferencia+" DIFERENCIA 2"+" ACTUAL "+ actual +" Nuevo "+ crema);
+                }
+                else
+                {
+                    throw new Exception("Error Al Establecer Crema disponible, porfavor Verifique los valores o las producciones"
+                            + "en las cuales utilizo la Crema");
+                }
+            }
+            
             lecheP.setDescremado(esDescremada);
             lecheP.setCrema(crema);
+            lecheP.setId(id);
 
             boolean modificar = controlador.modificarPasteurizado(lecheP);
             if(modificar){
@@ -532,7 +575,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         txtIngreso.setText(tablaPasteurizados.getValueAt(fila, 3).toString());
         boolean checked = (boolean) tablaPasteurizados.getValueAt(fila, 4);       
         chkDescremada.setSelected(checked);        
-        txtCrema.setText(tablaPasteurizados.getValueAt(fila, 5).toString());            
+        txtCrema.setText(tablaPasteurizados.getValueAt(fila, 5).toString()); 
+        txtCremaDisponible.setText(tablaPasteurizados.getValueAt(fila, 6).toString());
     }//GEN-LAST:event_tablaPasteurizadosMouseClicked
 
     private void tablaIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaIngresosMouseClicked
@@ -573,6 +617,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -585,6 +630,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
     private javax.swing.JTable tablaIngresos;
     private javax.swing.JTable tablaPasteurizados;
     private javax.swing.JTextField txtCrema;
+    private javax.swing.JTextField txtCremaDisponible;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtIngreso;
     private javax.swing.JTextField txtLitros;

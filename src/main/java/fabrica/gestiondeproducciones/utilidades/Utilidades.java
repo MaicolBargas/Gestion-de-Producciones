@@ -1,6 +1,8 @@
 
 package fabrica.gestiondeproducciones.utilidades;
 
+import fabrica.gestiondeproducciones.dominio.Controlador;
+import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -189,6 +191,26 @@ public String calcularDiferenciaHoras(String hora1, String hora2) throws Excepti
     }
 }
 
+
+public int validarCantidadCrema(int litros, int id) throws Exception {
+    try {
+        
+        Controlador c= new Controlador();
+        LechePasteurizada l= new LechePasteurizada();
+        l=c.buscarPasteurizado(id);
+        int i= l.getCrema();
+        
+        // Comparar las horas y minutos
+        if (litros>i) {
+            throw new Exception("Los Litros de Crema Ingresados No pueden se mayor a los disponibles En el Pasteurizado");
+        }
+
+        
+        return litros;
+    } catch (Exception e) {
+        throw new Exception(e.getMessage());
+    }
+}
     
 
 }
