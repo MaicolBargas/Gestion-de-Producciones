@@ -8,6 +8,7 @@ import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.Produccion;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.persistencia.PersistenciaProduccion;
+import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal() {
         initComponents();
+     
+       
         
         
         
