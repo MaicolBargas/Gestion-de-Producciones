@@ -1,17 +1,11 @@
 
 package fabrica.gestiondeproducciones.persistencia;
 
-import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
 import fabrica.gestiondeproducciones.dominio.Empleado;
-import fabrica.gestiondeproducciones.dominio.IngresoLeche;
-import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
-import fabrica.gestiondeproducciones.dominio.Produccion;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.Producto;
-import fabrica.gestiondeproducciones.dominio.Seccion;
-import fabrica.gestiondeproducciones.dominio.Silo;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +23,6 @@ public class PersistenciaProduccionManteca {
     PreparedStatement consulta;
     PersistenciaProduccion persProduccion = new PersistenciaProduccion();
     PersistenciaPasteurizado persLecheP = new PersistenciaPasteurizado();
-    PersistenciaInsumo persInsumo = new PersistenciaInsumo();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
     PersistenciaProducto persProducto = new PersistenciaProducto();
 
@@ -43,8 +36,7 @@ public class PersistenciaProduccionManteca {
     String sqlProduccionManteca = "INSERT INTO produccion_manteca " + 
         "(idProduccion, comienzoBatido, finBatido, totalBatido, ormas) " + 
         "VALUES (?, ?, ?, ?, ?)";
-    String sqlAgregarEmpleados = "INSERT INTO produccion_empleados" +"(idProduccion,idEmpleado) VALUES (?,?)";
-    String sqlAgregarInsumo = "INSERT INTO linea_insumos" +"(idProduccion,idInsumo,cantidad) VALUES (?,?,?)";
+
 
     try {
         con = conexion.obtenerConexion();
@@ -88,20 +80,17 @@ public class PersistenciaProduccionManteca {
 
         // Ejecutar el segundo insert
         consulta.executeUpdate();
-        for(int i=0;i<produccion.getListaEmpleados().size();i++){
-        consulta = con.prepareStatement(sqlAgregarEmpleados);
-            consulta.setInt(1, idProduccion);
-            consulta.setInt(2, produccion.getListaEmpleados().get(i).getId());
-            consulta.executeUpdate();}
+        
+        for(Empleado empleado : produccion.getListaEmpleados()){                
+                persProduccion.agregarEmpleado(idProduccion, empleado.getId());                
+            }
         
       
         consulta.executeUpdate();
-        for(int i=0;i<produccion.getListaInsumos().size();i++){
-        consulta = con.prepareStatement(sqlAgregarInsumo);
-            consulta.setInt(1, idProduccion);
-            consulta.setInt(2, produccion.getListaInsumos().get(i).getInsumo().getId());
-            consulta.setInt(3, produccion.getListaInsumos().get(i).getCantidad());
-            consulta.executeUpdate();}
+        
+        for(LineaInsumo insumo : produccion.getListaInsumos()){                
+                persProduccion.agregarInsumos(idProduccion, insumo.getInsumo().getId(), insumo.getCantidad());
+            }
 
         return true;
 
@@ -119,7 +108,7 @@ public class PersistenciaProduccionManteca {
 }
 
     
-    public boolean agregarEmpleado(int idProd,int idEmpleado){
+    public void agregarEmpleado(int idProd,int idEmpleado){
         String sqlAgregarEmpleados = "INSERT INTO produccion_empleados" +"(idProduccion,idEmpleado) VALUES (?,?)";
         
         try{
@@ -128,10 +117,8 @@ public class PersistenciaProduccionManteca {
             consulta.setInt(1, idProd);
             consulta.setInt(2, idEmpleado);
             consulta.execute();
-            return true;
         }catch(SQLException e){            
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return false;
         }finally{
             try{
                 con.close();
@@ -189,8 +176,8 @@ public class PersistenciaProduccionManteca {
                 
                 produccion.setRendimiento(resultado.getInt("rendimiento"));
                 produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
-                produccion.setFecha(resultado.getString("fecha"));
-                
+                produccion.setFecha(resultado.getString("fecha"));              
+                produccion.setLitros(resultado.getInt("litros"));
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
                 if(encargado instanceof Empleado){
                     produccion.setEncargado(encargado);
@@ -202,10 +189,10 @@ public class PersistenciaProduccionManteca {
                
                 listarInfoEspecifica(produccion);     
                 
-                List<Empleado> empleados = listarEmpleadosXProduccion(id);                
+                List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);                
                 produccion.setListaEmpleados(empleados);
                 
-                List<LineaInsumo> insumos = listarInsumoXProduccion(id);
+                List<LineaInsumo> insumos = persProduccion.listarInsumoXProduccion(id);
                 produccion.setListaInsumos(insumos);
                 lista.add(produccion);
             }
@@ -233,49 +220,6 @@ public class PersistenciaProduccionManteca {
         }
     }
     
-    private List listarEmpleadosXProduccion(int idProduccion){
-        List<Empleado> lista = new ArrayList();
-        String sql = "SELECT * FROM produccion_empleados WHERE idProduccion = ?";
-        try{
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            consulta.setInt(1, idProduccion);
-            resultado = consulta.executeQuery();
-            while(resultado.next()){
-                Empleado empleado = persEmpleado.buscarEmpleado(resultado.getInt("idEmpleado"));
-               
-                if(empleado instanceof Empleado){
-                    lista.add(empleado);
-                }              
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return null;
-        }
-        return lista;
-    }
-    
-    private List listarInsumoXProduccion(int idProduccion){
-        List<LineaInsumo> lista = new ArrayList();
-        String sql = "SELECT * FROM linea_insumos WHERE idProduccion = ?";
-        try{
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            consulta.setInt(1, idProduccion);
-            resultado = consulta.executeQuery();
-            while(resultado.next()){
-                Insumo insumo = persInsumo.buscarInsumo(resultado.getInt("idInsumo"));
-                int id = resultado.getInt("idLinea");
-                int cantidad = resultado.getInt("cantidad");
-                LineaInsumo linea = new LineaInsumo(id,insumo,cantidad);
-                lista.add(linea);
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return null;
-        }
-        return lista;
-    }
     
     public ProduccionManteca buscarProduccionManteca(int id){
         String sql = "SELECT * FROM produccion WHERE idProduccion = ? AND activo = '1'";
@@ -303,7 +247,8 @@ public class PersistenciaProduccionManteca {
                 produccion.setRendimiento(resultado.getInt("rendimiento"));
                 produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
                 produccion.setFecha(resultado.getString("fecha"));
-                
+                produccion.setLitros(resultado.getInt("litros"));
+
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
                 if(encargado instanceof Empleado){
                     produccion.setEncargado(encargado);
@@ -315,10 +260,10 @@ public class PersistenciaProduccionManteca {
                
                 listarInfoEspecifica(produccion);     
                 
-                List<Empleado> empleados = listarEmpleadosXProduccion(id);                
+                List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);                
                 produccion.setListaEmpleados(empleados);
                 
-                List<LineaInsumo> insumos = listarInsumoXProduccion(id);
+                List<LineaInsumo> insumos = persProduccion.listarInsumoXProduccion(id);
                 produccion.setListaInsumos(insumos);
                 return produccion;
             }
@@ -329,4 +274,46 @@ public class PersistenciaProduccionManteca {
         return null;
     }
     
+    public boolean modificarProduccionManteca(ProduccionManteca produccion){
+        String sql = "UPDATE produccion SET codInterno = ?, idLechePast = ?, idProducto = ?, rendimiento = ?, kgLtsObt = ?, fecha = ?, encargadoId = ?, horaInicio = ? ,horaFin = ?, tiempoTrabajado = ?, nroTacho = ? WHERE idProduccion = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setString(1, produccion.getCodInterno());
+            consulta.setInt(2, produccion.getLechep().getId());
+            consulta.setInt(3, produccion.getProducto().getId());
+            consulta.setFloat(4, produccion.getRendimiento());
+            consulta.setInt(5, produccion.getKgLtsObt());
+            consulta.setString(6, produccion.getFecha());
+            consulta.setInt(7, produccion.getEncargado().getId());           
+            consulta.setString(8, produccion.getHoraInicio());
+            consulta.setString(9, produccion.getHoraFin());
+            consulta.setString(10, produccion.getTiempoTrabajado());
+            consulta.setInt(11, produccion.getNroTacho());
+            consulta.setInt(12, produccion.getIdProduccion());
+            consulta.execute();
+            
+            String sqlProduccionManteca = "UPDATE produccion_manteca SET comienzoBatido = ?, finBatido = ?, totalBatido = ?, ormas = ? WHERE idProduccion = ?";
+            
+            consulta = con.prepareStatement(sqlProduccionManteca);
+            consulta.setString(1, produccion.getHoraComienzoBatido());
+            consulta.setString(2, produccion.getHoraFinBatido());
+            consulta.setString(3, produccion.getTiempoTotalBatido());
+            consulta.setInt(4, produccion.getCantidad());
+            consulta.setInt(5, produccion.getIdProduccion());
+
+            persProduccion.actualizarEmpleadosxProduccion(produccion.getIdProduccion(), produccion.getListaEmpleados());
+            persProduccion.actualizarInsumosxProduccion(produccion.getIdProduccion(), produccion.getListaInsumos());
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
 }

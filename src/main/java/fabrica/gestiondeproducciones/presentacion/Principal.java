@@ -175,7 +175,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuProducciones.setText("Producciones");
 
-        menuProduccionesManteca.setText("Produccion de Mantexa");
+        menuProduccionesManteca.setText("Produccion de Manteca");
         menuProduccionesManteca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuProduccionesMantecaActionPerformed(evt);

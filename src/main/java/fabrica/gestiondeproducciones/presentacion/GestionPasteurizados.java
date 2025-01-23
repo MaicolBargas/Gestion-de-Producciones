@@ -574,7 +574,11 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         txtLitros.setEditable(false);
         txtIngreso.setText(tablaPasteurizados.getValueAt(fila, 3).toString());
         boolean checked = (boolean) tablaPasteurizados.getValueAt(fila, 4);       
-        chkDescremada.setSelected(checked);        
+        chkDescremada.setSelected(checked);
+        if(checked){
+           lblCrema.setVisible(true);
+           txtCrema.setVisible(true);
+        }
         txtCrema.setText(tablaPasteurizados.getValueAt(fila, 5).toString()); 
         txtCremaDisponible.setText(tablaPasteurizados.getValueAt(fila, 6).toString());
     }//GEN-LAST:event_tablaPasteurizadosMouseClicked

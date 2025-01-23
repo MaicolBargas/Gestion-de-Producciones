@@ -108,7 +108,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuProduccionesManteca">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Produccion de Mantexa"/>
+                <Property name="text" type="java.lang.String" value="Produccion de Manteca"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProduccionesMantecaActionPerformed"/>

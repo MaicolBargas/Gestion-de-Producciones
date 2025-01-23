@@ -272,6 +272,11 @@ public class ControladorPersistencia {
         return persistenciaProduccion.altaProduccion(produccion);
     }
     
+    public boolean bajaProduccion(int id, String tabla) throws Exception{
+        return persistenciaProduccion.bajaProduccion(id, tabla);
+    }
+        
+    // <editor-fold defaultstate="collapsed" desc="Produccion Manteca">
     public boolean altaProduccionManteca(ProduccionManteca produccion)
     {
         return persistenciaProduccionManteca.altaProduccionManteca(produccion);
@@ -285,9 +290,11 @@ public class ControladorPersistencia {
         return persistenciaProduccionManteca.buscarProduccionManteca(id);
     }
     
-    public boolean bajaProduccion(int id, String tabla) throws Exception{
-        return persistenciaProduccion.bajaProduccion(id, tabla);
+    public boolean modificarProduccionManteca(ProduccionManteca produccion){
+        return persistenciaProduccionManteca.modificarProduccionManteca(produccion);
     }
+    // </editor-fold>  
+
     
    // </editor-fold>  
    
