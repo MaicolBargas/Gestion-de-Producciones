@@ -55,7 +55,6 @@ public class PersistenciaProduccionManteca {
         consulta.setString(10, produccion.getHoraFin());
         consulta.setString(11, produccion.getTiempoTrabajado());
         consulta.setInt(12, produccion.getNroTacho());
-        System.out.println("RENDIMIENTO PERS "+ produccion.getRendimiento());
         // Ejecutar el primer insert
         consulta.executeUpdate();
 
@@ -153,7 +152,7 @@ public class PersistenciaProduccionManteca {
     
     public List listarProduccionesManteca() {
         List<ProduccionManteca> lista = new ArrayList<>();
-        String sql = "SELECT * FROM produccion p INNER JOIN produccion_manteca pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1'";
+        String sql = "SELECT * FROM produccion p INNER JOIN produccion_manteca pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1' GROUP BY p.idProduccion";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
