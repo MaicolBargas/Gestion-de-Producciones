@@ -3,6 +3,7 @@ package fabrica.gestiondeproducciones.utilidades;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.Produccion;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -198,7 +199,7 @@ public int validarCantidadCrema(int litros, int id) throws Exception {
         Controlador c= new Controlador();
         LechePasteurizada l= new LechePasteurizada();
         l=c.buscarPasteurizado(id);
-        int i= l.getCrema();
+        int i= l.getCremaDisponible();
         
         // Comparar las horas y minutos
         if (litros>i) {
@@ -211,8 +212,14 @@ public int validarCantidadCrema(int litros, int id) throws Exception {
         throw new Exception(e.getMessage());
     }
 }
-    
+Controlador c= new Controlador();    
 
+
+public void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
+        int litrosDisponibles = lecheP.getCremaDisponible();
+        lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
+        c.modificarPasteurizado(lecheP);
+    }
 }
 
 
