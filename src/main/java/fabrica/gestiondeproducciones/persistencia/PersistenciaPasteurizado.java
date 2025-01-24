@@ -79,6 +79,40 @@ public class PersistenciaPasteurizado {
         return lista;
     }
     
+     public List listarPasteurizadosProducidos(){
+        List<LechePasteurizada> lista = new ArrayList();
+        String sql = "SELECT * FROM " + nombreTabla + " WHERE activo = '1' AND idLecheP NOT IN ("
+           + "SELECT idLechePast FROM produccion p WHERE p.idProduccion NOT IN ("
+           + "SELECT pm.idProduccion FROM produccion_manteca pm));";
+
+
+
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                LechePasteurizada lecheP = new LechePasteurizada();
+                lecheP.setId(resultado.getInt("idLecheP"));
+                lecheP.setTemperatura(resultado.getInt("temperatura"));
+                lecheP.setLitros(resultado.getInt("litros"));
+                IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
+                if(ingreso instanceof IngresoLeche){
+                    lecheP.setIngreso(ingreso);
+                }              
+                lecheP.setDescremado(resultado.getBoolean("descremado"));
+                lecheP.setCrema(resultado.getInt("cremaObtenida"));
+                lecheP.setCremaDisponible(resultado.getInt("cremaDisponible"));
+                lista.add(lecheP);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    
         public List listarPasteurizadosPendientesAnalizar(){
         List<LechePasteurizada> lista = new ArrayList();
         String sql = "SELECT p.* FROM pasteurizadas p LEFT JOIN analisis a ON p.idLecheP = a.idPasteurizada WHERE p.activo = '1' AND a.idPasteurizada IS NULL";

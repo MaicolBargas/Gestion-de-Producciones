@@ -202,6 +202,9 @@ public class ControladorPersistencia {
         return persistenciaPasteurizado.listarPasteurizados();
     }
     
+    public List listarPasteurizadosNoUsados(){
+        return persistenciaPasteurizado.listarPasteurizadosProducidos();
+    }
     public List listarPasteurizadosPendientesAnalizar(){
         return persistenciaPasteurizado.listarPasteurizadosPendientesAnalizar();
     }
@@ -267,6 +270,7 @@ public class ControladorPersistencia {
     
     PersistenciaProduccion persistenciaProduccion= new PersistenciaProduccion();
     PersistenciaProduccionManteca persistenciaProduccionManteca= new PersistenciaProduccionManteca();
+    PersistenciaProduccionYogur persistenciaProduccionYogur=new PersistenciaProduccionYogur();
     
     public boolean altaProduccion(Produccion produccion){
         return persistenciaProduccion.altaProduccion(produccion);
@@ -295,6 +299,24 @@ public class ControladorPersistencia {
     }
     // </editor-fold>  
 
+    // <editor-fold defaultstate="collapsed" desc="Produccion Yogur">
+    public boolean altaProduccionYogur(ProduccionYogur produccion)
+    {
+        return persistenciaProduccionYogur.altaProduccionYogur(produccion);
+    }
+    
+    public List listarProduccionesYogur(){
+        return persistenciaProduccionYogur.listarProduccionesYogur();
+    }
+    
+    public ProduccionYogur buscarProduccionYogur(int id){
+        return persistenciaProduccionYogur.buscarProduccionYogur(id);
+    }
+    
+    public boolean modificarProduccionYogur(ProduccionYogur produccion){
+        return persistenciaProduccionYogur.modificarProduccionYogur(produccion);
+    }
+    // </editor-fold>  
     
    // </editor-fold>  
    

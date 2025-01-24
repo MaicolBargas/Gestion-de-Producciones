@@ -183,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuProducciones.add(menuProduccionesManteca);
 
-        menuAnalisisLeche3.setText("Analisis de Leche Pasteurizada");
+        menuAnalisisLeche3.setText("Produccion de Yogur");
         menuAnalisisLeche3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuAnalisisLeche3ActionPerformed(evt);
@@ -292,7 +292,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuProduccionesMantecaActionPerformed
 
     private void menuAnalisisLeche3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisLeche3ActionPerformed
-        // TODO add your handling code here:
+        GestionProduccionYogur gestionProduccion= new GestionProduccionYogur();
+        escritorio.add(gestionProduccion);
+        gestionProduccion.show();
     }//GEN-LAST:event_menuAnalisisLeche3ActionPerformed
 
     /**
