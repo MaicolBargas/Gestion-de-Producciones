@@ -52,6 +52,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuAnalisisLeche = new javax.swing.JMenuItem();
         menuAnalisisLeche1 = new javax.swing.JMenuItem();
+        menuAnalisisManteca = new javax.swing.JMenuItem();
         jMenuProducciones = new javax.swing.JMenu();
         menuProduccionesManteca = new javax.swing.JMenuItem();
         menuAnalisisLeche3 = new javax.swing.JMenuItem();
@@ -170,6 +171,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(menuAnalisisLeche1);
+
+        menuAnalisisManteca.setText("Analisis de Produccion Manteca");
+        menuAnalisisManteca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAnalisisMantecaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuAnalisisManteca);
 
         menuPrincipal.add(jMenu1);
 
@@ -297,6 +306,12 @@ public class Principal extends javax.swing.JFrame {
         gestionProduccion.show();
     }//GEN-LAST:event_menuAnalisisLeche3ActionPerformed
 
+    private void menuAnalisisMantecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisMantecaActionPerformed
+        GestionAnalisisManteca gestionAnalisis = new GestionAnalisisManteca();
+        escritorio.add(gestionAnalisis);
+        gestionAnalisis.show();
+    }//GEN-LAST:event_menuAnalisisMantecaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -340,6 +355,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuAnalisisLeche;
     private javax.swing.JMenuItem menuAnalisisLeche1;
     private javax.swing.JMenuItem menuAnalisisLeche3;
+    private javax.swing.JMenuItem menuAnalisisManteca;
     private javax.swing.JMenu menuEmpleados;
     private javax.swing.JMenuItem menuIngresos;
     private javax.swing.JMenu menuInsumos;

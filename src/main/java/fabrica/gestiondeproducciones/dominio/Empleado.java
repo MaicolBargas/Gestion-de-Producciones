@@ -111,5 +111,7 @@ public class Empleado {
         return this.nombre + " " + this.apellido;
     }
     
-    
+    public String getInfoCompleta(){
+        return this.id + " - "+ this.getNombreCompleto();
+    }
 }

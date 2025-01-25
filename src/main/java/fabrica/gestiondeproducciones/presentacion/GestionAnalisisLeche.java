@@ -36,7 +36,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         cargarFecha();
         List<AnalisisIngreso> lista = controlador.listarAnalisisIngreso();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
-        Object[] objeto = new Object[12];
+        Object[] objeto = new Object[11];
         for(int i = 0; i < lista.size(); i++){
             objeto[0] = lista.get(i).getId();
             if(lista.get(i).getEncargado() instanceof Empleado){
@@ -243,13 +243,16 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                             .addComponent(txtLitros)
                             .addComponent(txtSilo)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
                         .addGap(23, 23, 23)
-                        .addComponent(txtIdIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTambo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(txtTambo, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtIdIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))))
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -628,10 +631,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
             
-            analisis.setTipo("ingreso");
-            
-
-           
+            analisis.setTipo(tipoAnalisis);
            analisis.setFecha(fecha);
            analisis.setLevadura(levadura);
            analisis.setMos(mos);

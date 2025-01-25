@@ -266,6 +266,26 @@ public class ControladorPersistencia {
     }
      // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis Manteca">    
+    public boolean altaAnalisisManteca(AnalisisManteca analisis){
+       return persistenciaAnalisis.altaAnalisisManteca(analisis);
+    }
+    
+    public List listarAnalisisManteca(){
+        return persistenciaAnalisis.listarAnalisisManteca();
+    }
+    
+   
+    public boolean modificarAnalisisManteca(AnalisisManteca analisis){
+       return persistenciaAnalisis.modificarAnalisisManteca(analisis);
+    }
+    
+    public AnalisisManteca buscarAnalisisManteca(int id){
+        return persistenciaAnalisis.buscarAnalisisManteca(id);
+    }
+    
+    // </editor-fold> 
+    
     // <editor-fold defaultstate="collapsed" desc="Produccion">
     
     PersistenciaProduccion persistenciaProduccion= new PersistenciaProduccion();
@@ -296,6 +316,10 @@ public class ControladorPersistencia {
     
     public boolean modificarProduccionManteca(ProduccionManteca produccion){
         return persistenciaProduccionManteca.modificarProduccionManteca(produccion);
+    }
+    
+    public List listarMantecaPendienteAnalizar(){
+        return persistenciaProduccionManteca.listarMantecaPendienteAnalizar();
     }
     // </editor-fold>  
 

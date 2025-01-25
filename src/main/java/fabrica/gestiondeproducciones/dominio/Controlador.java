@@ -248,6 +248,26 @@ public class Controlador {
     }
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis Manteca">    
+    public boolean altaAnalisisManteca(AnalisisManteca analisis){
+       return persistencia.altaAnalisisManteca(analisis);
+    }
+    
+    public List listarAnalisisManteca(){
+        return persistencia.listarAnalisisManteca();
+    }
+    
+   
+    public boolean modificarAnalisisManteca(AnalisisManteca analisis){
+       return persistencia.modificarAnalisisManteca(analisis);
+    }
+    
+    public AnalisisManteca buscarAnalisisManteca(int id){
+        return persistencia.buscarAnalisisManteca(id);
+    }
+    
+    // </editor-fold> 
+    
     // <editor-fold defaultstate="collapsed" desc="Produccion">
 
     public boolean altaProduccion(Produccion produccion){
@@ -276,6 +296,10 @@ public class Controlador {
     public boolean modificarProduccionManteca(ProduccionManteca produccion){
         return persistencia.modificarProduccionManteca(produccion);
     }    
+    
+    public List listarMantecaPendienteAnalizar(){
+        return persistencia.listarMantecaPendienteAnalizar();
+    }
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Produccion Yogur">

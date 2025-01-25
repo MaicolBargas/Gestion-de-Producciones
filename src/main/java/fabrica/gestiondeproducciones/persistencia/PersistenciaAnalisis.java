@@ -4,9 +4,11 @@ package fabrica.gestiondeproducciones.persistencia;
 import fabrica.gestiondeproducciones.dominio.Analisis;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
 import fabrica.gestiondeproducciones.dominio.AnalisisLechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.AnalisisManteca;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +28,8 @@ public class PersistenciaAnalisis {
     PersistenciaIngresoLeche persIngreso = new PersistenciaIngresoLeche();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
     PersistenciaPasteurizado persLechePast=new PersistenciaPasteurizado();
-
+    PersistenciaProduccionManteca persManteca = new PersistenciaProduccionManteca();
+    
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
         String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -226,6 +229,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(9, analisisLechePast.getProteina());
             consulta.setInt(10, analisisLechePast.getAgua());
             consulta.setInt(11, analisisLechePast.getLechePast().getId());
+            consulta.setInt(12, analisisLechePast.getId());
            
 
             consulta.execute();
@@ -329,12 +333,158 @@ public class PersistenciaAnalisis {
     }
     
     // </editor-fold>  
-    
-    private void altaAnalisisProduccion(Analisis analisis, PreparedStatement consulta){
-            
+      
+    // <editor-fold defaultstate="collapsed" desc="Analisis de Manteca">  
+    public boolean altaAnalisisManteca(AnalisisManteca analisis){
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,acidez,humedad,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);          
+            consulta.setString(1, analisis.getTipo());
+            consulta.setInt(2, analisis.getEncargado().getId());
+            consulta.setString(3, analisis.getFecha());
+            consulta.setInt(4, analisis.getLevadura());
+            consulta.setInt(5, analisis.getMos());
+            consulta.setInt(6, analisis.getPoliformosTotales());
+            consulta.setInt(7, analisis.getPoliformosFecales());           
+            consulta.setInt(8, analisis.getGrasa());
+            consulta.setInt(9, analisis.getAcidez());
+            consulta.setInt(10, analisis.getHumedad());
+            consulta.setInt(11, analisis.getProduccion().getIdProduccion());
+            consulta.execute();
+            return true;
+        }catch(SQLException e){            
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+               JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
     }
     
+    public boolean modificarAnalisisManteca(AnalisisManteca analisis){
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,acidez = ?, humedad = ?, idProduccion = ? WHERE idAnalisis = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setString(1, analisis.getTipo());
+            consulta.setInt(2, analisis.getEncargado().getId());
+            consulta.setString(3, analisis.getFecha());
+            consulta.setInt(4, analisis.getLevadura());
+            consulta.setInt(5, analisis.getMos());
+            consulta.setInt(6, analisis.getPoliformosTotales());
+            consulta.setInt(7, analisis.getPoliformosFecales());           
+            consulta.setInt(8, analisis.getGrasa());
+            consulta.setInt(9, analisis.getAcidez());
+            consulta.setInt(10, analisis.getHumedad());
+            consulta.setInt(11, analisis.getProduccion().getIdProduccion());
+            consulta.setInt(12, analisis.getId());
+
+            consulta.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
     
+    public List listarAnalisisManteca() {
+        List<AnalisisManteca> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'manteca' AND activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                AnalisisManteca analisis = new AnalisisManteca();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                analisis.setGrasa(resultado.getInt("grasa"));
+                analisis.setAcidez(resultado.getInt("acidez"));
+                analisis.setHumedad(resultado.getInt("humedad"));
+
+                ProduccionManteca produccion = persManteca.buscarProduccionManteca(resultado.getInt("idProduccion"));
+                if(produccion instanceof ProduccionManteca){
+                    analisis.setProduccion(produccion);
+                }   
+                
+                lista.add(analisis);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    public AnalisisManteca buscarAnalisisManteca(int id){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idAnalisis =?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            resultado = consulta.executeQuery();     
+            if(resultado.next()){
+               AnalisisManteca analisis = new AnalisisManteca();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                analisis.setGrasa(resultado.getInt("grasa"));
+                analisis.setAcidez(resultado.getInt("acidez"));
+                analisis.setHumedad(resultado.getInt("humedad"));
+
+                ProduccionManteca produccion = persManteca.buscarProduccionManteca(resultado.getInt("idProduccion"));
+                if(produccion instanceof ProduccionManteca){
+                    analisis.setProduccion(produccion);
+                }   
+                
+                return analisis;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+        return null;
+    }
+    
+    // </editor-fold>  
     
     public boolean bajaAnalisis(int id){
         String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idAnalisis = ?";
