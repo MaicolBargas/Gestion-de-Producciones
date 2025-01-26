@@ -291,6 +291,7 @@ public class ControladorPersistencia {
     PersistenciaProduccion persistenciaProduccion= new PersistenciaProduccion();
     PersistenciaProduccionManteca persistenciaProduccionManteca= new PersistenciaProduccionManteca();
     PersistenciaProduccionYogur persistenciaProduccionYogur=new PersistenciaProduccionYogur();
+    PersistenciaProduccionQueso persistenciaProduccionQueso= new PersistenciaProduccionQueso();
     
     public boolean altaProduccion(Produccion produccion){
         return persistenciaProduccion.altaProduccion(produccion);
@@ -339,6 +340,25 @@ public class ControladorPersistencia {
     
     public boolean modificarProduccionYogur(ProduccionYogur produccion){
         return persistenciaProduccionYogur.modificarProduccionYogur(produccion);
+    }
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Produccion Queso">
+    public boolean altaProduccionQueso(ProduccionQueso produccion)
+    {
+        return persistenciaProduccionQueso.altaProduccionQueso(produccion);
+    }
+    
+    public List listarProduccionesQueso(){
+        return persistenciaProduccionQueso.listarProduccionesQueso();
+    }
+    
+    public ProduccionQueso buscarProduccionQueso(int id){
+        return persistenciaProduccionQueso.buscarProduccionQueso(id);
+    }
+    
+    public boolean modificarProduccionQueso(ProduccionQueso produccion){
+        return persistenciaProduccionQueso.modificarProduccionQueso(produccion);
     }
     // </editor-fold>  
     

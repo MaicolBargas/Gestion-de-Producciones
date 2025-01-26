@@ -320,4 +320,21 @@ public class Controlador {
     }    
     // </editor-fold>  
 
+    // <editor-fold defaultstate="collapsed" desc="Produccion Queso">
+    public boolean altaProduccionQueso(ProduccionQueso produccionQueso){
+        return persistencia.altaProduccionQueso(produccionQueso);
+    }
+   
+    public List listarProduccionesQueso(){
+        return persistencia.listarProduccionesQueso();
+    }
+       
+    public ProduccionQueso buscarProduccionQueso(int id){
+        return persistencia.buscarProduccionQueso(id);
+    }
+    
+    public boolean modificarProduccionQueso(ProduccionQueso produccion){
+        return persistencia.modificarProduccionQueso(produccion);
+    }    
+    // </editor-fold>  
 }
