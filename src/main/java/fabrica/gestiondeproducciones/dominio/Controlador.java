@@ -268,6 +268,26 @@ public class Controlador {
     
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis Yogur">    
+    public boolean altaAnalisisYogur(AnalisisYogur analisis){
+       return persistencia.altaAnalisisYogur(analisis);
+    }
+    
+    public List listarAnalisisYogur(){
+        return persistencia.listarAnalisisYogur();
+    }
+    
+   
+    public boolean modificarAnalisisYogur(AnalisisYogur analisis){
+       return persistencia.modificarAnalisisYogur(analisis);
+    }
+    
+    public AnalisisYogur buscarAnalisisYogur(int id){
+        return persistencia.buscarAnalisisYogur(id);
+    }
+    
+    // </editor-fold> 
+    
     // <editor-fold defaultstate="collapsed" desc="Produccion">
 
     public boolean altaProduccion(Produccion produccion){
@@ -318,6 +338,10 @@ public class Controlador {
     public boolean modificarProduccionYogur(ProduccionYogur produccion){
         return persistencia.modificarProduccionYogur(produccion);
     }    
+    
+    public List listarYogurPendienteAnalizar(){
+        return persistencia.listarYogurPendienteAnalizar();
+    }
     // </editor-fold>  
 
     // <editor-fold defaultstate="collapsed" desc="Produccion Queso">

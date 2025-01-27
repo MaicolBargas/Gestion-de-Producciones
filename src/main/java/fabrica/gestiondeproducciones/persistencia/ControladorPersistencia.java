@@ -286,6 +286,26 @@ public class ControladorPersistencia {
     
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis Yogur">    
+    public boolean altaAnalisisYogur(AnalisisYogur analisis){
+       return persistenciaAnalisis.altaAnalisisYogur(analisis);
+    }
+    
+    public List listarAnalisisYogur(){
+        return persistenciaAnalisis.listarAnalisisYogur();
+    }
+    
+   
+    public boolean modificarAnalisisYogur(AnalisisYogur analisis){
+       return persistenciaAnalisis.modificarAnalisisYogur(analisis);
+    }
+    
+    public AnalisisYogur buscarAnalisisYogur(int id){
+        return persistenciaAnalisis.buscarAnalisisYogur(id);
+    }
+    
+    // </editor-fold>     
+    
     // <editor-fold defaultstate="collapsed" desc="Produccion">
     
     PersistenciaProduccion persistenciaProduccion= new PersistenciaProduccion();
@@ -340,6 +360,10 @@ public class ControladorPersistencia {
     
     public boolean modificarProduccionYogur(ProduccionYogur produccion){
         return persistenciaProduccionYogur.modificarProduccionYogur(produccion);
+    }
+    
+    public List listarYogurPendienteAnalizar(){
+        return persistenciaProduccionYogur.listarYogurPendienteAnalizar();
     }
     // </editor-fold>  
     

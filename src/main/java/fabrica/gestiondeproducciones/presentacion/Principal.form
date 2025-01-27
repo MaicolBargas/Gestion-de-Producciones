@@ -101,10 +101,18 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisManteca">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Analisis de Produccion Manteca"/>
+                <Property name="text" type="java.lang.String" value="Analisis de Manteca"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisMantecaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisYogur">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Analisis de Yogur"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisYogurActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

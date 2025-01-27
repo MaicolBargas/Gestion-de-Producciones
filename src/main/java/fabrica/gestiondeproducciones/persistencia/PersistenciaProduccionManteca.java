@@ -152,7 +152,7 @@ public class PersistenciaProduccionManteca {
     
     public List listarProduccionesManteca() {
         List<ProduccionManteca> lista = new ArrayList<>();
-        String sql = "SELECT * FROM produccion p INNER JOIN produccion_manteca pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1' GROUP BY p.idProduccion";
+        String sql = "SELECT p.*, py.* FROM produccion p INNER JOIN produccion_manteca pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL GROUP BY p.idProduccion;";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -210,8 +210,6 @@ public class PersistenciaProduccionManteca {
             }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
-        
-       
     }}
     
     /*private void listarInfoEspecifica(ProduccionManteca produccion){

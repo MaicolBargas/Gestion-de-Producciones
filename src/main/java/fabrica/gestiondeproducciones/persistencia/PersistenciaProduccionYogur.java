@@ -92,8 +92,6 @@ public class PersistenciaProduccionYogur {
                 persProduccion.agregarEmpleado(idProduccion, empleado.getId());
             }
 
-            consulta.executeUpdate();
-
             for (LineaInsumo insumo : produccion.getListaInsumos()) {
                 persProduccion.agregarInsumos(idProduccion, insumo.getInsumo().getId(), insumo.getCantidad());
             }
@@ -351,6 +349,74 @@ public class PersistenciaProduccionYogur {
                 con.close();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public List listarYogurPendienteAnalizar(){
+        List<ProduccionYogur> lista = new ArrayList<>();
+        String sql = "SELECT p.*, py.* FROM produccion p INNER JOIN produccion_yogur py ON p.idProduccion = py.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND py.activo = '1' AND a.idProduccion IS NULL GROUP BY p.idProduccion;";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                ProduccionYogur produccion = new ProduccionYogur();
+                int id = resultado.getInt("idProduccion");
+                produccion.setIdProduccion(id);
+                produccion.setCodInterno(resultado.getString("codInterno"));
+                LechePasteurizada lecheP = persLecheP.buscarPasteurizado(resultado.getInt("idLechePast"));
+                
+                if(lecheP instanceof LechePasteurizada){
+                       produccion.setLechep(lecheP); 
+                }
+                
+                Producto producto = persProducto.buscarProducto(resultado.getInt("idProducto"));
+                if(producto instanceof Producto){
+                       produccion.setProducto(producto); 
+                }
+                
+                produccion.setRendimiento(resultado.getInt("rendimiento"));
+                produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
+                produccion.setFecha(resultado.getString("fecha"));              
+                produccion.setLitros(resultado.getInt("litros"));
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
+                if(encargado instanceof Empleado){
+                    produccion.setEncargado(encargado);
+                } 
+                produccion.setHoraInicio(resultado.getString("horaInicio"));
+                produccion.setHoraFin(resultado.getString("horaFin"));
+                produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
+                produccion.setNroTacho(resultado.getInt("NroTacho"));
+                produccion.setTemperaturaIncubacion(resultado.getInt("tempIncubacion"));
+                produccion.setHoraComienzoIncubacion(resultado.getString("horaComienzoInc"));
+                produccion.setHoraFinIncubacion(resultado.getString("horaFinInc"));
+                produccion.setTiempoIncubacion(resultado.getString("tiempoIncubacion"));
+                produccion.setHoraComienzoEnfriado(resultado.getString("horaComienzoEnfriado"));
+                produccion.setHoraFinEnfriado(resultado.getString("horaFinEnfriado"));
+                produccion.setTiempoTotalEnfriado(resultado.getString("tiempoTotalEnfriado"));
+                produccion.setTempAguaHelada(resultado.getInt("tempAguaHelada"));
+                produccion.setTempAgregadoSabor(resultado.getInt("tempAgregadoSabor"));
+                produccion.setTempAgregadoColor(resultado.getInt("tempAgregadoColor"));
+                produccion.setLitrosSuero(resultado.getInt("litrosSuero"));
+                produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
+ 
+                List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);                
+                produccion.setListaEmpleados(empleados);
+                
+                List<LineaInsumo> insumos = persProduccion.listarInsumoXProduccion(id);
+                produccion.setListaInsumos(insumos);
+                lista.add(produccion);
+            } 
+            return lista;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
     }
