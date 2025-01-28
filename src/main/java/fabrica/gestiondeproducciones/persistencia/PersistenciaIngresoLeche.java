@@ -178,7 +178,7 @@ public class PersistenciaIngresoLeche {
         return null;
     }
     
-        public List listarIngresosPendientesAnalizar(){
+    public List listarIngresosPendientesAnalizar(){
         List<IngresoLeche> lista = new ArrayList();
         String sql = "SELECT i.* FROM ingresos i LEFT JOIN analisis a ON i.idIngreso = a.idIngreso WHERE i.activo = '1' AND a.idIngreso IS NULL";
 

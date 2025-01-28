@@ -355,7 +355,7 @@ public class PersistenciaProduccionYogur {
     
     public List listarYogurPendienteAnalizar(){
         List<ProduccionYogur> lista = new ArrayList<>();
-        String sql = "SELECT p.*, py.* FROM produccion p INNER JOIN produccion_yogur py ON p.idProduccion = py.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND py.activo = '1' AND a.idProduccion IS NULL GROUP BY p.idProduccion;";
+        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_yogur pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL OR a.activo = '0' GROUP BY p.idProduccion;";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);

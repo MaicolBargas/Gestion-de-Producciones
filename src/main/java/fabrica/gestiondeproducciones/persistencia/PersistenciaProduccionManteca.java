@@ -339,7 +339,7 @@ public class PersistenciaProduccionManteca {
     
     public List listarMantecaPendienteAnalizar(){
         List<ProduccionManteca> lista = new ArrayList<>();
-        String sql = "SELECT p.* FROM produccion p LEFT JOIN analisis a On p.idProduccion=a.idProduccion where p.activo='1' and a.activo='1' AND a.idProduccion IS NULL";
+        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_manteca pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL OR a.activo = '0' GROUP BY p.idProduccion;";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
