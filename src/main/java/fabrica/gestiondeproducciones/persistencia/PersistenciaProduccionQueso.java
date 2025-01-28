@@ -386,6 +386,79 @@ public class PersistenciaProduccionQueso {
             }
         }
     }
+    
+    public List listarQuesoPendienteAnalizar() {
+        List<ProduccionQueso> lista = new ArrayList<>();
+        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_queso pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL OR a.activo = '0' GROUP BY p.idProduccion;";
+        try {
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                ProduccionQueso produccion = new ProduccionQueso();
+                int id = resultado.getInt("idProduccion");
+                produccion.setIdProduccion(id);
+                produccion.setCodInterno(resultado.getString("codInterno"));
+                LechePasteurizada lecheP = persLecheP.buscarPasteurizado(resultado.getInt("idLechePast"));
+
+                if (lecheP instanceof LechePasteurizada) {
+                    produccion.setLechep(lecheP);
+                }
+
+                Producto producto = persProducto.buscarProducto(resultado.getInt("idProducto"));
+                if (producto instanceof Producto) {
+                    produccion.setProducto(producto);
+                }
+
+                produccion.setRendimiento(resultado.getInt("rendimiento"));
+                produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
+                produccion.setFecha(resultado.getString("fecha"));
+                produccion.setLitros(resultado.getInt("litros"));
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
+                if (encargado instanceof Empleado) {
+                    produccion.setEncargado(encargado);
+                }
+                produccion.setHoraInicio(resultado.getString("horaInicio"));
+                produccion.setHoraFin(resultado.getString("horaFin"));
+                produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
+                produccion.setNroTacho(resultado.getInt("NroTacho"));
+
+                produccion.setTempPastQueso(resultado.getInt("tempPastQueso"));
+                produccion.setTiempoReposoFermento(resultado.getString("tiempoReposoFermento"));
+                produccion.setTempReposoFermento(resultado.getInt("tempReposoFermento"));
+                produccion.setTipoCuajoObtenido(resultado.getString("tipoCuajoObtenido"));
+                produccion.setTiempoCuajado(resultado.getString("tiempoCuajado"));
+                produccion.setTempAlCuajar(resultado.getInt("tempAlCuajar"));
+                produccion.setCantCuajoObtenido(resultado.getInt("cantCuajoObtenido"));
+                produccion.setTipoDeGrano(resultado.getString("tipoDeGrano"));
+                produccion.setLitrosSueroObtenidos(resultado.getInt("litrosSueroObtenidos"));
+                produccion.setTiempoAgregadoAgua(resultado.getString("tiempoAgregadoAgua"));
+                produccion.setTempAgua(resultado.getInt("tempAgua"));
+                produccion.setTempCuajoFinal(resultado.getInt("tempCuajoFinal"));
+                produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
+                produccion.setAcidesFermento(resultado.getInt("acidesFermento")); 
+
+                List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
+                produccion.setListaEmpleados(empleados);
+
+                List<LineaInsumo> insumos = persProduccion.listarInsumoXProduccion(id);
+                produccion.setListaInsumos(insumos);
+                lista.add(produccion);
+            }
+            return lista;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+
+        }
+    }
+    
 }
 
 /*private void listarInfoEspecifica(ProduccionManteca produccion){

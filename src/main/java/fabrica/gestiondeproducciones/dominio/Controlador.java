@@ -288,6 +288,26 @@ public class Controlador {
     
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis Queso">    
+    public boolean altaAnalisisQueso(AnalisisQueso analisis){
+       return persistencia.altaAnalisisQueso(analisis);
+    }
+    
+    public List listarAnalisisQueso(){
+        return persistencia.listarAnalisisQueso();
+    }
+    
+   
+    public boolean modificarAnalisisQueso(AnalisisQueso analisis){
+       return persistencia.modificarAnalisisQueso(analisis);
+    }
+    
+    public AnalisisQueso buscarAnalisisQueso(int id){
+        return persistencia.buscarAnalisisQueso(id);
+    }
+    
+    // </editor-fold>    
+    
     // <editor-fold defaultstate="collapsed" desc="Produccion">
 
     public boolean altaProduccion(Produccion produccion){
@@ -360,5 +380,9 @@ public class Controlador {
     public boolean modificarProduccionQueso(ProduccionQueso produccion){
         return persistencia.modificarProduccionQueso(produccion);
     }    
+    
+    public List listarQuesoPendienteAnalizar(){
+        return persistencia.listarQuesoPendienteAnalizar();
+    }
     // </editor-fold>  
 }
