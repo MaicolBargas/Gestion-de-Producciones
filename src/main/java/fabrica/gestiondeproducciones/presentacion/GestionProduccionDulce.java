@@ -5,9 +5,9 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
+import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
-import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class GestionProduccionQueso extends javax.swing.JInternalFrame {
+public class GestionProduccionDulce extends javax.swing.JInternalFrame {
 
     Controlador controlador = new Controlador();
     DefaultTableModel modelo = new DefaultTableModel();
@@ -32,7 +32,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
     DefaultTableModel modeloInsumosAgregar = new DefaultTableModel();
     DefaultTableModel modeloInsumosUtilizados = new DefaultTableModel();
     Utilidades utilidad = new Utilidades();
-    ProduccionQueso produccion = new ProduccionQueso();
+    ProduccionDulce produccion = new ProduccionDulce();
     List<Empleado> listaEmpleados = new ArrayList<>();
     List<LineaInsumo> listaInsumosLinea = new ArrayList<>();
     int idEncargadoobtener;
@@ -46,14 +46,13 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaInsumos;
     int idProduccionObtenido;
 
-    public GestionProduccionQueso() {
+    public GestionProduccionDulce() {
         initComponents();
         listar();
         listarLeche();
-        listarProductos();
+      inicializarProductos();
         listarAgregarEmpleado();
         listarAgregarInsumo();
-        
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
 
@@ -64,7 +63,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
 
         limpiarTabla();
         cargarFecha();
-        List<ProduccionQueso> lista = controlador.listarProduccionesQueso();
+        List<ProduccionDulce> lista = controlador.listarProduccionesDulce();
   
         modelo = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto = new Object[5];
@@ -87,27 +86,19 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
 
     private void listarLeche() {
         cbxLeche.removeAllItems();
-        List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
+        List<LechePasteurizada> leche = controlador.listarPasteurizados();
         for (LechePasteurizada t : leche) {
-            cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Litros: "
-                    + "" + t.getLitros()+"l");
+            cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " - : "
+                    + "" + t.getLitros() + "l");
         }
     }
-private void listarLecheModificar(LechePasteurizada lechePast ) {
-        cbxLeche.removeAllItems();
-        List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
-        leche.add(lechePast);
-        for (LechePasteurizada t : leche) {
-            cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Litros: "
-                    + "" + t.getLitros()+"-L");
-        }
-    }
-    private void listarProductos() {
+
+    /*private void listarProductos() {
         List<Producto> productos = controlador.listarProductos();
         for (Producto t : productos) {
             cbxProducto.addItem(t.getId() + " - " + t.getNombre());
         }
-    }
+    }*/
 
     private void listarAgregarEmpleado() {
         limpiarTablaEmpleados();
@@ -209,23 +200,10 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             i = - 1;
         }
     }
-    
-    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
-        
-        for (int i = 0; i < comboBox.getItemCount(); i++) {
-            String item = comboBox.getItemAt(i).toString();
-            String[] parts = item.split(" - ");
-        
-            if (parts[0].trim().equals(idBuscado)) {
-                comboBox.setSelectedIndex(i);
-                break;
-            }
-        }
-    }
 
+   
     
     private void limpiarFormulario() {
-    
         this.txtCantidadInsumo.setText("");
         this.txtCodigoInterno.setText("");
         this.txtEncargado.setText("");
@@ -236,21 +214,11 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         this.txtNroTacho.setText("");
         this.txtTiempoTrabajado.setText("");
         this.txtObtenidos.setText("");
-        this.txtTiempoReposoFermento.setText("");
-        this.txtTempReposoFermento.setText("");
-        this.txtTipoCuajoObtenido.setText("");
-        this.txtCantidadCuajoObtenido.setText("");
+        this.txtPhSn.setText("");
+        this.txtPhNeut.setText("");
+        this.txtLitrosSuero.setText("");
+        
         this.txtLitros.setText("");
-        this.txtTempPastQueso.setText("");
-        this.txtTempAlCuajar.setText("");
-        this.txtSueroObtenido.setText("");
-        this.txtTiempoAgregadoAgua.setText("");
-        this.txtxTempAgua.setText("");
-        this.txtTempCuajoFinal.setText("");
-        this.txtTipoGrano.setText("");
-        this.txtTiempoCuajado.setText("");
-        this.txtUnidadesObtenidas.setText("");
-        this.txtAcidesFermento.setText("");
         idEncargado = -1;
         idEncargadoobtener = -1;
         idEmpleado = -1;
@@ -258,7 +226,6 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         idInsumo = -1;
         limpiarTablaEmpleadosTrabajaron();
         limpiarTablaInsumosUtilizados();
-        listarLeche();
         listaEmpleados.clear();
         listaInsumosLinea.clear();
 
@@ -297,7 +264,17 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         fila.setRowFilter(rf);
     }
     
-   
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            String item = comboBox.getItemAt(i).toString();
+            String[] parts = item.split(" - ");
+        
+            if (parts[0].trim().equals(idBuscado)) {
+                comboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
     
    
     // </editor-fold>  
@@ -332,15 +309,18 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         jLabel49 = new javax.swing.JLabel();
         txtNroTacho = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
-        txtTiempoReposoFermento = new javax.swing.JTextField();
+        txtPhSn = new javax.swing.JTextField();
         jLabel52 = new javax.swing.JLabel();
-        txtTempReposoFermento = new javax.swing.JTextField();
+        txtPhNeut = new javax.swing.JTextField();
         jLabel55 = new javax.swing.JLabel();
-        txtTipoCuajoObtenido = new javax.swing.JTextField();
-        jLabel53 = new javax.swing.JLabel();
-        txtCantidadCuajoObtenido = new javax.swing.JTextField();
+        txtLitrosSuero = new javax.swing.JTextField();
         txtLitros = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        btnAlta = new javax.swing.JButton();
+        btnBaja = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tablaProducciones = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
@@ -372,33 +352,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         txtCantidadInsumo = new javax.swing.JTextField();
         btnAgregarInsumo = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        btnAlta = new javax.swing.JButton();
-        btnBaja = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
-        jLabel56 = new javax.swing.JLabel();
-        jLabel57 = new javax.swing.JLabel();
-        jLabel58 = new javax.swing.JLabel();
-        jLabel59 = new javax.swing.JLabel();
-        jLabel60 = new javax.swing.JLabel();
-        txtTiempoCuajado = new javax.swing.JTextField();
-        txtSueroObtenido = new javax.swing.JTextField();
-        txtTiempoAgregadoAgua = new javax.swing.JTextField();
-        txtTipoGrano = new javax.swing.JTextField();
-        txtTempAlCuajar = new javax.swing.JTextField();
-        jLabel62 = new javax.swing.JLabel();
-        jLabel63 = new javax.swing.JLabel();
-        txtTempPastQueso = new javax.swing.JTextField();
-        txtxTempAgua = new javax.swing.JTextField();
         cbxProducto = new javax.swing.JComboBox<>();
-        jLabel64 = new javax.swing.JLabel();
-        txtTempCuajoFinal = new javax.swing.JTextField();
-        jLabel65 = new javax.swing.JLabel();
-        jLabel66 = new javax.swing.JLabel();
-        txtAcidesFermento = new javax.swing.JTextField();
-        txtUnidadesObtenidas = new javax.swing.JTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -419,7 +373,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
         txtCodigoInterno.setEditable(false);
 
-        jLabel42.setText("Leche Pasteurizada:");
+        jLabel42.setText("Obtencion de Crema");
 
         jLabel44.setText("Producto:");
 
@@ -429,6 +383,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
         jLabel45.setText("Kg/L Obtenidos:");
 
+        txtObtenidos.setEditable(false);
         txtObtenidos.setToolTipText("");
 
         jLabel50.setText("Fecha:");
@@ -456,31 +411,79 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
         txtNroTacho.setToolTipText("");
 
-        jLabel51.setText("Tiempo Reposo Fermento:");
+        jLabel51.setText("pH Leche Sin Neutralizar:");
 
-        txtTiempoReposoFermento.setToolTipText("");
+        txtPhSn.setToolTipText("");
 
-        jLabel52.setText("Temp Reposo Fermento:");
+        jLabel52.setText("pH Leche Neutralizada:");
 
-        txtTempReposoFermento.setToolTipText("");
+        txtPhNeut.setToolTipText("");
 
-        jLabel55.setText("Tipo Cuajo Obtenido:");
+        jLabel55.setText("Litros de Suero Agregados:");
 
-        txtTipoCuajoObtenido.setToolTipText("");
-
-        jLabel53.setText("Litros Suero Obtenido:");
-
-        txtCantidadCuajoObtenido.setToolTipText("");
-        txtCantidadCuajoObtenido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCantidadCuajoObtenidoActionPerformed(evt);
-            }
-        });
+        txtLitrosSuero.setToolTipText("");
 
         txtLitros.setEditable(false);
         txtLitros.setToolTipText("");
 
         jLabel4.setText("Litros Leche:");
+
+        btnAlta.setText("Alta");
+        btnAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAltaActionPerformed(evt);
+            }
+        });
+
+        btnBaja.setText("Baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBajaActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(btnAlta)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLimpiar)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnBaja)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnModificar)))
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnLimpiar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAlta)
+                    .addComponent(btnBaja)
+                    .addComponent(btnModificar))
+                .addGap(17, 17, 17))
+        );
 
         tablaProducciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -692,7 +695,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(btnEliminarEmpleado)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -830,74 +833,6 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 163, Short.MAX_VALUE)
-        );
-
-        btnAlta.setText("Alta");
-        btnAlta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAltaActionPerformed(evt);
-            }
-        });
-
-        btnBaja.setText("Baja");
-        btnBaja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBajaActionPerformed(evt);
-            }
-        });
-
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-
-        btnLimpiar.setText("Limpiar");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(btnAlta)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiar)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnBaja)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar)))
-                .addContainerGap(53, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnLimpiar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAlta)
-                    .addComponent(btnBaja)
-                    .addComponent(btnModificar))
-                .addGap(17, 17, 17))
-        );
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -908,22 +843,17 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel30)
                 .addGap(415, 415, 415))
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminarInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -936,7 +866,8 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(btnEliminarInsumo))
+                        .addComponent(btnEliminarInsumo)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -946,100 +877,12 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
 
-        jLabel56.setText("Cantidad Cuajo Obtenido:");
-
-        jLabel57.setText("Tipo Grano Obtenido:");
-
-        jLabel58.setText("Tiempo Agregado Agua:");
-
-        jLabel59.setText("Tiempo Cuajado:");
-
-        jLabel60.setText("Temperatura al Cuajar:");
-
-        txtTiempoCuajado.setToolTipText("");
-        txtTiempoCuajado.addActionListener(new java.awt.event.ActionListener() {
+        cbxProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTiempoCuajadoActionPerformed(evt);
-            }
-        });
-
-        txtSueroObtenido.setToolTipText("");
-        txtSueroObtenido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSueroObtenidoActionPerformed(evt);
-            }
-        });
-
-        txtTiempoAgregadoAgua.setToolTipText("");
-        txtTiempoAgregadoAgua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTiempoAgregadoAguaActionPerformed(evt);
-            }
-        });
-
-        txtTipoGrano.setToolTipText("");
-        txtTipoGrano.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTipoGranoActionPerformed(evt);
-            }
-        });
-
-        txtTempAlCuajar.setToolTipText("");
-        txtTempAlCuajar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTempAlCuajarActionPerformed(evt);
-            }
-        });
-
-        jLabel62.setText("Temp Past Queso:");
-
-        jLabel63.setText("Temp Cuajo Final:");
-
-        txtTempPastQueso.setToolTipText("");
-        txtTempPastQueso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTempPastQuesoActionPerformed(evt);
-            }
-        });
-
-        txtxTempAgua.setToolTipText("");
-        txtxTempAgua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtxTempAguaActionPerformed(evt);
-            }
-        });
-
-        jLabel64.setText("Temp  Agua:");
-
-        txtTempCuajoFinal.setToolTipText("");
-        txtTempCuajoFinal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTempCuajoFinalActionPerformed(evt);
-            }
-        });
-
-        jLabel65.setText("Unidades Obtenidas:");
-
-        jLabel66.setText("Acides Fermento:");
-
-        txtAcidesFermento.setToolTipText("");
-        txtAcidesFermento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAcidesFermentoActionPerformed(evt);
-            }
-        });
-
-        txtUnidadesObtenidas.setToolTipText("");
-        txtUnidadesObtenidas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUnidadesObtenidasActionPerformed(evt);
+                cbxProductoActionPerformed(evt);
             }
         });
 
@@ -1048,108 +891,70 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtUnidadesObtenidas, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel44)
+                            .addComponent(jLabel43)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel66)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtAcidesFermento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel44)
-                                    .addComponent(jLabel43)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtLitros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtIRendimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(cbxProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel42)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbxLeche, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel41)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCodigoInterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel50)
-                                    .addComponent(jLabel46)
-                                    .addComponent(jLabel47)
-                                    .addComponent(jLabel48)
-                                    .addComponent(jLabel54)
-                                    .addComponent(jLabel49)
-                                    .addComponent(jLabel45))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtObtenidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEncargado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHoraInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTiempoTrabajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel63)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTempCuajoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel65, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel62)
-                                                .addGap(81, 81, 81))
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel60)
-                                                    .addGap(12, 12, 12))
-                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel52)
-                                                    .addComponent(jLabel51)
-                                                    .addComponent(jLabel55)
-                                                    .addComponent(jLabel59)
-                                                    .addComponent(jLabel56)
-                                                    .addComponent(jLabel57)
-                                                    .addComponent(jLabel53)
-                                                    .addComponent(jLabel58)))
-                                            .addComponent(jLabel64))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtTempPastQueso, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtTiempoReposoFermento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtTempReposoFermento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtTipoCuajoObtenido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtCantidadCuajoObtenido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtSueroObtenido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtTiempoCuajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtTiempoAgregadoAgua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtTipoGrano, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtxTempAgua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtTempAlCuajar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                    .addComponent(txtLitros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIRendimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbxProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel42)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxLeche, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel50)
+                            .addComponent(jLabel46)
+                            .addComponent(jLabel47)
+                            .addComponent(jLabel48)
+                            .addComponent(jLabel54)
+                            .addComponent(jLabel52)
+                            .addComponent(jLabel55)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel49))
+                            .addComponent(jLabel45))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtObtenidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEncargado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoraInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTiempoTrabajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPhSn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPhNeut, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLitrosSuero, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 2, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel41)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCodigoInterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addContainerGap(386, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1198,7 +1003,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                             .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1213,64 +1018,22 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                             .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel62, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTempPastQueso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTiempoReposoFermento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPhSn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTempReposoFermento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPhNeut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTipoCuajoObtenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLitrosSuero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel59, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTiempoCuajado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTempAlCuajar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCantidadCuajoObtenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel57, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTipoGrano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtSueroObtenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTiempoAgregadoAgua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtxTempAgua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel64, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTempCuajoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel65, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUnidadesObtenidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel66, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAcidesFermento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(44, 44, 44)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         PanelScroll.setViewportView(jPanel1);
@@ -1279,16 +1042,13 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(PanelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1776, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(PanelScroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1529, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1285, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(PanelScroll))
         );
 
         pack();
@@ -1298,16 +1058,11 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
         idProduccionObtenido=id;
         
-        ProduccionQueso prod = controlador.buscarProduccionQueso(id);
+        ProduccionManteca prod = controlador.buscarProduccionManteca(id);
         txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
         txtCodigoInterno.setText(prod.getCodInterno());
         if (prod.getLechep() instanceof LechePasteurizada) {
-            listarLecheModificar(prod.getLechep());
             seleccionarEnComboBox(prod.getLechep().getId()+"",cbxLeche);            
-        }
-        if (prod.getProducto() instanceof Producto) {
-            
-            seleccionarEnComboBox(prod.getProducto().getId()+"",cbxProducto);            
         }
         txtIRendimiento.setText(""+prod.getRendimiento());
         txtLitros.setText(prod.getLitros() + "");
@@ -1318,27 +1073,14 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             txtEncargado.setText(prod.encargadoToString());
             idEncargado = prod.getEncargado().getId();
         }
-        
+        txtHoraInicio.setText(prod.getHoraInicio());
+        txtHoraFin.setText(prod.getHoraFin());
+        txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
+        txtNroTacho.setText(prod.getNroTacho() + "");
+        txtPhSn.setText(prod.getHoraComienzoBatido());
+        txtPhNeut.setText(prod.getHoraFinBatido());
+        txtLitrosSuero.setText(prod.getTiempoTotalBatido());
        
-       
-        this.txtHoraFin.setText(prod.getHoraFin());
-        this.txtHoraInicio.setText(prod.getHoraInicio());
-        this.txtNroTacho.setText(prod.getNroTacho()+"");
-        this.txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
-        this.txtTiempoReposoFermento.setText(""+prod.getTiempoReposoFermento());
-        this.txtTempReposoFermento.setText(prod.getTempReposoFermento()+"");
-        this.txtTipoCuajoObtenido.setText(prod.getTipoCuajoObtenido());
-        this.txtCantidadCuajoObtenido.setText(prod.getCantCuajoObtenido()+"");
-        this.txtTempPastQueso.setText(""+prod.getTempPastQueso());
-        this.txtTempAlCuajar.setText(prod.getTempAlCuajar()+"");
-        this.txtSueroObtenido.setText(""+prod.getLitrosSueroObtenidos());
-        this.txtTiempoAgregadoAgua.setText(""+prod.getTiempoAgregadoAgua());
-        this.txtxTempAgua.setText(""+prod.getTempAgua());
-        this.txtTempCuajoFinal.setText(""+prod.getTempCuajoFinal());
-        this.txtTiempoCuajado.setText(prod.getTiempoCuajado());
-        this.txtTipoGrano.setText(prod.getTipoDeGrano());
-        this.txtUnidadesObtenidas.setText(prod.getUnidadesObtenidas()+"");
-        this.txtAcidesFermento.setText(prod.getAcidesFermento()+"");
         listaEmpleados = prod.getListaEmpleados();
         listaInsumosLinea = prod.getListaInsumos();       
         
@@ -1355,27 +1097,17 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
-            String CodigoInterno = "Q" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtTempCuajoFinal.getText() + txtNroTacho.getText();
-            int kgObtenidos=utilidad.validarNumericos(txtObtenidos.getText(),"Kg Obtenidos",false);
+            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtNroTacho.getText();
             
-            String tiempoReposoFermento=utilidad.validarHora(txtTiempoReposoFermento.getText(),"Tiempo de Reposo del Fermento"); 
-            int tempPastQueso=utilidad.validarNumericos(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false);
-            int tempReposoFermento= utilidad.validarNumericos(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false);
-            String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido",false);
-            String tiempoCuajado=utilidad.validarHora(txtTiempoCuajado.getText(),"Tiempo de Cuajado");
-            int tempAlCuajar=utilidad.validarNumericos(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false);
-            int cantCuajoObtenido=utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(),"Cantidad de Cuajo Obtenido",false);
-            String tipoGrano= utilidad.sanitizarCampos(txtTipoGrano.getText(),"Tipo de Grano Obtenido",false);
-            int sueroObtenido=utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido",false);
-            String tiempoAgregadoAgua=utilidad.validarHora(txtTiempoAgregadoAgua.getText(),"Tiempo de Agregado de Agua");
-            int tempAgua=utilidad.validarNumericos(txtxTempAgua.getText(),"Temperatura de Agua", false);
-            int tempCuajoFinal=utilidad.validarNumericos(txtTempCuajoFinal.getText(),"Unidades Obtenidas",false);
-            int unidadesObtenidas= utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            int acidesFermento= utilidad.validarNumericos(txtAcidesFermento.getText(),"Acides de Fermento",false);
+            Float phLecheSn = utilidad.validarNumericosFloat(txtPhSn.getText(), "pH de Leche sin Neutralizar",false);
+            Float phLecheNeut = utilidad.validarNumericosFloat(txtPhNeut.getText(), "pH de Leche Neutralizada",false);
+            int litrosSuero= utilidad.validarNumericos(txtLitrosSuero.getText(),"Litros de Suero Agregado",false);
+            
           
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
             
+
             try {
                 Empleado empleado = controlador.buscarEmpleado(idEncargado);
                 
@@ -1390,7 +1122,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            int litros =  lechep.getLitros();
+            int litros = utilidad.validarNumericos(lechep.getLitros()+"","Litros",false);
            
             if (lechep instanceof LechePasteurizada) {
 
@@ -1399,21 +1131,9 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
             
-            if(acidesFermento<14&&acidesFermento>0){
-                    System.out.println("ACIDES  "+acidesFermento);
-                    produccion.setAcidesFermento(acidesFermento);
-            }
-            else{
-                throw new Exception("El valor de acides del fermento debe de estar contenido entre 0.0 y 14.0");
-            }
             
-            if(kgObtenidos>(litros/4)){
-                throw new Exception("Los Kg obtenidos no son coherentes respecto a la cantidad de materia prima utilizada(Litros de Leche)");
-            }
-           
-            
-            float rendimiento = ((float) kgObtenidos / (litros)) * 100; // Usa división en coma flotante
-            
+            int kgObtenidos = 100;
+            float rendimiento = ((float) kgObtenidos / litros) * 100; // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);
@@ -1429,30 +1149,17 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             produccion.setTiempoTrabajado(TiempoTrabajado);
             produccion.setNroTacho(nroTacho);
             
-            produccion.setTempPastQueso(tempPastQueso);
-            produccion.setTiempoReposoFermento(tiempoReposoFermento);
-            produccion.setTempReposoFermento(tempReposoFermento);
-            produccion.setTipoCuajoObtenido(tipoCuajo);
-            produccion.setTiempoCuajado(tiempoCuajado);
-            produccion.setTempAlCuajar(tempAlCuajar);
-            produccion.setCantCuajoObtenido(cantCuajoObtenido);
-            produccion.setTipoDeGrano(tipoGrano);
-            produccion.setLitrosSueroObtenidos(sueroObtenido);
-            produccion.setTiempoAgregadoAgua(tiempoAgregadoAgua);
-            produccion.setTempAgua(tempAgua);
-            produccion.setTempCuajoFinal(tempCuajoFinal);
-            produccion.setUnidadesObtenidas(unidadesObtenidas);
-        
+            produccion.setPhLechSn(phLecheSn);
+            produccion.setPhLecheNeut(phLecheNeut);
+            produccion.setLitrosSuero(litrosSuero);
            
             
-            
-            
 
-            boolean alta = controlador.altaProduccionQueso(produccion);
+            boolean alta = controlador.altaProduccionDulce(produccion);
             if (alta) {
 
                 JOptionPane.showMessageDialog(null, "Produccion dada de alta.");
-                
+                utilidad.actualizarLitros(lechep, litros);
                 limpiarFormulario();
                 listar();
                 listarLeche();
@@ -1477,7 +1184,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 }
                 listarLineaInsumos(listaInsumosLinea);
             } else {
-                throw new Exception("Debe seleccionar un Insumo de la lista");
+                throw new Exception("Debe seleccionar un empleado de la lista");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
@@ -1522,7 +1229,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
-            boolean baja = controlador.bajaProduccion(id, "produccion_queso");
+            boolean baja = controlador.bajaProduccion(id, "produccion_manteca");
             if (baja) {
                 JOptionPane.showMessageDialog(null, "Produccion dada de baja.");
                 limpiarFormulario();
@@ -1535,7 +1242,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try{   
-            int id= Integer.parseInt(txtId.getText());
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
             String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
@@ -1543,31 +1250,21 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
-            String CodigoInterno = "Q" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtTempCuajoFinal.getText() + txtNroTacho.getText();
-            int kgObtenidos=utilidad.validarNumericos(txtObtenidos.getText(),"Kg Obtenidos",false);
+            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtNroTacho.getText();
             
-            String tiempoReposoFermento=utilidad.validarHora(txtTiempoReposoFermento.getText(),"Tiempo de Reposo del Fermento"); 
-            int tempPastQueso=utilidad.validarNumericos(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false);
-            int tempReposoFermento= utilidad.validarNumericos(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false);
-            String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido",false);
-            String tiempoCuajado=utilidad.validarHora(txtTiempoCuajado.getText(),"Tiempo de Cuajado");
-            int tempAlCuajar=utilidad.validarNumericos(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false);
-            int cantCuajoObtenido=utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(),"Cantidad de Cuajo Obtenido",false);
-            String tipoGrano= utilidad.sanitizarCampos(txtTipoGrano.getText(),"Tipo de Grano Obtenido",false);
-            int sueroObtenido=utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido",false);
-            String tiempoAgregadoAgua=utilidad.validarHora(txtTiempoAgregadoAgua.getText(),"Tiempo de Agregado de Agua");
-            int tempAgua=utilidad.validarNumericos(txtxTempAgua.getText(),"Temperatura de Agua", false);
-            int tempCuajoFinal=utilidad.validarNumericos(txtTempCuajoFinal.getText(),"Unidades Obtenidas",false);
-            int unidadesObtenidas= utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            int acidesFermento= utilidad.validarNumericos(txtAcidesFermento.getText(),"Acides de Fermento",false);
-            
+            Float phLecheSn = utilidad.validarNumericosFloat(txtPhSn.getText(), "pH de Leche sin Neutralizar",false);
+            Float phLecheNeut = utilidad.validarNumericosFloat(txtPhNeut.getText(), "pH de Leche Neutralizada",false);
+            int litrosSuero= utilidad.validarNumericos(txtLitrosSuero.getText(),"Litros de Suero Agregado",false);
+            int kgObtenidos=100;
+          
+
+            utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
             
             Controlador c= new Controlador();
-            ProduccionQueso produccion=c.buscarProduccionQueso(id);
+            ProduccionDulce produccion = c.buscarProduccionDulce(id);
             
             try {
                 Empleado empleado = controlador.buscarEmpleado(idEncargado);
-                
                 if (empleado instanceof Empleado) {
                     produccion.setEncargado(empleado);
                 } else {
@@ -1576,9 +1273,11 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             } catch (Exception e) {
                 throw new Exception("Debe buscar un encargado valido primero, por favor verifique");
             }
-
+            
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
+            
+          
             int litros =  lechep.getLitros();
            
             if (lechep instanceof LechePasteurizada) {
@@ -1587,22 +1286,11 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-             if(acidesFermento<14&&acidesFermento>0){
-                    System.out.println("ACIDES  "+acidesFermento);
-                    produccion.setAcidesFermento(acidesFermento);
-            }
-            else{
-                throw new Exception("El valor de acides del fermento debe de estar contenido entre 0.0 y 14.0");
-            }
-            
-            if(kgObtenidos>litros){
-                throw new Exception("Los Kg obtenidos no pueden ser mayor a la cantidad de materia prima utilizada(Litros de Leche)");
-            }
-           
-            
             float rendimiento = ((float) kgObtenidos / (litros)) * 100; // Usa división en coma flotante
-            String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
+              String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
+            //--------
+            
            produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
             produccion.setListaEmpleados(listaEmpleados);
@@ -1616,33 +1304,18 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             produccion.setTiempoTrabajado(TiempoTrabajado);
             produccion.setNroTacho(nroTacho);
             
-            produccion.setTempPastQueso(tempPastQueso);
-            produccion.setTiempoReposoFermento(tiempoReposoFermento);
-            produccion.setTempReposoFermento(tempReposoFermento);
-            produccion.setTipoCuajoObtenido(tipoCuajo);
-            produccion.setTiempoCuajado(tiempoCuajado);
-            produccion.setTempAlCuajar(tempAlCuajar);
-            produccion.setCantCuajoObtenido(cantCuajoObtenido);
-            produccion.setTipoDeGrano(tipoGrano);
-            produccion.setLitrosSueroObtenidos(sueroObtenido);
-            produccion.setTiempoAgregadoAgua(tiempoAgregadoAgua);
-            produccion.setTempAgua(tempAgua);
-            produccion.setTempCuajoFinal(tempCuajoFinal);
-            produccion.setUnidadesObtenidas(unidadesObtenidas);
-            produccion.setAcidesFermento(acidesFermento);
-            
-            
+            produccion.setPhLechSn(phLecheSn);
+            produccion.setPhLecheNeut(phLecheNeut);
+            produccion.setLitrosSuero(litrosSuero);
+           
 
-            boolean modificar = controlador.modificarProduccionQueso(produccion);
+            boolean modificar = controlador.modificarProduccionDulce(produccion);
             if (modificar) {
-               
-                JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
-                
+                JOptionPane.showMessageDialog(null, "Produccion modificada correctamente.");
                 limpiarFormulario();
                 listar();
                 listarLeche();
             }
-            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -1704,50 +1377,17 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         idEmpleadoEliminar = (int) tablaEmpleadosTrabajaron.getValueAt(fila, 0);
     }//GEN-LAST:event_tablaEmpleadosTrabajaronMouseClicked
 
-    private void txtCantidadCuajoObtenidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadCuajoObtenidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCantidadCuajoObtenidoActionPerformed
+    private void cbxProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxProductoActionPerformed
+       
 
-    private void txtTiempoCuajadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoCuajadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTiempoCuajadoActionPerformed
-
-    private void txtSueroObtenidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSueroObtenidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSueroObtenidoActionPerformed
-
-    private void txtTiempoAgregadoAguaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoAgregadoAguaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTiempoAgregadoAguaActionPerformed
-
-    private void txtTipoGranoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoGranoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTipoGranoActionPerformed
-
-    private void txtTempAlCuajarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempAlCuajarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTempAlCuajarActionPerformed
-
-    private void txtTempPastQuesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempPastQuesoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTempPastQuesoActionPerformed
-
-    private void txtxTempAguaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtxTempAguaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtxTempAguaActionPerformed
-
-    private void txtTempCuajoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempCuajoFinalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTempCuajoFinalActionPerformed
-
-    private void txtAcidesFermentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAcidesFermentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAcidesFermentoActionPerformed
-
-    private void txtUnidadesObtenidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnidadesObtenidasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUnidadesObtenidasActionPerformed
-
+    // Agregar tres valores al JComboBox
+    
+    }//GEN-LAST:event_cbxProductoActionPerformed
+private void inicializarProductos() {
+    cbxProducto.addItem("1 - Leche Entera");
+    cbxProducto.addItem("2 - Queso");
+    cbxProducto.addItem("3 - Yogur");
+}
    /* private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         int litrosDisponibles = lecheP.getCremaDisponible();
         lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
@@ -1786,19 +1426,8 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
-    private javax.swing.JLabel jLabel58;
-    private javax.swing.JLabel jLabel59;
-    private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
-    private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -1809,7 +1438,6 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
@@ -1820,8 +1448,6 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
     private javax.swing.JTable tablaEmpleadosTrabajaron;
     private javax.swing.JTable tablaInsumosAgregados;
     private javax.swing.JTable tablaProducciones;
-    private javax.swing.JTextField txtAcidesFermento;
-    private javax.swing.JTextField txtCantidadCuajoObtenido;
     private javax.swing.JTextField txtCantidadInsumo;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;
@@ -1833,20 +1459,11 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
     private javax.swing.JTextField txtIRendimiento;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLitros;
+    private javax.swing.JTextField txtLitrosSuero;
     private javax.swing.JTextField txtNroTacho;
     private javax.swing.JTextField txtObtenidos;
-    private javax.swing.JTextField txtSueroObtenido;
-    private javax.swing.JTextField txtTempAlCuajar;
-    private javax.swing.JTextField txtTempCuajoFinal;
-    private javax.swing.JTextField txtTempPastQueso;
-    private javax.swing.JTextField txtTempReposoFermento;
-    private javax.swing.JTextField txtTiempoAgregadoAgua;
-    private javax.swing.JTextField txtTiempoCuajado;
-    private javax.swing.JTextField txtTiempoReposoFermento;
+    private javax.swing.JTextField txtPhNeut;
+    private javax.swing.JTextField txtPhSn;
     private javax.swing.JTextField txtTiempoTrabajado;
-    private javax.swing.JTextField txtTipoCuajoObtenido;
-    private javax.swing.JTextField txtTipoGrano;
-    private javax.swing.JTextField txtUnidadesObtenidas;
-    private javax.swing.JTextField txtxTempAgua;
     // End of variables declaration//GEN-END:variables
 }

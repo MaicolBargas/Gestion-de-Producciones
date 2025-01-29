@@ -15,6 +15,11 @@ public class Utilidades {
             if(!valor.isEmpty() || permiteVacios){
                try{
                 Integer numero = Integer.valueOf(valor);
+                
+                if (numero <= 0) {
+                    throw new Exception("El campo " + nombre + " debe ser mayor a 0.");
+                }
+                
                 return numero;
                }catch(NumberFormatException e){
                 throw new Exception("El campo "+nombre+" no es numerico, por favor verifique.");
@@ -26,6 +31,30 @@ public class Utilidades {
            throw new Exception(e.getMessage());
         }
     }
+    
+    public Float validarNumericosFloat(String valor, String nombre, Boolean permiteVacios) throws Exception {
+    try {
+        if (!valor.isEmpty() || permiteVacios) {
+            try {
+                Float numero = Float.valueOf(valor);
+                
+               
+                if (numero <= 0) {
+                    throw new Exception("El campo " + nombre + " debe ser mayor a 0.");
+                }
+                
+                return numero;
+            } catch (NumberFormatException e) {
+                throw new Exception("El campo " + nombre + " no es numérico, por favor verifique.");
+            }
+        } else {
+            throw new Exception("El campo " + nombre + " no puede estar vacío.");
+        }
+    } catch (Exception e) {
+        throw new Exception(e.getMessage());
+    }
+}
+
     
     
     public String sanitizarCampos(String valor, String nombre, Boolean permiteVacios) throws Exception{
@@ -220,6 +249,18 @@ public void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
         c.modificarPasteurizado(lecheP);
     }
+
+public Float validarTemperatura(Float temperatura) throws Exception{
+    if(temperatura<120)
+    {
+        return temperatura;
+        
+    }
+    else
+    {
+        throw new Exception("La temperatura Nunca alcanza valores tan altos, Verificar");
+    }
+}
 }
 
 

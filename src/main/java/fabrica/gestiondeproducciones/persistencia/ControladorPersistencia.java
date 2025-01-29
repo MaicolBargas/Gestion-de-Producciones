@@ -332,6 +332,8 @@ public class ControladorPersistencia {
     PersistenciaProduccionManteca persistenciaProduccionManteca= new PersistenciaProduccionManteca();
     PersistenciaProduccionYogur persistenciaProduccionYogur=new PersistenciaProduccionYogur();
     PersistenciaProduccionQueso persistenciaProduccionQueso= new PersistenciaProduccionQueso();
+    PersistenciaProduccionDulce persistenciaProduccionDulce= new PersistenciaProduccionDulce();
+    PersistenciaEnvases persistenciaEnvases= new PersistenciaEnvases();
     
     public boolean altaProduccion(Produccion produccion){
         return persistenciaProduccion.altaProduccion(produccion);
@@ -409,7 +411,51 @@ public class ControladorPersistencia {
         return persistenciaProduccionQueso.listarQuesoPendienteAnalizar();
     }
     // </editor-fold>  
+     // <editor-fold defaultstate="collapsed" desc="Produccion Dulce">
+    public boolean altaProduccionDulce(ProduccionDulce produccion)
+    {
+        return persistenciaProduccionDulce.altaProduccionDulce(produccion);
+    }
+    
+    public List listarProduccionesDulce(){
+        return persistenciaProduccionDulce.listarProduccionesDulce();
+    }
+    
+    public ProduccionDulce buscarProduccionDulce(int id){
+        return persistenciaProduccionDulce.buscarProduccionDulce(id);
+    }
+    
+    public boolean modificarProduccionDulce(ProduccionDulce produccion){
+        return persistenciaProduccionDulce.modificarProduccionDulce(produccion);
+    }
+    
+    public List listarDulcePendienteAnalizar(){
+        return persistenciaProduccionDulce.listarDulcePendienteAnalizar();
+    }
+    // </editor-fold> 
     
    // </editor-fold>  
    
+    // <editor-fold defaultstate="collapsed" desc="Envases Dulce">
+    public boolean altaEnvase(EnvasesDulce envase)
+    {
+        return persistenciaEnvases.altaEnvase(envase);
+    }
+    
+    public List listarEnvases(){
+        return persistenciaEnvases.listarEnvases();
+    }
+    
+    public EnvasesDulce buscarEnvase(int id){
+        return persistenciaEnvases.buscarEnvase(id);
+    }
+    
+    public boolean modificarEnvase(EnvasesDulce envase){
+        return persistenciaEnvases.modificarEnvase(envase);
+    }
+     public boolean bajaEnvase(int id){
+        return persistenciaEnvases.bajaEnvase(id);
+    }
+    
+    // </editor-fold>  
 }

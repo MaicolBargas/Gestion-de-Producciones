@@ -4,6 +4,7 @@ package fabrica.gestiondeproducciones.persistencia;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
+import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
@@ -17,7 +18,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 
-public class PersistenciaProduccionManteca {
+public class PersistenciaProduccionDulce {
     Conexion conexion = new Conexion();
     Connection con;
     PreparedStatement consulta;
@@ -29,13 +30,13 @@ public class PersistenciaProduccionManteca {
     ResultSet resultado;
 
     
-    public boolean altaProduccionManteca(ProduccionManteca produccion) {
+    public boolean altaProduccionDulce(ProduccionDulce produccion) {
     String sqlProduccion = "INSERT INTO produccion " + 
         "(codInterno, idLechePast,litros, idProducto, rendimiento, kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho) " + 
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
-    String sqlProduccionManteca = "INSERT INTO produccion_manteca " + 
-        "(idProduccion, comienzoBatido, finBatido, totalBatido, ormas) " + 
-        "VALUES (?, ?, ?, ?, ?)";
+    String sqlProduccionDulce = "INSERT INTO produccion_dulce" + 
+        "(idProduccion, phLecheSn, phLecheNeut, litrosSuero) " + 
+        "VALUES (?, ?, ?, ?)";
 
 
     try {
@@ -70,12 +71,12 @@ public class PersistenciaProduccionManteca {
         }
 
         // Preparar el segundo insert
-        consulta = con.prepareStatement(sqlProduccionManteca);
+        consulta = con.prepareStatement(sqlProduccionDulce);
         consulta.setInt(1, idProduccion);
-        consulta.setString(2, produccion.getHoraComienzoBatido());
-        consulta.setString(3, produccion.getHoraFinBatido());
-        consulta.setString(4, produccion.getTiempoTotalBatido());
-        consulta.setInt(5, produccion.getCantidad());
+        consulta.setFloat(2, produccion.getPhLechSn());
+        consulta.setFloat(3, produccion.getPhLechNeut());
+        consulta.setInt(4,produccion.getLitrosSuero());
+        
 
         // Ejecutar el segundo insert
         consulta.executeUpdate();
@@ -150,15 +151,15 @@ public class PersistenciaProduccionManteca {
         }
     }
     
-    public List listarProduccionesManteca() {
-        List<ProduccionManteca> lista = new ArrayList<>();
-        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_manteca pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL GROUP BY p.idProduccion;";
+    public List listarProduccionesDulce() {
+        List<ProduccionDulce> lista = new ArrayList<>();
+        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_dulce pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL GROUP BY p.idProduccion;";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
             while(resultado.next()){
-                ProduccionManteca produccion = new ProduccionManteca();
+                ProduccionDulce produccion = new ProduccionDulce();
                 int id = resultado.getInt("idProduccion");
                 produccion.setIdProduccion(id);
                 produccion.setCodInterno(resultado.getString("codInterno"));
@@ -185,10 +186,11 @@ public class PersistenciaProduccionManteca {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
-                produccion.setHoraComienzoBatido(resultado.getString("pm.comienzoBatido"));
-                produccion.setHoraFinBatido(resultado.getString("pm.finBatido"));
-                produccion.setTiempoTotalBatido(resultado.getString("pm.totalBatido"));
-                produccion.setCantidad(resultado.getInt("pm.ormas"));
+                
+                produccion.setPhLechSn(resultado.getFloat("pm.phLecheSn"));
+                produccion.setPhLecheNeut(resultado.getFloat("pm.phLecheNeut"));
+                produccion.setLitrosSuero(resultado.getInt("pm.litrosSuero"));
+                
                
                
                   
@@ -230,8 +232,8 @@ public class PersistenciaProduccionManteca {
     }*/
     
     
-    public ProduccionManteca buscarProduccionManteca(int id){
-        String sql = "SELECT * FROM produccion p INNER JOIN produccion_manteca pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1' and p.idProduccion=?";
+    public ProduccionDulce buscarProduccionDulce(int id){
+        String sql = "SELECT * FROM produccion p INNER JOIN produccion_dulce pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1' and p.idProduccion=?";
                 //"SELECT * FROM produccion WHERE idProduccion = ? AND activo = '1'";
         try{
             con = conexion.obtenerConexion();
@@ -240,7 +242,7 @@ public class PersistenciaProduccionManteca {
             resultado = consulta.executeQuery();
             
             while(resultado.next()){
-                ProduccionManteca produccion = new ProduccionManteca();
+                ProduccionDulce produccion = new ProduccionDulce();
                 produccion.setIdProduccion(id);
                 produccion.setCodInterno(resultado.getString("codInterno"));
                 LechePasteurizada lecheP = persLecheP.buscarPasteurizado(resultado.getInt("idLechePast"));
@@ -270,10 +272,9 @@ public class PersistenciaProduccionManteca {
                 
                
 //                listarInfoEspecifica(produccion);     
-                produccion.setHoraComienzoBatido(resultado.getString("comienzoBatido"));
-                produccion.setHoraFinBatido(resultado.getString("finBatido"));
-                produccion.setTiempoTotalBatido(resultado.getString("totalBatido"));
-                produccion.setCantidad(resultado.getInt("ormas"));
+                 produccion.setPhLechSn(resultado.getFloat("phLecheSn"));
+                produccion.setPhLecheNeut(resultado.getFloat("phLecheNeut"));
+                produccion.setLitrosSuero(resultado.getInt("litrosSuero"));
                 List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);                
                 produccion.setListaEmpleados(empleados);
                 
@@ -293,9 +294,9 @@ public class PersistenciaProduccionManteca {
         return null;
     }
     
-    public boolean modificarProduccionManteca(ProduccionManteca produccion){
+    public boolean modificarProduccionDulce(ProduccionDulce produccion){
         String sql = "UPDATE produccion SET codInterno = ?, idLechePast = ?, idProducto = ?, rendimiento = ?, kgLtsObt = ?, fecha = ?, encargadoId = ?, horaInicio = ? ,horaFin = ?, tiempoTrabajado = ?, nroTacho = ?, litros=? WHERE idProduccion = ?";
-        String sqlProduccionManteca = "UPDATE produccion_manteca SET comienzoBatido = ?, finBatido = ?, totalBatido = ?, ormas = ? WHERE idProduccion = ?";
+        String sqlProduccionDulce = "UPDATE produccion_dulce SET phLecheSn= ?, phLecheNeut= ?, litrosSuero= ? WHERE idProduccion = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -315,12 +316,12 @@ public class PersistenciaProduccionManteca {
              consulta.executeUpdate();
            
         
-            consulta = con.prepareStatement(sqlProduccionManteca);
-            consulta.setString(1, produccion.getHoraComienzoBatido());
-            consulta.setString(2, produccion.getHoraFinBatido());
-            consulta.setString(3, produccion.getTiempoTotalBatido());
-            consulta.setInt(4, produccion.getCantidad());
-            consulta.setInt(5, produccion.getIdProduccion());
+            consulta = con.prepareStatement(sqlProduccionDulce);
+            consulta.setFloat(1, produccion.getPhLechSn());
+            consulta.setFloat(2, produccion.getPhLechNeut());
+            consulta.setInt(3, produccion.getLitrosSuero());
+            
+            consulta.setInt(4, produccion.getIdProduccion());
             consulta.executeUpdate();
             persProduccion.actualizarEmpleadosxProduccion(produccion.getIdProduccion(), produccion.getListaEmpleados());
             persProduccion.actualizarInsumosxProduccion(produccion.getIdProduccion(), produccion.getListaInsumos());
@@ -337,15 +338,15 @@ public class PersistenciaProduccionManteca {
         }
     }
     
-    public List listarMantecaPendienteAnalizar(){
-        List<ProduccionManteca> lista = new ArrayList<>();
-        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_manteca pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL OR a.activo = '0' GROUP BY p.idProduccion;";
+    public List listarDulcePendienteAnalizar(){
+        List<ProduccionDulce> lista = new ArrayList<>();
+        String sql = "SELECT p.* FROM produccion p LEFT JOIN analisis a On p.idProduccion=a.idProduccion where p.activo='1' and a.activo='1' AND a.idProduccion IS NULL";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
             while(resultado.next()){
-                ProduccionManteca produccion = new ProduccionManteca();
+                ProduccionDulce produccion = new ProduccionDulce();
                 int id = resultado.getInt("idProduccion");
                 produccion.setIdProduccion(id);
                 produccion.setCodInterno(resultado.getString("codInterno"));

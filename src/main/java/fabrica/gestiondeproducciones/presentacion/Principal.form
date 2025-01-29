@@ -154,7 +154,23 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLeche4ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisLeche5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Produccion de Dulce"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLeche5ActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="menuEnvases">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Envases Dulce"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuEnvasesMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>

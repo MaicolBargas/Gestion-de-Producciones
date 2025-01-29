@@ -385,4 +385,48 @@ public class Controlador {
         return persistencia.listarQuesoPendienteAnalizar();
     }
     // </editor-fold>  
+    // <editor-fold defaultstate="collapsed" desc="Produccion Dulce">
+    public boolean altaProduccionDulce(ProduccionDulce produccionDulce){
+        return persistencia.altaProduccionDulce(produccionDulce);
+    }
+   
+    public List listarProduccionesDulce(){
+        return persistencia.listarProduccionesDulce();
+    }
+       
+    public ProduccionDulce buscarProduccionDulce(int id){
+        return persistencia.buscarProduccionDulce(id);
+    }
+    
+    public boolean modificarProduccionDulce(ProduccionDulce produccion){
+        return persistencia.modificarProduccionDulce(produccion);
+    }    
+    
+    public List listarDulcePendienteAnalizar(){
+        return persistencia.listarDulcePendienteAnalizar();
+    }
+    // </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="Envases Dulce">
+    public boolean altaEnvase(EnvasesDulce envase){
+        return persistencia.altaEnvase(envase);
+    }
+   
+    public List listarEnvases(){
+        return persistencia.listarEnvases();
+    }
+       
+    public EnvasesDulce buscarEnvase(int id){
+        return persistencia.buscarEnvase(id);
+    }
+    
+    public boolean modificarEnvase(EnvasesDulce envase){
+        return persistencia.modificarEnvase(envase);
+    }    
+    
+     public boolean bajaEnvase(int id) {
+        return persistencia.bajaEnvase(id);
+    }
+    // </editor-fold>  
+    
 }

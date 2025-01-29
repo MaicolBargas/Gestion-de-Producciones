@@ -3,7 +3,9 @@ package fabrica.gestiondeproducciones.persistencia;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
+import fabrica.gestiondeproducciones.dominio.EnvasesDulce;
 import fabrica.gestiondeproducciones.dominio.Insumo;
+import fabrica.gestiondeproducciones.dominio.LineaEnvase;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.Produccion;
 import fabrica.gestiondeproducciones.dominio.Silo;
@@ -27,6 +29,7 @@ public class PersistenciaProduccion {
     ResultSet resultado;
     String nombreTabla = "produccion";
     PersistenciaInsumo persInsumo = new PersistenciaInsumo();
+    PersistenciaEnvases persEnvase= new PersistenciaEnvases();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
     PersistenciaProducto persProducto = new PersistenciaProducto();
     
@@ -132,6 +135,8 @@ public class PersistenciaProduccion {
         }
     }
     
+    
+    
     public boolean bajaProduccion(int id, String tabla) throws Exception{
         String sql = "UPDATE produccion SET activo = 0 WHERE idProduccion = ?";       
         try{
@@ -222,7 +227,7 @@ public class PersistenciaProduccion {
         }
         return lista;
     }
-    
+     
     public void actualizarEmpleadosxProduccion(int idProduccion, List<Empleado> empleados){
         limpiarEmpleadosProduccion(idProduccion);
         try{
@@ -280,5 +285,84 @@ public class PersistenciaProduccion {
             }
         }
     }
+    
+    
+    
+    
+    public void agregarEnvase(int idProd,int idEnvase,int cantidad){
+        String sql = "INSERT INTO linea_envases" +"(idProduccion,idEnvase,cantidad) VALUES (?,?,?)";
+        
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, idProd);
+            consulta.setInt(2, idEnvase);
+            consulta.setInt(3,cantidad);
+            consulta.execute();
+        }catch(SQLException e){            
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+               JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    private void limpiarEnvasesProduccion(int idProduccion){
+        String sql = "DELETE FROM linea_envases WHERE idProduccion = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, idProduccion);
+            consulta.execute();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public List listarEnvaseXProduccion(int idProduccion){
+        List<LineaEnvase> lista = new ArrayList();
+        String sql = "SELECT * FROM linea_envase WHERE idProduccion = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, idProduccion);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                EnvasesDulce  envase = persEnvase.buscarEnvase(resultado.getInt("idEnvase"));
+                if( envase instanceof EnvasesDulce){
+                    int id = resultado.getInt("idLinea");
+                    int cantidad = resultado.getInt("cantidad");
+                    LineaEnvase linea = new LineaEnvase(id,envase,cantidad);
+                    lista.add(linea);
+                }
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    
+    public void actualizarEnvasexProduccion(int idProduccion, List<LineaEnvase> envases){
+        limpiarEnvasesProduccion(idProduccion);
+        try{
+            for(LineaEnvase envase : envases){                
+                agregarEnvase(idProduccion, envase.getEnvase().getId(),envase.getCantidad());
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+        }
+    }
+    
     
 }
