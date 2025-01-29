@@ -52,7 +52,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             objeto[5] = lista.get(i).getPoliformosTotales();
             objeto[6] = lista.get(i).getPoliformosFecales();
             objeto[7] = lista.get(i).getGrasa();
-            objeto[8] = lista.get(i).getAcidez();
+            objeto[8] = lista.get(i).getPh();
             objeto[9] = lista.get(i).getHumedad();
             objeto[10] = lista.get(i).getProduccion().getIdProduccion();
 
@@ -106,7 +106,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         txtPTotales.setText("");
         txtPFecales.setText("");
         txtGrasa.setText("");
-        txtAcidez.setText("");
+        txtPh.setText("");
         txtHumedad.setText("");
 
         txtIdProduccion.setText("");
@@ -169,7 +169,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         txtPTotales = new javax.swing.JTextField();
         txtPFecales = new javax.swing.JTextField();
         txtGrasa = new javax.swing.JTextField();
-        txtAcidez = new javax.swing.JTextField();
+        txtPh = new javax.swing.JTextField();
         txtHumedad = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -213,7 +213,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Grasa");
 
-        jLabel9.setText("Acidez");
+        jLabel9.setText("P.H.:");
 
         jLabel10.setText("Humedad");
 
@@ -273,7 +273,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtPFecales, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                             .addComponent(txtGrasa, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtAcidez, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPh, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtHumedad))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -318,7 +318,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtAcidez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -500,7 +500,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Acides", "Humedad", "Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "PH", "Humedad", "Produccion"
             }
         ) {
             Class[] types = new Class [] {
@@ -543,7 +543,6 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(51, 51, 51))))))
         );
@@ -595,7 +594,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            int acidez = utilidad.validarNumericos(txtAcidez.getText(), "Acidez", false);
+            int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionManteca produccion = controlador.buscarProduccionManteca(idProduccion); 
@@ -623,7 +622,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
            analisis.setPoliformosTotales(pTotales);
            analisis.setPoliformosFecales(pFecales);
            analisis.setGrasa(grasa);
-           analisis.setAcidez(acidez);
+           analisis.setPh(ph);
            analisis.setHumedad(humedad);
            
            if(produccion instanceof ProduccionManteca){
@@ -665,7 +664,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            int acidez = utilidad.validarNumericos(txtAcidez.getText(), "Acidez", false);
+            int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionManteca produccion = controlador.buscarProduccionManteca(idProduccion); 
@@ -694,7 +693,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
            analisis.setPoliformosTotales(pTotales);
            analisis.setPoliformosFecales(pFecales);
            analisis.setGrasa(grasa);
-           analisis.setAcidez(acidez);
+           analisis.setPh(ph);
            analisis.setHumedad(humedad);
            
            if(produccion instanceof ProduccionManteca){
@@ -733,7 +732,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         txtPTotales.setText(tablaAnalisis.getValueAt(fila, 5).toString());
         txtPFecales.setText(tablaAnalisis.getValueAt(fila,6).toString());
         txtGrasa.setText(tablaAnalisis.getValueAt(fila, 7).toString());
-        txtAcidez.setText(tablaAnalisis.getValueAt(fila, 8).toString());
+        txtPh.setText(tablaAnalisis.getValueAt(fila, 8).toString());
         txtHumedad.setText(tablaAnalisis.getValueAt(fila, 9).toString());
         int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 10).toString());
         ProduccionManteca produccion = controlador.buscarProduccionManteca(id);
@@ -784,7 +783,6 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaAnalisis;
     private javax.swing.JTable tablaProducciones;
-    private javax.swing.JTextField txtAcidez;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;
     private javax.swing.JTextField txtFecha;
@@ -797,5 +795,6 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtMos;
     private javax.swing.JTextField txtPFecales;
     private javax.swing.JTextField txtPTotales;
+    private javax.swing.JTextField txtPh;
     // End of variables declaration//GEN-END:variables
 }

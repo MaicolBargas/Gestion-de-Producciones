@@ -5,7 +5,6 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
-import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
@@ -102,10 +101,14 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         }
     }
     private void listarProductos() {
-        List<Producto> productos = controlador.listarProductos();
-        for (Producto t : productos) {
-            cbxProducto.addItem(t.getId() + " - " + t.getNombre());
-        }
+        cbxProducto.addItem("20 - Yogur bebible Frutilla");
+        cbxProducto.addItem("21 - Yogur bebible Durazno");
+        cbxProducto.addItem("22 - Yogur bebible Ananà");
+        cbxProducto.addItem("23 - Yogur bebible Banana");
+        cbxProducto.addItem("24 - Yogur batido Vainilla");
+        cbxProducto.addItem("25 - Yogur batido Natural");
+        cbxProducto.addItem("26 - Yogur batido Frutilla");
+        cbxProducto.addItem("27 - Yogur batido Durazno");
     }
 
     private void listarAgregarEmpleado() {
@@ -395,7 +398,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Produccion de Manteca");
+        setTitle("Produccion de Yogur");
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(2100000000, 2100000000));
         setPreferredSize(new java.awt.Dimension(1800, 1000));
@@ -908,7 +911,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 350, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminarInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)

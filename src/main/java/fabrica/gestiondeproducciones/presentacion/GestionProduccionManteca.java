@@ -6,7 +6,6 @@ import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
-import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
@@ -44,12 +43,11 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
     int idProduccionObtenido;
-
+    int idManteca = 19;
     public GestionProduccionManteca() {
         initComponents();
         listar();
         listarLeche();
-        setManteca();
         listarAgregarEmpleado();
         listarAgregarInsumo();
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
@@ -92,12 +90,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         }
     }
 
-    /*private void listarProductos() {
-        List<Producto> productos = controlador.listarProductos();
-        for (Producto t : productos) {
-            cbxProducto.addItem(t.getId() + " - " + t.getNombre());
-        }
-    }*/
 
     private void listarAgregarEmpleado() {
         limpiarTablaEmpleados();
@@ -200,23 +192,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         }
     }
 
-    private void setManteca(){
-        List<Producto> lista= new ArrayList<>();
-       
-        Controlador c= new Controlador();
-        lista=c.listarProductos();
-        String manteca="a";
-        for(Producto p:lista){
-            if(p.getNombre().toLowerCase().equals("manteca"))
-            {
-                manteca=p.getId()+" - "+p.getNombre();
-                this.txtProducto.setText(manteca);
-                break;
-            }
-        }
-        
-    }
-    
     private void limpiarFormulario() {
         this.txtCantidadInsumo.setText("");
         this.txtCodigoInterno.setText("");
@@ -305,7 +280,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         txtCodigoInterno = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         cbxLeche = new javax.swing.JComboBox<>();
-        jLabel44 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         txtIRendimiento = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
@@ -332,7 +306,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         txtOrmas = new javax.swing.JTextField();
         txtLitros = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtProducto = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnAlta = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
@@ -390,8 +363,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         txtCodigoInterno.setEditable(false);
 
         jLabel42.setText("Obtencion de Crema");
-
-        jLabel44.setText("Producto:");
 
         jLabel43.setText("Rendimiento :    %");
 
@@ -452,9 +423,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         txtLitros.setToolTipText("");
 
         jLabel4.setText("Litros Crema:");
-
-        txtProducto.setEditable(false);
-        txtProducto.setToolTipText("");
 
         btnAlta.setText("Alta");
         btnAlta.addActionListener(new java.awt.event.ActionListener() {
@@ -921,12 +889,10 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel44)
                             .addComponent(jLabel43)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtLitros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtIRendimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -998,11 +964,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtLitros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(39, 39, 39)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIRendimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1160,8 +1122,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
             int kgObtenidos = ormas * 5;
             float rendimiento = ((float) kgObtenidos / litros) * 100; // Usa división en coma flotante
-            String[] partes2 = txtProducto.getText().split(" - ");
-            Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
+            Producto producto = controlador.buscarProducto(idManteca);
             produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
             produccion.setListaEmpleados(listaEmpleados);
@@ -1360,8 +1321,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             }
             //--------
             
-            String[] partes2 = txtProducto.getText().split(" - ");
-            Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
+            Producto producto = controlador.buscarProducto(idManteca);
             produccion.setLitros(litros);
             produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
@@ -1488,7 +1448,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
@@ -1536,7 +1495,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNroTacho;
     private javax.swing.JTextField txtObtenidos;
     private javax.swing.JTextField txtOrmas;
-    private javax.swing.JTextField txtProducto;
     private javax.swing.JTextField txtTiempoTrabajado;
     private javax.swing.JTextField txtTotalBatido;
     // End of variables declaration//GEN-END:variables

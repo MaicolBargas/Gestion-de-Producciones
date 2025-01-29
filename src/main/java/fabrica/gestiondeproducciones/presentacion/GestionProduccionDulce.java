@@ -7,7 +7,6 @@ import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
-import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
@@ -1383,11 +1382,17 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     // Agregar tres valores al JComboBox
     
     }//GEN-LAST:event_cbxProductoActionPerformed
-private void inicializarProductos() {
-    cbxProducto.addItem("1 - Leche Entera");
-    cbxProducto.addItem("2 - Queso");
-    cbxProducto.addItem("3 - Yogur");
-}
+    private void inicializarProductos() {
+        cbxProducto.addItem("11 - Dulce de Leche Crema");
+        cbxProducto.addItem("12 - Dulce de Leche Casero");
+        cbxProducto.addItem("13 - Dulce de Leche Repostero");
+        cbxProducto.addItem("14 - Dulce de Leche Amarillo");
+        cbxProducto.addItem("15 - Dulce de Leche Azul");
+        cbxProducto.addItem("16 - Dulce de Leche Especial");
+        cbxProducto.addItem("17 - Dulce de Leche Verde Duro");
+        cbxProducto.addItem("18 - Dulce de Leche Verde Blando");
+
+    }
    /* private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         int litrosDisponibles = lecheP.getCremaDisponible();
         lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);

@@ -98,7 +98,7 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Unidad de medida:");
 
-        cxbUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "L", "g", "UF" }));
+        cxbUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kg", "L", "UF" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

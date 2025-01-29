@@ -5,9 +5,7 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
-import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
-import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
@@ -102,11 +100,18 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                     + "" + t.getLitros()+"-L");
         }
     }
-    private void listarProductos() {
-        List<Producto> productos = controlador.listarProductos();
-        for (Producto t : productos) {
-            cbxProducto.addItem(t.getId() + " - " + t.getNombre());
-        }
+
+    private void listarProductos() {  
+        cbxProducto.addItem("1 - Queso Colonia");
+        cbxProducto.addItem("2 - Queso Cuartirolo");
+        cbxProducto.addItem("3 - Queso Dambo");
+        cbxProducto.addItem("4 - Queso Holandita");
+        cbxProducto.addItem("5 - Queso Magro");
+        cbxProducto.addItem("6 - Queso Muzarella");
+        cbxProducto.addItem("7 - Queso Parmesano");
+        cbxProducto.addItem("8 - Queso Provolone");
+        cbxProducto.addItem("9 - Queso Sardo");
+        cbxProducto.addItem("10 - Queso Semiduro");
     }
 
     private void listarAgregarEmpleado() {
@@ -1015,6 +1020,8 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 txtxTempAguaActionPerformed(evt);
             }
         });
+
+        cbxProducto.setToolTipText("");
 
         jLabel64.setText("Temp  Agua:");
 

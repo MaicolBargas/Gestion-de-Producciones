@@ -50,8 +50,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             objeto[5] = lista.get(i).getPoliformosTotales();
             objeto[6] = lista.get(i).getPoliformosFecales();
             objeto[7] = lista.get(i).getPh();
-            objeto[8] = lista.get(i).getAcidez();
-            objeto[9] = lista.get(i).getProduccion().getIdProduccion();
+            objeto[8] = lista.get(i).getProduccion().getIdProduccion();
 
             modelo.addRow(objeto);
         }
@@ -102,7 +101,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         txtMos.setText("");
         txtPTotales.setText("");
         txtPFecales.setText("");
-        txtAcidez.setText("");
         txtPh.setText("");
 
         txtIdProduccion.setText("");
@@ -155,7 +153,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         txtEncargado = new javax.swing.JTextField();
@@ -165,7 +162,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         txtMos = new javax.swing.JTextField();
         txtPTotales = new javax.swing.JTextField();
         txtPFecales = new javax.swing.JTextField();
-        txtAcidez = new javax.swing.JTextField();
         txtPh = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -207,8 +203,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         jLabel6.setText("Poliformos totales:");
 
         jLabel7.setText("Poliformos fecales:");
-
-        jLabel8.setText("Acidez");
 
         jLabel9.setText("P.H.:");
 
@@ -256,12 +250,10 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel6)
                                         .addComponent(jLabel7)
-                                        .addComponent(jLabel8)
                                         .addComponent(jLabel9))
                                     .addGap(59, 59, 59)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtAcidez, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtPFecales, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtPTotales, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -301,15 +293,11 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtPFecales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txtAcidez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -484,14 +472,14 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "PH", "Acidez", "Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "PH", "Produccion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -573,7 +561,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
-            int acidez = utilidad.validarNumericos(txtAcidez.getText(), "Acidez", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion); 
             
@@ -600,7 +587,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
            analisis.setPoliformosTotales(pTotales);
            analisis.setPoliformosFecales(pFecales);
            analisis.setPh(ph);
-           analisis.setAcidez(acidez);
            
            if(produccion instanceof ProduccionYogur){
             analisis.setProduccion(produccion);            
@@ -641,7 +627,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
-            int acidez = utilidad.validarNumericos(txtAcidez.getText(), "Acidez", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion); 
             
@@ -669,7 +654,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
            analisis.setPoliformosTotales(pTotales);
            analisis.setPoliformosFecales(pFecales);
            analisis.setPh(ph);
-           analisis.setAcidez(acidez);
            
            if(produccion instanceof ProduccionYogur){
             analisis.setProduccion(produccion);            
@@ -703,11 +687,10 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         txtPTotales.setText(tablaAnalisis.getValueAt(fila, 5).toString());
         txtPFecales.setText(tablaAnalisis.getValueAt(fila,6).toString());
         txtPh.setText(tablaAnalisis.getValueAt(fila, 7).toString());
-        txtAcidez.setText(tablaAnalisis.getValueAt(fila, 8).toString());
-        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 9).toString());
+        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 8).toString());
         ProduccionYogur produccion = controlador.buscarProduccionYogur(id);
         if(produccion instanceof ProduccionYogur){
-            txtIdProduccion.setText(tablaAnalisis.getValueAt(fila, 9).toString());
+            txtIdProduccion.setText(tablaAnalisis.getValueAt(fila, 8).toString());
             txtCodigoInterno.setText(produccion.getCodInterno());
             txtFechaProduccion.setText(produccion.getFecha());
         }        
@@ -742,7 +725,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -754,7 +736,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTable tablaAnalisis;
     private javax.swing.JTable tablaProducciones;
-    private javax.swing.JTextField txtAcidez;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;
     private javax.swing.JTextField txtFecha;

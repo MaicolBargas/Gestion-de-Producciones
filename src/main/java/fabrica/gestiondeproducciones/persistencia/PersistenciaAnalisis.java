@@ -342,7 +342,7 @@ public class PersistenciaAnalisis {
       
     // <editor-fold defaultstate="collapsed" desc="Analisis de Manteca">  
     public boolean altaAnalisisManteca(AnalisisManteca analisis){
-        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,acidez,humedad,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,ph,humedad,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -355,7 +355,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getGrasa());
-            consulta.setInt(9, analisis.getAcidez());
+            consulta.setInt(9, analisis.getPh());
             consulta.setInt(10, analisis.getHumedad());
             consulta.setInt(11, analisis.getProduccion().getIdProduccion());
             consulta.execute();
@@ -373,7 +373,7 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisManteca(AnalisisManteca analisis){
-        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,acidez = ?, humedad = ?, idProduccion = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,ph = ?, humedad = ?, idProduccion = ? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -385,7 +385,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getGrasa());
-            consulta.setInt(9, analisis.getAcidez());
+            consulta.setInt(9, analisis.getPh());
             consulta.setInt(10, analisis.getHumedad());
             consulta.setInt(11, analisis.getProduccion().getIdProduccion());
             consulta.setInt(12, analisis.getId());
@@ -427,7 +427,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setGrasa(resultado.getInt("grasa"));
-                analisis.setAcidez(resultado.getInt("acidez"));
+                analisis.setPh(resultado.getInt("ph"));
                 analisis.setHumedad(resultado.getInt("humedad"));
 
                 ProduccionManteca produccion = persManteca.buscarProduccionManteca(resultado.getInt("idProduccion"));
@@ -467,7 +467,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setGrasa(resultado.getInt("grasa"));
-                analisis.setAcidez(resultado.getInt("acidez"));
+                analisis.setPh(resultado.getInt("ph"));
                 analisis.setHumedad(resultado.getInt("humedad"));
 
                 ProduccionManteca produccion = persManteca.buscarProduccionManteca(resultado.getInt("idProduccion"));
@@ -494,7 +494,7 @@ public class PersistenciaAnalisis {
     
     // <editor-fold defaultstate="collapsed" desc="Analisis de Yogur">  
     public boolean altaAnalisisYogur(AnalisisYogur analisis){
-        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,ph,acidez,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,ph,idProduccion) VALUES (?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -507,8 +507,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getPh());
-            consulta.setInt(9, analisis.getAcidez());
-            consulta.setInt(10, analisis.getProduccion().getIdProduccion());
+            consulta.setInt(9, analisis.getProduccion().getIdProduccion());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -524,7 +523,7 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisYogur(AnalisisYogur analisis){
-        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, ph = ? ,acidez = ?, idProduccion = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, ph = ? , idProduccion = ? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -536,9 +535,8 @@ public class PersistenciaAnalisis {
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getPh());
-            consulta.setInt(9, analisis.getAcidez());
-            consulta.setInt(10, analisis.getProduccion().getIdProduccion());
-            consulta.setInt(11, analisis.getId());
+            consulta.setInt(9, analisis.getProduccion().getIdProduccion());
+            consulta.setInt(10, analisis.getId());
 
             consulta.execute();
             return true;
@@ -577,7 +575,6 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setPh(resultado.getInt("ph"));
-                analisis.setAcidez(resultado.getInt("acidez"));
 
                 ProduccionYogur produccion = persYogur.buscarProduccionYogur(resultado.getInt("idProduccion"));
                 if(produccion instanceof ProduccionYogur){
@@ -616,7 +613,6 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setPh(resultado.getInt("grasa"));
-                analisis.setAcidez(resultado.getInt("acidez"));
 
                 ProduccionYogur produccion = persYogur.buscarProduccionYogur(resultado.getInt("idProduccion"));
                 if(produccion instanceof ProduccionYogur){
@@ -640,7 +636,7 @@ public class PersistenciaAnalisis {
     
     // </editor-fold>  
     
-    // <editor-fold defaultstate="collapsed" desc="Analisis de Manteca">  
+    // <editor-fold defaultstate="collapsed" desc="Analisis de Queso">  
     public boolean altaAnalisisQueso(AnalisisQueso analisis){
         String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,humedad,sal,ph,grasa,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         

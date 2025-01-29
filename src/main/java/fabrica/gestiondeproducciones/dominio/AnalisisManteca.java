@@ -3,7 +3,7 @@ package fabrica.gestiondeproducciones.dominio;
 
 
 public class AnalisisManteca extends Analisis {
-    private int acidez;
+    private int ph;
     private int humedad;
     private int grasa;
     private Produccion produccion;
@@ -11,27 +11,27 @@ public class AnalisisManteca extends Analisis {
     public AnalisisManteca() {
     }
 
-    public AnalisisManteca(int acidez, int humedad, int grasa, Produccion produccion) {
-        this.acidez = acidez;
+    public AnalisisManteca(int ph, int humedad, int grasa, Produccion produccion) {
+        this.ph = ph;
         this.humedad = humedad;
         this.grasa = grasa;
         this.produccion = produccion;
     }
 
-    public AnalisisManteca(int acidez, int humedad, int grasa, Produccion produccion, int id, Empleado encargado, String fecha, int levadura, int mos, int poliformosTotales, int poliformosFecales, String tipo) {
+    public AnalisisManteca(int ph, int humedad, int grasa, Produccion produccion, int id, Empleado encargado, String fecha, int levadura, int mos, int poliformosTotales, int poliformosFecales, String tipo) {
         super(id, encargado, fecha, levadura, mos, poliformosTotales, poliformosFecales, tipo);
-        this.acidez = acidez;
+        this.ph = ph;
         this.humedad = humedad;
         this.grasa = grasa;
         this.produccion = produccion;
     }
 
-    public int getAcidez() {
-        return acidez;
+    public int getPh() {
+        return ph;
     }
 
-    public void setAcidez(int acidez) {
-        this.acidez = acidez;
+    public void setPh(int acidez) {
+        this.ph = acidez;
     }
 
     public int getHumedad() {
