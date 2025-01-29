@@ -3,7 +3,6 @@ package fabrica.gestiondeproducciones.utilidades;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
-import fabrica.gestiondeproducciones.dominio.Produccion;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

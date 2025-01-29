@@ -1366,19 +1366,19 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int kgObtenidos=utilidad.validarNumericos(txtObtenidos.getText(),"Kg Obtenidos",false);
             
             String tiempoReposoFermento=utilidad.validarHora(txtTiempoReposoFermento.getText(),"Tiempo de Reposo del Fermento"); 
-            int tempPastQueso=utilidad.validarNumericos(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false);
-            int tempReposoFermento= utilidad.validarNumericos(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false);
+            float tempPastQueso=utilidad.validarNumericosFloat(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false);
+            float tempReposoFermento= utilidad.validarNumericosFloat(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false);
             String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido",false);
             String tiempoCuajado=utilidad.validarHora(txtTiempoCuajado.getText(),"Tiempo de Cuajado");
-            int tempAlCuajar=utilidad.validarNumericos(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false);
+            float tempAlCuajar=utilidad.validarNumericosFloat(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false);
             int cantCuajoObtenido=utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(),"Cantidad de Cuajo Obtenido",false);
             String tipoGrano= utilidad.sanitizarCampos(txtTipoGrano.getText(),"Tipo de Grano Obtenido",false);
             int sueroObtenido=utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido",false);
             String tiempoAgregadoAgua=utilidad.validarHora(txtTiempoAgregadoAgua.getText(),"Tiempo de Agregado de Agua");
-            int tempAgua=utilidad.validarNumericos(txtxTempAgua.getText(),"Temperatura de Agua", false);
-            int tempCuajoFinal=utilidad.validarNumericos(txtTempCuajoFinal.getText(),"Unidades Obtenidas",false);
+            float tempAgua=utilidad.validarNumericosFloat(txtxTempAgua.getText(),"Temperatura de Agua", false);
+            float tempCuajoFinal=utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(),"Unidades Obtenidas",false);
             int unidadesObtenidas= utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            int acidesFermento= utilidad.validarNumericos(txtAcidesFermento.getText(),"Acides de Fermento",false);
+            float acidesFermento= utilidad.validarNumericosFloat(txtAcidesFermento.getText(),"Acides de Fermento",false);
           
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
@@ -1554,19 +1554,19 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int kgObtenidos=utilidad.validarNumericos(txtObtenidos.getText(),"Kg Obtenidos",false);
             
             String tiempoReposoFermento=utilidad.validarHora(txtTiempoReposoFermento.getText(),"Tiempo de Reposo del Fermento"); 
-            int tempPastQueso=utilidad.validarNumericos(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false);
-            int tempReposoFermento= utilidad.validarNumericos(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false);
+            float tempPastQueso=utilidad.validarNumericosFloat(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false);
+            float tempReposoFermento= utilidad.validarNumericosFloat(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false);
             String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido",false);
             String tiempoCuajado=utilidad.validarHora(txtTiempoCuajado.getText(),"Tiempo de Cuajado");
-            int tempAlCuajar=utilidad.validarNumericos(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false);
+            float tempAlCuajar=utilidad.validarNumericosFloat(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false);
             int cantCuajoObtenido=utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(),"Cantidad de Cuajo Obtenido",false);
             String tipoGrano= utilidad.sanitizarCampos(txtTipoGrano.getText(),"Tipo de Grano Obtenido",false);
             int sueroObtenido=utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido",false);
             String tiempoAgregadoAgua=utilidad.validarHora(txtTiempoAgregadoAgua.getText(),"Tiempo de Agregado de Agua");
-            int tempAgua=utilidad.validarNumericos(txtxTempAgua.getText(),"Temperatura de Agua", false);
-            int tempCuajoFinal=utilidad.validarNumericos(txtTempCuajoFinal.getText(),"Unidades Obtenidas",false);
+            float tempAgua=utilidad.validarNumericosFloat(txtxTempAgua.getText(),"Temperatura de Agua", false);
+            float tempCuajoFinal=utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(),"Unidades Obtenidas",false);
             int unidadesObtenidas= utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            int acidesFermento= utilidad.validarNumericos(txtAcidesFermento.getText(),"Acides de Fermento",false);
+            float acidesFermento= utilidad.validarNumericosFloat(txtAcidesFermento.getText(),"Acides de Fermento",false);
             
             
             Controlador c= new Controlador();

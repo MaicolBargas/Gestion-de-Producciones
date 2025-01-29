@@ -6,25 +6,75 @@ import java.util.List;
 
 public class ProduccionYogur extends Produccion{
     
-    private int temperaturaIncubacion;
+    private float temperaturaIncubacion;
     private String horaComienzoIncubacion;
     private String horaFinIncubacion;
     private String tiempoIncubacion;
     private String horaComienzoEnfriado;
     private String horaFinEnfriado;
     private String tiempoTotalEnfriado;
-    private int tempAguaHelada;
-    private int tempAgregadoSabor;
-    private int tempAgregadoColor;
+    private float tempAguaHelada;
+    private float tempAgregadoSabor;
+    private float tempAgregadoColor;
     private int litrosSuero;
     private int unidadesObtenidas;
 
-    public int getTemperaturaIncubacion() {
+    public ProduccionYogur() {
+    }
+
+    public ProduccionYogur(float temperaturaIncubacion, String horaComienzoIncubacion, String horaFinIncubacion, String tiempoIncubacion, String horaComienzoEnfriado, String horaFinEnfriado, String tiempoTotalEnfriado, float tempAguaHelada, float tempAgregadoSabor, float tempAgregadoColor, int litrosSuero, int unidadesObtenidas) {
+        this.temperaturaIncubacion = temperaturaIncubacion;
+        this.horaComienzoIncubacion = horaComienzoIncubacion;
+        this.horaFinIncubacion = horaFinIncubacion;
+        this.tiempoIncubacion = tiempoIncubacion;
+        this.horaComienzoEnfriado = horaComienzoEnfriado;
+        this.horaFinEnfriado = horaFinEnfriado;
+        this.tiempoTotalEnfriado = tiempoTotalEnfriado;
+        this.tempAguaHelada = tempAguaHelada;
+        this.tempAgregadoSabor = tempAgregadoSabor;
+        this.tempAgregadoColor = tempAgregadoColor;
+        this.litrosSuero = litrosSuero;
+        this.unidadesObtenidas = unidadesObtenidas;
+    }
+
+    public ProduccionYogur(float temperaturaIncubacion, String horaComienzoIncubacion, String horaFinIncubacion, String tiempoIncubacion, String horaComienzoEnfriado, String horaFinEnfriado, String tiempoTotalEnfriado, float tempAguaHelada, float tempAgregadoSabor, float tempAgregadoColor, int litrosSuero, int unidadesObtenidas, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
+        this.temperaturaIncubacion = temperaturaIncubacion;
+        this.horaComienzoIncubacion = horaComienzoIncubacion;
+        this.horaFinIncubacion = horaFinIncubacion;
+        this.tiempoIncubacion = tiempoIncubacion;
+        this.horaComienzoEnfriado = horaComienzoEnfriado;
+        this.horaFinEnfriado = horaFinEnfriado;
+        this.tiempoTotalEnfriado = tiempoTotalEnfriado;
+        this.tempAguaHelada = tempAguaHelada;
+        this.tempAgregadoSabor = tempAgregadoSabor;
+        this.tempAgregadoColor = tempAgregadoColor;
+        this.litrosSuero = litrosSuero;
+        this.unidadesObtenidas = unidadesObtenidas;
+    }
+
+    public float getTemperaturaIncubacion() {
         return temperaturaIncubacion;
     }
 
-    public void setTemperaturaIncubacion(int temperaturaIncubacion) {
+    public void setTemperaturaIncubacion(float temperaturaIncubacion) {
         this.temperaturaIncubacion = temperaturaIncubacion;
+    }
+
+    public String getHoraComienzoIncubacion() {
+        return horaComienzoIncubacion;
+    }
+
+    public void setHoraComienzoIncubacion(String horaComienzoIncubacion) {
+        this.horaComienzoIncubacion = horaComienzoIncubacion;
+    }
+
+    public String getHoraFinIncubacion() {
+        return horaFinIncubacion;
+    }
+
+    public void setHoraFinIncubacion(String horaFinIncubacion) {
+        this.horaFinIncubacion = horaFinIncubacion;
     }
 
     public String getTiempoIncubacion() {
@@ -59,27 +109,27 @@ public class ProduccionYogur extends Produccion{
         this.tiempoTotalEnfriado = tiempoTotalEnfriado;
     }
 
-    public int getTempAguaHelada() {
+    public float getTempAguaHelada() {
         return tempAguaHelada;
     }
 
-    public void setTempAguaHelada(int tempAguaHelada) {
+    public void setTempAguaHelada(float tempAguaHelada) {
         this.tempAguaHelada = tempAguaHelada;
     }
 
-    public int getTempAgregadoSabor() {
+    public float getTempAgregadoSabor() {
         return tempAgregadoSabor;
     }
 
-    public void setTempAgregadoSabor(int tempAgregadoSabor) {
+    public void setTempAgregadoSabor(float tempAgregadoSabor) {
         this.tempAgregadoSabor = tempAgregadoSabor;
     }
 
-    public int getTempAgregadoColor() {
+    public float getTempAgregadoColor() {
         return tempAgregadoColor;
     }
 
-    public void setTempAgregadoColor(int tempAgregadoColor) {
+    public void setTempAgregadoColor(float tempAgregadoColor) {
         this.tempAgregadoColor = tempAgregadoColor;
     }
 
@@ -91,22 +141,6 @@ public class ProduccionYogur extends Produccion{
         this.litrosSuero = litrosSuero;
     }
 
-    public String getHoraComienzoIncubacion() {
-        return horaComienzoIncubacion;
-    }
-
-    public void setHoraComienzoIncubacion(String horaComienzoIncubacion) {
-        this.horaComienzoIncubacion = horaComienzoIncubacion;
-    }
-
-    public String getHoraFinIncubacion() {
-        return horaFinIncubacion;
-    }
-
-    public void setHoraFinIncubacion(String horaFinIncubacion) {
-        this.horaFinIncubacion = horaFinIncubacion;
-    }
-
     public int getUnidadesObtenidas() {
         return unidadesObtenidas;
     }
@@ -115,29 +149,5 @@ public class ProduccionYogur extends Produccion{
         this.unidadesObtenidas = unidadesObtenidas;
     }
 
-    public ProduccionYogur(int temperaturaIncubacion, String horaComienzoIncubacion, String horaFinIncubacion, String tiempoIncubacion, String horaComienzoEnfriado, String horaFinEnfriado, String tiempoTotalEnfriado, int tempAguaHelada, int tempAgregadoSabor, int tempAgregadoColor, int litrosSuero, int unidadesObtenidas, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
-        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
-        this.temperaturaIncubacion = temperaturaIncubacion;
-        this.horaComienzoIncubacion = horaComienzoIncubacion;
-        this.horaFinIncubacion = horaFinIncubacion;
-        this.tiempoIncubacion = tiempoIncubacion;
-        this.horaComienzoEnfriado = horaComienzoEnfriado;
-        this.horaFinEnfriado = horaFinEnfriado;
-        this.tiempoTotalEnfriado = tiempoTotalEnfriado;
-        this.tempAguaHelada = tempAguaHelada;
-        this.tempAgregadoSabor = tempAgregadoSabor;
-        this.tempAgregadoColor = tempAgregadoColor;
-        this.litrosSuero = litrosSuero;
-        this.unidadesObtenidas = unidadesObtenidas;
-    }
-
-    
-
-    
-
-
-
-    public ProduccionYogur() {
-    }
- 
+   
 }

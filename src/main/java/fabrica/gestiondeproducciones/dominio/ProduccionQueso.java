@@ -5,26 +5,64 @@ import java.util.List;
 
 
 public class ProduccionQueso extends Produccion {
-    private int tempPastQueso;
+    private float tempPastQueso;
     private String tiempoReposoFermento;
-    private int tempReposoFermento;
+    private float tempReposoFermento;
     private String tipoCuajoObtenido;
     private String tiempoCuajado;
-    private int tempAlCuajar;
+    private float tempAlCuajar;
     private int cantCuajoObtenido;
     private String tipoDeGrano;
     private int litrosSueroObtenidos;
     private String tiempoAgregadoAgua;
-    private int tempAgua;
-    private int tempCuajoFinal;
+    private float tempAgua;
+    private float tempCuajoFinal;
     private int unidadesObtenidas;
-    private int acidesFermento;
+    private float acidesFermento;
 
-    public int getTempPastQueso() {
+    public ProduccionQueso() {
+    }
+
+    public ProduccionQueso(float tempPastQueso, String tiempoReposoFermento, float tempReposoFermento, String tipoCuajoObtenido, String tiempoCuajado, float tempAlCuajar, int cantCuajoObtenido, String tipoDeGrano, int litrosSueroObtenidos, String tiempoAgregadoAgua, float tempAgua, float tempCuajoFinal, int unidadesObtenidas, float acidesFermento) {
+        this.tempPastQueso = tempPastQueso;
+        this.tiempoReposoFermento = tiempoReposoFermento;
+        this.tempReposoFermento = tempReposoFermento;
+        this.tipoCuajoObtenido = tipoCuajoObtenido;
+        this.tiempoCuajado = tiempoCuajado;
+        this.tempAlCuajar = tempAlCuajar;
+        this.cantCuajoObtenido = cantCuajoObtenido;
+        this.tipoDeGrano = tipoDeGrano;
+        this.litrosSueroObtenidos = litrosSueroObtenidos;
+        this.tiempoAgregadoAgua = tiempoAgregadoAgua;
+        this.tempAgua = tempAgua;
+        this.tempCuajoFinal = tempCuajoFinal;
+        this.unidadesObtenidas = unidadesObtenidas;
+        this.acidesFermento = acidesFermento;
+    }
+
+    public ProduccionQueso(float tempPastQueso, String tiempoReposoFermento, float tempReposoFermento, String tipoCuajoObtenido, String tiempoCuajado, float tempAlCuajar, int cantCuajoObtenido, String tipoDeGrano, int litrosSueroObtenidos, String tiempoAgregadoAgua, float tempAgua, float tempCuajoFinal, int unidadesObtenidas, float acidesFermento, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
+        this.tempPastQueso = tempPastQueso;
+        this.tiempoReposoFermento = tiempoReposoFermento;
+        this.tempReposoFermento = tempReposoFermento;
+        this.tipoCuajoObtenido = tipoCuajoObtenido;
+        this.tiempoCuajado = tiempoCuajado;
+        this.tempAlCuajar = tempAlCuajar;
+        this.cantCuajoObtenido = cantCuajoObtenido;
+        this.tipoDeGrano = tipoDeGrano;
+        this.litrosSueroObtenidos = litrosSueroObtenidos;
+        this.tiempoAgregadoAgua = tiempoAgregadoAgua;
+        this.tempAgua = tempAgua;
+        this.tempCuajoFinal = tempCuajoFinal;
+        this.unidadesObtenidas = unidadesObtenidas;
+        this.acidesFermento = acidesFermento;
+    }
+
+    public float getTempPastQueso() {
         return tempPastQueso;
     }
 
-    public void setTempPastQueso(int tempPastQueso) {
+    public void setTempPastQueso(float tempPastQueso) {
         this.tempPastQueso = tempPastQueso;
     }
 
@@ -36,11 +74,11 @@ public class ProduccionQueso extends Produccion {
         this.tiempoReposoFermento = tiempoReposoFermento;
     }
 
-    public int getTempReposoFermento() {
+    public float getTempReposoFermento() {
         return tempReposoFermento;
     }
 
-    public void setTempReposoFermento(int tempReposoFermento) {
+    public void setTempReposoFermento(float tempReposoFermento) {
         this.tempReposoFermento = tempReposoFermento;
     }
 
@@ -60,11 +98,11 @@ public class ProduccionQueso extends Produccion {
         this.tiempoCuajado = tiempoCuajado;
     }
 
-    public int getTempAlCuajar() {
+    public float getTempAlCuajar() {
         return tempAlCuajar;
     }
 
-    public void setTempAlCuajar(int tempAlCuajar) {
+    public void setTempAlCuajar(float tempAlCuajar) {
         this.tempAlCuajar = tempAlCuajar;
     }
 
@@ -100,19 +138,19 @@ public class ProduccionQueso extends Produccion {
         this.tiempoAgregadoAgua = tiempoAgregadoAgua;
     }
 
-    public int getTempAgua() {
+    public float getTempAgua() {
         return tempAgua;
     }
 
-    public void setTempAgua(int tempAgua) {
+    public void setTempAgua(float tempAgua) {
         this.tempAgua = tempAgua;
     }
 
-    public int getTempCuajoFinal() {
+    public float getTempCuajoFinal() {
         return tempCuajoFinal;
     }
 
-    public void setTempCuajoFinal(int tempCuajoFinal) {
+    public void setTempCuajoFinal(float tempCuajoFinal) {
         this.tempCuajoFinal = tempCuajoFinal;
     }
 
@@ -124,34 +162,14 @@ public class ProduccionQueso extends Produccion {
         this.unidadesObtenidas = unidadesObtenidas;
     }
 
-    public int getAcidesFermento() {
+    public float getAcidesFermento() {
         return acidesFermento;
     }
 
-    public void setAcidesFermento(int acidesFermento) {
+    public void setAcidesFermento(float acidesFermento) {
         this.acidesFermento = acidesFermento;
     }
 
-    public ProduccionQueso(int tempPastQueso, String tiempoReposoFermento, int tempReposoFermento, String tipoCuajoObtenido, String tiempoCuajado, int tempAlCuajar, int cantCuajoObtenido, String tipoDeGrano, int litrosSueroObtenidos, String tiempoAgregadoAgua, int tempAgua, int tempCuajoFinal, int unidadesObtenidas, int acidesFermento, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
-        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
-        this.tempPastQueso = tempPastQueso;
-        this.tiempoReposoFermento = tiempoReposoFermento;
-        this.tempReposoFermento = tempReposoFermento;
-        this.tipoCuajoObtenido = tipoCuajoObtenido;
-        this.tiempoCuajado = tiempoCuajado;
-        this.tempAlCuajar = tempAlCuajar;
-        this.cantCuajoObtenido = cantCuajoObtenido;
-        this.tipoDeGrano = tipoDeGrano;
-        this.litrosSueroObtenidos = litrosSueroObtenidos;
-        this.tiempoAgregadoAgua = tiempoAgregadoAgua;
-        this.tempAgua = tempAgua;
-        this.tempCuajoFinal = tempCuajoFinal;
-        this.unidadesObtenidas = unidadesObtenidas;
-        this.acidesFermento = acidesFermento;
-    }
-
-    public ProduccionQueso() {
-    }
     
     
 }

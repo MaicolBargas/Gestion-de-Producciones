@@ -483,10 +483,10 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -574,7 +574,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int sal = utilidad.validarNumericos(txtSal.getText(), "Sal", false);
-            int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionQueso produccion = controlador.buscarProduccionQueso(idProduccion); 
@@ -647,7 +647,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int sal = utilidad.validarNumericos(txtSal.getText(), "Sal", false);
-            int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionQueso produccion = controlador.buscarProduccionQueso(idProduccion); 

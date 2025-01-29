@@ -1,9 +1,6 @@
 
 package fabrica.gestiondeproducciones.dominio;
 
-import java.util.List;
-
-
 public class ProduccionDulce extends Produccion {
     private Float phLecheSn;
     private Float phLecheNeut;

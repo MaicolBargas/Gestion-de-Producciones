@@ -577,7 +577,7 @@
                     <Column editable="false" title="Poliformos Totales" type="java.lang.Integer"/>
                     <Column editable="false" title="Poliformos fecales" type="java.lang.Integer"/>
                     <Column editable="false" title="Grasa" type="java.lang.Integer"/>
-                    <Column editable="false" title="PH" type="java.lang.Integer"/>
+                    <Column editable="false" title="PH" type="java.lang.Float"/>
                     <Column editable="false" title="Humedad" type="java.lang.Integer"/>
                     <Column editable="false" title="Produccion" type="java.lang.Integer"/>
                   </Table>

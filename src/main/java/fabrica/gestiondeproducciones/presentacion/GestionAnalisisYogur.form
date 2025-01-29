@@ -544,7 +544,7 @@
                     <Column editable="false" title="Mos" type="java.lang.Integer"/>
                     <Column editable="false" title="Poliformos totales" type="java.lang.Integer"/>
                     <Column editable="false" title="Poliformos fecales" type="java.lang.Integer"/>
-                    <Column editable="false" title="PH" type="java.lang.Integer"/>
+                    <Column editable="false" title="PH" type="java.lang.Float"/>
                     <Column editable="false" title="Produccion" type="java.lang.Integer"/>
                   </Table>
                 </Property>

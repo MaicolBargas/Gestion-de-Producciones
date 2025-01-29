@@ -73,16 +73,16 @@ public class PersistenciaProduccionYogur {
             // Preparar el segundo insert
             consulta = con.prepareStatement(sqlProduccionYogur);
             consulta.setInt(1, idProduccion);
-            consulta.setInt(2, produccion.getTemperaturaIncubacion());
+            consulta.setFloat(2, produccion.getTemperaturaIncubacion());
             consulta.setString(3, produccion.getHoraComienzoIncubacion());
             consulta.setString(4, produccion.getHoraFinIncubacion());
             consulta.setString(5, produccion.getTiempoIncubacion());
             consulta.setString(6, produccion.getHoraComienzoEnfriado());
             consulta.setString(7, produccion.getHoraFinEnfriado());
             consulta.setString(8, produccion.getTiempoTotalEnfriado());
-            consulta.setInt(9, produccion.getTempAguaHelada());
-            consulta.setInt(10, produccion.getTempAgregadoSabor());
-            consulta.setInt(11, produccion.getTempAgregadoColor());
+            consulta.setFloat(9, produccion.getTempAguaHelada());
+            consulta.setFloat(10, produccion.getTempAgregadoSabor());
+            consulta.setFloat(11, produccion.getTempAgregadoColor());
             consulta.setInt(12, produccion.getLitrosSuero());
             consulta.setInt(13,produccion.getUnidadesObtenidas());
 
@@ -191,16 +191,16 @@ public class PersistenciaProduccionYogur {
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
 
-                produccion.setTemperaturaIncubacion(resultado.getInt("tempIncubacion"));
+                produccion.setTemperaturaIncubacion(resultado.getFloat("tempIncubacion"));
                 produccion.setHoraComienzoIncubacion(resultado.getString("horaComienzoInc"));
                 produccion.setHoraFinIncubacion(resultado.getString("horaFinInc"));
                 produccion.setTiempoIncubacion(resultado.getString("tiempoIncubacion"));
                 produccion.setHoraComienzoEnfriado(resultado.getString("horaComienzoEnfriado"));
                 produccion.setHoraFinEnfriado(resultado.getString("horaFinEnfriado"));
                 produccion.setTiempoTotalEnfriado(resultado.getString("tiempoTotalEnfriado"));
-                produccion.setTempAguaHelada(resultado.getInt("tempAguaHelada"));
-                produccion.setTempAgregadoSabor(resultado.getInt("tempAgregadoSabor"));
-                produccion.setTempAgregadoColor(resultado.getInt("tempAgregadoColor"));
+                produccion.setTempAguaHelada(resultado.getFloat("tempAguaHelada"));
+                produccion.setTempAgregadoSabor(resultado.getFloat("tempAgregadoSabor"));
+                produccion.setTempAgregadoColor(resultado.getFloat("tempAgregadoColor"));
                 produccion.setLitrosSuero(resultado.getInt("litrosSuero"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
 
@@ -264,16 +264,16 @@ public class PersistenciaProduccionYogur {
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
 
 //                listarInfoEspecifica(produccion);     
-                produccion.setTemperaturaIncubacion(resultado.getInt("tempIncubacion"));
+                produccion.setTemperaturaIncubacion(resultado.getFloat("tempIncubacion"));
                 produccion.setHoraComienzoIncubacion(resultado.getString("horaComienzoInc"));
                 produccion.setHoraFinIncubacion(resultado.getString("horaFinInc"));
                 produccion.setTiempoIncubacion(resultado.getString("tiempoIncubacion"));
                 produccion.setHoraComienzoEnfriado(resultado.getString("horaComienzoEnfriado"));
                 produccion.setHoraFinEnfriado(resultado.getString("horaFinEnfriado"));
                 produccion.setTiempoTotalEnfriado(resultado.getString("tiempoTotalEnfriado"));
-                produccion.setTempAguaHelada(resultado.getInt("tempAguaHelada"));
-                produccion.setTempAgregadoSabor(resultado.getInt("tempAgregadoSabor"));
-                produccion.setTempAgregadoColor(resultado.getInt("tempAgregadoColor"));
+                produccion.setTempAguaHelada(resultado.getFloat("tempAguaHelada"));
+                produccion.setTempAgregadoSabor(resultado.getFloat("tempAgregadoSabor"));
+                produccion.setTempAgregadoColor(resultado.getFloat("tempAgregadoColor"));
                 produccion.setLitrosSuero(resultado.getInt("litrosSuero"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
                 List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
@@ -319,25 +319,23 @@ public class PersistenciaProduccionYogur {
             consulta.setInt(12, produccion.getLitros());
             consulta.setInt(13, produccion.getIdProduccion());
             consulta.executeUpdate();
-            System.out.println("PERSISTENCIA YOGUR 1");
+            
             consulta = con.prepareStatement(sqlProduccionYogur);
-            consulta.setInt(1, produccion.getTemperaturaIncubacion());
+            consulta.setFloat(1, produccion.getTemperaturaIncubacion());
             consulta.setString(2, produccion.getHoraComienzoIncubacion());
             consulta.setString(3, produccion.getHoraFinIncubacion());
             consulta.setString(4, produccion.getTiempoIncubacion());
             consulta.setString(5, produccion.getHoraComienzoEnfriado());
             consulta.setString(6, produccion.getHoraFinEnfriado());
             consulta.setString(7, produccion.getTiempoTotalEnfriado());
-            consulta.setInt(8, produccion.getTempAguaHelada());
-            consulta.setInt(9, produccion.getTempAgregadoSabor());
-            consulta.setInt(10, produccion.getTempAgregadoColor());
+            consulta.setFloat(8, produccion.getTempAguaHelada());
+            consulta.setFloat(9, produccion.getTempAgregadoSabor());
+            consulta.setFloat(10, produccion.getTempAgregadoColor());
             consulta.setInt(11, produccion.getLitrosSuero());
             consulta.setInt(12,produccion.getUnidadesObtenidas());
             consulta.setInt(13, produccion.getIdProduccion());
             consulta.executeUpdate();
-            System.out.println(produccion.getLitrosSuero());
-            System.out.println("PERSISTENCIA YOGUR 2");
-            System.out.println(produccion.getIdProduccion()+ "ID PROD");
+
             persProduccion.actualizarEmpleadosxProduccion(produccion.getIdProduccion(), produccion.getListaEmpleados());
             persProduccion.actualizarInsumosxProduccion(produccion.getIdProduccion(), produccion.getListaInsumos());
             return true;
@@ -388,16 +386,16 @@ public class PersistenciaProduccionYogur {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
-                produccion.setTemperaturaIncubacion(resultado.getInt("tempIncubacion"));
+                produccion.setTemperaturaIncubacion(resultado.getFloat("tempIncubacion"));
                 produccion.setHoraComienzoIncubacion(resultado.getString("horaComienzoInc"));
                 produccion.setHoraFinIncubacion(resultado.getString("horaFinInc"));
                 produccion.setTiempoIncubacion(resultado.getString("tiempoIncubacion"));
                 produccion.setHoraComienzoEnfriado(resultado.getString("horaComienzoEnfriado"));
                 produccion.setHoraFinEnfriado(resultado.getString("horaFinEnfriado"));
                 produccion.setTiempoTotalEnfriado(resultado.getString("tiempoTotalEnfriado"));
-                produccion.setTempAguaHelada(resultado.getInt("tempAguaHelada"));
-                produccion.setTempAgregadoSabor(resultado.getInt("tempAgregadoSabor"));
-                produccion.setTempAgregadoColor(resultado.getInt("tempAgregadoColor"));
+                produccion.setTempAguaHelada(resultado.getFloat("tempAguaHelada"));
+                produccion.setTempAgregadoSabor(resultado.getFloat("tempAgregadoSabor"));
+                produccion.setTempAgregadoColor(resultado.getFloat("tempAgregadoColor"));
                 produccion.setLitrosSuero(resultado.getInt("litrosSuero"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
  

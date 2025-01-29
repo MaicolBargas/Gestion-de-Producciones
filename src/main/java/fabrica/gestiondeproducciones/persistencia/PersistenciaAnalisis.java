@@ -355,7 +355,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getGrasa());
-            consulta.setInt(9, analisis.getPh());
+            consulta.setFloat(9, analisis.getPh());
             consulta.setInt(10, analisis.getHumedad());
             consulta.setInt(11, analisis.getProduccion().getIdProduccion());
             consulta.execute();
@@ -385,7 +385,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getGrasa());
-            consulta.setInt(9, analisis.getPh());
+            consulta.setFloat(9, analisis.getPh());
             consulta.setInt(10, analisis.getHumedad());
             consulta.setInt(11, analisis.getProduccion().getIdProduccion());
             consulta.setInt(12, analisis.getId());
@@ -467,7 +467,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setGrasa(resultado.getInt("grasa"));
-                analisis.setPh(resultado.getInt("ph"));
+                analisis.setPh(resultado.getFloat("ph"));
                 analisis.setHumedad(resultado.getInt("humedad"));
 
                 ProduccionManteca produccion = persManteca.buscarProduccionManteca(resultado.getInt("idProduccion"));
@@ -506,7 +506,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(5, analisis.getMos());
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
-            consulta.setInt(8, analisis.getPh());
+            consulta.setFloat(8, analisis.getPh());
             consulta.setInt(9, analisis.getProduccion().getIdProduccion());
             consulta.execute();
             return true;
@@ -534,7 +534,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(5, analisis.getMos());
             consulta.setInt(6, analisis.getPoliformosTotales());
             consulta.setInt(7, analisis.getPoliformosFecales());           
-            consulta.setInt(8, analisis.getPh());
+            consulta.setFloat(8, analisis.getPh());
             consulta.setInt(9, analisis.getProduccion().getIdProduccion());
             consulta.setInt(10, analisis.getId());
 
@@ -574,7 +574,7 @@ public class PersistenciaAnalisis {
                 analisis.setMos(resultado.getInt("mos"));
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
-                analisis.setPh(resultado.getInt("ph"));
+                analisis.setPh(resultado.getFloat("ph"));
 
                 ProduccionYogur produccion = persYogur.buscarProduccionYogur(resultado.getInt("idProduccion"));
                 if(produccion instanceof ProduccionYogur){
@@ -612,7 +612,7 @@ public class PersistenciaAnalisis {
                 analisis.setMos(resultado.getInt("mos"));
                 analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
-                analisis.setPh(resultado.getInt("grasa"));
+                analisis.setPh(resultado.getFloat("ph"));
 
                 ProduccionYogur produccion = persYogur.buscarProduccionYogur(resultado.getInt("idProduccion"));
                 if(produccion instanceof ProduccionYogur){
@@ -652,7 +652,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getHumedad());
             consulta.setInt(9, analisis.getSal());
-            consulta.setInt(10, analisis.getPh());
+            consulta.setFloat(10, analisis.getPh());
             consulta.setInt(11, analisis.getGrasa());
             consulta.setInt(12, analisis.getProduccion().getIdProduccion());
             consulta.execute();
@@ -683,7 +683,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(7, analisis.getPoliformosFecales());           
             consulta.setInt(8, analisis.getHumedad());
             consulta.setInt(9, analisis.getSal());
-            consulta.setInt(10, analisis.getPh());
+            consulta.setFloat(10, analisis.getPh());
             consulta.setInt(11, analisis.getGrasa());
             consulta.setInt(12, analisis.getProduccion().getIdProduccion());
             consulta.setInt(13, analisis.getId());
@@ -726,7 +726,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setHumedad(resultado.getInt("humedad"));
                 analisis.setSal(resultado.getInt("sal"));
-                analisis.setPh(resultado.getInt("ph"));
+                analisis.setPh(resultado.getFloat("ph"));
                 analisis.setGrasa(resultado.getInt("grasa"));
 
                 ProduccionQueso produccion = persQueso.buscarProduccionQueso(resultado.getInt("idProduccion"));
@@ -767,7 +767,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setHumedad(resultado.getInt("humedad"));
                 analisis.setSal(resultado.getInt("sal"));
-                analisis.setPh(resultado.getInt("ph"));
+                analisis.setPh(resultado.getFloat("ph"));
                 analisis.setGrasa(resultado.getInt("grasa"));
 
                 ProduccionQueso produccion = persQueso.buscarProduccionQueso(resultado.getInt("idProduccion"));

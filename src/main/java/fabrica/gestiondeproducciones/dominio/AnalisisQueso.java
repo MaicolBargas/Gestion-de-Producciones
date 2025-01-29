@@ -5,14 +5,14 @@ public class AnalisisQueso extends Analisis{
     
     private int humedad;
     private int sal;
-    private int ph;
+    private float ph;
     private int grasa;
     private ProduccionQueso produccion;
 
     public AnalisisQueso() {
     }
 
-    public AnalisisQueso(int humedad, int sal, int ph, int grasa, ProduccionQueso produccion) {
+    public AnalisisQueso(int humedad, int sal, float ph, int grasa, ProduccionQueso produccion) {
         this.humedad = humedad;
         this.sal = sal;
         this.ph = ph;
@@ -20,7 +20,7 @@ public class AnalisisQueso extends Analisis{
         this.produccion = produccion;
     }
 
-    public AnalisisQueso(int humedad, int sal, int ph, int grasa, ProduccionQueso produccion, int id, Empleado encargado, String fecha, int levadura, int mos, int poliformosTotales, int poliformosFecales, String tipo) {
+    public AnalisisQueso(int humedad, int sal, float ph, int grasa, ProduccionQueso produccion, int id, Empleado encargado, String fecha, int levadura, int mos, int poliformosTotales, int poliformosFecales, String tipo) {
         super(id, encargado, fecha, levadura, mos, poliformosTotales, poliformosFecales, tipo);
         this.humedad = humedad;
         this.sal = sal;
@@ -45,11 +45,11 @@ public class AnalisisQueso extends Analisis{
         this.sal = sal;
     }
 
-    public int getPh() {
+    public float getPh() {
         return ph;
     }
 
-    public void setPh(int ph) {
+    public void setPh(float ph) {
         this.ph = ph;
     }
 

@@ -1312,7 +1312,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Y" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtUnidadesObtenidas.getText() + txtNroTacho.getText();
-            int tempIncubacion=utilidad.validarNumericos(txtTempInc.getText(),"Temperatura de Incubacion",false);
+            float tempIncubacion=utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false);
             
             String horaComienzoIncubacion = utilidad.validarHora(txtComienzoInc.getText(), "Hora de Inicio de Incubacion");
             String horaFinIncubacion = utilidad.validarHora(txtFinInc.getText(), "Hora de Finalizacion de Incubacion");
@@ -1320,9 +1320,9 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             String horaComienzoEnfriado=utilidad.validarHora(txtComienzoEnfriado.getText(),"Hora de comienzo de Enfriado");
             String horaFinEnfriado=utilidad.validarHora(txtFinEnfriado.getText(),"Hora de Fin de Enfriado");
             String tiempoEnfriado=utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
-            int tempAguaHelada=utilidad.validarNumericos(txtTempAgua.getText(), "Temperatura de Agua Helada",false);
-            int tempAgregadoSabor=utilidad.validarNumericos(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false);
-            int tempAgregadoColor=utilidad.validarNumericos(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false);
+            float tempAguaHelada=utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false);
+            float tempAgregadoSabor=utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false);
+            float tempAgregadoColor=utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false);
             int litrosSuero=utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero",false);
             int unidadesObtenidas=utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
             
@@ -1499,7 +1499,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Y" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtUnidadesObtenidas.getText() + txtNroTacho.getText();
-            int tempIncubacion=utilidad.validarNumericos(txtTempInc.getText(),"Temperatura de Incubacion",false);
+            float tempIncubacion=utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false);
             
             String horaComienzoIncubacion = utilidad.validarHora(txtComienzoInc.getText(), "Hora de Inicio de Incubacion");
             String horaFinIncubacion = utilidad.validarHora(txtFinInc.getText(), "Hora de Finalizacion de Incubacion");
@@ -1507,9 +1507,9 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             String horaComienzoEnfriado=utilidad.validarHora(txtComienzoEnfriado.getText(),"Hora de comienzo de Enfriado");
             String horaFinEnfriado=utilidad.validarHora(txtFinEnfriado.getText(),"Hora de Fin de Enfriado");
             String tiempoEnfriado=utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
-            int tempAguaHelada=utilidad.validarNumericos(txtTempAgua.getText(), "Temperatura de Agua Helada",false);
-            int tempAgregadoSabor=utilidad.validarNumericos(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false);
-            int tempAgregadoColor=utilidad.validarNumericos(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false);
+            float tempAguaHelada=utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false);
+            float tempAgregadoSabor=utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false);
+            float tempAgregadoColor=utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false);
             int litrosSuero=utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero",false);
             int unidadesObtenidas=utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
             
