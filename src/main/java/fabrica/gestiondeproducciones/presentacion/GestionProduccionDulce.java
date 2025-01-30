@@ -2,8 +2,10 @@ package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
+import fabrica.gestiondeproducciones.dominio.EnvasesDulce;
 import fabrica.gestiondeproducciones.dominio.Insumo;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.LineaEnvase;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
@@ -30,15 +32,19 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     DefaultTableModel modeloEmpleadosTrabajaron = new DefaultTableModel();
     DefaultTableModel modeloInsumosAgregar = new DefaultTableModel();
     DefaultTableModel modeloInsumosUtilizados = new DefaultTableModel();
+    DefaultTableModel modeloEnvasesUtilizados= new DefaultTableModel();
+    DefaultTableModel modeloEnvasesAgregar= new DefaultTableModel();
     Utilidades utilidad = new Utilidades();
     ProduccionDulce produccion = new ProduccionDulce();
     List<Empleado> listaEmpleados = new ArrayList<>();
     List<LineaInsumo> listaInsumosLinea = new ArrayList<>();
+    List<LineaEnvase> listaEnvasesLinea= new ArrayList<>();
     int idEncargadoobtener;
     int idEmpleadoObtener;
     int idEncargado;
     int idEmpleado;
     int idInsumo;
+    int idEnvase;
     int idEmpleadoEliminar;
     int idInsumoEliminar;
     private TableRowSorter<TableModel> filtroFilaEmpleados;
@@ -49,9 +55,10 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         initComponents();
         listar();
         listarLeche();
-      inicializarProductos();
+        inicializarProductos();
         listarAgregarEmpleado();
         listarAgregarInsumo();
+        listarAgregarEnvase();
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
 
@@ -169,7 +176,30 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         filtroFilaInsumos = new TableRowSorter<>(modeloInsumosAgregar);
         tablaAgregarInsumos.setRowSorter(filtroFilaInsumos);
     }
+    
+    private void listarAgregarEnvase() {
+        limpiarTablaEnvasesUtilizados();
+        List<EnvasesDulce> lista = controlador.listarEnvases();
+        modeloEnvasesAgregar = (DefaultTableModel) tablaAgregarEnvases.getModel();
+        Object[] objeto = new Object[3];
+        for (int i = 0; i < lista.size(); i++) {
+            objeto[0] = lista.get(i).getId();
+            objeto[1] = lista.get(i).getDescripcion();
+            objeto[2] = lista.get(i).getCapacidad();
 
+            modeloEnvasesAgregar.addRow(objeto);
+        }
+        tablaAgregarEnvases.setModel(modeloEnvasesAgregar);
+        
+    }
+
+    private void limpiarTablaEnvasesUtilizados() {
+        for (int i = 0; i < modeloEnvasesUtilizados.getRowCount(); i++) {
+            modeloEnvasesUtilizados.removeRow(i);
+            i = - 1;
+        }
+    }
+    
     private void limpiarTablaAgregarInsumos() {
         for (int i = 0; i < modeloInsumosAgregar.getRowCount(); i++) {
             modeloInsumosAgregar.removeRow(i);
@@ -193,6 +223,22 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         tablaInsumosAgregados.setModel(modeloInsumosUtilizados);
     }
 
+    private void listarLineaEnvases(List<LineaEnvase> lista) {
+        limpiarTablaEnvasesUtilizados();
+
+        modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
+        Object[] objeto = new Object[4];
+        for (int i = 0; i < lista.size(); i++) {
+            objeto[0] = lista.get(i).getEnvase().getId();
+            objeto[1] = lista.get(i).getEnvase().getDescripcion();
+            objeto[2] = lista.get(i).getEnvase().getCapacidad();
+            objeto[3] = lista.get(i).getCantidad();
+            
+            modeloEnvasesUtilizados.addRow(objeto);
+        }
+        tablaEnvasesUtilizados.setModel(modeloEnvasesUtilizados);
+    }
+    
     private void limpiarTablaInsumosUtilizados() {
         for (int i = 0; i < modeloInsumosUtilizados.getRowCount(); i++) {
             modeloInsumosUtilizados.removeRow(i);
@@ -225,6 +271,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         idInsumo = -1;
         limpiarTablaEmpleadosTrabajaron();
         limpiarTablaInsumosUtilizados();
+        limpiarTablaEnvasesUtilizados();
         listaEmpleados.clear();
         listaInsumosLinea.clear();
 
@@ -352,6 +399,17 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         btnAgregarInsumo = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         cbxProducto = new javax.swing.JComboBox<>();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        tablaEnvasesUtilizados = new javax.swing.JTable();
+        btnEliminarInsumo1 = new javax.swing.JButton();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        tablaAgregarEnvases = new javax.swing.JTable();
+        txtCantidadEnvase = new javax.swing.JTextField();
+        btnAgregarInsumo1 = new javax.swing.JButton();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -837,31 +895,32 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel30)
-                .addGap(415, 415, 415))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminarInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel8)
+                        .addGap(443, 443, 443)
+                        .addComponent(jLabel30))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel30))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel8))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -884,6 +943,141 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                 cbxProductoActionPerformed(evt);
             }
         });
+
+        tablaEnvasesUtilizados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id Envase", "Descripcion", "Capacidad", "Cantidad"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaEnvasesUtilizados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaEnvasesUtilizadosMouseClicked(evt);
+            }
+        });
+        jScrollPane10.setViewportView(tablaEnvasesUtilizados);
+
+        btnEliminarInsumo1.setText("Eliminar Envase");
+        btnEliminarInsumo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarInsumo1ActionPerformed(evt);
+            }
+        });
+
+        tablaAgregarEnvases.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id Envase", "Descripcion", "Capacidad"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaAgregarEnvases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAgregarEnvasesMouseClicked(evt);
+            }
+        });
+        jScrollPane11.setViewportView(tablaAgregarEnvases);
+
+        txtCantidadEnvase.setToolTipText("");
+
+        btnAgregarInsumo1.setText("Agregar Envase");
+        btnAgregarInsumo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarInsumo1ActionPerformed(evt);
+            }
+        });
+
+        jLabel32.setText("Cantidad de Envases");
+
+        jLabel5.setText("Envases Utilizados");
+
+        jLabel6.setText("Envases");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminarInsumo1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCantidadEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarInsumo1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel32))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(jLabel5)
+                .addGap(453, 453, 453)
+                .addComponent(jLabel6)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(btnEliminarInsumo1)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel32)
+                .addGap(18, 18, 18)
+                .addComponent(txtCantidadEnvase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAgregarInsumo1)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -949,10 +1143,11 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCodigoInterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(386, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1029,10 +1224,13 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                             .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(44, 44, 44)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(505, Short.MAX_VALUE))
         );
 
         PanelScroll.setViewportView(jPanel1);
@@ -1041,13 +1239,13 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelScroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1529, Short.MAX_VALUE)
+            .addComponent(PanelScroll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1788, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PanelScroll))
+                .addComponent(PanelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1316, Short.MAX_VALUE))
         );
 
         pack();
@@ -1057,7 +1255,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
         idProduccionObtenido=id;
         
-        ProduccionManteca prod = controlador.buscarProduccionManteca(id);
+        ProduccionDulce prod = controlador.buscarProduccionDulce(id);
         txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
         txtCodigoInterno.setText(prod.getCodInterno());
         if (prod.getLechep() instanceof LechePasteurizada) {
@@ -1076,15 +1274,17 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         txtHoraFin.setText(prod.getHoraFin());
         txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
         txtNroTacho.setText(prod.getNroTacho() + "");
-        txtPhSn.setText(prod.getHoraComienzoBatido());
-        txtPhNeut.setText(prod.getHoraFinBatido());
-        txtLitrosSuero.setText(prod.getTiempoTotalBatido());
+        txtPhSn.setText(prod.getPhLechSn()+"");
+        txtPhNeut.setText(prod.getPhLechNeut()+"");
+        txtLitrosSuero.setText(prod.getLitrosSuero()+"");
        
         listaEmpleados = prod.getListaEmpleados();
         listaInsumosLinea = prod.getListaInsumos();       
         
         listarEmpleados(prod.getListaEmpleados());
         listarLineaInsumos(prod.getListaInsumos());
+        listarLineaEnvases(prod.getListaEnvases());
+        
     }//GEN-LAST:event_tablaProduccionesMouseClicked
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
@@ -1138,6 +1338,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
             produccion.setListaEmpleados(listaEmpleados);
+            produccion.setListaEnvases(listaEnvasesLinea);
             produccion.setLechep(lechep);
             produccion.setProducto(producto);
             produccion.setRendimiento(rendimiento);
@@ -1178,6 +1379,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             if (insumo instanceof Insumo && insumoLinea instanceof LineaInsumo) {
                 if (!listaInsumosLinea.contains(insumoLinea)) {
                     listaInsumosLinea.add(insumoLinea);
+                    txtCantidadInsumo.setText("");
                 } else {
                     throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
                 }
@@ -1382,6 +1584,43 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     // Agregar tres valores al JComboBox
     
     }//GEN-LAST:event_cbxProductoActionPerformed
+
+    private void tablaEnvasesUtilizadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEnvasesUtilizadosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaEnvasesUtilizadosMouseClicked
+
+    private void btnEliminarInsumo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarInsumo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarInsumo1ActionPerformed
+
+    private void tablaAgregarEnvasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarEnvasesMouseClicked
+        int fila = tablaAgregarEnvases.rowAtPoint(evt.getPoint());
+        idEnvase = (int) tablaAgregarEnvases.getValueAt(fila, 0);
+    }//GEN-LAST:event_tablaAgregarEnvasesMouseClicked
+
+    private void btnAgregarInsumo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumo1ActionPerformed
+       try {
+            EnvasesDulce envase = controlador.buscarEnvase(idEnvase);
+            int cantidad = Integer.parseInt(txtCantidadEnvase.getText());
+            System.out.println("Variable:   "+idEnvase);
+            System.out.println(envase.getId());
+            LineaEnvase lineaEnvase = new LineaEnvase(envase,cantidad);
+            
+            if (envase instanceof EnvasesDulce && lineaEnvase instanceof LineaEnvase) {
+                if (!listaEnvasesLinea.contains(lineaEnvase)) {
+                    listaEnvasesLinea.add(lineaEnvase);
+                    txtCantidadEnvase.setText("");
+                } else {
+                    throw new Exception("El Envase ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
+                }
+                listarLineaEnvases(listaEnvasesLinea);
+            } else {
+                throw new Exception("Debe seleccionar un Envase de la lista");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAgregarInsumo1ActionPerformed
     private void inicializarProductos() {
         cbxProducto.addItem("11 - Dulce de Leche Crema");
         cbxProducto.addItem("12 - Dulce de Leche Casero");
@@ -1403,10 +1642,12 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane PanelScroll;
     private javax.swing.JButton btnAgregarEmpleado;
     private javax.swing.JButton btnAgregarInsumo;
+    private javax.swing.JButton btnAgregarInsumo1;
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;
     private javax.swing.JToggleButton btnEliminarEmpleado;
     private javax.swing.JButton btnEliminarInsumo;
+    private javax.swing.JButton btnEliminarInsumo1;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSeleccionarEncargado;
@@ -1418,6 +1659,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -1428,11 +1670,13 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -1443,16 +1687,22 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTable tablaAgregarEmpleados;
+    private javax.swing.JTable tablaAgregarEnvases;
     private javax.swing.JTable tablaAgregarInsumos;
     private javax.swing.JTable tablaEmpleadosTrabajaron;
+    private javax.swing.JTable tablaEnvasesUtilizados;
     private javax.swing.JTable tablaInsumosAgregados;
     private javax.swing.JTable tablaProducciones;
+    private javax.swing.JTextField txtCantidadEnvase;
     private javax.swing.JTextField txtCantidadInsumo;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;

@@ -1,5 +1,7 @@
 package fabrica.gestiondeproducciones.dominio;
 
+import java.util.Objects;
+
 public class LineaEnvase {
     private int id;
     private EnvasesDulce envase;
@@ -37,7 +39,24 @@ public class LineaEnvase {
 
     public LineaEnvase() {
     }
+
+    public LineaEnvase(EnvasesDulce envase, int cantidad) {
+        this.envase = envase;
+        this.cantidad = cantidad;
+    }
     
-    
+    @Override
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    LineaEnvase that = (LineaEnvase) obj;
+    return this.envase.getId() == that.envase.getId();
+}
+
+@Override
+public int hashCode() {
+    return Objects.hash(envase.getId());
+}
+
     
 }
