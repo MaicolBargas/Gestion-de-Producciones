@@ -3,6 +3,9 @@ package fabrica.gestiondeproducciones.utilidades;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,21 +71,28 @@ public class Utilidades {
         }
     }
     
-    public String controlarFechas(String fecha) throws Exception{
+    public String controlarFechas(String fecha) throws Exception {
         String regex = "^\\d{2}/\\d{2}/\\d{4}$";
-        try{
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(fecha);
 
-        if (matcher.matches()) {
-            return fecha;
-        } else {
-            throw new Exception("La fecha tiene un formato incorecto. Formato esperado dd/mm/aaaa");
+        try {
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(fecha);
+
+            if (matcher.matches()) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                try {
+                    LocalDate fechaValida = LocalDate.parse(fecha, formatter);
+                    return fecha;
+                } catch (DateTimeParseException e) {
+                    throw new Exception("La fecha no es válida en el calendario.");
+                }
+            } else {
+                throw new Exception("La fecha tiene un formato incorrecto. Formato esperado dd/mm/yyyy.");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
-        }catch(Exception e){
-            throw new Exception(e.getMessage());               
-        }
-    }
+}
     
     public String validarVacios(String valor, String nombre) throws Exception{
         try{

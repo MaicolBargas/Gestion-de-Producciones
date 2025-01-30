@@ -306,7 +306,27 @@ public class Controlador {
         return persistencia.buscarAnalisisQueso(id);
     }
     
-    // </editor-fold>    
+    // </editor-fold>   
+    
+    // <editor-fold defaultstate="collapsed" desc="Analisis Dulce">    
+    public boolean altaAnalisisDulce(AnalisisDulce analisis){
+       return persistencia.altaAnalisisDulce(analisis);
+    }
+    
+    public List listarAnalisisDulce(){
+        return persistencia.listarAnalisisDulce();
+    }
+    
+   
+    public boolean modificarAnalisisDulce(AnalisisDulce analisis){
+       return persistencia.modificarAnalisisDulce(analisis);
+    }
+    
+    public AnalisisDulce buscarAnalisisDulce(int id){
+        return persistencia.buscarAnalisisDulce(id);
+    }
+    
+    // </editor-fold>     
     
     // <editor-fold defaultstate="collapsed" desc="Produccion">
 
@@ -385,6 +405,7 @@ public class Controlador {
         return persistencia.listarQuesoPendienteAnalizar();
     }
     // </editor-fold>  
+    
     // <editor-fold defaultstate="collapsed" desc="Produccion Dulce">
     public boolean altaProduccionDulce(ProduccionDulce produccionDulce){
         return persistencia.altaProduccionDulce(produccionDulce);
@@ -407,7 +428,7 @@ public class Controlador {
     }
     // </editor-fold>
     
-     // <editor-fold defaultstate="collapsed" desc="Envases Dulce">
+    // <editor-fold defaultstate="collapsed" desc="Envases Dulce">
     public boolean altaEnvase(EnvasesDulce envase){
         return persistencia.altaEnvase(envase);
     }

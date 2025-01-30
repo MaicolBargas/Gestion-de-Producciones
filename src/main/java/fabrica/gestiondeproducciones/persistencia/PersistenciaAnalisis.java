@@ -1,7 +1,7 @@
 
 package fabrica.gestiondeproducciones.persistencia;
 
-import fabrica.gestiondeproducciones.dominio.Analisis;
+import fabrica.gestiondeproducciones.dominio.AnalisisDulce;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
 import fabrica.gestiondeproducciones.dominio.AnalisisLechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.AnalisisManteca;
@@ -10,6 +10,7 @@ import fabrica.gestiondeproducciones.dominio.AnalisisYogur;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
+import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
 import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
@@ -35,6 +36,7 @@ public class PersistenciaAnalisis {
     PersistenciaProduccionManteca persManteca = new PersistenciaProduccionManteca();
     PersistenciaProduccionYogur persYogur = new PersistenciaProduccionYogur();
     PersistenciaProduccionQueso persQueso = new PersistenciaProduccionQueso();
+    PersistenciaProduccionDulce persDulce = new PersistenciaProduccionDulce();
 
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
@@ -774,6 +776,154 @@ public class PersistenciaAnalisis {
                 if(produccion instanceof ProduccionQueso){
                     analisis.setProduccion(produccion);
                 }   
+                
+                return analisis;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+        return null;
+    }
+    
+    // </editor-fold>  
+    
+    // <editor-fold defaultstate="collapsed" desc="Analisis de Dulce">  
+    public boolean altaAnalisisDulce(AnalisisDulce analisis){
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,humedad,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);          
+            consulta.setString(1, analisis.getTipo());
+            consulta.setInt(2, analisis.getEncargado().getId());
+            consulta.setString(3, analisis.getFecha());
+            consulta.setInt(4, analisis.getLevadura());
+            consulta.setInt(5, analisis.getMos());
+            consulta.setInt(6, analisis.getPoliformosTotales());
+            consulta.setInt(7, analisis.getPoliformosFecales());           
+            consulta.setInt(8, analisis.getGrasa());
+            consulta.setInt(9, analisis.getHumedad());
+            consulta.setInt(10, analisis.getProduccion().getIdProduccion());
+            consulta.execute();
+            return true;
+        }catch(SQLException e){            
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+               JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public boolean modificarAnalisisDulce(AnalisisDulce analisis){
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? , humedad = ?, idProduccion = ? WHERE idAnalisis = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setString(1, analisis.getTipo());
+            consulta.setInt(2, analisis.getEncargado().getId());
+            consulta.setString(3, analisis.getFecha());
+            consulta.setInt(4, analisis.getLevadura());
+            consulta.setInt(5, analisis.getMos());
+            consulta.setInt(6, analisis.getPoliformosTotales());
+            consulta.setInt(7, analisis.getPoliformosFecales());           
+            consulta.setInt(8, analisis.getGrasa());
+            consulta.setInt(9, analisis.getHumedad());
+            consulta.setInt(10, analisis.getProduccion().getIdProduccion());
+            consulta.setInt(11, analisis.getId());
+
+            consulta.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public List listarAnalisisDulce() {
+        List<AnalisisDulce> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE tipo = 'dulce' AND activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                AnalisisDulce analisis = new AnalisisDulce();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                analisis.setGrasa(resultado.getInt("grasa"));
+                analisis.setHumedad(resultado.getInt("humedad"));
+
+                ProduccionDulce produccion = persDulce.buscarProduccionDulce(resultado.getInt("idProduccion"));
+                if(produccion instanceof ProduccionDulce){
+                    analisis.setProduccion(produccion);
+                }   
+                
+                lista.add(analisis);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    public AnalisisDulce buscarAnalisisDulce(int id){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idAnalisis =?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            resultado = consulta.executeQuery();     
+            if(resultado.next()){
+               AnalisisDulce analisis = new AnalisisDulce();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                analisis.setGrasa(resultado.getInt("grasa"));
+                analisis.setHumedad(resultado.getInt("humedad"));
+
+                ProduccionDulce produccion = persDulce.buscarProduccionDulce(resultado.getInt("idProduccion"));
+                if(produccion instanceof ProduccionDulce){
+                    analisis.setProduccion(produccion);
+                }    
                 
                 return analisis;
             }
