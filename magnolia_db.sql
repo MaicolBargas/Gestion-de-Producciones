@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-01-2025 a las 03:19:26
+-- Tiempo de generación: 30-01-2025 a las 03:26:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,8 +44,7 @@ CREATE TABLE `analisis` (
   `idPasteurizada` int(11) DEFAULT NULL,
   `humedad` int(11) DEFAULT NULL,
   `sal` int(11) DEFAULT NULL,
-  `ph` int(11) DEFAULT NULL,
-  `acides` int(11) DEFAULT NULL,
+  `ph` float(10,2) DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -64,6 +63,19 @@ CREATE TABLE `empleado` (
   `telefono` int(9) NOT NULL,
   `mail` varchar(30) NOT NULL,
   `activo` int(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `envases`
+--
+
+CREATE TABLE `envases` (
+  `idEnvase` int(11) NOT NULL,
+  `descripcion` varchar(300) NOT NULL,
+  `capacidad` float(10,3) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -99,6 +111,19 @@ CREATE TABLE `insumo` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `linea_envases`
+--
+
+CREATE TABLE `linea_envases` (
+  `idLinea` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `idEnvase` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `linea_insumos`
 --
 
@@ -123,6 +148,7 @@ CREATE TABLE `pasteurizadas` (
   `idIngreso` int(11) NOT NULL,
   `descremado` varchar(20) NOT NULL,
   `cremaObtenida` int(11) NOT NULL,
+  `cremaDisponible` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -136,6 +162,7 @@ CREATE TABLE `produccion` (
   `idProduccion` int(11) NOT NULL,
   `codInterno` varchar(50) NOT NULL,
   `idLechePast` int(11) NOT NULL,
+  `litros` int(11) NOT NULL,
   `idProducto` int(11) NOT NULL,
   `rendimiento` int(11) NOT NULL,
   `kgLtsObt` int(11) NOT NULL,
@@ -145,6 +172,21 @@ CREATE TABLE `produccion` (
   `horaFin` varchar(5) NOT NULL,
   `tiempoTrabajado` varchar(5) NOT NULL,
   `nroTacho` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produccion_dulce`
+--
+
+CREATE TABLE `produccion_dulce` (
+  `id` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `phLecheSn` float(10,3) NOT NULL,
+  `phLecheNeut` float(10,3) NOT NULL,
+  `litrosSuero` int(11) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -180,15 +222,98 @@ CREATE TABLE `produccion_manteca` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `produccion_queso`
+--
+
+CREATE TABLE `produccion_queso` (
+  `id` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `tempPastQueso` float(10,2) NOT NULL,
+  `tiempoReposoFermento` varchar(5) NOT NULL,
+  `tempReposoFermento` decimal(10,0) NOT NULL,
+  `tipoCuajoObtenido` varchar(50) NOT NULL,
+  `tiempoCuajado` varchar(5) NOT NULL,
+  `tempAlCuajar` float(10,2) NOT NULL,
+  `cantCuajoObtenido` decimal(10,0) NOT NULL,
+  `tipoDeGrano` varchar(50) NOT NULL,
+  `litrosSueroObtenidos` decimal(10,0) NOT NULL,
+  `tiempoAgregadoAgua` varchar(5) NOT NULL,
+  `tempAgua` float(10,2) NOT NULL,
+  `tempCuajoFinal` float(10,2) NOT NULL,
+  `unidadesObtenidas` int(11) NOT NULL,
+  `acidesFermento` float(10,2) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `produccion_yogur`
+--
+
+CREATE TABLE `produccion_yogur` (
+  `id` int(11) NOT NULL,
+  `idProduccion` int(11) NOT NULL,
+  `tempIncubacion` float(10,2) NOT NULL,
+  `horaComienzoInc` varchar(5) NOT NULL,
+  `horaFinInc` varchar(5) NOT NULL,
+  `tiempoIncubacion` varchar(5) NOT NULL,
+  `horaComienzoEnfriado` varchar(5) NOT NULL,
+  `horaFinEnfriado` varchar(5) NOT NULL,
+  `tiempoTotalEnfriado` varchar(5) NOT NULL,
+  `tempAguaHelada` float(10,2) NOT NULL,
+  `tempAgregadoSabor` float(10,2) NOT NULL,
+  `tempAgregadoColor` float(10,2) NOT NULL,
+  `litrosSuero` int(11) NOT NULL,
+  `unidadesObtenidas` int(11) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
 CREATE TABLE `producto` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `activo`) VALUES
+(1, 'Queso Colonia', 'Queso Colonia', 1),
+(2, 'Queso Cuartirolo', 'Queso Cuartirolo', 1),
+(3, 'Queso Dambo', 'Queso Dambo', 1),
+(4, 'Queso Holandita', 'Queso Holandita', 1),
+(5, 'Queso Magro', 'Queso Magro', 1),
+(6, 'Queso Muzarella', 'Queso Muzarella', 1),
+(7, 'Queso Parmesano', 'Queso Parmesano', 1),
+(8, 'Queso Provolone', 'Queso Provolone', 1),
+(9, 'Queso Sardo', 'Queso Sardo', 1),
+(10, 'Queso Semiduro', 'Queso Semiduro', 1),
+(11, 'Dulce de Leche Crema', 'Dulce de Leche Crema', 1),
+(12, 'Dulce de Leche Casero', 'Dulce de Leche Casero', 1),
+(13, 'Dulce de Leche Repostero', 'Dulce de Leche Repostero', 1),
+(14, 'Dulce de Leche Amarillo', 'Dulce de Leche Suizo Amarillo', 1),
+(15, 'Dulce de Leche Azul', 'Dulce de Leche Suizo Azul', 1),
+(16, 'Dulce de Leche Especial', 'Dulce de Leche Especial', 1),
+(17, 'Dulce de Leche Verde Duro', 'Dulce de Leche Verde Duro', 1),
+(18, 'Dulce de Leche Verde Blando', 'Dulce de Leche Verde Blando', 1),
+(19, 'Manteca', 'Manteca', 1),
+(20, 'Yogur bebible Frutilla', 'Yogur bebible frutilla', 1),
+(21, 'Yogur bebible Durazno', 'Yogur bebible Durazno', 1),
+(22, 'Yogur bebible Ananà', 'Yogur bebible Ananà', 1),
+(23, 'Yogur bebible Banana', 'Yogur bebible Banana', 1),
+(24, 'Yogur batido Vainilla', 'Yogur batido Vainilla', 1),
+(25, 'Yogur batido Natural', 'Yogur batido Natural', 1),
+(26, 'Yogur batido Frutilla', 'Yogur batido Frutilla', 1),
+(27, 'Yogur batido Durazno', 'Yogur batido Durazno', 1);
 
 -- --------------------------------------------------------
 
@@ -215,6 +340,15 @@ CREATE TABLE `silos` (
   `capacidad` int(8) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `silos`
+--
+
+INSERT INTO `silos` (`IdSilo`, `codigoSilo`, `capacidad`, `activo`) VALUES
+(1, '1', 50000, 1),
+(2, '2', 50000, 1),
+(3, '3', 45000, 1);
 
 -- --------------------------------------------------------
 
@@ -249,6 +383,12 @@ ALTER TABLE `empleado`
   ADD UNIQUE KEY `ci` (`ci`);
 
 --
+-- Indices de la tabla `envases`
+--
+ALTER TABLE `envases`
+  ADD PRIMARY KEY (`idEnvase`);
+
+--
 -- Indices de la tabla `ingresos`
 --
 ALTER TABLE `ingresos`
@@ -259,6 +399,12 @@ ALTER TABLE `ingresos`
 --
 ALTER TABLE `insumo`
   ADD PRIMARY KEY (`idInsumo`);
+
+--
+-- Indices de la tabla `linea_envases`
+--
+ALTER TABLE `linea_envases`
+  ADD PRIMARY KEY (`idLinea`);
 
 --
 -- Indices de la tabla `linea_insumos`
@@ -279,6 +425,12 @@ ALTER TABLE `produccion`
   ADD PRIMARY KEY (`idProduccion`);
 
 --
+-- Indices de la tabla `produccion_dulce`
+--
+ALTER TABLE `produccion_dulce`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `produccion_empleados`
 --
 ALTER TABLE `produccion_empleados`
@@ -288,6 +440,18 @@ ALTER TABLE `produccion_empleados`
 -- Indices de la tabla `produccion_manteca`
 --
 ALTER TABLE `produccion_manteca`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `produccion_queso`
+--
+ALTER TABLE `produccion_queso`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `produccion_yogur`
+--
+ALTER TABLE `produccion_yogur`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -332,6 +496,12 @@ ALTER TABLE `empleado`
   MODIFY `idEmpleado` int(4) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `envases`
+--
+ALTER TABLE `envases`
+  MODIFY `idEnvase` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `ingresos`
 --
 ALTER TABLE `ingresos`
@@ -342,6 +512,12 @@ ALTER TABLE `ingresos`
 --
 ALTER TABLE `insumo`
   MODIFY `idInsumo` int(2) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `linea_envases`
+--
+ALTER TABLE `linea_envases`
+  MODIFY `idLinea` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `linea_insumos`
@@ -362,6 +538,12 @@ ALTER TABLE `produccion`
   MODIFY `idProduccion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `produccion_dulce`
+--
+ALTER TABLE `produccion_dulce`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `produccion_empleados`
 --
 ALTER TABLE `produccion_empleados`
@@ -374,9 +556,15 @@ ALTER TABLE `produccion_manteca`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `producto`
+-- AUTO_INCREMENT de la tabla `produccion_queso`
 --
-ALTER TABLE `producto`
+ALTER TABLE `produccion_queso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `produccion_yogur`
+--
+ALTER TABLE `produccion_yogur`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -389,7 +577,7 @@ ALTER TABLE `secciones`
 -- AUTO_INCREMENT de la tabla `silos`
 --
 ALTER TABLE `silos`
-  MODIFY `IdSilo` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdSilo` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tambo`
