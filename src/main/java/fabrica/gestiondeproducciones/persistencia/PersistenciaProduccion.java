@@ -291,7 +291,7 @@ public class PersistenciaProduccion {
     
     public void agregarEnvase(int idProd,int idEnvase,int cantidad){
         String sql = "INSERT INTO linea_envases" +"(idProduccion,idEnvase,cantidad) VALUES (?,?,?)";
-        
+        System.out.println("LLEGO A AGREGAR ENVASE");
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);

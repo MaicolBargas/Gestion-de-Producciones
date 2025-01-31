@@ -433,7 +433,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
@@ -533,7 +533,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try{
-            int temperatura = utilidad.validarNumericos(txtTemperatura.getText(), "Temperatura", false);
+            float temperatura = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTemperatura.getText(), "Temperatura", false).toString());
             int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);           
             String[] partes = txtIngreso.getText().split(" - ");
             IngresoLeche ingreso = controlador.buscarIngreso(Integer.parseInt(partes[0]));
@@ -586,7 +586,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try{
             int id= Integer.parseInt(txtId.getText());
-            int temperatura = utilidad.validarNumericos(txtTemperatura.getText(), "Temperatura", false);
+            float temperatura = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTemperatura.getText(), "Temperatura", false).toString());
             int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);           
             String[] partes = txtIngreso.getText().split(" - ");
             IngresoLeche ingreso = controlador.buscarIngreso(Integer.parseInt(partes[0]));

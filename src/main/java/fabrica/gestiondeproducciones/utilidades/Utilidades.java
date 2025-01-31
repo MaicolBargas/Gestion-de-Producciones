@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JInternalFrame;
 
 public class Utilidades {
     
@@ -259,17 +260,28 @@ public void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         c.modificarPasteurizado(lecheP);
     }
 
-public Float validarTemperatura(Float temperatura) throws Exception{
-    if(temperatura<120)
+public float validarTemperatura(String temperatura) throws Exception{
+    if(Float.parseFloat(temperatura)<120)
     {
-        return temperatura;
+        return Float.parseFloat(temperatura);
         
     }
     else
     {
-        throw new Exception("La temperatura Nunca alcanza valores tan altos, Verificar");
+        throw new Exception("Ningun Proceso Alcanza valores de temperatura tan altos, Verificar Temperaturas Ingresadas");
     }
 }
+
+public float validarPh(String ph)throws Exception{
+    
+    if(Float.parseFloat(ph)>0&&Float.parseFloat(ph)<14)
+    {
+        return Float.parseFloat(ph);
+    }
+    throw new Exception("Los Valores de ph deben de estar contenidos entre 0.0 y 14.0");
+}
+
+
 }
 
 

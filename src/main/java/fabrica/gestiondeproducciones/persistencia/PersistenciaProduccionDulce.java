@@ -93,7 +93,7 @@ public class PersistenciaProduccionDulce {
         for(LineaInsumo insumo : produccion.getListaInsumos()){                
                 persProduccion.agregarInsumos(idProduccion, insumo.getInsumo().getId(), insumo.getCantidad());
             }
-
+        System.out.println("PERSISTENCIA LISTA ENVASES TAMAÑO  "+ produccion.getListaEnvases().size());
         for(LineaEnvase envase: produccion.getListaEnvases()){
             persProduccion.agregarEnvase(idProduccion,envase.getEnvase().getId(),envase.getCantidad());
             
@@ -182,12 +182,15 @@ public class PersistenciaProduccionDulce {
     
     public List listarProduccionesDulce() {
         List<ProduccionDulce> lista = new ArrayList<>();
-        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_dulce pm ON p.idProduccion = pm.idProduccion LEFT JOIN analisis a ON p.idProduccion = a.idProduccion WHERE p.activo = '1' AND pm.activo = '1' AND a.idProduccion IS NULL GROUP BY p.idProduccion;";
+        String sql = "SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_dulce pm ON p.idProduccion = pm.idProduccion WHERE pm.activo='1' ";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
+           
+
             while(resultado.next()){
+                System.out.println("Procesando idProduccion: " + resultado.getInt("idProduccion"));
                 ProduccionDulce produccion = new ProduccionDulce();
                 int id = resultado.getInt("idProduccion");
                 produccion.setIdProduccion(id);
@@ -360,10 +363,39 @@ public class PersistenciaProduccionDulce {
             consulta.executeUpdate();
             persProduccion.actualizarEmpleadosxProduccion(produccion.getIdProduccion(), produccion.getListaEmpleados());
             persProduccion.actualizarInsumosxProduccion(produccion.getIdProduccion(), produccion.getListaInsumos());
+            this.actualizarEnvasesxProduccion(produccion.getIdProduccion(),produccion.getListaEnvases() );
             return true;
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public void actualizarEnvasesxProduccion(int idProduccion, List<LineaEnvase> envases){
+        limpiarEnvasesProduccion(idProduccion);
+        try{
+            for(LineaEnvase envase : envases){                
+                agregarEnvases(idProduccion, envase.getEnvase().getId(), envase.getCantidad());                
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+        }
+    }
+    private void limpiarEnvasesProduccion(int idProduccion){
+        String sql = "DELETE FROM linea_envases WHERE idProduccion = ?";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, idProduccion);
+            consulta.execute();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
         }finally{
             try{
                 con.close();
@@ -431,28 +463,42 @@ public class PersistenciaProduccionDulce {
     
     PersistenciaEnvases persEnvase= new PersistenciaEnvases();
     
-    public List listarEnvaseXProduccion(int idProduccion){
-        List<LineaEnvase> lista = new ArrayList();
-        String sql = "SELECT * FROM linea_envases WHERE idProduccion = ?";
-        try{
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            consulta.setInt(1, idProduccion);
-            resultado = consulta.executeQuery();
-            while(resultado.next()){
-                EnvasesDulce envase = persEnvase.buscarEnvase(resultado.getInt("idEnvase"));
-                if( envase instanceof EnvasesDulce){
-                    int id = resultado.getInt("idLinea");
-                    int cantidad = resultado.getInt("cantidad");
-                    LineaEnvase linea = new LineaEnvase(id,envase,cantidad);
-                    lista.add(linea);
-                }
+   public List<LineaEnvase> listarEnvaseXProduccion(int idProduccion){
+    List<LineaEnvase> lista = new ArrayList<>();
+    String sql = "SELECT * FROM linea_envases WHERE idProduccion = ?";
+    Connection con = null;
+    PreparedStatement consulta = null;
+    ResultSet resultado = null;
+
+    try {
+        con = conexion.obtenerConexion();
+        consulta = con.prepareStatement(sql);
+        consulta.setInt(1, idProduccion);
+        resultado = consulta.executeQuery();
+
+        while(resultado.next()) {
+            EnvasesDulce envase = persEnvase.buscarEnvase(resultado.getInt("idEnvase"));
+            if(envase instanceof EnvasesDulce) {
+                int id = resultado.getInt("idLinea");
+                int cantidad = resultado.getInt("cantidad");
+                LineaEnvase linea = new LineaEnvase(id, envase, cantidad);
+                lista.add(linea);
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return null;
         }
-        return lista;
+    } catch(SQLException e) {
+        JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+        return null;
+    } finally {
+        try {
+            if (resultado != null) resultado.close();
+            if (consulta != null) consulta.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+        }
     }
+    return lista;
+}
+
         
 }

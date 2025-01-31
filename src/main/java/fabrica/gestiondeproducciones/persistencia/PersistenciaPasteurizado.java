@@ -26,7 +26,7 @@ public class PersistenciaPasteurizado {
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setInt(1, lecheP.getTemperatura());
+            consulta.setFloat(1, lecheP.getTemperatura());
             consulta.setInt(2, lecheP.getLitros());
             if(lecheP.getIngreso() instanceof IngresoLeche){
                 consulta.setInt(3, lecheP.getIngreso().getIdIngreso());
@@ -61,7 +61,7 @@ public class PersistenciaPasteurizado {
             while(resultado.next()){
                 LechePasteurizada lecheP = new LechePasteurizada();
                 lecheP.setId(resultado.getInt("idLecheP"));
-                lecheP.setTemperatura(resultado.getInt("temperatura"));
+                lecheP.setTemperatura(resultado.getFloat("temperatura"));
                 lecheP.setLitros(resultado.getInt("litros"));
                 IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
                 if(ingreso instanceof IngresoLeche){
@@ -94,7 +94,7 @@ public class PersistenciaPasteurizado {
             while(resultado.next()){
                 LechePasteurizada lecheP = new LechePasteurizada();
                 lecheP.setId(resultado.getInt("idLecheP"));
-                lecheP.setTemperatura(resultado.getInt("temperatura"));
+                lecheP.setTemperatura(resultado.getFloat("temperatura"));
                 lecheP.setLitros(resultado.getInt("litros"));
                 IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
                 if(ingreso instanceof IngresoLeche){
@@ -124,7 +124,7 @@ public class PersistenciaPasteurizado {
             while(resultado.next()){
                 LechePasteurizada lecheP = new LechePasteurizada();
                 lecheP.setId(resultado.getInt("idLecheP"));
-                lecheP.setTemperatura(resultado.getInt("temperatura"));
+                lecheP.setTemperatura(resultado.getFloat("temperatura"));
                 lecheP.setLitros(resultado.getInt("litros"));
                 IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
                 if(ingreso instanceof IngresoLeche){
@@ -168,7 +168,7 @@ public class PersistenciaPasteurizado {
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setInt(1, lecheP.getTemperatura());
+            consulta.setFloat(1, lecheP.getTemperatura());
             consulta.setInt(2, lecheP.getLitros());
             consulta.setInt(3, lecheP.getIngreso().getIdIngreso());
             consulta.setBoolean(4, lecheP.getDescremado());
@@ -199,7 +199,7 @@ public class PersistenciaPasteurizado {
             if(resultado.next()){
                LechePasteurizada lecheP = new LechePasteurizada();
                 lecheP.setId(resultado.getInt("idLecheP"));
-                lecheP.setTemperatura(resultado.getInt("temperatura"));
+                lecheP.setTemperatura(resultado.getFloat("temperatura"));
                 lecheP.setLitros(resultado.getInt("litros"));
                 IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
                 if(ingreso instanceof IngresoLeche){

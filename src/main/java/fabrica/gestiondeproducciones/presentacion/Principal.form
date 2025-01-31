@@ -83,12 +83,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLecheActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisLeche1">
+            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisLechePasteurizada">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Analisis de Leche Pasteurizada"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLeche1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLechePasteurizadaActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisManteca">
@@ -138,28 +138,28 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProduccionesMantecaActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisLeche3">
+            <MenuItem class="javax.swing.JMenuItem" name="menuProduccionYogur">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Produccion de Yogur"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLeche3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProduccionYogurActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisLeche4">
+            <MenuItem class="javax.swing.JMenuItem" name="menuProduccionQueso">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Produccion de Queso"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLeche4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProduccionQuesoActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuAnalisisLeche5">
+            <MenuItem class="javax.swing.JMenuItem" name="menuProduccionDulce">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Produccion de Dulce"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAnalisisLeche5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuProduccionDulceActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

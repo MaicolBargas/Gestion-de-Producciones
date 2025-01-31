@@ -119,11 +119,9 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="txtFecha" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
                                           <Component id="txtId" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtPTotales" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="txtLevadura" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                              <Component id="txtMos" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="txtPTotales" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                          <Component id="txtLevadura" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
+                                          <Component id="txtMos" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -259,7 +257,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
-                <Property name="text" type="java.lang.String" value="P.H.:"/>
+                <Property name="text" type="java.lang.String" value="P.H:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">

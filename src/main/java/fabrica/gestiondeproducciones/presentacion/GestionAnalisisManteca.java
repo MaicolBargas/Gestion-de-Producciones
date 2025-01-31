@@ -255,7 +255,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Grasa");
 
-        jLabel9.setText("P.H.:");
+        jLabel9.setText("P.H:");
 
         jLabel10.setText("Humedad");
 
@@ -295,10 +295,9 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtPTotales, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtLevadura, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtMos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtPTotales, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtLevadura, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -660,7 +659,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionManteca produccion = controlador.buscarProduccionManteca(idProduccion); 
@@ -730,7 +729,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionManteca produccion = controlador.buscarProduccionManteca(idProduccion); 

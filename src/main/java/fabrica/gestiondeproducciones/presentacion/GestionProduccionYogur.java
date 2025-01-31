@@ -398,7 +398,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Produccion de Yogur");
+        setTitle("Gestion de Produccion de Yogur");
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(2100000000, 2100000000));
         setPreferredSize(new java.awt.Dimension(1800, 1000));
@@ -912,7 +912,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminarInsumo, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1312,7 +1312,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Y" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtUnidadesObtenidas.getText() + txtNroTacho.getText();
-            float tempIncubacion=utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false);
+            float tempIncubacion=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false).toString());
             
             String horaComienzoIncubacion = utilidad.validarHora(txtComienzoInc.getText(), "Hora de Inicio de Incubacion");
             String horaFinIncubacion = utilidad.validarHora(txtFinInc.getText(), "Hora de Finalizacion de Incubacion");
@@ -1320,9 +1320,9 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             String horaComienzoEnfriado=utilidad.validarHora(txtComienzoEnfriado.getText(),"Hora de comienzo de Enfriado");
             String horaFinEnfriado=utilidad.validarHora(txtFinEnfriado.getText(),"Hora de Fin de Enfriado");
             String tiempoEnfriado=utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
-            float tempAguaHelada=utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false);
-            float tempAgregadoSabor=utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false);
-            float tempAgregadoColor=utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false);
+            float tempAguaHelada=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false).toString());
+            float tempAgregadoSabor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false).toString());
+            float tempAgregadoColor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false).toString());
             int litrosSuero=utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero",false);
             int unidadesObtenidas=utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
             
@@ -1361,7 +1361,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             
            
             int kgObtenidos = unidadesObtenidas;
-            float rendimiento = ((float) kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante
+            int rendimiento = Math.round(kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);
@@ -1499,7 +1499,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Y" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtUnidadesObtenidas.getText() + txtNroTacho.getText();
-            float tempIncubacion=utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false);
+            float tempIncubacion=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false).toString());
             
             String horaComienzoIncubacion = utilidad.validarHora(txtComienzoInc.getText(), "Hora de Inicio de Incubacion");
             String horaFinIncubacion = utilidad.validarHora(txtFinInc.getText(), "Hora de Finalizacion de Incubacion");
@@ -1507,9 +1507,9 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             String horaComienzoEnfriado=utilidad.validarHora(txtComienzoEnfriado.getText(),"Hora de comienzo de Enfriado");
             String horaFinEnfriado=utilidad.validarHora(txtFinEnfriado.getText(),"Hora de Fin de Enfriado");
             String tiempoEnfriado=utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
-            float tempAguaHelada=utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false);
-            float tempAgregadoSabor=utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false);
-            float tempAgregadoColor=utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false);
+            float tempAguaHelada=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false).toString());
+            float tempAgregadoSabor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false).toString());
+            float tempAgregadoColor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false).toString());
             int litrosSuero=utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero",false);
             int unidadesObtenidas=utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
             
@@ -1552,7 +1552,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             
            
             int kgObtenidos = unidadesObtenidas;
-            float rendimiento = ((float) kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante
+            int rendimiento = Math.round(kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);

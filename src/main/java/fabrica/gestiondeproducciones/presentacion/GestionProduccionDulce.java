@@ -224,6 +224,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     }
 
     private void listarLineaEnvases(List<LineaEnvase> lista) {
+        System.out.println("LISTAR ENVASES"+   lista.size());
         limpiarTablaEnvasesUtilizados();
 
         modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
@@ -415,7 +416,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Produccion de Manteca");
+        setTitle("Gestion de Produccion de Dulce");
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(2100000000, 2100000000));
         setPreferredSize(new java.awt.Dimension(1800, 1000));
@@ -956,7 +957,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1279,10 +1280,12 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         txtLitrosSuero.setText(prod.getLitrosSuero()+"");
        
         listaEmpleados = prod.getListaEmpleados();
-        listaInsumosLinea = prod.getListaInsumos();       
+        listaInsumosLinea = prod.getListaInsumos(); 
+        listaEnvasesLinea=prod.getListaEnvases();
         
         listarEmpleados(prod.getListaEmpleados());
         listarLineaInsumos(prod.getListaInsumos());
+        System.out.println("TAMAÑO LISTA     "+ prod.getListaEnvases().size());
         listarLineaEnvases(prod.getListaEnvases());
         
     }//GEN-LAST:event_tablaProduccionesMouseClicked
@@ -1296,10 +1299,10 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
-            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtNroTacho.getText();
+            String CodigoInterno = "D" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtNroTacho.getText();
             
-            Float phLecheSn = utilidad.validarNumericosFloat(txtPhSn.getText(), "pH de Leche sin Neutralizar",false);
-            Float phLecheNeut = utilidad.validarNumericosFloat(txtPhNeut.getText(), "pH de Leche Neutralizada",false);
+            Float phLecheSn = utilidad.validarPh(utilidad.validarNumericosFloat(txtPhSn.getText(), "pH de Leche sin Neutralizar",false).toString());
+            Float phLecheNeut = utilidad.validarPh(utilidad.validarNumericosFloat(txtPhNeut.getText(), "pH de Leche Neutralizada",false).toString());
             int litrosSuero= utilidad.validarNumericos(txtLitrosSuero.getText(),"Litros de Suero Agregado",false);
             
           
@@ -1329,10 +1332,18 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
+            float kg=0;
+            for(LineaEnvase linea: listaEnvasesLinea){
+                kg= kg+(linea.getEnvase().getCapacidad()*linea.getCantidad());
+            }
             
+            int kgObtenidos=Math.round(kg);
+            if(kgObtenidos>((litros+litrosSuero)/2)){
+                throw new Exception("Verificar Cantidad de Envases o materia Prima(Leche Y Suero), Los kg Obtenidos son demasiados para la produccion ");
+            }
+            int divisor=litros+litrosSuero;
+            int rendimiento = Math.round((kgObtenidos / (float)divisor) * 100);   
             
-            int kgObtenidos = 100;
-            float rendimiento = ((float) kgObtenidos / litros) * 100; // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);
@@ -1451,12 +1462,12 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
-            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtNroTacho.getText();
+            String CodigoInterno = "D" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtNroTacho.getText();
             
-            Float phLecheSn = utilidad.validarNumericosFloat(txtPhSn.getText(), "pH de Leche sin Neutralizar",false);
-            Float phLecheNeut = utilidad.validarNumericosFloat(txtPhNeut.getText(), "pH de Leche Neutralizada",false);
+            Float phLecheSn = utilidad.validarPh(utilidad.validarNumericosFloat(txtPhSn.getText(), "pH de Leche sin Neutralizar",false).toString());
+            Float phLecheNeut =utilidad.validarPh( utilidad.validarNumericosFloat(txtPhNeut.getText(), "pH de Leche Neutralizada",false).toString());
             int litrosSuero= utilidad.validarNumericos(txtLitrosSuero.getText(),"Litros de Suero Agregado",false);
-            int kgObtenidos=100;
+           
           
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
@@ -1487,7 +1498,20 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-            float rendimiento = ((float) kgObtenidos / (litros)) * 100; // Usa división en coma flotante
+            
+            float kg=0;
+            for(LineaEnvase linea: listaEnvasesLinea){
+                kg= kg+(linea.getEnvase().getCapacidad()*linea.getCantidad());
+            }
+            
+            
+            int kgObtenidos=Math.round(kg);
+            
+            if(kgObtenidos>((litros+litrosSuero)/2)){
+                throw new Exception("Verificar Cantidad de Envases o materia Prima(Leche Y Suero), Los kg Obtenidos son demasiados para la produccion ");
+            }
+             int divisor=litros+litrosSuero;
+            int rendimiento = Math.round((kgObtenidos / (float)divisor) * 100);   
               String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             //--------
@@ -1495,6 +1519,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
            produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
             produccion.setListaEmpleados(listaEmpleados);
+            produccion.setListaEnvases(listaEnvasesLinea);
             produccion.setLechep(lechep);
             produccion.setProducto(producto);
             produccion.setRendimiento(rendimiento);
@@ -1600,6 +1625,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
 
     private void btnAgregarInsumo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumo1ActionPerformed
        try {
+           
             EnvasesDulce envase = controlador.buscarEnvase(idEnvase);
             int cantidad = Integer.parseInt(txtCantidadEnvase.getText());
             System.out.println("Variable:   "+idEnvase);
@@ -1617,6 +1643,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             } else {
                 throw new Exception("Debe seleccionar un Envase de la lista");
             }
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }

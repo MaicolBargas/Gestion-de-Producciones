@@ -398,7 +398,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(txtIdProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+                        .addComponent(txtIdProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
@@ -509,14 +509,15 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLimpiar)
-                    .addComponent(btnAlta)
-                    .addComponent(btnBaja)
-                    .addComponent(btnModificar)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLimpiar)
+                        .addComponent(btnAlta)
+                        .addComponent(btnBaja)
+                        .addComponent(btnModificar)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -613,7 +614,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion); 
             
@@ -679,7 +680,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
-            int ph = utilidad.validarNumericos(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion); 
             

@@ -3,7 +3,7 @@ package fabrica.gestiondeproducciones.dominio;
 
 public class LechePasteurizada {
     private int id;
-    private int temperatura;
+    private float temperatura;
     private int litros;
     private IngresoLeche ingreso;
     private boolean descremado;
@@ -21,15 +21,7 @@ public class LechePasteurizada {
     public LechePasteurizada() {
     }
 
-    public LechePasteurizada(int id, int temperatura, int litros, IngresoLeche ingreso, boolean descremado, int crema,int cremaDisponible) {
-        this.id = id;
-        this.temperatura = temperatura;
-        this.litros = litros;
-        this.ingreso = ingreso;
-        this.descremado = descremado;
-        this.crema = crema;
-        this.cremaDisponible=cremaDisponible;
-    }
+   
 
     public int getId() {
         return id;
@@ -39,13 +31,27 @@ public class LechePasteurizada {
         this.id = id;
     }
 
-    public int getTemperatura() {
+    public float getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(int temperatura) {
+    public void setTemperatura(float temperatura) {
         this.temperatura = temperatura;
     }
+
+    public LechePasteurizada(int id, float temperatura, int litros, IngresoLeche ingreso, boolean descremado, int crema, int cremaDisponible) {
+        this.id = id;
+        this.temperatura = temperatura;
+        this.litros = litros;
+        this.ingreso = ingreso;
+        this.descremado = descremado;
+        this.crema = crema;
+        this.cremaDisponible = cremaDisponible;
+    }
+
+    
+
+    
 
     public int getLitros() {
         return litros;

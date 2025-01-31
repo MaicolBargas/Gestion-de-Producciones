@@ -345,7 +345,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Produccion de Manteca");
+        setTitle("Gestion de Produccion de Manteca");
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(2100000000, 2100000000));
         setPreferredSize(new java.awt.Dimension(1800, 1000));
@@ -1119,7 +1119,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
             int kgObtenidos = ormas * 5;
-            float rendimiento = ((float) kgObtenidos / litros) * 100; // Usa división en coma flotante
+            int rendimiento = Math.round((kgObtenidos / litros) * 100); // Usa división en coma flotante
             Producto producto = controlador.buscarProducto(idManteca);
             produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);
@@ -1247,7 +1247,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros de Leche Pasteurizada", false);
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
             int kgObtenidos = ormas * 5;
-            float rendimiento = (100 / Integer.parseInt(txtLitros.getText())) * kgObtenidos;
+            int rendimiento = Math.round((kgObtenidos / litros) * 100);
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
             utilidad.validarHoraNoMayor(InicioBatido, FinBatido, "Hora de Inicio de Batido y Hora de Fin de Batido", "Inicio ", "Fin ");

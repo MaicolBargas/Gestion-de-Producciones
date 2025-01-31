@@ -239,7 +239,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Gestion Analisis de Manteca");
+        setTitle("Gestion Analisis de Queso");
 
         jLabel1.setText("Id:");
 
@@ -426,7 +426,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtFechaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                     .addComponent(txtIdProduccion)
@@ -583,9 +583,8 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -622,7 +621,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int sal = utilidad.validarNumericos(txtSal.getText(), "Sal", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionQueso produccion = controlador.buscarProduccionQueso(idProduccion); 
@@ -695,7 +694,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int sal = utilidad.validarNumericos(txtSal.getText(), "Sal", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionQueso produccion = controlador.buscarProduccionQueso(idProduccion); 
