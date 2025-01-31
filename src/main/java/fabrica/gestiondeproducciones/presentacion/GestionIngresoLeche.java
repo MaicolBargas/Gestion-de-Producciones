@@ -9,8 +9,14 @@ import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 
 public class GestionIngresoLeche extends javax.swing.JInternalFrame {
@@ -19,7 +25,7 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     IngresoLeche ingreso = new IngresoLeche();
     Controlador controlador = new Controlador();
     DefaultTableModel modelo = new DefaultTableModel();
-    
+    private TableRowSorter<TableModel> filtroTabla;    
     /**
      * Creates new form GestionIngresoLeche
      */
@@ -27,9 +33,12 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         initComponents();
         listarTambos();
         listarSilos();
-        listar();       
+        listar();     
+        agregarFiltros(txtBuscar, filtroTabla);
+
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
     private void listar(){
         limpiarTabla();
         cargarFecha();
@@ -45,6 +54,8 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
             modelo.addRow(objeto);
         }
         tablaIngresos.setModel(modelo);
+        filtroTabla = new TableRowSorter<>(modelo);
+        tablaIngresos.setRowSorter(filtroTabla);
     }
         
     private void limpiarTabla(){
@@ -89,6 +100,49 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         txtFecha.setText(fecha);
     }
     
+    private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
+        campo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+        });
+    }
+
+    private void applyFilter(javax.swing.JTextField campo, TableRowSorter fila) {
+        RowFilter<TableModel, Object> rf;
+
+        if (campo.getText().length() == 0) {
+            rf = RowFilter.regexFilter(".*");
+        } else {
+            rf = RowFilter.regexFilter("(?i)" + campo.getText());
+        }
+        fila.setRowFilter(rf);
+    }
+        
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            String item = comboBox.getItemAt(i).toString();
+            String[] parts = item.split(" - ");
+        
+            if (parts[0].trim().equals(idBuscado)) {
+                comboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+    //</editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,6 +170,9 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         btnAlta = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaIngresos = new javax.swing.JTable();
 
@@ -250,7 +307,30 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
                 .addComponent(btnBaja)
                 .addGap(18, 18, 18)
                 .addComponent(btnModificar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jLabel9.setText("Buscar:");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -261,16 +341,22 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -433,9 +519,9 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     private void tablaIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaIngresosMouseClicked
         int fila = tablaIngresos.rowAtPoint(evt.getPoint());
         txtId.setText(tablaIngresos.getValueAt(fila, 0).toString());
-        cbxTambo.setSelectedIndex(Integer.parseInt(tablaIngresos.getValueAt(fila, 1).toString().split(" - ")[0]) - 1);
+        seleccionarEnComboBox(tablaIngresos.getValueAt(fila, 1).toString().split(" - ")[0],cbxTambo);            
         txtLitros.setText(tablaIngresos.getValueAt(fila, 2).toString());
-        //cbxSilo.setSelectedIndex(Integer.parseInt(tablaIngresos.getValueAt(fila, 3).toString().split(" - ")[0]) - 1);
+        seleccionarEnComboBox(tablaIngresos.getValueAt(fila, 3).toString().split(" - ")[0],cbxSilo);            
         txtFecha.setText(tablaIngresos.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tablaIngresosMouseClicked
 
@@ -452,12 +538,15 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaIngresos;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLitros;

@@ -6,6 +6,7 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.Seccion;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -109,6 +110,18 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         fila.setRowFilter(rf);
     }
         
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            String item = comboBox.getItemAt(i).toString();
+            String[] parts = item.split(" - ");
+        
+            if (parts[0].trim().equals(idBuscado)) {
+                comboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+    
     //</editor-fold>
     /**
      * This method is called from within the constructor to initialize the form.
@@ -496,7 +509,7 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         txtDocumento.setText(tablaEmpleados.getValueAt(fila, 1).toString());
         txtNombre.setText(tablaEmpleados.getValueAt(fila, 2).toString());
         txtApellido.setText(tablaEmpleados.getValueAt(fila, 3).toString());
-        cbxSeccion.setSelectedIndex(Integer.parseInt(tablaEmpleados.getValueAt(fila, 4).toString().split(" - ")[0]) - 1);
+        seleccionarEnComboBox(tablaEmpleados.getValueAt(fila, 4).toString().split(" - ")[0],cbxSeccion);            
         txtTelefono.setText(tablaEmpleados.getValueAt(fila, 5).toString());
         txtMail.setText(tablaEmpleados.getValueAt(fila, 6).toString());
     }//GEN-LAST:event_tablaEmpleadosMouseClicked
