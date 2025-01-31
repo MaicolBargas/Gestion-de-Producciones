@@ -51,9 +51,37 @@ public class PersistenciaPasteurizado {
     }
     
     
+    public List listarPasteurizadosManteca(){
+        List<LechePasteurizada> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1' AND cremaDisponible>'0'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                LechePasteurizada lecheP = new LechePasteurizada();
+                lecheP.setId(resultado.getInt("idLecheP"));
+                lecheP.setTemperatura(resultado.getFloat("temperatura"));
+                lecheP.setLitros(resultado.getInt("litros"));
+                IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
+                if(ingreso instanceof IngresoLeche){
+                    lecheP.setIngreso(ingreso);
+                }              
+                lecheP.setDescremado(resultado.getBoolean("descremado"));
+                lecheP.setCrema(resultado.getInt("cremaObtenida"));
+                lecheP.setCremaDisponible(resultado.getInt("cremaDisponible"));
+                lista.add(lecheP);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
     public List listarPasteurizados(){
         List<LechePasteurizada> lista = new ArrayList();
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1' ";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);

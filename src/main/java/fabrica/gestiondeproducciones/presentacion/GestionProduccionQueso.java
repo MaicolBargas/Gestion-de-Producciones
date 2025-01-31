@@ -1407,7 +1407,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             }
             
             if(acidesFermento<14&&acidesFermento>0){
-                    System.out.println("ACIDES  "+acidesFermento);
+                   
                     produccion.setAcidesFermento(acidesFermento);
             }
             else{
@@ -1595,7 +1595,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
              if(acidesFermento<14&&acidesFermento>0){
-                    System.out.println("ACIDES  "+acidesFermento);
+                   
                     produccion.setAcidesFermento(acidesFermento);
             }
             else{

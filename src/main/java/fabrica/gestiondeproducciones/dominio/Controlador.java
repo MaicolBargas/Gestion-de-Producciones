@@ -189,6 +189,11 @@ public class Controlador {
     public List listarPasteurizados(){
         return persistencia.listarPasteurizados();
     }
+    
+    public List listarPasteurizadosManteca(){
+        return persistencia.listarPasteurizadosManteca();
+    }
+    
     public boolean bajaPasteurizado(int id){
         return persistencia.bajaPasteurizado(id);
     }

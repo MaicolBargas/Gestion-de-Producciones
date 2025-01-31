@@ -55,7 +55,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             objeto[4] = lista.get(i).getDescremado();
             objeto[5] = lista.get(i).getCrema();
             objeto[6]=lista.get(i).getCremaDisponible();
-            System.out.println(objeto[6]);
+            
             modelo.addRow(objeto);
         }
         tablaPasteurizados.setModel(modelo);
@@ -610,13 +610,13 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             if(p.getCrema()<=crema){
                 diferencia=crema-actual;
                 lecheP.setCremaDisponible(p.getCrema()+diferencia);
-                System.out.println(diferencia+" DIFERENCIA 1"+" ACTUAL "+ actual +" Nuevo "+ crema);
+               
             }
             if(p.getCrema()>crema){
                 diferencia=actual-crema;
                 if(diferencia<=p.getCremaDisponible()){
                 lecheP.setCremaDisponible(p.getCrema()-diferencia);
-                    System.out.println(diferencia+" DIFERENCIA 2"+" ACTUAL "+ actual +" Nuevo "+ crema);
+                   
                 }
                 else
                 {

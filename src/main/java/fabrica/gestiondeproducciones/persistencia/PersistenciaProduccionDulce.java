@@ -93,7 +93,7 @@ public class PersistenciaProduccionDulce {
         for(LineaInsumo insumo : produccion.getListaInsumos()){                
                 persProduccion.agregarInsumos(idProduccion, insumo.getInsumo().getId(), insumo.getCantidad());
             }
-        System.out.println("PERSISTENCIA LISTA ENVASES TAMAÑO  "+ produccion.getListaEnvases().size());
+        
         for(LineaEnvase envase: produccion.getListaEnvases()){
             persProduccion.agregarEnvase(idProduccion,envase.getEnvase().getId(),envase.getCantidad());
             
@@ -190,7 +190,7 @@ public class PersistenciaProduccionDulce {
            
 
             while(resultado.next()){
-                System.out.println("Procesando idProduccion: " + resultado.getInt("idProduccion"));
+              
                 ProduccionDulce produccion = new ProduccionDulce();
                 int id = resultado.getInt("idProduccion");
                 produccion.setIdProduccion(id);

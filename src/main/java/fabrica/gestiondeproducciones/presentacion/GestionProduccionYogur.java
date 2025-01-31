@@ -1596,8 +1596,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
             boolean modificar = controlador.modificarProduccionYogur(produccion);
             if (modificar) {
-                System.out.println(modificar);
-                System.out.println(produccion.getLitrosSuero());
+               
                 JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
                 
                 limpiarFormulario();

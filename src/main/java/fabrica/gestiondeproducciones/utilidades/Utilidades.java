@@ -256,7 +256,7 @@ Controlador c= new Controlador();
 
 public void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         int litrosDisponibles = lecheP.getCremaDisponible();
-        lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
+        lecheP.setCremaDisponible(litrosDisponibles - (litrosUtilizados));
         c.modificarPasteurizado(lecheP);
     }
 

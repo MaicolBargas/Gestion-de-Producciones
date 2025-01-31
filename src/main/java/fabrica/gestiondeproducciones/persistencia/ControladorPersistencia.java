@@ -202,6 +202,10 @@ public class ControladorPersistencia {
         return persistenciaPasteurizado.listarPasteurizados();
     }
     
+     public List listarPasteurizadosManteca(){
+        return persistenciaPasteurizado.listarPasteurizadosManteca();
+    }
+    
     public List listarPasteurizadosNoUsados(){
         return persistenciaPasteurizado.listarPasteurizadosProducidos();
     }

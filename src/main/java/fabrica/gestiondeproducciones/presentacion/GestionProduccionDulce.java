@@ -49,7 +49,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     int idInsumoEliminar;
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
-    int idProduccionObtenido;
+    int idProduccionObtenido=-1;
 
     public GestionProduccionDulce() {
         initComponents();
@@ -92,7 +92,11 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
 
     private void listarLeche() {
         cbxLeche.removeAllItems();
-        List<LechePasteurizada> leche = controlador.listarPasteurizados();
+        List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
+        if(idProduccionObtenido!=-1){
+        LechePasteurizada p=controlador.buscarProduccionDulce(idProduccionObtenido).getLechep();
+        leche.add(p);
+        }
         for (LechePasteurizada t : leche) {
             cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " - : "
                     + "" + t.getLitros() + "l");
@@ -224,7 +228,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     }
 
     private void listarLineaEnvases(List<LineaEnvase> lista) {
-        System.out.println("LISTAR ENVASES"+   lista.size());
+       
         limpiarTablaEnvasesUtilizados();
 
         modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
@@ -973,6 +977,11 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                 tablaEnvasesUtilizadosMouseClicked(evt);
             }
         });
+        tablaEnvasesUtilizados.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tablaEnvasesUtilizadosPropertyChange(evt);
+            }
+        });
         jScrollPane10.setViewportView(tablaEnvasesUtilizados);
 
         btnEliminarInsumo1.setText("Eliminar Envase");
@@ -1259,6 +1268,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         ProduccionDulce prod = controlador.buscarProduccionDulce(id);
         txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
         txtCodigoInterno.setText(prod.getCodInterno());
+        listarLeche();
         if (prod.getLechep() instanceof LechePasteurizada) {
             seleccionarEnComboBox(prod.getLechep().getId()+"",cbxLeche);            
         }
@@ -1285,7 +1295,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         
         listarEmpleados(prod.getListaEmpleados());
         listarLineaInsumos(prod.getListaInsumos());
-        System.out.println("TAMAÑO LISTA     "+ prod.getListaEnvases().size());
+        
         listarLineaEnvases(prod.getListaEnvases());
         
     }//GEN-LAST:event_tablaProduccionesMouseClicked
@@ -1338,7 +1348,8 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             }
             
             int kgObtenidos=Math.round(kg);
-            if(kgObtenidos>((litros+litrosSuero)/2)){
+            if(kgObtenidos>((litros+litrosSuero)/2.0)){
+               
                 throw new Exception("Verificar Cantidad de Envases o materia Prima(Leche Y Suero), Los kg Obtenidos son demasiados para la produccion ");
             }
             int divisor=litros+litrosSuero;
@@ -1500,6 +1511,17 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             }
             
             float kg=0;
+            
+        modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
+        Object[] objeto = new Object[4];
+        for (int i = 0; i < modeloEnvasesUtilizados.getRowCount(); i++) {
+            
+            modeloEnvasesUtilizados.setValueAt(modeloEnvasesUtilizados.getValueAt(i,3), i, 3);
+
+            System.out.println("CANTIDAD ENVASES      "+modeloEnvasesUtilizados.getValueAt(i,3));
+            produccion.getListaEnvases().get(i).setCantidad((int)modeloEnvasesUtilizados.getValueAt(i,3));
+            
+        }
             for(LineaEnvase linea: listaEnvasesLinea){
                 kg= kg+(linea.getEnvase().getCapacidad()*linea.getCantidad());
             }
@@ -1628,8 +1650,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
            
             EnvasesDulce envase = controlador.buscarEnvase(idEnvase);
             int cantidad = Integer.parseInt(txtCantidadEnvase.getText());
-            System.out.println("Variable:   "+idEnvase);
-            System.out.println(envase.getId());
+          
             LineaEnvase lineaEnvase = new LineaEnvase(envase,cantidad);
             
             if (envase instanceof EnvasesDulce && lineaEnvase instanceof LineaEnvase) {
@@ -1648,6 +1669,24 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarInsumo1ActionPerformed
+
+    private void tablaEnvasesUtilizadosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tablaEnvasesUtilizadosPropertyChange
+        
+        
+        modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
+        
+        Object[] objeto = new Object[4];
+        for (int i = 0; i < modeloEnvasesUtilizados.getRowCount(); i++) {
+            
+            
+           // objeto[3] = modeloEnvasesUtilizados.getValueAt(i,3);
+           // int cant= (int) objeto[3];
+            System.out.println("CANTIDAD ENVASES      "+modeloEnvasesUtilizados.getValueAt(i,3));
+           // produccion.getListaEnvases().get(i).setCantidad(cant);
+            
+        }
+        
+    }//GEN-LAST:event_tablaEnvasesUtilizadosPropertyChange
     private void inicializarProductos() {
         cbxProducto.addItem("11 - Dulce de Leche Crema");
         cbxProducto.addItem("12 - Dulce de Leche Casero");
