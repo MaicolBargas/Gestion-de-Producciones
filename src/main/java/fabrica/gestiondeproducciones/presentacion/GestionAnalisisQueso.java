@@ -11,7 +11,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 
 public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
@@ -23,13 +28,15 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
     DefaultTableModel modeloProducciones = new DefaultTableModel();
     String tipoAnalisis = "queso";
     Empleado encargado = new Empleado();
-    
+    private TableRowSorter<TableModel> filtroTabla;     
     /**
      * Creates new form GestionAnalisisQueso
      */
     public GestionAnalisisQueso() {
         initComponents();
         listar();
+        agregarFiltros(txtBuscar, filtroTabla);        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
@@ -59,6 +66,8 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             modelo.addRow(objeto);
         }
         tablaAnalisis.setModel(modelo);
+        filtroTabla = new TableRowSorter<>(modelo);
+        tablaAnalisis.setRowSorter(filtroTabla);
     }
         
     private void listarProducciones(){     
@@ -115,7 +124,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         txtCodigoInterno.setText("");        
     }
     
-        private Empleado buscarEncargado() throws Exception{
+    private Empleado buscarEncargado() throws Exception{
         String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
         String[] nombreCompleto = valor.split(" ");        
         List<Empleado> empleados = controlador.listarEmpleados();
@@ -139,6 +148,37 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         }
         throw new Exception("No existe un usuario con estos datos");
     }
+    
+    private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
+        campo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+        });
+    }
+
+    private void applyFilter(javax.swing.JTextField campo, TableRowSorter fila) {
+        RowFilter<TableModel, Object> rf;
+
+        if (campo.getText().length() == 0) {
+            rf = RowFilter.regexFilter(".*");
+        } else {
+            rf = RowFilter.regexFilter("(?i)" + campo.getText());
+        }
+        fila.setRowFilter(rf);
+    }   
+    
     // </editor-fold>
     
     /**
@@ -190,6 +230,8 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         btnAlta = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAnalisis = new javax.swing.JTable();
 
@@ -448,6 +490,8 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel16.setText("Buscar");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -460,7 +504,11 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
                 .addComponent(btnBaja)
                 .addGap(18, 18, 18)
                 .addComponent(btnModificar)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(217, 217, 217)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,8 +518,10 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
                     .addComponent(btnLimpiar)
                     .addComponent(btnAlta)
                     .addComponent(btnBaja)
-                    .addComponent(btnModificar))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(btnModificar)
+                    .addComponent(jLabel16)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         tablaAnalisis.setModel(new javax.swing.table.DefaultTableModel(
@@ -513,14 +563,11 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(139, 139, 139)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 72, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -529,15 +576,16 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -750,6 +798,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -766,6 +815,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaAnalisis;
     private javax.swing.JTable tablaProducciones;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;
     private javax.swing.JTextField txtFecha;

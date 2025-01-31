@@ -243,11 +243,9 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private void applyFilter(javax.swing.JTextField campo, TableRowSorter fila) {
         RowFilter<TableModel, Object> rf;
 
-        // Si el filtro está vacío, mostrar todas las filas
         if (campo.getText().length() == 0) {
             rf = RowFilter.regexFilter(".*");
         } else {
-            // Usar el texto del JTextField como filtro
             rf = RowFilter.regexFilter("(?i)" + campo.getText());
         }
         fila.setRowFilter(rf);

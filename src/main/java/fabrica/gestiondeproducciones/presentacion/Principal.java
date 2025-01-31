@@ -45,7 +45,6 @@ public class Principal extends javax.swing.JFrame {
         menuTambos = new javax.swing.JMenu();
         menuInsumos = new javax.swing.JMenu();
         menuEmpleados = new javax.swing.JMenu();
-        menuProductos = new javax.swing.JMenu();
         menuLeche = new javax.swing.JMenu();
         menuIngresos = new javax.swing.JMenuItem();
         menuPasteurizados = new javax.swing.JMenuItem();
@@ -131,14 +130,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuPrincipal.add(menuEmpleados);
-
-        menuProductos.setText("Productos");
-        menuProductos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuProductosMouseClicked(evt);
-            }
-        });
-        menuPrincipal.add(menuProductos);
 
         menuLeche.setText("Leche");
 
@@ -318,12 +309,6 @@ public class Principal extends javax.swing.JFrame {
         gestionEmpleados.show();
     }//GEN-LAST:event_menuEmpleadosMouseClicked
 
-    private void menuProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuProductosMouseClicked
-       GestionProductos gestionProductos = new GestionProductos();
-        escritorio.add(gestionProductos);
-        gestionProductos.show();
-    }//GEN-LAST:event_menuProductosMouseClicked
-
     private void menuIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuIngresosActionPerformed
         GestionIngresoLeche gestionIngresoLeche = new GestionIngresoLeche();
         escritorio.add(gestionIngresoLeche);
@@ -459,7 +444,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuPasteurizados;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenuItem menuProduccionesManteca;
-    private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuSecciones;
     private javax.swing.JMenu menuSilos;
     private javax.swing.JMenu menuTambos;

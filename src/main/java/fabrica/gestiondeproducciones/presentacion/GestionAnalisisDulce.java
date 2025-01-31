@@ -11,7 +11,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 
 public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
@@ -23,13 +28,16 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     DefaultTableModel modeloProducciones = new DefaultTableModel();
     String tipoAnalisis = "dulce";
     Empleado encargado = new Empleado();
-    
+    private TableRowSorter<TableModel> filtroTabla;
+ 
     /**
      * Creates new form GestionAnalisisDulce
      */
     public GestionAnalisisDulce() {
         initComponents();
         listar();
+        agregarFiltros(txtBuscar, filtroTabla);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
@@ -58,6 +66,8 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             modelo.addRow(objeto);
         }
         tablaAnalisis.setModel(modelo);
+        filtroTabla = new TableRowSorter<>(modelo);
+        tablaAnalisis.setRowSorter(filtroTabla);
     }
         
     private void listarProducciones(){     
@@ -111,7 +121,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         txtCodigoInterno.setText("");        
     }
     
-        private Empleado buscarEncargado() throws Exception{
+    private Empleado buscarEncargado() throws Exception{
         String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
         String[] nombreCompleto = valor.split(" ");        
         List<Empleado> empleados = controlador.listarEmpleados();
@@ -135,6 +145,36 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         }
         throw new Exception("No existe un usuario con estos datos");
     }
+        
+    private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
+        campo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                applyFilter(campo, fila);
+            }
+        });
+    }
+
+    private void applyFilter(javax.swing.JTextField campo, TableRowSorter fila) {
+        RowFilter<TableModel, Object> rf;
+
+        if (campo.getText().length() == 0) {
+            rf = RowFilter.regexFilter(".*");
+        } else {
+            rf = RowFilter.regexFilter("(?i)" + campo.getText());
+        }
+        fila.setRowFilter(rf);
+    }   
     // </editor-fold>
     
     /**
@@ -183,6 +223,8 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         btnBaja = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAnalisis = new javax.swing.JTable();
 
@@ -451,6 +493,8 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setText("Buscar");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -464,7 +508,11 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                 .addComponent(btnBaja)
                 .addGap(18, 18, 18)
                 .addComponent(btnModificar)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -474,7 +522,9 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                     .addComponent(btnAlta)
                     .addComponent(btnBaja)
                     .addComponent(btnModificar)
-                    .addComponent(btnLimpiar))
+                    .addComponent(btnLimpiar)
+                    .addComponent(jLabel10)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -518,9 +568,9 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 13, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
@@ -730,6 +780,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -751,6 +802,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaAnalisis;
     private javax.swing.JTable tablaProducciones;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;
     private javax.swing.JTextField txtFecha;
