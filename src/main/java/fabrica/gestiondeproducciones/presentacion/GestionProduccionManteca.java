@@ -43,7 +43,6 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
     private TableRowSorter<TableModel> filtroTabla;       
-    int idProduccionObtenido;
     int idProduccionObtenido = -1;
     int idManteca = 19;
     

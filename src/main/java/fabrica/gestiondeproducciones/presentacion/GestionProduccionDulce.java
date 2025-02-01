@@ -8,7 +8,6 @@ import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaEnvase;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
-import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
@@ -50,8 +49,6 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
     private TableRowSorter<TableModel> filtroTabla;    
-
-    int idProduccionObtenido;
     int idProduccionObtenido=-1;
 
     public GestionProduccionDulce() {
