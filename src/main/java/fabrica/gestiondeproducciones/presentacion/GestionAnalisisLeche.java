@@ -210,6 +210,8 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         txtAgua = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        txtPh = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -433,25 +435,31 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel17.setText("P.H:");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
@@ -459,7 +467,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPTotales)
                             .addComponent(txtPFecales)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14))
@@ -467,11 +475,11 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtGrasa)
                             .addComponent(txtProteina)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
@@ -480,7 +488,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                             .addComponent(txtLevadura, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -527,7 +535,11 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtAgua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -542,8 +554,9 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel16.setText("Buscar");
@@ -609,14 +622,14 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "Ingreso"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "", "Ingreso"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -653,7 +666,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -693,6 +706,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
+            float ph= utilidad.validarNumericosFloat(txtPh.getText(),"PH", false);
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso); 
             
             try{
@@ -710,7 +724,10 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             if(pFecales > pTotales){
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
-            
+            if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             analisis.setTipo(tipoAnalisis);
            analisis.setFecha(fecha);
            analisis.setLevadura(levadura);
@@ -720,6 +737,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
            analisis.setGrasa(grasa);
            analisis.setProteina(proteina);
            analisis.setAgua(agua);
+           analisis.setPh(ph);
            
            if(ingreso instanceof IngresoLeche){
             analisis.setIngreso(ingreso);            
@@ -771,6 +789,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
+            float ph= utilidad.validarNumericosFloat(txtPh.getText(),"PH", false);
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);  
             
             try{
@@ -787,7 +806,9 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             
             if(pFecales > pTotales){
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
-            }           
+            }        
+            
+           
             
            analisis.setFecha(fecha);
            analisis.setLevadura(levadura);
@@ -797,6 +818,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
            analisis.setGrasa(grasa);
            analisis.setProteina(proteina);
            analisis.setAgua(agua);
+           analisis.setPh(ph);
            
            if(ingreso instanceof IngresoLeche){
             analisis.setIngreso(ingreso);            
@@ -833,10 +855,11 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         txtGrasa.setText(tablaAnalisis.getValueAt(fila, 7).toString());
         txtProteina.setText(tablaAnalisis.getValueAt(fila, 8).toString());
         txtAgua.setText(tablaAnalisis.getValueAt(fila, 9).toString());
-        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 10).toString());
+        txtPh.setText(tablaAnalisis.getValueAt(fila,10).toString());
+        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 11).toString());
         IngresoLeche ingreso = controlador.buscarIngreso(id);
         if(ingreso instanceof IngresoLeche){
-            txtIdIngreso.setText(tablaAnalisis.getValueAt(fila, 10).toString());
+            txtIdIngreso.setText(tablaAnalisis.getValueAt(fila, 11).toString());
             txtTambo.setText(ingreso.getTambo().getPropietario());
             txtLitros.setText(ingreso.getLitros()+"");
             txtSilo.setText(ingreso.getSilo().getCodigoInterno()+"");
@@ -888,6 +911,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -919,6 +943,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtMos;
     private javax.swing.JTextField txtPFecales;
     private javax.swing.JTextField txtPTotales;
+    private javax.swing.JTextField txtPh;
     private javax.swing.JTextField txtProteina;
     private javax.swing.JTextField txtSilo;
     private javax.swing.JTextField txtTambo;

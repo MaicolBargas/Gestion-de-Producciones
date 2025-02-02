@@ -439,7 +439,10 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         if(e instanceof Empleado){
             throw new Exception("Ya existe un empleado con esta CI : " + e.getNombre() +" "+ e.getApellido());
         }
-        
+        if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
         empleado.setCi(ci);   
         empleado.setNombre(nombre);
         empleado.setApellido(apellido);

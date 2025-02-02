@@ -454,7 +454,10 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         if(silo instanceof Silo){
             ingreso.setSilo(silo);
         }else{ throw new Exception("El silo seleccionado no existe");}
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
         ingreso.setFecha(fecha);
         
         boolean alta = controlador.altaIngreso(ingreso);

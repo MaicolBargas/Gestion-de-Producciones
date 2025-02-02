@@ -242,6 +242,8 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         txtAgua = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        txtPh = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -475,25 +477,37 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
         jLabel15.setText("Agua:");
 
+        jLabel19.setText("P.H:");
+
+        txtPh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPhActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
                             .addComponent(txtEncargado)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
@@ -501,7 +515,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPTotales)
                             .addComponent(txtPFecales)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14))
@@ -509,20 +523,20 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtGrasa)
                             .addComponent(txtProteina)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtAgua, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLevadura)
+                            .addComponent(txtLevadura, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
                             .addComponent(txtMos, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -569,7 +583,10 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtAgua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jLabel18.setText("Buscar");
@@ -618,9 +635,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -637,14 +652,14 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "Pasteurizada"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "", "Pasteurizada"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -671,7 +686,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -711,6 +726,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int id = utilidad.validarNumericos(txtIdLechePast.getText(), "leche pasteurizada", false);
+             float ph= utilidad.validarNumericosFloat(txtPh.getText(),"PH", false);
             LechePasteurizada ingreso = controlador.buscarPasteurizado(id);
 
             try{
@@ -728,6 +744,10 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             if(pFecales > pTotales){
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
+            if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             analisis.setTipo(tipoAnalisis);
 
             analisis.setFecha(fecha);
@@ -738,6 +758,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             analisis.setGrasa(grasa);
             analisis.setProteina(proteina);
             analisis.setAgua(agua);
+            analisis.setPh(ph);
             
 
             if(lechePast instanceof LechePasteurizada){
@@ -780,6 +801,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int id = utilidad.validarNumericos(txtIdLechePast.getText(), "Ingreso", false);
+             float ph= utilidad.validarNumericosFloat(txtPh.getText(),"PH", false);
             LechePasteurizada lechePast = controlador.buscarPasteurizado(id);
             
             try{
@@ -805,7 +827,8 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             analisis.setGrasa(grasa);
             analisis.setProteina(proteina);
             analisis.setAgua(agua);
-
+            analisis.setPh(ph);
+            
             if(lechePast instanceof LechePasteurizada){
                 analisis.setLechePast(lechePast);
             }else{throw new Exception("El Pasteurizado no existe en el sistema");}
@@ -844,10 +867,11 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         txtGrasa.setText(tablaAnalisis.getValueAt(fila,7).toString());
         txtProteina.setText(tablaAnalisis.getValueAt(fila,8).toString());
         txtAgua.setText(tablaAnalisis.getValueAt(fila,9).toString());
-        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 10).toString());
+        txtPh.setText(tablaAnalisis.getValueAt(fila,10).toString());
+        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 11).toString());
         LechePasteurizada pasteurizada = controlador.buscarPasteurizado(id);
         if(pasteurizada instanceof LechePasteurizada){
-            txtIdLechePast.setText(tablaAnalisis.getValueAt(fila, 10).toString());
+            txtIdLechePast.setText(tablaAnalisis.getValueAt(fila, 11).toString());
             txtTemp.setText(""+pasteurizada.getTemperatura());
             txtLitros.setText(pasteurizada.getLitros()+"");
             txtDescremado.setText(descremadoTexto(pasteurizada.getDescremado()));
@@ -859,6 +883,10 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         }        
         btnBuscar.doClick();            
     }//GEN-LAST:event_tablaAnalisisMouseClicked
+
+    private void txtPhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPhActionPerformed
 
     
 
@@ -878,6 +906,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -910,6 +939,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     private javax.swing.JTextField txtMos;
     private javax.swing.JTextField txtPFecales;
     private javax.swing.JTextField txtPTotales;
+    private javax.swing.JTextField txtPh;
     private javax.swing.JTextField txtProteina;
     private javax.swing.JTextField txtTemp;
     // End of variables declaration//GEN-END:variables

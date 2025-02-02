@@ -679,7 +679,10 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             if(pFecales > pTotales){
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
-            
+           if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
            analisis.setTipo(tipoAnalisis);
            analisis.setFecha(fecha);
            analisis.setLevadura(levadura);

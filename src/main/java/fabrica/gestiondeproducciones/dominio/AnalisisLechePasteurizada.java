@@ -17,9 +17,12 @@ public class AnalisisLechePasteurizada extends AnalisisLeche{
     public AnalisisLechePasteurizada() {
     }
 
-    public AnalisisLechePasteurizada(int grasa, int proteina, int agua) {
-        super(grasa, proteina, agua);
+    public AnalisisLechePasteurizada(LechePasteurizada lechePast, int grasa, int proteina, int agua, float ph) {
+        super(grasa, proteina, agua, ph);
+        this.lechePast = lechePast;
     }
+
+   
     
     
 }

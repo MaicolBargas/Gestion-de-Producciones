@@ -285,7 +285,10 @@ public class GestionSilos extends javax.swing.JInternalFrame {
       try{
         int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno", false);
         int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad", false);
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
         silo.setCodigoInterno(codigoInterno);
         silo.setCapacidad(capacidad);
 

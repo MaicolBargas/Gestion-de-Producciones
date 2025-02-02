@@ -383,6 +383,10 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
           insumo.setNombre(nombre);
           insumo.setDescripcion(descripcion);
           insumo.setUnidad(unidad);
+          if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
           boolean alta = controlador.altaInsumo(insumo);
           if(alta){
             JOptionPane.showMessageDialog(null, "Insumo dado de alta.");

@@ -265,7 +265,10 @@ private void listarProductos(){
 
             producto.setNombre(nombre);
             producto.setDescripcion(descripcion);
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             boolean altaProducto = controlador.altaProducto(producto);
             if(altaProducto){
                 JOptionPane.showMessageDialog(null, "Producto dado de alta.");

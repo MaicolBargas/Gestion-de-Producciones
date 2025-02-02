@@ -1389,7 +1389,10 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
             }
             int divisor=litros+litrosSuero;
             int rendimiento = Math.round((kgObtenidos / (float)divisor) * 100);   
-            
+            if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);

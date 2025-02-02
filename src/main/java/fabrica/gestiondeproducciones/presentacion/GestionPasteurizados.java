@@ -557,7 +557,10 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
             lecheP.setCrema(crema);
             lecheP.setCremaDisponible(crema);
             
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             boolean alta = controlador.altaPasteurizado(lecheP);
             if(alta){
               JOptionPane.showMessageDialog(null, "Pasteurizado dado de alta.");

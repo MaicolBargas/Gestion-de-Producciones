@@ -7,15 +7,27 @@ public class AnalisisLeche extends Analisis {
     private int grasa;
     private int proteina;
     private int agua;
+    private float ph;
 
     public AnalisisLeche() {
     }
 
-    public AnalisisLeche(int grasa, int proteina, int agua) {
+    public float getPh() {
+        return ph;
+    }
+
+    public void setPh(float ph) {
+        this.ph = ph;
+    }
+
+    public AnalisisLeche(int grasa, int proteina, int agua, float ph) {
         this.grasa = grasa;
         this.proteina = proteina;
         this.agua = agua;
+        this.ph = ph;
     }
+
+   
 
     public int getGrasa() {
         return grasa;

@@ -293,8 +293,10 @@ public class GestionEnvases extends javax.swing.JInternalFrame {
       try{
         String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Codigo Interno", false);
         float capacidad = utilidad.validarNumericosFloat(txtCapacidad.getText(), "Capacidad", false);
-
-       envase.setDescripcion(descripcion);
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }       envase.setDescripcion(descripcion);
        envase.setCapacidad(capacidad);
 
         boolean alta = controlador.altaEnvase(envase);

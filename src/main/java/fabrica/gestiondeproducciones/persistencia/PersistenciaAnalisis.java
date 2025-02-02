@@ -40,7 +40,7 @@ public class PersistenciaAnalisis {
 
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
-        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,ph,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -55,7 +55,8 @@ public class PersistenciaAnalisis {
             consulta.setInt(8, analisis.getGrasa());
             consulta.setInt(9, analisis.getProteina());
             consulta.setInt(10, analisis.getAgua());
-            consulta.setInt(11, analisis.getIngreso().getIdIngreso());
+            consulta.setFloat(11,analisis.getPh());
+            consulta.setInt(12, analisis.getIngreso().getIdIngreso());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -71,7 +72,7 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisIngreso(AnalisisIngreso analisis){
-        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idIngreso = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?,ph=?, idIngreso = ? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -85,8 +86,9 @@ public class PersistenciaAnalisis {
             consulta.setInt(8, analisis.getGrasa());
             consulta.setInt(9, analisis.getProteina());
             consulta.setInt(10, analisis.getAgua());
-            consulta.setInt(11, analisis.getIngreso().getIdIngreso());
-            consulta.setInt(12, analisis.getId());
+            consulta.setFloat(11,analisis.getPh());
+            consulta.setInt(12, analisis.getIngreso().getIdIngreso());
+            consulta.setInt(13, analisis.getId());
 
             consulta.execute();
             return true;
@@ -127,6 +129,7 @@ public class PersistenciaAnalisis {
                 analisis.setGrasa(resultado.getInt("grasa"));
                 analisis.setProteina(resultado.getInt("proteina"));
                 analisis.setAgua(resultado.getInt("agua"));
+                analisis.setPh(resultado.getFloat("ph"));
 
                 IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
                 if(ingreso instanceof IngresoLeche){
@@ -167,6 +170,7 @@ public class PersistenciaAnalisis {
                 analisis.setGrasa(resultado.getInt("grasa"));
                 analisis.setProteina(resultado.getInt("proteina"));
                 analisis.setAgua(resultado.getInt("agua"));
+                analisis.setPh(resultado.getFloat("ph"));
 
                 IngresoLeche ingreso = persIngreso.buscarIngreso(resultado.getInt("idIngreso"));
                 if(ingreso instanceof IngresoLeche){
@@ -191,7 +195,7 @@ public class PersistenciaAnalisis {
     
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Leche Pasteurizada">  
     public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,ph,idPasteurizada) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -206,7 +210,8 @@ public class PersistenciaAnalisis {
             consulta.setInt(8, analisisLechePast.getGrasa());
             consulta.setInt(9, analisisLechePast.getProteina());
             consulta.setInt(10, analisisLechePast.getAgua());
-            consulta.setInt(11, analisisLechePast.getLechePast().getId());
+            consulta.setFloat(11,analisisLechePast.getPh());
+            consulta.setInt(12, analisisLechePast.getLechePast().getId());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -222,7 +227,7 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?, idPasteurizada = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? ,proteina = ?, agua = ?,ph=?, idPasteurizada = ? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -236,8 +241,9 @@ public class PersistenciaAnalisis {
             consulta.setInt(8, analisisLechePast.getGrasa());
             consulta.setInt(9, analisisLechePast.getProteina());
             consulta.setInt(10, analisisLechePast.getAgua());
-            consulta.setInt(11, analisisLechePast.getLechePast().getId());
-            consulta.setInt(12, analisisLechePast.getId());
+            consulta.setFloat(11,analisisLechePast.getPh());
+            consulta.setInt(12, analisisLechePast.getLechePast().getId());
+            consulta.setInt(13, analisisLechePast.getId());
            
 
             consulta.execute();
@@ -280,6 +286,7 @@ public class PersistenciaAnalisis {
                 analisisLechePast.setGrasa(resultado.getInt("grasa"));
                 analisisLechePast.setProteina(resultado.getInt("proteina"));
                 analisisLechePast.setAgua(resultado.getInt("agua"));
+                analisisLechePast.setPh(resultado.getFloat("ph"));
 
                 LechePasteurizada LechePast = persLechePast.buscarPasteurizado(resultado.getInt("idPasteurizada"));
                 if(LechePast instanceof LechePasteurizada){
@@ -320,6 +327,7 @@ public class PersistenciaAnalisis {
                 analisisLechePast.setGrasa(resultado.getInt("grasa"));
                 analisisLechePast.setProteina(resultado.getInt("proteina"));
                 analisisLechePast.setAgua(resultado.getInt("agua"));
+                analisisLechePast.setPh(resultado.getFloat("ph"));
 
                 LechePasteurizada LechePast = persLechePast.buscarPasteurizado(resultado.getInt("idPasteurizada"));
                 if(LechePast instanceof LechePasteurizada){
@@ -796,7 +804,7 @@ public class PersistenciaAnalisis {
     
     // <editor-fold defaultstate="collapsed" desc="Analisis de Dulce">  
     public boolean altaAnalisisDulce(AnalisisDulce analisis){
-        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,humedad,idProduccion) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,humedad,idProduccion,ph) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
         try{
             con = conexion.obtenerConexion();
@@ -811,6 +819,7 @@ public class PersistenciaAnalisis {
             consulta.setInt(8, analisis.getGrasa());
             consulta.setInt(9, analisis.getHumedad());
             consulta.setInt(10, analisis.getProduccion().getIdProduccion());
+            consulta.setFloat(11,analisis.getPh());
             consulta.execute();
             return true;
         }catch(SQLException e){            
@@ -826,7 +835,7 @@ public class PersistenciaAnalisis {
     }
     
     public boolean modificarAnalisisDulce(AnalisisDulce analisis){
-        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? , humedad = ?, idProduccion = ? WHERE idAnalisis = ?";
+        String sql = "UPDATE "+ nombreTabla +" SET tipo = ?, empleado = ?, fecha = ?, levadura = ?, mos = ?, poliformosTotales = ?, poliformosFecales = ?, grasa = ? , humedad = ?, idProduccion = ?, ph=? WHERE idAnalisis = ?";
         try{
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -840,7 +849,8 @@ public class PersistenciaAnalisis {
             consulta.setInt(8, analisis.getGrasa());
             consulta.setInt(9, analisis.getHumedad());
             consulta.setInt(10, analisis.getProduccion().getIdProduccion());
-            consulta.setInt(11, analisis.getId());
+            consulta.setFloat(11,analisis.getPh());
+            consulta.setInt(12, analisis.getId());
 
             consulta.execute();
             return true;
@@ -880,6 +890,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setGrasa(resultado.getInt("grasa"));
                 analisis.setHumedad(resultado.getInt("humedad"));
+                analisis.setPh(resultado.getFloat("ph"));
 
                 ProduccionDulce produccion = persDulce.buscarProduccionDulce(resultado.getInt("idProduccion"));
                 if(produccion instanceof ProduccionDulce){
@@ -919,6 +930,7 @@ public class PersistenciaAnalisis {
                 analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
                 analisis.setGrasa(resultado.getInt("grasa"));
                 analisis.setHumedad(resultado.getInt("humedad"));
+                analisis.setPh(resultado.getFloat("ph"));
 
                 ProduccionDulce produccion = persDulce.buscarProduccionDulce(resultado.getInt("idProduccion"));
                 if(produccion instanceof ProduccionDulce){
