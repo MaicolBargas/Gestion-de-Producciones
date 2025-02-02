@@ -368,7 +368,10 @@ public class GestionTambo extends javax.swing.JInternalFrame {
         String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre del propietario", false);
         String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
         String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
         tambo.setPropietario(propietario);
         tambo.setContacto(contacto);
         tambo.setDireccion(direccion);

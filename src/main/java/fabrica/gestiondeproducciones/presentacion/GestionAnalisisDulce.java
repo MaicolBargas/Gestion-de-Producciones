@@ -207,6 +207,8 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         txtPFecales = new javax.swing.JTextField();
         txtGrasa = new javax.swing.JTextField();
         txtHumedad = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtPh = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProducciones = new javax.swing.JTable();
@@ -261,31 +263,31 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel15.setText("P.H:");
+
+        txtPh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPhActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtEncargado, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                .addComponent(txtEncargado, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel9))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtGrasa, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                            .addComponent(txtHumedad)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addGap(18, 18, 18)
@@ -301,10 +303,20 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                                             .addComponent(txtFecha)
                                             .addComponent(txtLevadura)
                                             .addComponent(txtMos)
-                                            .addComponent(txtPTotales))))
+                                            .addComponent(txtPTotales)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel15))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtGrasa, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                            .addComponent(txtHumedad)
+                                            .addComponent(txtPh))))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -350,7 +362,11 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtHumedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -533,14 +549,14 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "Grasa", "Humedad", "Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "Grasa", "Humedad", "", "Produccion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -571,7 +587,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 13, Short.MAX_VALUE))
+                        .addGap(0, 11, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -586,7 +602,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -624,6 +640,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
+            float ph=utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
             ProduccionDulce produccion = controlador.buscarProduccionDulce(idProduccion); 
             
             try{
@@ -642,6 +659,11 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
             
+            if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
+            
            analisis.setTipo(tipoAnalisis);
            analisis.setFecha(fecha);
            analisis.setLevadura(levadura);
@@ -650,6 +672,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
            analisis.setPoliformosFecales(pFecales);
            analisis.setGrasa(grasa);
            analisis.setHumedad(humedad);
+           analisis.setPh(ph);
            
            if(produccion instanceof ProduccionDulce){
             analisis.setProduccion(produccion);            
@@ -692,6 +715,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
+            float ph=utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
             ProduccionDulce produccion = controlador.buscarProduccionDulce(idProduccion); 
             
             analisis = controlador.buscarAnalisisDulce(id);
@@ -719,6 +743,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
            analisis.setPoliformosFecales(pFecales);
            analisis.setGrasa(grasa);
            analisis.setHumedad(humedad);
+           analisis.setPh(ph);
            
            if(produccion instanceof ProduccionDulce){
             analisis.setProduccion(produccion);            
@@ -762,15 +787,20 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         txtPFecales.setText(tablaAnalisis.getValueAt(fila,6).toString());
         txtGrasa.setText(tablaAnalisis.getValueAt(fila, 7).toString());
         txtHumedad.setText(tablaAnalisis.getValueAt(fila, 8).toString());
-        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 9).toString());
+        txtPh.setText(tablaAnalisis.getValueAt(fila, 9).toString());
+        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 10).toString());
         ProduccionDulce produccion = controlador.buscarProduccionDulce(id);
         if(produccion instanceof ProduccionDulce){
-            txtIdProduccion.setText(tablaAnalisis.getValueAt(fila, 9).toString());
+            txtIdProduccion.setText(tablaAnalisis.getValueAt(fila, 10).toString());
             txtCodigoInterno.setText(produccion.getCodInterno());
             txtFechaProduccion.setText(produccion.getFecha());
         }        
         btnBuscar.doClick();    
     }//GEN-LAST:event_tablaAnalisisMouseClicked
+
+    private void txtPhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPhActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -785,6 +815,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -815,5 +846,6 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtMos;
     private javax.swing.JTextField txtPFecales;
     private javax.swing.JTextField txtPTotales;
+    private javax.swing.JTextField txtPh;
     // End of variables declaration//GEN-END:variables
 }

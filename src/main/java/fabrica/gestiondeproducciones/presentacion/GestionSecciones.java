@@ -290,7 +290,10 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
 
             seccion.setNombre(nombre);
             seccion.setDescripcion(descripcion);
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             boolean altaSeccion = controlador.altaSeccion(seccion);
             if(altaSeccion){
               JOptionPane.showMessageDialog(null, "Seccion dada de alta.");

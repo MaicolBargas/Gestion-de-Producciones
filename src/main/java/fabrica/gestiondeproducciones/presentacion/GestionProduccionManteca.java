@@ -1167,7 +1167,10 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
             int kgObtenidos = ormas * 5;
             int rendimiento = Math.round((kgObtenidos / litros) * 100); // Usa división en coma flotante

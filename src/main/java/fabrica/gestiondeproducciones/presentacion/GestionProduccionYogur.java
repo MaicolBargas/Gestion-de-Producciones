@@ -1394,7 +1394,10 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
             
-           
+           if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             int kgObtenidos = unidadesObtenidas;
             int rendimiento = Math.round(kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");

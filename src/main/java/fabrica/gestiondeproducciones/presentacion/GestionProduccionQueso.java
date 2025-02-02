@@ -1432,7 +1432,10 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             if(kgObtenidos>(litros/4)){
                 throw new Exception("Los Kg obtenidos no son coherentes respecto a la cantidad de materia prima utilizada(Litros de Leche)");
             }
-
+if(!txtId.getText().equals(""))
+            {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
             int rendimiento = Math.round((kgObtenidos / (litros)) * 100); // Usa división en coma flotante
 
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");

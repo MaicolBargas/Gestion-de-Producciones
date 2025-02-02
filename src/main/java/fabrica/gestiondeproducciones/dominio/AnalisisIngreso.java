@@ -8,9 +8,12 @@ public class AnalisisIngreso extends AnalisisLeche{
     public AnalisisIngreso() {
     }
 
-    public AnalisisIngreso(int grasa, int proteina, int agua) {
-        super(grasa, proteina, agua);
+    public AnalisisIngreso(IngresoLeche ingreso, int grasa, int proteina, int agua, float ph) {
+        super(grasa, proteina, agua, ph);
+        this.ingreso = ingreso;
     }
+
+    
 
     public IngresoLeche getIngreso() {
         return ingreso;
