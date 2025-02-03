@@ -225,6 +225,8 @@ public class ControladorPersistencia {
     }
      // </editor-fold>    
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis">    
+    
     // <editor-fold defaultstate="collapsed" desc="Analisis Ingreso Leche">    
     PersistenciaAnalisis persistenciaAnalisis = new PersistenciaAnalisis();
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
@@ -348,7 +350,12 @@ public class ControladorPersistencia {
         return persistenciaAnalisis.buscarAnalisisDulce(id);
     }
     
-    // </editor-fold>     
+    // </editor-fold>   
+    
+    public List listarAnalisis(){
+       return persistenciaAnalisis.listarAnalisis();
+    }
+    // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Produccion">
     

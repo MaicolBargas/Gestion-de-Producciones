@@ -105,6 +105,9 @@ public class Principal extends javax.swing.JFrame {
             case "GestionTambo":
                 nuevoFrame = new GestionTambo();
                 break;
+            case "ListadoAnalisis":
+                nuevoFrame = new ListadoAnalisis();
+                break;
         }
 
         if (nuevoFrame != null) {
@@ -149,6 +152,8 @@ public class Principal extends javax.swing.JFrame {
         menuProduccionQueso = new javax.swing.JMenuItem();
         menuProduccionDulce = new javax.swing.JMenuItem();
         menuEnvases = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        menuAnalisis = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -335,6 +340,18 @@ public class Principal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuEnvases);
 
+        jMenu2.setText("Listados");
+
+        menuAnalisis.setText("Analisis");
+        menuAnalisis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAnalisisActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuAnalisis);
+
+        menuPrincipal.add(jMenu2);
+
         setJMenuBar(menuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -439,6 +456,10 @@ public class Principal extends javax.swing.JFrame {
         this.Singleton("GestionAnalisisDulce");
     }//GEN-LAST:event_menuAnalisisDulceActionPerformed
 
+    private void menuAnalisisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisActionPerformed
+        this.Singleton("ListadoAnalisis");
+    }//GEN-LAST:event_menuAnalisisActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -478,7 +499,9 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenuProducciones;
+    private javax.swing.JMenuItem menuAnalisis;
     private javax.swing.JMenuItem menuAnalisisDulce;
     private javax.swing.JMenuItem menuAnalisisLeche;
     private javax.swing.JMenuItem menuAnalisisLechePasteurizada;

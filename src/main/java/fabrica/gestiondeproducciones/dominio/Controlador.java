@@ -211,6 +211,8 @@ public class Controlador {
     
     // </editor-fold> 
     
+    // <editor-fold defaultstate="collapsed" desc="Analisis">
+    
     // <editor-fold defaultstate="collapsed" desc="Analisis Ingreso Leche">
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
        return persistencia.altaAnalisisIngreso(analisis);
@@ -331,20 +333,17 @@ public class Controlador {
         return persistencia.buscarAnalisisDulce(id);
     }
     
-    // </editor-fold>     
+    // </editor-fold> 
+    
+    public List listarAnalisis(){
+       return persistencia.listarAnalisis();
+    }
+        
+    // </editor-fold>
+      
     
     // <editor-fold defaultstate="collapsed" desc="Produccion">
 
-    public boolean altaProduccion(Produccion produccion){
-        return persistencia.altaProduccion(produccion);
-    }
-    
-    public boolean bajaProduccion(int id, String tabla) throws Exception{
-        return persistencia.bajaProduccion(id, tabla);
-    }
-  
-    // </editor-fold>  
-    
     // <editor-fold defaultstate="collapsed" desc="Produccion Manteca">
     public boolean altaProduccionManteca(ProduccionManteca produccionManteca){
         return persistencia.altaProduccionManteca(produccionManteca);
@@ -453,6 +452,16 @@ public class Controlador {
      public boolean bajaEnvase(int id) {
         return persistencia.bajaEnvase(id);
     }
+    // </editor-fold> 
+    
+    public boolean altaProduccion(Produccion produccion){
+        return persistencia.altaProduccion(produccion);
+    }
+    
+    public boolean bajaProduccion(int id, String tabla) throws Exception{
+        return persistencia.bajaProduccion(id, tabla);
+    }
+  
     // </editor-fold>  
     
 }

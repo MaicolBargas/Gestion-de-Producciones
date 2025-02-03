@@ -549,7 +549,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "Grasa", "Humedad", "", "Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "Grasa", "Humedad", "PH", "Produccion"
             }
         ) {
             Class[] types = new Class [] {

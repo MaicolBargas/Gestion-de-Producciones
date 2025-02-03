@@ -1,6 +1,7 @@
 
 package fabrica.gestiondeproducciones.persistencia;
 
+import fabrica.gestiondeproducciones.dominio.Analisis;
 import fabrica.gestiondeproducciones.dominio.AnalisisDulce;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
 import fabrica.gestiondeproducciones.dominio.AnalisisLechePasteurizada;
@@ -975,6 +976,36 @@ public class PersistenciaAnalisis {
         }
     }
     
-    
+    public List listarAnalisis() {
+        List<Analisis> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                Analisis analisis = new Analisis();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+ 
+                lista.add(analisis);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
     
 }
