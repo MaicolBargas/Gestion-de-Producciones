@@ -39,6 +39,100 @@ public class PersistenciaAnalisis {
     PersistenciaProduccionQueso persQueso = new PersistenciaProduccionQueso();
     PersistenciaProduccionDulce persDulce = new PersistenciaProduccionDulce();
 
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis Base">  
+    public boolean bajaAnalisis(int id){
+        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idAnalisis = ?";
+       
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1, id);
+            consulta.execute();
+            return true;
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return false;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+    }
+    
+    public List listarAnalisis() {
+        List<Analisis> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                Analisis analisis = new Analisis();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+ 
+                lista.add(analisis);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
+    }
+    
+    public Analisis buscarAnalisis(int id){
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idAnalisis =?";
+        try{
+           con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            consulta.setInt(1,id);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                Analisis analisis = new Analisis();
+                analisis.setId(resultado.getInt("idAnalisis"));
+                analisis.setTipo(resultado.getString("tipo"));
+                
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
+                if(encargado instanceof Empleado){
+                    analisis.setEncargado(encargado);
+                } 
+                
+                analisis.setFecha(resultado.getString("fecha"));
+                analisis.setLevadura(resultado.getInt("levadura"));
+                analisis.setMos(resultado.getInt("mos"));
+                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
+                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
+                
+                return analisis;
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }finally{
+            try{
+                con.close();
+            }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            }
+        }
+        return null;
+    }
+    
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Persistencia Analisis de Ingreso">  
     public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
         String sql = "INSERT INTO "+ nombreTabla +"(tipo, empleado,fecha,levadura,mos,poliformosTotales,poliformosFecales,grasa,proteina,agua,ph,idIngreso) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -955,57 +1049,5 @@ public class PersistenciaAnalisis {
     
     // </editor-fold>  
     
-    public boolean bajaAnalisis(int id){
-        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idAnalisis = ?";
-       
-        try{
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            consulta.setInt(1, id);
-            consulta.execute();
-            return true;
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return false;
-        }finally{
-            try{
-                con.close();
-            }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            }
-        }
-    }
-    
-    public List listarAnalisis() {
-        List<Analisis> lista = new ArrayList();
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
-        try{
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            resultado = consulta.executeQuery();
-            while(resultado.next()){
-                Analisis analisis = new Analisis();
-                analisis.setId(resultado.getInt("idAnalisis"));
-                analisis.setTipo(resultado.getString("tipo"));
-                
-                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("empleado"));
-                if(encargado instanceof Empleado){
-                    analisis.setEncargado(encargado);
-                } 
-                
-                analisis.setFecha(resultado.getString("fecha"));
-                analisis.setLevadura(resultado.getInt("levadura"));
-                analisis.setMos(resultado.getInt("mos"));
-                analisis.setPoliformosTotales(resultado.getInt("poliformosTotales"));
-                analisis.setPoliformosFecales(resultado.getInt("poliformosFecales"));
- 
-                lista.add(analisis);
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return null;
-        }
-        return lista;
-    }
     
 }

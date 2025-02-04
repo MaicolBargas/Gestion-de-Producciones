@@ -355,6 +355,10 @@ public class ControladorPersistencia {
     public List listarAnalisis(){
        return persistenciaAnalisis.listarAnalisis();
     }
+    
+    public Analisis buscarAnalisis(int id){
+        return persistenciaAnalisis.buscarAnalisis(id);
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Produccion">

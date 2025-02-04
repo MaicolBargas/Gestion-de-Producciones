@@ -338,10 +338,13 @@ public class Controlador {
     public List listarAnalisis(){
        return persistencia.listarAnalisis();
     }
+    
+    public Analisis buscarAnalisis(int id){
+        return persistencia.buscarAnalisis(id);
+    }
         
     // </editor-fold>
       
-    
     // <editor-fold defaultstate="collapsed" desc="Produccion">
 
     // <editor-fold defaultstate="collapsed" desc="Produccion Manteca">

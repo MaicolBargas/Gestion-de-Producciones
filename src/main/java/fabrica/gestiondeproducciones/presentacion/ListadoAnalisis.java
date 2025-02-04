@@ -1,6 +1,7 @@
 
 package fabrica.gestiondeproducciones.presentacion;
 
+import com.itextpdf.text.Chunk;
 import fabrica.gestiondeproducciones.dominio.Analisis;
 import fabrica.gestiondeproducciones.dominio.AnalisisDulce;
 import fabrica.gestiondeproducciones.dominio.AnalisisIngreso;
@@ -25,6 +26,32 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.print.DocFlavor;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.Doc;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.SimpleDoc;
 
 public class ListadoAnalisis extends javax.swing.JInternalFrame {
 
@@ -32,7 +59,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     Controlador controlador = new Controlador();
     private TableRowSorter<TableModel> filtroTabla;
-
+    Analisis analisisSeleccionado = null;
     
     /**
      * Creates new form ListadoAnalisis
@@ -48,23 +75,29 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         cargarFecha();
         List<Analisis> lista = controlador.listarAnalisis();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
-        Object[] objeto = new Object[15];
+        Object[] objeto;
         for(int i = 0; i < lista.size(); i++){
-            objeto[0] = lista.get(i).getId();
-            if(lista.get(i).getEncargado() instanceof Empleado){
-                objeto[1] = lista.get(i).getEncargado().getInfoCompleta();
-            }
-            objeto[2] = lista.get(i).getFecha();
-            objeto[3] = lista.get(i).getLevadura();
-            objeto[4] = lista.get(i).getMos();
-            objeto[5] = lista.get(i).getPoliformosTotales();
-            objeto[6] = lista.get(i).getPoliformosFecales();
-            listarAnalisisEspecifico(lista.get(i),objeto);
+            objeto = obtenerAnalisis(lista.get(i));
             modelo.addRow(objeto);
         }
         tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+    }
+    
+    private Object[] obtenerAnalisis(Analisis analisis){
+            Object[] objeto = new Object[15];
+            objeto[0] = analisis.getId();
+            if(analisis.getEncargado() instanceof Empleado){
+                objeto[1] = analisis.getEncargado().getInfoCompleta();
+            }
+            objeto[2] = analisis.getFecha();
+            objeto[3] = analisis.getLevadura();
+            objeto[4] = analisis.getMos();
+            objeto[5] = analisis.getPoliformosTotales();
+            objeto[6] = analisis.getPoliformosFecales();
+            listarAnalisisEspecifico(analisis,objeto); 
+            return objeto;
     }
     
     private void cargarFecha(){
@@ -192,7 +225,22 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         fila.setRowFilter(rf);
     }
 
-    
+
+    private void abrirPDF(String rutaArchivo) {
+        try {
+            // Verificar si el archivo existe
+            File archivoPDF = new File(rutaArchivo);
+            if (archivoPDF.exists()) {
+                // Usar la clase Desktop para abrir el archivo con la aplicación predeterminada del sistema
+                Desktop.getDesktop().open(archivoPDF);
+            } else {
+                JOptionPane.showMessageDialog(null, "El archivo PDF no se encuentra en la ruta especificada.");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al intentar abrir el archivo PDF: " + e.getMessage());
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -361,6 +409,11 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         });
         tablaAnalisis.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tablaAnalisis.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tablaAnalisis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaAnalisisMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaAnalisis);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Imprimir PDF"));
@@ -428,7 +481,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1419, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1443, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -499,8 +552,82 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnImprimirUnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirUnicoActionPerformed
-        
+         Document documento = new Document();
+        try {
+            if (analisisSeleccionado == null) {
+                throw new DocumentException("Debe seleccionar un análisis");
+            }
+
+            String ruta = System.getProperty("user.home") + "/Desktop/Reporte_Analisis_"+analisisSeleccionado.getId()+".pdf";
+            PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
+            documento.addHeader("Titulo", "Reporte de Analisis - La Magnolia");
+            documento.addTitle("Reporte de Analisis - La Magnolia");
+
+            documento.open();
+
+            Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            Paragraph titulo = new Paragraph("Reporte de Análisis - La Magnolia", fontTitulo);
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            documento.add(titulo);
+            documento.add(Chunk.NEWLINE);
+ 
+            Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14);
+            Paragraph subTitulo = new Paragraph("Analisis de " +analisisSeleccionado.getTipo().toUpperCase(), fontSubTitulo);
+            subTitulo.setAlignment(Element.ALIGN_CENTER);
+            documento.add(subTitulo);
+            documento.add(Chunk.NEWLINE);
+            
+            PdfPTable tabla = new PdfPTable(2);
+            tabla.setWidthPercentage(100); 
+
+            Object[] objeto = obtenerAnalisis(analisisSeleccionado);
+
+            Map<String, Object> datosAnalisis = new HashMap<>();
+
+            String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH"};
+
+            for (int i = 0; i <= 12; i++) {
+                if (objeto[i] != null) {
+                    datosAnalisis.put(nombresCampos[i], objeto[i]);
+                }
+            }
+            //FORMATO TABLA
+            for (String campo : nombresCampos) {
+                if (datosAnalisis.containsKey(campo)) {
+                    tabla.addCell(campo);
+                    tabla.addCell(datosAnalisis.get(campo).toString());
+                }
+            }
+            
+            //FORMATO LINEA POR LINEA
+            Font fontCampo = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+            Font fontValor = new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL);
+            
+            for (String campo : nombresCampos) {
+                if (datosAnalisis.containsKey(campo)) {
+                    documento.add(new Paragraph(campo +": ", fontCampo));
+                    documento.add(new Paragraph(datosAnalisis.get(campo).toString(), fontValor));
+                }
+            }
+           
+            documento.add(tabla);
+            documento.close();
+
+            JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
+            abrirPDF(ruta);
+        } catch (DocumentException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+        }
+    
     }//GEN-LAST:event_btnImprimirUnicoActionPerformed
+
+    private void tablaAnalisisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAnalisisMouseClicked
+        int fila = tablaAnalisis.rowAtPoint(evt.getPoint());
+        int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 0).toString());
+        txtAnalisisSeleccionado.setText(tablaAnalisis.getValueAt(fila, 0).toString());
+        analisisSeleccionado = controlador.buscarAnalisis(id);
+    }//GEN-LAST:event_tablaAnalisisMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
