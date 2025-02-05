@@ -708,7 +708,7 @@
                     <Column editable="false" title="Grasa" type="java.lang.Integer"/>
                     <Column editable="false" title="Proteina" type="java.lang.Integer"/>
                     <Column editable="false" title="Agua" type="java.lang.Integer"/>
-                    <Column editable="false" title="" type="java.lang.Float"/>
+                    <Column editable="false" title="PH" type="java.lang.Float"/>
                     <Column editable="false" title="Ingreso" type="java.lang.Integer"/>
                   </Table>
                 </Property>
@@ -759,7 +759,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

@@ -64,9 +64,9 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
 
             modelo.addRow(objeto);
         }
-        tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+        tablaAnalisis.setModel(modelo);
     }
         
     private void listarProducciones(){     
@@ -120,7 +120,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         txtCodigoInterno.setText("");        
     }
     
-        private Empleado buscarEncargado() throws Exception{
+    private Empleado buscarEncargado() throws Exception{
         String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
         String[] nombreCompleto = valor.split(" ");        
         List<Empleado> empleados = controlador.listarEmpleados();

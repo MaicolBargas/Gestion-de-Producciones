@@ -63,11 +63,13 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         txtGrasa.setText("");
         txtProteina.setText("");
         txtAgua.setText("");
-
+        txtPh.setText("");
         txtIdLechePast.setText("");
         txtTemp.setText("");
         txtLitros.setText("");
         txtDescremado.setText("");
+        txtLecheIng.setText("");
+        txtCantCrema.setText("");
         
     }
   
@@ -128,7 +130,8 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             objeto[7] = lista.get(i).getGrasa();
             objeto[8] = lista.get(i).getProteina();
             objeto[9] = lista.get(i).getAgua();
-            objeto[10] = lista.get(i).getLechePast().getId();
+            objeto[10] = lista.get(i).getPh();
+            objeto[11] = lista.get(i).getLechePast().getId();
 
             modelo.addRow(objeto);
         }
@@ -587,7 +590,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(txtPh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jLabel18.setText("Buscar");
@@ -653,7 +656,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "", "Pasteurizada"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "PH", "Pasteurizada"
             }
         ) {
             Class[] types = new Class [] {

@@ -61,7 +61,8 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             objeto[6] = lista.get(i).getPoliformosFecales();
             objeto[7] = lista.get(i).getGrasa();
             objeto[8] = lista.get(i).getHumedad();
-            objeto[9] = lista.get(i).getProduccion().getIdProduccion();
+            objeto[9] = lista.get(i).getPh();
+            objeto[10] = lista.get(i).getProduccion().getIdProduccion();
 
             modelo.addRow(objeto);
         }
@@ -115,7 +116,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         txtPFecales.setText("");
         txtGrasa.setText("");
         txtHumedad.setText("");
-
+        txtPh.setText("");
         txtIdProduccion.setText("");
         txtFechaProduccion.setText("");
         txtCodigoInterno.setText("");        

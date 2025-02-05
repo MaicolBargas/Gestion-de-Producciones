@@ -538,7 +538,7 @@
                           <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtPh" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -709,7 +709,7 @@
                 <Column editable="false" title="Grasa" type="java.lang.Integer"/>
                 <Column editable="false" title="Proteina" type="java.lang.Integer"/>
                 <Column editable="false" title="Agua" type="java.lang.Integer"/>
-                <Column editable="false" title="" type="java.lang.Float"/>
+                <Column editable="false" title="PH" type="java.lang.Float"/>
                 <Column editable="false" title="Pasteurizada" type="java.lang.Integer"/>
               </Table>
             </Property>

@@ -47,7 +47,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         cargarFecha();
         List<AnalisisIngreso> lista = controlador.listarAnalisisIngreso();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
-        Object[] objeto = new Object[11];
+        Object[] objeto = new Object[12];
         for(int i = 0; i < lista.size(); i++){
             objeto[0] = lista.get(i).getId();
             if(lista.get(i).getEncargado() instanceof Empleado){
@@ -61,7 +61,8 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             objeto[7] = lista.get(i).getGrasa();
             objeto[8] = lista.get(i).getProteina();
             objeto[9] = lista.get(i).getAgua();
-            objeto[10] = lista.get(i).getIngreso().getIdIngreso();
+            objeto[10] = lista.get(i).getPh();
+            objeto[11] = lista.get(i).getIngreso().getIdIngreso();
 
             modelo.addRow(objeto);
         }
@@ -119,7 +120,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         txtGrasa.setText("");
         txtProteina.setText("");
         txtAgua.setText("");
-
+        txtPh.setText("");
         txtIdIngreso.setText("");
         txtTambo.setText("");
         txtLitros.setText("");
@@ -622,7 +623,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "", "Ingreso"
+                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "PH", "Ingreso"
             }
         ) {
             Class[] types = new Class [] {
@@ -646,9 +647,6 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(tablaAnalisis);
-        if (tablaAnalisis.getColumnModel().getColumnCount() > 0) {
-            tablaAnalisis.getColumnModel().getColumn(9).setResizable(false);
-        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
