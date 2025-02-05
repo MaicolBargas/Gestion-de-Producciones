@@ -5,11 +5,11 @@ import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.EnvasesDulce;
 import fabrica.gestiondeproducciones.dominio.Insumo;
+import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaEnvase;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
 import fabrica.gestiondeproducciones.dominio.Produccion;
-import fabrica.gestiondeproducciones.dominio.Silo;
-import fabrica.gestiondeproducciones.presentacion.GestionProduccionManteca;
+import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +32,8 @@ public class PersistenciaProduccion {
     PersistenciaEnvases persEnvase= new PersistenciaEnvases();
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
     PersistenciaProducto persProducto = new PersistenciaProducto();
-    
+    PersistenciaPasteurizado persLecheP = new PersistenciaPasteurizado();
+
     int idGenerado;
     
     public int getIdGenerado(){
@@ -134,9 +135,7 @@ public class PersistenciaProduccion {
             }
         }
     }
-    
-    
-    
+       
     public boolean bajaProduccion(int id, String tabla) throws Exception{
         String sql = "UPDATE produccion SET activo = 0 WHERE idProduccion = ?";       
         try{
@@ -159,6 +158,51 @@ public class PersistenciaProduccion {
             }
         }
         
+    }
+    
+    public List listarProducciones(){
+        List<Produccion> lista = new ArrayList();
+        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
+        try{
+            con = conexion.obtenerConexion();
+            consulta = con.prepareStatement(sql);
+            resultado = consulta.executeQuery();
+            while(resultado.next()){
+                Produccion produccion = new Produccion();
+                
+                int id = resultado.getInt("idProduccion");
+                produccion.setIdProduccion(id);
+                produccion.setCodInterno(resultado.getString("codInterno"));
+                LechePasteurizada lecheP = persLecheP.buscarPasteurizado(resultado.getInt("idLechePast"));
+                
+                if(lecheP instanceof LechePasteurizada){
+                       produccion.setLechep(lecheP); 
+                }
+                
+                Producto producto = persProducto.buscarProducto(resultado.getInt("idProducto"));
+                if(producto instanceof Producto){
+                       produccion.setProducto(producto); 
+                }
+                
+                produccion.setRendimiento(resultado.getInt("rendimiento"));
+                produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
+                produccion.setFecha(resultado.getString("fecha"));              
+                produccion.setLitros(resultado.getInt("litros"));
+                Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
+                if(encargado instanceof Empleado){
+                    produccion.setEncargado(encargado);
+                } 
+                produccion.setHoraInicio(resultado.getString("horaInicio"));
+                produccion.setHoraFin(resultado.getString("horaFin"));
+                produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
+                produccion.setNroTacho(resultado.getInt("NroTacho"));
+                lista.add(produccion);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            return null;
+        }
+        return lista;
     }
     
     private boolean bajaProduccionEspecifica(int id, String tabla) throws Exception{        
@@ -286,9 +330,6 @@ public class PersistenciaProduccion {
         }
     }
     
-    
-    
-    
     public void agregarEnvase(int idProd,int idEnvase,int cantidad){
         String sql = "INSERT INTO linea_envases" +"(idProduccion,idEnvase,cantidad) VALUES (?,?,?)";
         
@@ -351,7 +392,6 @@ public class PersistenciaProduccion {
         }
         return lista;
     }
-    
     
     public void actualizarEnvasexProduccion(int idProduccion, List<LineaEnvase> envases){
         limpiarEnvasesProduccion(idProduccion);

@@ -45,7 +45,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -195,10 +197,8 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         RowFilter<TableModel, Object> rf;
 
         if (campo.getText().length() == 0) {
-            // El filtro no es restrictivo cuando el campo está vacío
             rf = RowFilter.regexFilter(".*", columna);
         } else {
-            // Filtrar solo en la columna específica (columna)
             rf = RowFilter.regexFilter("(?i)" + campo.getText(), columna);
         }
         fila.setRowFilter(rf);
@@ -213,13 +213,11 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     private void applyFilterComboBox(javax.swing.JComboBox<String> comboBox, TableRowSorter fila, int columna) {
         RowFilter<TableModel, Object> rf;
 
-        String selectedItem = (String) comboBox.getSelectedItem();  // Obtener el valor seleccionado del JComboBox
+        String selectedItem = (String) comboBox.getSelectedItem();
 
         if (selectedItem == null || selectedItem.isEmpty()) {
-            // Si no hay selección o la selección es vacía, mostrar todas las filas
             rf = RowFilter.regexFilter(".*", columna);
         } else {
-            // Si hay selección, aplicar el filtro solo para esa columna
             rf = RowFilter.regexFilter("(?i)" + selectedItem, columna);
         }
         fila.setRowFilter(rf);
@@ -227,10 +225,8 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
 
     private void abrirPDF(String rutaArchivo) {
         try {
-            // Verificar si el archivo existe
             File archivoPDF = new File(rutaArchivo);
             if (archivoPDF.exists()) {
-                // Usar la clase Desktop para abrir el archivo con la aplicación predeterminada del sistema
                 Desktop.getDesktop().open(archivoPDF);
             } else {
                 JOptionPane.showMessageDialog(null, "El archivo PDF no se encuentra en la ruta especificada.");
@@ -277,13 +273,12 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         txtEncargado = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         cbxTipo = new javax.swing.JComboBox<>();
-        panelFecha = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtFechaInicio = new javax.swing.JTextField();
-        txtFechaFin = new javax.swing.JTextField();
-        btnFechas = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        txtFechaFin = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtFechaInicio = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnFechas = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAnalisis = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -308,6 +303,13 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Pasteurizada", "Manteca", "Yogur", "Queso", "Dulce" }));
         cbxTipo.setSelectedIndex(-1);
 
+        btnLimpiar.setText("Limpiar Filtros");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Fecha inicio");
 
         jLabel5.setText("Fecha fin");
@@ -319,86 +321,52 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout panelFechaLayout = new javax.swing.GroupLayout(panelFecha);
-        panelFecha.setLayout(panelFechaLayout);
-        panelFechaLayout.setHorizontalGroup(
-            panelFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFechaLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(panelFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelFechaLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(62, 62, 62)
-                        .addComponent(jLabel5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelFechaLayout.createSequentialGroup()
-                        .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnFechas)
-                        .addContainerGap())))
-        );
-        panelFechaLayout.setVerticalGroup(
-            panelFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFechaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelFechaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFechas))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-
-        btnLimpiar.setText("Limpiar Filtros");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout panelFiltrosLayout = new javax.swing.GroupLayout(panelFiltros);
         panelFiltros.setLayout(panelFiltrosLayout);
         panelFiltrosLayout.setHorizontalGroup(
             panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFiltrosLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFiltrosLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel1))
-                    .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
+                    .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(44, 44, 44)
                 .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addComponent(panelFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLimpiar)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(65, 65, 65)
+                .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(panelFiltrosLayout.createSequentialGroup()
+                        .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFechas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar)))
+                .addContainerGap())
         );
         panelFiltrosLayout.setVerticalGroup(
             panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelFiltrosLayout.createSequentialGroup()
-                .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFiltrosLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelFiltrosLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(btnLimpiar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
+                .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEncargado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnFechas))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         tablaAnalisis.setModel(new javax.swing.table.DefaultTableModel(
@@ -467,7 +435,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(txtAnalisisSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -486,8 +454,8 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(panelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(86, 86, 86)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 608, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 588, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -643,8 +611,14 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             
             String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
 
+            // Indices para excluir
+            Set<Integer> indicesExcluidos = new HashSet<>();
+            indicesExcluidos.add(4); 
+            indicesExcluidos.add(6);  
+            indicesExcluidos.add(8);  
+
             for (int i = 0; i < nombresCampos.length; i++) {
-                if (objeto[i] != null) {
+                if (!indicesExcluidos.contains(i) && objeto[i] != null) {
                     datosAnalisis.put(nombresCampos[i], objeto[i]);
                 }
             }
@@ -748,13 +722,18 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                 Map<String, Object> datosAnalisis = new HashMap<>();
                 String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
                 
+                // Indices para excluir
+                Set<Integer> indicesExcluidos = new HashSet<>();
+                indicesExcluidos.add(4); 
+                indicesExcluidos.add(6);  
+                indicesExcluidos.add(8);  
+                
                 for (int i = 0; i < nombresCampos.length; i++) {
-                    if (objeto[i] != null) {
+                    if (!indicesExcluidos.contains(i) && objeto[i] != null) {
                         datosAnalisis.put(nombresCampos[i], objeto[i]);
                     }
                 }
                 
-                // Formato tabla con bordes y negrita
                 for (String campo : nombresCampos) {
                     if (datosAnalisis.containsKey(campo)) {
                         PdfPCell cellCampo = new PdfPCell(new Phrase(campo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
@@ -799,7 +778,6 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JPanel panelFecha;
     private javax.swing.JPanel panelFiltros;
     private javax.swing.JTable tablaAnalisis;
     private javax.swing.JTextField txtAnalisisSeleccionado;

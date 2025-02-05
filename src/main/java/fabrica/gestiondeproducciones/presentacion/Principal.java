@@ -108,6 +108,10 @@ public class Principal extends javax.swing.JFrame {
             case "ListadoAnalisis":
                 nuevoFrame = new ListadoAnalisis();
                 break;
+            case "ListadoProducciones":
+                nuevoFrame = new ListadoProducciones();
+                break;
+
         }
 
         if (nuevoFrame != null) {
@@ -154,6 +158,7 @@ public class Principal extends javax.swing.JFrame {
         menuEnvases = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         menuAnalisis = new javax.swing.JMenuItem();
+        menuListadoProducciones = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal");
@@ -350,6 +355,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(menuAnalisis);
 
+        menuListadoProducciones.setText("Producciones");
+        menuListadoProducciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuListadoProduccionesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuListadoProducciones);
+
         menuPrincipal.add(jMenu2);
 
         setJMenuBar(menuPrincipal);
@@ -460,6 +473,10 @@ public class Principal extends javax.swing.JFrame {
         this.Singleton("ListadoAnalisis");
     }//GEN-LAST:event_menuAnalisisActionPerformed
 
+    private void menuListadoProduccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListadoProduccionesActionPerformed
+        this.Singleton("ListadoProducciones");
+    }//GEN-LAST:event_menuListadoProduccionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -513,6 +530,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuIngresos;
     private javax.swing.JMenu menuInsumos;
     private javax.swing.JMenu menuLeche;
+    private javax.swing.JMenuItem menuListadoProducciones;
     private javax.swing.JMenuItem menuPasteurizados;
     private javax.swing.JMenuBar menuPrincipal;
     private javax.swing.JMenuItem menuProduccionDulce;

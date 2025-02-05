@@ -464,6 +464,10 @@ public class Controlador {
     public boolean bajaProduccion(int id, String tabla) throws Exception{
         return persistencia.bajaProduccion(id, tabla);
     }
+    
+    public List listarProducciones(){
+        return persistencia.listarProducciones();
+    }
   
     // </editor-fold>  
     

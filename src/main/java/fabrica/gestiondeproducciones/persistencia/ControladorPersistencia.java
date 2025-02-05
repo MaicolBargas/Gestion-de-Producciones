@@ -377,6 +377,10 @@ public class ControladorPersistencia {
     public boolean bajaProduccion(int id, String tabla) throws Exception{
         return persistenciaProduccion.bajaProduccion(id, tabla);
     }
+    
+    public List listarProducciones(){
+        return persistenciaProduccion.listarProducciones();
+    }
         
     // <editor-fold defaultstate="collapsed" desc="Produccion Manteca">
     public boolean altaProduccionManteca(ProduccionManteca produccion)
