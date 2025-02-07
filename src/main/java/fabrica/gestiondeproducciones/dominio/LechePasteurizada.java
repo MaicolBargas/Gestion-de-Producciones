@@ -50,8 +50,19 @@ public class LechePasteurizada {
     }
 
     
+    public Object[] pasteurizadaToArray() {
+        return new Object[]{
+            new Object[]{"Id", id},
+            new Object[]{"Temperatura", temperatura},
+            new Object[]{"Litros", litros},
+            new Object[]{"Descremado", descremado ? "Sí, "+ crema+ " de crema obtenido" : "No"},
+            new Object[]{"Ingreso de Leche", ingreso.getIdIngreso()},
+            new Object[]{"Fecha ingreso", ingreso.getFecha()},
+            new Object[]{"Tambo de origen", ingreso.getTambo().getPropietario()+" - "+ ingreso.getTambo().getContacto()},
+            new Object[]{"Silo", ingreso.getSilo().getCodigoInterno()},                
+        };
+    }
 
-    
 
     public int getLitros() {
         return litros;

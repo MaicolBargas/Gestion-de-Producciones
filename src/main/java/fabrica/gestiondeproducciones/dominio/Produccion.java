@@ -166,4 +166,41 @@ public class Produccion {
         return this.encargado.getId() +"-"+ this.encargado.getNombre() +" "+ this.encargado.getApellido();
     }
     
+    public String listadoInsumos(){
+        String insumos = "";
+        for(LineaInsumo insumo : listaInsumos){
+            insumos = insumo.getCantidad()+" x "+insumo.getInsumo().getNombre()+" / ";
+        }
+        return insumos;
+    }
+    
+    public String listadoEmpleados(){
+        String empleados = "";
+        for(Empleado empleado : listaEmpleados){
+            empleados = empleado.getNombreCompleto()+" / ";
+        }
+        return empleados;
+    }
+    
+    public Object[] produccionToArray() {
+        return new Object[]{
+            new Object[]{"Id", idProduccion},
+            new Object[]{"Código Interno", codInterno},
+            new Object[]{"Lista Insumos", listadoInsumos()},
+            new Object[]{"Lista Empleados", listadoEmpleados()},
+            new Object[]{"Leche Pasteurizada", lechep.getId()},
+            new Object[]{"Litros", litros},
+            new Object[]{"Producto", producto.getNombre()},
+            new Object[]{"Rendimiento", rendimiento},
+            new Object[]{"Kg/Lts Obt", kgLtsObt},
+            new Object[]{"Fecha", fecha},
+            new Object[]{"Encargado", encargado.getInfoCompleta()},
+            new Object[]{"Hora Inicio", horaInicio},
+            new Object[]{"Hora Fin", horaFin},
+            new Object[]{"Tiempo Trabajado", tiempoTrabajado},
+            new Object[]{"Nro Tacho", nroTacho}
+        };
+    }
+
+   
 }

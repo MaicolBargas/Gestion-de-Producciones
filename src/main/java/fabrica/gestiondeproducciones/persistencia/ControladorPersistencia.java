@@ -359,6 +359,10 @@ public class ControladorPersistencia {
     public Analisis buscarAnalisis(int id){
         return persistenciaAnalisis.buscarAnalisis(id);
     }
+    
+    public Analisis buscarAnalisisXProduccion(int id){
+       return persistenciaAnalisis.buscarAnalisisXProduccion(id);
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Produccion">
@@ -380,6 +384,10 @@ public class ControladorPersistencia {
     
     public List listarProducciones(){
         return persistenciaProduccion.listarProducciones();
+    }
+    
+    public Produccion buscarProduccion(int id){
+        return persistenciaProduccion.buscarProduccion(id);
     }
         
     // <editor-fold defaultstate="collapsed" desc="Produccion Manteca">

@@ -149,5 +149,31 @@ public class ProduccionYogur extends Produccion{
         this.unidadesObtenidas = unidadesObtenidas;
     }
 
+    @Override
+    public Object[] produccionToArray() {
+        Object[] datosProduccion = super.produccionToArray();
+
+        Object[] datosYogur = new Object[]{
+            new Object[]{"Temperatura Incubación", temperaturaIncubacion},
+            new Object[]{"Hora Comienzo Incubación", horaComienzoIncubacion},
+            new Object[]{"Hora Fin Incubación", horaFinIncubacion},
+            new Object[]{"Tiempo Incubación", tiempoIncubacion},
+            new Object[]{"Hora Comienzo Enfriado", horaComienzoEnfriado},
+            new Object[]{"Hora Fin Enfriado", horaFinEnfriado},
+            new Object[]{"Tiempo Total Enfriado", tiempoTotalEnfriado},
+            new Object[]{"Temp. Agua Helada", tempAguaHelada},
+            new Object[]{"Temp. Agregado Sabor", tempAgregadoSabor},
+            new Object[]{"Temp. Agregado Color", tempAgregadoColor},
+            new Object[]{"Litros de Suero", litrosSuero},
+            new Object[]{"Unidades Obtenidas", unidadesObtenidas}
+        };
+
+        Object[] resultado = new Object[datosProduccion.length + datosYogur.length];
+        System.arraycopy(datosProduccion, 0, resultado, 0, datosProduccion.length);
+        System.arraycopy(datosYogur, 0, resultado, datosProduccion.length, datosYogur.length);
+
+        return resultado;
+    }
+
    
 }

@@ -54,4 +54,23 @@ public class ProduccionManteca extends Produccion {
         this.tiempoTotalBatido = tiempoTotalBatido;
         this.cantidad = cantidad;
     }
+     
+    @Override
+    public Object[] produccionToArray() {
+        Object[] datosProduccion = super.produccionToArray();
+
+        Object[] datosManteca = new Object[]{
+            new Object[]{"Hora Comienzo Batido", horaComienzoBatido},
+            new Object[]{"Hora Fin Batido", horaFinBatido},
+            new Object[]{"Tiempo Total Batido", tiempoTotalBatido},
+            new Object[]{"Cantidad", cantidad}
+        };
+
+        Object[] resultado = new Object[datosProduccion.length + datosManteca.length];
+        System.arraycopy(datosProduccion, 0, resultado, 0, datosProduccion.length);
+        System.arraycopy(datosManteca, 0, resultado, datosProduccion.length, datosManteca.length);
+
+        return resultado;
+    }
+
 }

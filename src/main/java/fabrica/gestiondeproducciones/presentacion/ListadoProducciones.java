@@ -1,21 +1,66 @@
 
 package fabrica.gestiondeproducciones.presentacion;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import fabrica.gestiondeproducciones.dominio.Analisis;
 import fabrica.gestiondeproducciones.dominio.Produccion;
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
+import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
+import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
+import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
+import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
-import java.awt.event.ItemEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Dialog;
+import java.awt.GridLayout;
+import java.awt.HeadlessException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -29,8 +74,9 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     Controlador controlador = new Controlador();
     private TableRowSorter<TableModel> filtroTabla;
-    Produccion produccionSeleccionado = null;
+    Produccion produccionSeleccionada = null;
     List<Produccion> listaProduccionesSeleccionadas = new ArrayList<>();
+    ListadoAnalisis listadoAnalisis = new ListadoAnalisis();
 
     /**
      * Creates new form ListadoProducciones
@@ -41,7 +87,8 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         agregarFiltros(txtEncargado, filtroTabla,4); 
         agregarFiltros(txtCodigoInterno, filtroTabla,1);       
         agregarFiltros(txtProducto, filtroTabla,2);
-        
+        detalleProducciones();
+        seleccionDeProducciones();
     }
 
     private void listar(){
@@ -115,6 +162,100 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         fila.setRowFilter(rf);
     }
 
+    private void detalleProducciones() {
+    tablaProducciones.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 2) { // Doble clic en la fila
+                int filaSeleccionada = tablaProducciones.getSelectedRow();
+                if (filaSeleccionada != -1) {
+                    int id = (int) tablaProducciones.getValueAt(filaSeleccionada, 0);
+                    String codigoInterno = (String) tablaProducciones.getValueAt(filaSeleccionada, 1);
+
+                    Object[] produccion = obtenerProduccionPorCodigo(id, codigoInterno);
+                    mostrarDetalleProduccion(tablaProducciones, produccion);
+                }
+            }
+        }
+    });
+    }
+
+    private void mostrarDetalleProduccion(Component parent, Object[] produccion) {
+        JDialog dialogo = new JDialog(SwingUtilities.getWindowAncestor(parent), "Detalles de Producción", Dialog.ModalityType.APPLICATION_MODAL);
+        dialogo.setSize(600, 800);
+        dialogo.setLayout(new GridLayout(produccion.length, 1, 5, 5));
+        dialogo.getRootPane().setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        dialogo.getContentPane().setBackground(Color.WHITE);
+
+        for (Object obj : produccion) {
+            Object[] atributo = (Object[]) obj;
+            JLabel label = new JLabel("<html><b>" + atributo[0] + ":</b> " + atributo[1] + "</html>");
+            label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+            label.setForeground(Color.DARK_GRAY);
+            dialogo.add(label);
+        }
+
+        dialogo.setLocationRelativeTo(parent);
+        dialogo.setVisible(true);
+    }
+ 
+    private Object[] obtenerProduccionPorCodigo(int id, String codigo){
+
+
+        switch(codigo.charAt(0)){
+            case 'M' -> {
+                ProduccionManteca produccionManteca = controlador.buscarProduccionManteca(id);
+                return produccionManteca.produccionToArray();
+            }
+            case 'Q' -> {
+                ProduccionQueso produccionQueso = controlador.buscarProduccionQueso(id);
+                return produccionQueso.produccionToArray();
+            }
+            case 'Y' -> {
+                ProduccionYogur produccionYogur = controlador.buscarProduccionYogur(id);
+                return produccionYogur.produccionToArray();
+            }
+            case 'D' -> {
+                ProduccionDulce produccionDulce = controlador.buscarProduccionDulce(id);
+                return produccionDulce.produccionToArray();
+            }
+            default -> {
+                return null;
+            }
+        }
+    }
+    
+    private void abrirPDF(String rutaArchivo) {
+        try {
+            File archivoPDF = new File(rutaArchivo);
+            if (archivoPDF.exists()) {
+                Desktop.getDesktop().open(archivoPDF);
+            } else {
+                JOptionPane.showMessageDialog(null, "El archivo PDF no se encuentra en la ruta especificada.");
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al intentar abrir el archivo PDF: " + e.getMessage());
+        }
+    }
+    
+    private void seleccionDeProducciones() {
+        tablaProducciones.getSelectionModel().addListSelectionListener(e -> {
+            listaProduccionesSeleccionadas.clear();
+            if (!e.getValueIsAdjusting()) {
+                int[] selectedRows = tablaProducciones.getSelectedRows();
+                if (selectedRows.length <= 10) {
+                    for (int fila : selectedRows) {
+                        int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
+                        Produccion produccion = controlador.buscarProduccion(id);
+                        listaProduccionesSeleccionadas.add(produccion);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "No es posible imprimir mas de 10 registros a la vez");
+                }
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,8 +265,8 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
+        scroll = new javax.swing.JScrollPane();
+        principal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtEncargado = new javax.swing.JTextField();
@@ -143,6 +284,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         txtProduccionSeleccionada = new javax.swing.JTextField();
         btnImprimirUnico = new javax.swing.JButton();
         btnImprimirListado = new javax.swing.JButton();
+        btnImprimirFlujoCompleto = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProducciones = new javax.swing.JTable();
 
@@ -236,9 +378,26 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
 
         txtProduccionSeleccionada.setEditable(false);
 
-        btnImprimirUnico.setText("Imprimir Produccion");
+        btnImprimirUnico.setText("Imprimir Produccion Unica");
+        btnImprimirUnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirUnicoActionPerformed(evt);
+            }
+        });
 
-        btnImprimirListado.setText("Imprimir Producciones Seleccionadas");
+        btnImprimirListado.setText("Imprimir Lista de Producciones ");
+        btnImprimirListado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirListadoActionPerformed(evt);
+            }
+        });
+
+        btnImprimirFlujoCompleto.setText("Imprimir flujo completo");
+        btnImprimirFlujoCompleto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirFlujoCompletoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -247,7 +406,10 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtProduccionSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtProduccionSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnImprimirFlujoCompleto))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnImprimirUnico)
                         .addGap(31, 31, 31)
@@ -258,8 +420,10 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtProduccionSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProduccionSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImprimirFlujoCompleto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnImprimirUnico)
                     .addComponent(btnImprimirListado))
@@ -289,37 +453,42 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaProducciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaProduccionesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaProducciones);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout principalLayout = new javax.swing.GroupLayout(principal);
+        principal.setLayout(principalLayout);
+        principalLayout.setHorizontalGroup(
+            principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(principalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(principalLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        principalLayout.setVerticalGroup(
+            principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(principalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel1.getAccessibleContext().setAccessibleParent(jScrollPane1);
+        jPanel1.getAccessibleContext().setAccessibleParent(scroll);
 
-        jScrollPane1.setViewportView(jPanel2);
+        scroll.setViewportView(principal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,14 +496,14 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(scroll)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -384,9 +553,383 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         cargarFecha();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
+    private void tablaProduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProduccionesMouseClicked
+        int fila = tablaProducciones.rowAtPoint(evt.getPoint());
+        int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
+        txtProduccionSeleccionada.setText(tablaProducciones.getValueAt(fila, 0).toString());
+        produccionSeleccionada = controlador.buscarProduccion(id);
+    }//GEN-LAST:event_tablaProduccionesMouseClicked
+
+    private void btnImprimirUnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirUnicoActionPerformed
+        Document documento = new Document();
+        try {
+            if (produccionSeleccionada == null) {
+                throw new DocumentException("Debe seleccionar un análisis");
+            }
+ 
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
+            String fechaHoraString = fechaHoraActual.format(formato);
+            
+            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Produccion_"+ produccionSeleccionada.getCodInterno()+ "_" + fechaHoraString + ".pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
+            documento.open();
+            
+            // Agregar tabla de encabezado con logo y textos
+            PdfPTable headerTable = new PdfPTable(3);
+            headerTable.setWidthPercentage(100);
+            float[] columnWidths = {1f, 2f, 1f};
+            headerTable.setWidths(columnWidths);
+           
+             //Logo
+            String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
+            Image logo = Image.getInstance(path);
+            logo.scaleToFit(80, 80);
+            PdfPCell cellLogo = new PdfPCell(logo);
+            cellLogo.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellLogo);
+            
+            // Títulos centrales
+            Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia", fontTitulo));
+            cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cellTitulo.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellTitulo);
+            
+            // Fecha
+            PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+            cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            cellFecha.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellFecha);
+            headerTable.setSpacingBefore(10);
+            headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+            
+            documento.add(headerTable);
+            documento.add(Chunk.NEWLINE);
+            
+            // Subtitulo
+            Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14);
+            Paragraph subTitulo = new Paragraph("Reporte de Produccion", fontSubTitulo);
+            subTitulo.setAlignment(Element.ALIGN_CENTER);
+            documento.add(subTitulo);
+            documento.add(Chunk.NEWLINE);
+
+            PdfPTable tabla = new PdfPTable(2);
+            tabla.setWidthPercentage(100); 
+
+            Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(),produccionSeleccionada.getCodInterno());
+            
+            //FORMATO TABLA
+            for (Object campo : campos) {
+                Object[] linea = (Object[]) campo;
+                String titulo = (String) linea[0];
+                String valor = linea[1].toString();
+                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                    cellCampo.setPadding(5);
+                    cellCampo.setBorderWidth(1.5f);
+                    tabla.addCell(cellCampo);
+
+                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                    cellValor.setPadding(5);
+                    cellValor.setBorderWidth(1.5f);
+                    tabla.addCell(cellValor);
+            }
+            documento.add(tabla);
+            documento.add(Chunk.NEWLINE);     
+            documento.close();
+
+            JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
+            abrirPDF(ruta);
+        } catch (DocumentException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(ListadoAnalisis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnImprimirUnicoActionPerformed
+
+    private void btnImprimirListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirListadoActionPerformed
+        Document documento = new Document();
+        try {
+            if (listaProduccionesSeleccionadas.isEmpty()) {
+                throw new DocumentException("El listado de análisis está vacío");
+            }
+            
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
+            String fechaHoraString = fechaHoraActual.format(formato);
+            
+            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Lista_Producciones_" + fechaHoraString + ".pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
+            documento.open();
+            
+            // Agregar tabla de encabezado con logo y textos
+            PdfPTable headerTable = new PdfPTable(3);
+            headerTable.setWidthPercentage(100);
+            float[] columnWidths = {1f, 2f, 1f};
+            headerTable.setWidths(columnWidths);
+           
+             //Logo
+            String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
+            Image logo = Image.getInstance(path);
+            logo.scaleToFit(80, 80);
+            PdfPCell cellLogo = new PdfPCell(logo);
+            cellLogo.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellLogo);
+            
+            // Títulos centrales
+            Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia", fontTitulo));
+            cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cellTitulo.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellTitulo);
+            
+            // Fecha
+            PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+            cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            cellFecha.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellFecha);
+            headerTable.setSpacingBefore(10);
+            headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+            
+            documento.add(headerTable);
+            documento.add(Chunk.NEWLINE);
+            
+            // Subtítulo
+            Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
+            Paragraph subTitulo = new Paragraph("Listado de Producciones", fontSubTitulo);
+            subTitulo.setAlignment(Element.ALIGN_CENTER);
+            documento.add(subTitulo);
+            documento.add(Chunk.NEWLINE);
+            
+            for (Produccion produccion : listaProduccionesSeleccionadas) {
+                PdfPTable tabla = new PdfPTable(2);
+                tabla.setWidthPercentage(100); 
+                
+                Paragraph codigoProd = new Paragraph(produccion.getCodInterno(), fontSubTitulo);
+                documento.add(codigoProd);
+                documento.add(Chunk.SPACETABBING);
+
+                Object[] campos = obtenerProduccionPorCodigo(produccion.getIdProduccion(),produccion.getCodInterno());
+
+                //FORMATO TABLA
+                for (Object campo : campos) {
+                    Object[] linea = (Object[]) campo;
+                    String titulo = (String) linea[0];
+                    String valor = linea[1].toString();
+                        PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                        cellCampo.setPadding(5);
+                        cellCampo.setBorderWidth(1.5f);
+                        tabla.addCell(cellCampo);
+
+                        PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                        cellValor.setPadding(5);
+                        cellValor.setBorderWidth(1.5f);
+                        tabla.addCell(cellValor);
+                }
+
+                    documento.add(tabla);
+                    documento.add(Chunk.NEWLINE);
+
+            }
+            
+            documento.close();
+            JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
+            abrirPDF(ruta);
+        } catch (DocumentException | HeadlessException | IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_btnImprimirListadoActionPerformed
+
+    private void btnImprimirFlujoCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirFlujoCompletoActionPerformed
+        Document documento = new Document();
+        try {
+            if (produccionSeleccionada == null) {
+                throw new DocumentException("Debe seleccionar un análisis");
+            }
+ 
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
+            String fechaHoraString = fechaHoraActual.format(formato);
+            
+            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Produccion_FlujoCompleto_"+ produccionSeleccionada.getCodInterno()+ "_" + fechaHoraString + ".pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
+            documento.open();
+            
+            // <editor-fold defaultstate="collapsed" desc="HEADER PDF">                          
+
+            // Agregar tabla de encabezado con logo y textos
+            PdfPTable headerTable = new PdfPTable(3);
+            headerTable.setWidthPercentage(100);
+            float[] columnWidths = {1f, 2f, 1f};
+            headerTable.setWidths(columnWidths);
+           
+             //Logo
+            String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
+            Image logo = Image.getInstance(path);
+            logo.scaleToFit(80, 80);
+            PdfPCell cellLogo = new PdfPCell(logo);
+            cellLogo.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellLogo);
+            
+            // Títulos centrales
+            Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia", fontTitulo));
+            cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cellTitulo.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellTitulo);
+            
+            // Fecha
+            PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+            cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            cellFecha.setBorder(Rectangle.NO_BORDER);
+            headerTable.addCell(cellFecha);
+            headerTable.setSpacingBefore(10);
+            headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+            
+            documento.add(headerTable);
+            documento.add(Chunk.NEWLINE);
+            
+            // Subtitulo
+            Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14);
+            Paragraph subTitulo = new Paragraph("Flujo completo de Produccion", fontSubTitulo);
+            subTitulo.setAlignment(Element.ALIGN_CENTER);
+            documento.add(subTitulo);
+            documento.add(Chunk.NEWLINE);
+
+            
+            //</editor-fold>
+            
+            // <editor-fold defaultstate="collapsed" desc="PRODUCCION"> 
+            
+            PdfPTable tablaProduccion = new PdfPTable(2);
+            tablaProduccion.setWidthPercentage(100); 
+            
+            Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(),produccionSeleccionada.getCodInterno());
+            Paragraph subProd = new Paragraph("Produccion", fontSubTitulo);
+            documento.add(subProd);
+            documento.add(Chunk.SPACETABBING);
+            for (Object campo : campos) {
+                Object[] linea = (Object[]) campo;
+                String titulo = (String) linea[0];
+                String valor = linea[1].toString();
+                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                    cellCampo.setPadding(5);
+                    cellCampo.setBorderWidth(1.5f);
+                    tablaProduccion.addCell(cellCampo);
+
+                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                    cellValor.setPadding(5);
+                    cellValor.setBorderWidth(1.5f);
+                    tablaProduccion.addCell(cellValor);
+            }
+            
+            documento.add(tablaProduccion);
+            documento.add(Chunk.NEWLINE);
+
+            //</editor-fold>
+            
+            // <editor-fold defaultstate="collapsed" desc="ANALISIS">                          
+
+            
+            Analisis analisis = controlador.buscarAnalisisXProduccion(produccionSeleccionada.getIdProduccion());
+            
+            if(analisis instanceof Analisis){
+                PdfPTable tablaAnalisis = new PdfPTable(2);
+                tablaAnalisis.setWidthPercentage(100); 
+                Object[] objetoAnalisis = listadoAnalisis.obtenerAnalisis(analisis);
+
+                Map<String, Object> datosAnalisis = new HashMap<>();
+                String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
+
+                // Indices para excluir
+                Set<Integer> indicesExcluidos = new HashSet<>();
+                indicesExcluidos.add(4); 
+                indicesExcluidos.add(6);  
+                indicesExcluidos.add(8);  
+
+                for (int i = 0; i < nombresCampos.length; i++) {
+                    if (!indicesExcluidos.contains(i) && objetoAnalisis[i] != null) {
+                        datosAnalisis.put(nombresCampos[i], objetoAnalisis[i]);
+                    }
+                }
+
+                Paragraph subAnalisis = new Paragraph("Analisis", fontSubTitulo);
+                documento.add(subAnalisis);
+                documento.add(Chunk.SPACETABBING);
+
+                for (String campo : nombresCampos) {
+                    if (datosAnalisis.containsKey(campo)) {
+                        PdfPCell cellCampo = new PdfPCell(new Phrase(campo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                        cellCampo.setPadding(5);
+                        cellCampo.setBorderWidth(1.5f);
+                        tablaAnalisis.addCell(cellCampo);
+
+                        PdfPCell cellValor = new PdfPCell(new Phrase(datosAnalisis.get(campo).toString()));
+                        cellValor.setPadding(5);
+                        cellValor.setBorderWidth(1.5f);
+                        tablaAnalisis.addCell(cellValor);
+                    }
+                }
+            documento.add(tablaAnalisis);
+            }else{
+                Paragraph subAnalisis = new Paragraph("Esta producción aún no tiene un análisis.", fontSubTitulo);
+                documento.add(subAnalisis);
+                documento.add(Chunk.SPACETABBING);
+            }        
+            documento.add(Chunk.NEWLINE);
+
+            //</editor-fold>
+            
+            // <editor-fold defaultstate="collapsed" desc="LECHE">                          
+
+            PdfPTable tablaLeche = new PdfPTable(2);
+            tablaLeche.setWidthPercentage(100);
+                
+            Object[] pasteurizadaObj = produccionSeleccionada.getLechep().pasteurizadaToArray();
+            Paragraph subLeche = new Paragraph("Leche", fontSubTitulo);
+            documento.add(subLeche);
+            documento.add(Chunk.SPACETABBING);
+                 
+            for (Object campo : pasteurizadaObj) {
+                Object[] linea = (Object[]) campo;
+                String titulo = (String) linea[0];
+                String valor = linea[1].toString();
+                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                    cellCampo.setPadding(5);
+                    cellCampo.setBorderWidth(1.5f);
+                    tablaLeche.addCell(cellCampo);
+
+                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                    cellValor.setPadding(5);
+                    cellValor.setBorderWidth(1.5f);
+                    tablaLeche.addCell(cellValor);
+            }
+            documento.add(tablaLeche);
+            documento.add(Chunk.NEWLINE);
+
+            // </editor-fold>
+            
+            documento.add(Chunk.NEWLINE);     
+            documento.close();
+
+            JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
+            abrirPDF(ruta);
+        } catch (DocumentException | FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(ListadoAnalisis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnImprimirFlujoCompletoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFiltrar;
+    private javax.swing.JButton btnImprimirFlujoCompleto;
     private javax.swing.JButton btnImprimirListado;
     private javax.swing.JButton btnImprimirUnico;
     private javax.swing.JButton btnLimpiar;
@@ -396,10 +939,10 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel principal;
+    private javax.swing.JScrollPane scroll;
     private javax.swing.JTable tablaProducciones;
     private javax.swing.JTextField txtCodigoInterno;
     private javax.swing.JTextField txtEncargado;

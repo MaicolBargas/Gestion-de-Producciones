@@ -170,6 +170,32 @@ public class ProduccionQueso extends Produccion {
         this.acidesFermento = acidesFermento;
     }
 
-    
-    
+    @Override
+    public Object[] produccionToArray() {
+        Object[] datosProduccion = super.produccionToArray();
+
+        Object[] datosQueso = new Object[]{
+            new Object[]{"Temp. Pasteurización Queso", tempPastQueso},
+            new Object[]{"Tiempo Reposo Fermento", tiempoReposoFermento},
+            new Object[]{"Temp. Reposo Fermento", tempReposoFermento},
+            new Object[]{"Tipo Cuajo Obtenido", tipoCuajoObtenido},
+            new Object[]{"Tiempo Cuajado", tiempoCuajado},
+            new Object[]{"Temp. al Cuajar", tempAlCuajar},
+            new Object[]{"Cantidad Cuajo Obtenido", cantCuajoObtenido},
+            new Object[]{"Tipo de Grano", tipoDeGrano},
+            new Object[]{"Litros de Suero Obtenidos", litrosSueroObtenidos},
+            new Object[]{"Tiempo Agregado Agua", tiempoAgregadoAgua},
+            new Object[]{"Temp. Agua", tempAgua},
+            new Object[]{"Temp. Cuajo Final", tempCuajoFinal},
+            new Object[]{"Unidades Obtenidas", unidadesObtenidas},
+            new Object[]{"Acidez Fermento", acidesFermento}
+        };
+
+        Object[] resultado = new Object[datosProduccion.length + datosQueso.length];
+        System.arraycopy(datosProduccion, 0, resultado, 0, datosProduccion.length);
+        System.arraycopy(datosQueso, 0, resultado, datosProduccion.length, datosQueso.length);
+
+        return resultado;
+    }
+
 }

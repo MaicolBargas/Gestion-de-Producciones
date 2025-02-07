@@ -87,7 +87,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         tablaAnalisis.setRowSorter(filtroTabla);
     }
     
-    private Object[] obtenerAnalisis(Analisis analisis){
+    public Object[] obtenerAnalisis(Analisis analisis){
             Object[] objeto = new Object[15];
             objeto[0] = analisis.getId();
             if(analisis.getEncargado() instanceof Empleado){
@@ -412,7 +412,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
 
         txtAnalisisSeleccionado.setEditable(false);
 
-        btnImprimirListadoAnalisis.setText("Imprimir Analisis Seleccionados");
+        btnImprimirListadoAnalisis.setText("Imprimir Lista de Analisis");
         btnImprimirListadoAnalisis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirListadoAnalisisActionPerformed(evt);
@@ -426,11 +426,12 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnImprimirUnico)
-                    .addComponent(txtAnalisisSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnImprimirListadoAnalisis)
-                .addGap(222, 222, 222))
+                    .addComponent(txtAnalisisSeleccionado, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnImprimirUnico)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnImprimirListadoAnalisis)))
+                .addGap(210, 210, 210))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

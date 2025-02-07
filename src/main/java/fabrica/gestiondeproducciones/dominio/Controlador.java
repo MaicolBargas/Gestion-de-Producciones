@@ -343,6 +343,9 @@ public class Controlador {
         return persistencia.buscarAnalisis(id);
     }
         
+    public Analisis buscarAnalisisXProduccion(int id){
+       return persistencia.buscarAnalisisXProduccion(id);
+    }
     // </editor-fold>
       
     // <editor-fold defaultstate="collapsed" desc="Produccion">
@@ -467,6 +470,10 @@ public class Controlador {
     
     public List listarProducciones(){
         return persistencia.listarProducciones();
+    }
+    
+    public Produccion buscarProduccion(int id){
+        return persistencia.buscarProduccion(id);
     }
   
     // </editor-fold>  

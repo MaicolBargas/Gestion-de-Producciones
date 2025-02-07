@@ -374,12 +374,14 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnImprimirUnico" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtAnalisisSeleccionado" alignment="0" min="-2" pref="49" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btnImprimirUnico" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnImprimirListadoAnalisis" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnImprimirListadoAnalisis" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="222" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -414,7 +416,7 @@
                     </Component>
                     <Component class="javax.swing.JButton" name="btnImprimirListadoAnalisis">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Imprimir Analisis Seleccionados"/>
+                        <Property name="text" type="java.lang.String" value="Imprimir Lista de Analisis"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirListadoAnalisisActionPerformed"/>
