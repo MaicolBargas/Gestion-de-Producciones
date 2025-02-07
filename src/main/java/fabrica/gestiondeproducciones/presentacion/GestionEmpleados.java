@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -20,7 +19,8 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
     Utilidades utilidad = new Utilidades();
     Empleado empleado = new Empleado();
     Controlador controlador = new Controlador();
-    DefaultTableModel modelo = new DefaultTableModel();;
+    DefaultTableModel modelo = new DefaultTableModel();
+    ;
     private TableRowSorter<TableModel> filtroTabla;
 
     /**
@@ -33,19 +33,19 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         agregarFiltros(txtBuscar, filtroTabla);
 
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
-    private void listar(){
+    private void listar() {
         limpiarTabla();
         List<Empleado> lista = controlador.listarEmpleados();
         modelo = (DefaultTableModel) tablaEmpleados.getModel();
         Object[] objeto = new Object[7];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getCi();
             objeto[2] = lista.get(i).getNombre();
             objeto[3] = lista.get(i).getApellido();
-            objeto[4] = lista.get(i).getSeccion().getId() + " - " +lista.get(i).getSeccion().getNombre();
+            objeto[4] = lista.get(i).getSeccion().getId() + " - " + lista.get(i).getSeccion().getNombre();
             objeto[5] = lista.get(i).getTelefono();
             objeto[6] = lista.get(i).getMail();
             modelo.addRow(objeto);
@@ -54,15 +54,15 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaEmpleados.setRowSorter(filtroTabla);
     }
-        
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         txtDocumento.setText("");
         txtNombre.setText("");
@@ -72,14 +72,14 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         txtMail.setText("");
 
     }
-    
-    private void listarSecciones(){      
+
+    private void listarSecciones() {
         List<Seccion> secciones = controlador.listarSecciones();
-        for(Seccion s : secciones){        
-            cbxSeccion.addItem(s.getId() + " - " +s.getNombre());
+        for (Seccion s : secciones) {
+            cbxSeccion.addItem(s.getId() + " - " + s.getNombre());
         }
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -109,19 +109,19 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-        
-    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
+
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox) {
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             String item = comboBox.getItemAt(i).toString();
             String[] parts = item.split(" - ");
-        
+
             if (parts[0].trim().equals(idBuscado)) {
                 comboBox.setSelectedIndex(i);
                 break;
             }
         }
     }
-    
+
     //</editor-fold>
     /**
      * This method is called from within the constructor to initialize the form.
@@ -426,60 +426,65 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      try{
-        int ci = utilidad.validarCi(txtDocumento.getText());
-        String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
-        String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido", false);
-        String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
-        Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
-        String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
-        String mail =  utilidad.sanitizarCampos(txtMail.getText(), "Mail", false);
-        
-        Empleado e = controlador.buscarEmpleadoXCi(ci);
-        if(e instanceof Empleado){
-            throw new Exception("Ya existe un empleado con esta CI : " + e.getNombre() +" "+ e.getApellido());
-        }
-        if(!txtId.getText().equals(""))
-            {
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            int ci = utilidad.validarCi(txtDocumento.getText());
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
+            String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido", false);
+            String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
+            Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
+            String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
+            String mail = utilidad.sanitizarCampos(txtMail.getText(), "Mail", false);
+
+            Empleado e = controlador.buscarEmpleadoXCi(ci);
+            if (e instanceof Empleado) {
+                throw new Exception("Ya existe un empleado con esta CI : " + e.getNombre() + " " + e.getApellido());
+            }
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
-        empleado.setCi(ci);   
-        empleado.setNombre(nombre);
-        empleado.setApellido(apellido);
-        if(seccion instanceof Seccion){
-            empleado.setSeccion(seccion);
-        }else{ throw new Exception("La seccion seleccionada no existe");}
-        
-        empleado.setTelefono(telefono);
-        empleado.setMail(mail);
+            empleado.setCi(ci);
+            empleado.setNombre(nombre);
+            empleado.setApellido(apellido);
+            if (seccion instanceof Seccion) {
+                empleado.setSeccion(seccion);
+            } else {
+                throw new Exception("La seccion seleccionada no existe");
+            }
 
-        boolean alta = controlador.altaEmpleado(empleado);
-        if(alta){
-          JOptionPane.showMessageDialog(null, "Empleado dado de alta.");
-          limpiarFormulario();
-          listar();
+            empleado.setTelefono(telefono);
+            empleado.setMail(mail);
+
+            boolean alta = controlador.altaEmpleado(empleado);
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Empleado dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaEmpleado(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Empleado dada de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             int ci = utilidad.validarCi(txtDocumento.getText());
             String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String apellido = utilidad.sanitizarCampos(txtApellido.getText(), "Apellido", false);
@@ -496,13 +501,13 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
             empleado.setMail(mail);
 
             boolean modificar = controlador.modificarEmpleado(empleado);
-            if(modificar){
+            if (modificar) {
                 JOptionPane.showMessageDialog(null, "Empleado modificado correctamente.");
                 limpiarFormulario();
                 listar();
-            } 
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -512,7 +517,7 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
         txtDocumento.setText(tablaEmpleados.getValueAt(fila, 1).toString());
         txtNombre.setText(tablaEmpleados.getValueAt(fila, 2).toString());
         txtApellido.setText(tablaEmpleados.getValueAt(fila, 3).toString());
-        seleccionarEnComboBox(tablaEmpleados.getValueAt(fila, 4).toString().split(" - ")[0],cbxSeccion);            
+        seleccionarEnComboBox(tablaEmpleados.getValueAt(fila, 4).toString().split(" - ")[0], cbxSeccion);
         txtTelefono.setText(tablaEmpleados.getValueAt(fila, 5).toString());
         txtMail.setText(tablaEmpleados.getValueAt(fila, 6).toString());
     }//GEN-LAST:event_tablaEmpleadosMouseClicked

@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.AnalisisYogur;
@@ -27,31 +26,31 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
     DefaultTableModel modeloProducciones = new DefaultTableModel();
     String tipoAnalisis = "yogur";
     Empleado encargado = new Empleado();
-    private TableRowSorter<TableModel> filtroTabla;  
-    
+    private TableRowSorter<TableModel> filtroTabla;
+
     /**
      * Creates new form GestionAnalisisYogur
      */
     public GestionAnalisisYogur() {
         initComponents();
         listar();
-        agregarFiltros(txtBuscar, filtroTabla);     
+        agregarFiltros(txtBuscar, filtroTabla);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
-        
+
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
-        private void listar(){
+    private void listar() {
         limpiarTabla();
         listarProducciones();
         cargarFecha();
         List<AnalisisYogur> lista = controlador.listarAnalisisYogur();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
         Object[] objeto = new Object[11];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
-            if(lista.get(i).getEncargado() instanceof Empleado){
+            if (lista.get(i).getEncargado() instanceof Empleado) {
                 objeto[1] = lista.get(i).getEncargado().getInfoCompleta();
             }
             objeto[2] = lista.get(i).getFecha();
@@ -68,13 +67,13 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         tablaAnalisis.setRowSorter(filtroTabla);
         tablaAnalisis.setModel(modelo);
     }
-        
-    private void listarProducciones(){     
+
+    private void listarProducciones() {
         limpiarTablaProducciones();
         List<ProduccionYogur> lista = controlador.listarYogurPendienteAnalizar();
         modeloProducciones = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto = new Object[4];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getIdProduccion();
             objeto[1] = lista.get(i).getCodInterno();
             objeto[2] = lista.get(i).getFecha();
@@ -83,29 +82,29 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         }
         tablaProducciones.setModel(modeloProducciones);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void limpiarTablaProducciones(){
-        for(int i = 0; i < modeloProducciones.getRowCount(); i++){
+
+    private void limpiarTablaProducciones() {
+        for (int i = 0; i < modeloProducciones.getRowCount(); i++) {
             modeloProducciones.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFecha.setText(fecha);
     }
-        
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         txtEncargado.setText("");
         txtFecha.setText("");
@@ -117,34 +116,33 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
 
         txtIdProduccion.setText("");
         txtFechaProduccion.setText("");
-        txtCodigoInterno.setText("");        
+        txtCodigoInterno.setText("");
     }
-    
-    private Empleado buscarEncargado() throws Exception{
-        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
-        String[] nombreCompleto = valor.split(" ");        
+
+    private Empleado buscarEncargado() throws Exception {
+        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);
+        String[] nombreCompleto = valor.split(" ");
         List<Empleado> empleados = controlador.listarEmpleados();
-        
-        for(Empleado empleado : empleados){
-            try{
+
+        for (Empleado empleado : empleados) {
+            try {
                 Integer ci = Integer.valueOf(valor);
-                if(ci.equals(empleado.getCi())){
+                if (ci.equals(empleado.getCi())) {
                     return empleado;
                 }
-            }catch(NumberFormatException e){
-                
-            }                                    
-            if(empleado.getNombre().equalsIgnoreCase(valor) ||
-               empleado.getApellido().equalsIgnoreCase(valor) ||
-               Arrays.asList(nombreCompleto).contains(empleado.getNombre())||
-               Arrays.asList(nombreCompleto).contains(empleado.getApellido())
-               ){
-                return empleado;              
-            }                         
+            } catch (NumberFormatException e) {
+
+            }
+            if (empleado.getNombre().equalsIgnoreCase(valor)
+                    || empleado.getApellido().equalsIgnoreCase(valor)
+                    || Arrays.asList(nombreCompleto).contains(empleado.getNombre())
+                    || Arrays.asList(nombreCompleto).contains(empleado.getApellido())) {
+                return empleado;
+            }
         }
         throw new Exception("No existe un usuario con estos datos");
     }
-        
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -173,7 +171,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             rf = RowFilter.regexFilter("(?i)" + campo.getText());
         }
         fila.setRowFilter(rf);
-    }       
+    }
     // </editor-fold>
 
     /**
@@ -242,11 +240,11 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Levadura:");
 
-        jLabel5.setText("Mos:");
+        jLabel5.setText("Mohos:");
 
-        jLabel6.setText("Poliformos totales:");
+        jLabel6.setText("Coliformes totales:");
 
-        jLabel7.setText("Poliformos fecales:");
+        jLabel7.setText("Coliformes fecales:");
 
         jLabel9.setText("P.H.:");
 
@@ -526,7 +524,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "PH", "Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes totales", "Coliformes fecales", "PH", "Produccion"
             }
         ) {
             Class[] types = new Class [] {
@@ -608,122 +606,129 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-       try{
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+
             String fecha = utilidad.controlarFechas(txtFecha.getText());
             int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
             float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
-            ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion); 
-            
-            try{
+            ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion);
+
+            try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     analisis.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un empleado habilitado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
-            
-            if(pFecales > pTotales){
+
+            if (pFecales > pTotales) {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
-            if(!txtId.getText().equals(""))
-            {
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
-           analisis.setTipo(tipoAnalisis);
-           analisis.setFecha(fecha);
-           analisis.setLevadura(levadura);
-           analisis.setMos(mos);
-           analisis.setPoliformosTotales(pTotales);
-           analisis.setPoliformosFecales(pFecales);
-           analisis.setPh(ph);
-           
-           if(produccion instanceof ProduccionYogur){
-            analisis.setProduccion(produccion);            
-           }else{throw new Exception("La produccion no existe en el sistema");}
-          
+            analisis.setTipo(tipoAnalisis);
+            analisis.setFecha(fecha);
+            analisis.setLevadura(levadura);
+            analisis.setMos(mos);
+            analisis.setPoliformosTotales(pTotales);
+            analisis.setPoliformosFecales(pFecales);
+            analisis.setPh(ph);
+
+            if (produccion instanceof ProduccionYogur) {
+                analisis.setProduccion(produccion);
+            } else {
+                throw new Exception("La produccion no existe en el sistema");
+            }
 
             boolean alta = controlador.altaAnalisisYogur(analisis);
-            if(alta){
-              JOptionPane.showMessageDialog(null, "Analisis dado de alta.");
-              limpiarFormulario();
-              listar();
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Analisis dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaAnalisis(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Analisis dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
             int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
             float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
-            ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion); 
-            
+            ProduccionYogur produccion = controlador.buscarProduccionYogur(idProduccion);
+
             analisis = controlador.buscarAnalisisYogur(id);
-            
-            try{
+
+            try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     analisis.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un empleado habilitado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
-            
-            if(pFecales > pTotales){
+
+            if (pFecales > pTotales) {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
-            }           
-            
-           analisis.setFecha(fecha);
-           analisis.setLevadura(levadura);
-           analisis.setMos(mos);
-           analisis.setPoliformosTotales(pTotales);
-           analisis.setPoliformosFecales(pFecales);
-           analisis.setPh(ph);
-           
-           if(produccion instanceof ProduccionYogur){
-            analisis.setProduccion(produccion);            
-           }else{throw new Exception("La produccion no existe en el sistema");}
+            }
+
+            analisis.setFecha(fecha);
+            analisis.setLevadura(levadura);
+            analisis.setMos(mos);
+            analisis.setPoliformosTotales(pTotales);
+            analisis.setPoliformosFecales(pFecales);
+            analisis.setPh(ph);
+
+            if (produccion instanceof ProduccionYogur) {
+                analisis.setProduccion(produccion);
+            } else {
+                throw new Exception("La produccion no existe en el sistema");
+            }
 
             boolean modificar = controlador.modificarAnalisisYogur(analisis);
-            if(modificar){
+            if (modificar) {
                 JOptionPane.showMessageDialog(null, "Analisis modificado correctamente.");
                 limpiarFormulario();
                 listar();
-            } 
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -735,23 +740,23 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablaProduccionesMouseClicked
 
     private void tablaAnalisisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAnalisisMouseClicked
-        int fila = tablaAnalisis.rowAtPoint(evt.getPoint());       
+        int fila = tablaAnalisis.rowAtPoint(evt.getPoint());
         txtId.setText(tablaAnalisis.getValueAt(fila, 0).toString());
-        txtEncargado.setText(tablaAnalisis.getValueAt(fila, 1).toString());  
-        txtFecha.setText(tablaAnalisis.getValueAt(fila,2).toString());
+        txtEncargado.setText(tablaAnalisis.getValueAt(fila, 1).toString());
+        txtFecha.setText(tablaAnalisis.getValueAt(fila, 2).toString());
         txtLevadura.setText(tablaAnalisis.getValueAt(fila, 3).toString());
-        txtMos.setText(tablaAnalisis.getValueAt(fila,4).toString());
+        txtMos.setText(tablaAnalisis.getValueAt(fila, 4).toString());
         txtPTotales.setText(tablaAnalisis.getValueAt(fila, 5).toString());
-        txtPFecales.setText(tablaAnalisis.getValueAt(fila,6).toString());
+        txtPFecales.setText(tablaAnalisis.getValueAt(fila, 6).toString());
         txtPh.setText(tablaAnalisis.getValueAt(fila, 7).toString());
         int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 8).toString());
         ProduccionYogur produccion = controlador.buscarProduccionYogur(id);
-        if(produccion instanceof ProduccionYogur){
+        if (produccion instanceof ProduccionYogur) {
             txtIdProduccion.setText(tablaAnalisis.getValueAt(fila, 8).toString());
             txtCodigoInterno.setText(produccion.getCodInterno());
             txtFechaProduccion.setText(produccion.getFecha());
-        }        
-        btnBuscar.doClick();    
+        }
+        btnBuscar.doClick();
     }//GEN-LAST:event_tablaAnalisisMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -759,7 +764,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             encargado = buscarEncargado();
             txtEncargado.setText(encargado.getInfoCompleta());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

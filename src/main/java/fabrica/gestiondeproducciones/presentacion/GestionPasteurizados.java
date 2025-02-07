@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -14,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class GestionPasteurizados extends javax.swing.JInternalFrame {
 
     Utilidades utilidad = new Utilidades();
@@ -23,7 +21,6 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloIngresos = new DefaultTableModel();
     private TableRowSorter<TableModel> filtroTabla;
-
 
     /**
      * Creates new form GestionPasteurizados
@@ -37,39 +34,37 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         agregarFiltros(txtBuscar, filtroTabla);
 
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
-
-
-    private void listar(){
+    private void listar() {
         limpiarTabla();
         listarIngresos();
         List<LechePasteurizada> lista = controlador.listarPasteurizados();
         modelo = (DefaultTableModel) tablaPasteurizados.getModel();
         Object[] objeto = new Object[7];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getTemperatura();
             objeto[2] = lista.get(i).getLitros();
-            objeto[3] = lista.get(i).getIngreso().getIdIngreso() + " - " +lista.get(i).getIngreso().getTambo().getPropietario()+ " - " +lista.get(i).getIngreso().getLitrosDisponibles()+ " L";
+            objeto[3] = lista.get(i).getIngreso().getIdIngreso() + " - " + lista.get(i).getIngreso().getTambo().getPropietario() + " - " + lista.get(i).getIngreso().getLitrosDisponibles() + " L";
             objeto[4] = lista.get(i).getDescremado();
             objeto[5] = lista.get(i).getCrema();
-            objeto[6]=lista.get(i).getCremaDisponible();
-            
+            objeto[6] = lista.get(i).getCremaDisponible();
+
             modelo.addRow(objeto);
         }
         tablaPasteurizados.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaPasteurizados.setRowSorter(filtroTabla);
     }
-        
-    private void listarIngresos(){     
+
+    private void listarIngresos() {
         limpiarTablaIngresos();
         List<IngresoLeche> lista = controlador.listarIngresos();
         modeloIngresos = (DefaultTableModel) tablaIngresos.getModel();
         Object[] objeto = new Object[5];
-        for(int i = 0; i < lista.size(); i++){
-            if(lista.get(i).getLitrosDisponibles() > 0){
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getLitrosDisponibles() > 0) {
                 objeto[0] = lista.get(i).getIdIngreso();
                 objeto[1] = lista.get(i).getTambo().getPropietario();
                 objeto[2] = lista.get(i).getLitrosDisponibles();
@@ -80,22 +75,22 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         }
         tablaIngresos.setModel(modeloIngresos);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void limpiarTablaIngresos(){
-        for(int i = 0; i < modeloIngresos.getRowCount(); i++){
+
+    private void limpiarTablaIngresos() {
+        for (int i = 0; i < modeloIngresos.getRowCount(); i++) {
             modeloIngresos.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         txtTemperatura.setText("");
         txtLitros.setText("");
@@ -103,7 +98,7 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         txtIngreso.setText("");
         txtCrema.setText("");
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -133,9 +128,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-    
+
     //</editor-fold>
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -533,114 +527,119 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try{
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
             float temperatura = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTemperatura.getText(), "Temperatura", false).toString());
-            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);           
+            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);
             String[] partes = txtIngreso.getText().split(" - ");
             IngresoLeche ingreso = controlador.buscarIngreso(Integer.parseInt(partes[0]));
             boolean esDescremada = chkDescremada.isSelected();
             int crema = 0;
-            if(esDescremada){
-               crema = utilidad.validarNumericos(txtCrema.getText(), "Crema", true);           
+            if (esDescremada) {
+                crema = utilidad.validarNumericos(txtCrema.getText(), "Crema", true);
             }
-                      
-            lecheP.setTemperatura(temperatura);   
+
+            lecheP.setTemperatura(temperatura);
             lecheP.setLitros(litros);
-            if(ingreso instanceof IngresoLeche){
-                if(litros > ingreso.getLitrosDisponibles()){
+            if (ingreso instanceof IngresoLeche) {
+                if (litros > ingreso.getLitrosDisponibles()) {
                     throw new Exception("El ingreso de leche seleccionado no tiene los suficientes litros para pasteurizar");
                 }
                 lecheP.setIngreso(ingreso);
-            }else{ throw new Exception("El ingreso seleccionado ya no esta disponible");}
+            } else {
+                throw new Exception("El ingreso seleccionado ya no esta disponible");
+            }
 
             lecheP.setDescremado(esDescremada);
             lecheP.setCrema(crema);
             lecheP.setCremaDisponible(crema);
-            
-if(!txtId.getText().equals(""))
-            {
+
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
             boolean alta = controlador.altaPasteurizado(lecheP);
-            if(alta){
-              JOptionPane.showMessageDialog(null, "Pasteurizado dado de alta.");
-              actualizarLitros(ingreso, litros);
-              limpiarFormulario();
-              listar();
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Pasteurizado dado de alta.");
+                actualizarLitros(ingreso, litros);
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaPasteurizado(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Pasteurizado dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
-            int id= Integer.parseInt(txtId.getText());
+        try {
+            int id = Integer.parseInt(txtId.getText());
             float temperatura = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTemperatura.getText(), "Temperatura", false).toString());
-            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);           
+            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);
             String[] partes = txtIngreso.getText().split(" - ");
             IngresoLeche ingreso = controlador.buscarIngreso(Integer.parseInt(partes[0]));
             boolean esDescremada = chkDescremada.isSelected();
-            int crema = utilidad.validarNumericos(txtLitros.getText(),"Cant Crema", false);
-            if(esDescremada){
-               crema = utilidad.validarNumericos(txtCrema.getText(), "Crema", true);           
+            int crema = utilidad.validarNumericos(txtLitros.getText(), "Cant Crema", false);
+            if (esDescremada) {
+                crema = utilidad.validarNumericos(txtCrema.getText(), "Crema", true);
             }
-                 
-            lecheP.setTemperatura(temperatura);   
+
+            lecheP.setTemperatura(temperatura);
             lecheP.setLitros(litros);
-            if(ingreso instanceof IngresoLeche){                
+            if (ingreso instanceof IngresoLeche) {
                 lecheP.setIngreso(ingreso);
-            }else{ throw new Exception("El ingreso seleccionado ya no esta disponible");}
-            
-            int diferencia;
-            LechePasteurizada p= new LechePasteurizada();
-            Controlador c= new Controlador();
-            p=c.buscarPasteurizado(id);
-            int actual=p.getCrema();
-            if(p.getCrema()<=crema){
-                diferencia=crema-actual;
-                lecheP.setCremaDisponible(p.getCrema()+diferencia);
-               
+            } else {
+                throw new Exception("El ingreso seleccionado ya no esta disponible");
             }
-            if(p.getCrema()>crema){
-                diferencia=actual-crema;
-                if(diferencia<=p.getCremaDisponible()){
-                lecheP.setCremaDisponible(p.getCrema()-diferencia);
-                   
-                }
-                else
-                {
+
+            int diferencia;
+            LechePasteurizada p = new LechePasteurizada();
+            Controlador c = new Controlador();
+            p = c.buscarPasteurizado(id);
+            int actual = p.getCrema();
+            if (p.getCrema() <= crema) {
+                diferencia = crema - actual;
+                lecheP.setCremaDisponible(p.getCrema() + diferencia);
+
+            }
+            if (p.getCrema() > crema) {
+                diferencia = actual - crema;
+                if (diferencia <= p.getCremaDisponible()) {
+                    lecheP.setCremaDisponible(p.getCrema() - diferencia);
+
+                } else {
                     throw new Exception("Error Al Establecer Crema disponible, porfavor Verifique los valores o las producciones"
                             + "en las cuales utilizo la Crema");
                 }
             }
-            
+
             lecheP.setDescremado(esDescremada);
             lecheP.setCrema(crema);
             lecheP.setId(id);
 
             boolean modificar = controlador.modificarPasteurizado(lecheP);
-            if(modificar){
+            if (modificar) {
                 JOptionPane.showMessageDialog(null, "Pasteurizado modificado correctamente.");
                 limpiarFormulario();
                 listar();
-            } 
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -651,13 +650,13 @@ if(!txtId.getText().equals(""))
         txtLitros.setText(tablaPasteurizados.getValueAt(fila, 2).toString());
         txtLitros.setEditable(false);
         txtIngreso.setText(tablaPasteurizados.getValueAt(fila, 3).toString());
-        boolean checked = (boolean) tablaPasteurizados.getValueAt(fila, 4);       
+        boolean checked = (boolean) tablaPasteurizados.getValueAt(fila, 4);
         chkDescremada.setSelected(checked);
-        if(checked){
-           lblCrema.setVisible(true);
-           txtCrema.setVisible(true);
+        if (checked) {
+            lblCrema.setVisible(true);
+            txtCrema.setVisible(true);
         }
-        txtCrema.setText(tablaPasteurizados.getValueAt(fila, 5).toString()); 
+        txtCrema.setText(tablaPasteurizados.getValueAt(fila, 5).toString());
         txtCremaDisponible.setText(tablaPasteurizados.getValueAt(fila, 6).toString());
     }//GEN-LAST:event_tablaPasteurizadosMouseClicked
 
@@ -666,7 +665,7 @@ if(!txtId.getText().equals(""))
         String id = tablaIngresos.getValueAt(fila, 0).toString();
         String tambo = tablaIngresos.getValueAt(fila, 1).toString();
         String litros = tablaIngresos.getValueAt(fila, 2).toString() + " L ";
-        txtIngreso.setText(id + " - " +tambo +" - "+ litros);
+        txtIngreso.setText(id + " - " + tambo + " - " + litros);
     }//GEN-LAST:event_tablaIngresosMouseClicked
 
     private void chkDescremadaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkDescremadaStateChanged
@@ -674,21 +673,21 @@ if(!txtId.getText().equals(""))
     }//GEN-LAST:event_chkDescremadaStateChanged
 
     private void chkDescremadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkDescremadaMouseClicked
-        if(chkDescremada.isSelected()){
-           lblCrema.setVisible(true);
-           txtCrema.setVisible(true);
-       }else{
+        if (chkDescremada.isSelected()) {
+            lblCrema.setVisible(true);
+            txtCrema.setVisible(true);
+        } else {
             lblCrema.setVisible(false);
             txtCrema.setVisible(false);
-       }
+        }
     }//GEN-LAST:event_chkDescremadaMouseClicked
 
-    private void actualizarLitros(IngresoLeche ingreso, int litrosUtilizados){
-        int litrosDisponibles = ingreso.getLitrosDisponibles();       
+    private void actualizarLitros(IngresoLeche ingreso, int litrosUtilizados) {
+        int litrosDisponibles = ingreso.getLitrosDisponibles();
         ingreso.setLitrosDisponibles(litrosDisponibles - litrosUtilizados);
         controlador.modificarIngreso(ingreso);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlta;
     private javax.swing.JButton btnBaja;

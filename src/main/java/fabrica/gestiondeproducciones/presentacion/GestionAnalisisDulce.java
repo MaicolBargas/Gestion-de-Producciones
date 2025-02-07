@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.AnalisisDulce;
@@ -18,9 +17,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
-    
+
     Utilidades utilidad = new Utilidades();
     AnalisisDulce analisis = new AnalisisDulce();
     Controlador controlador = new Controlador();
@@ -29,7 +27,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     String tipoAnalisis = "dulce";
     Empleado encargado = new Empleado();
     private TableRowSorter<TableModel> filtroTabla;
- 
+
     /**
      * Creates new form GestionAnalisisDulce
      */
@@ -41,17 +39,16 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
-    
-        private void listar(){
+    private void listar() {
         limpiarTabla();
         listarProducciones();
         cargarFecha();
         List<AnalisisDulce> lista = controlador.listarAnalisisDulce();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
         Object[] objeto = new Object[11];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
-            if(lista.get(i).getEncargado() instanceof Empleado){
+            if (lista.get(i).getEncargado() instanceof Empleado) {
                 objeto[1] = lista.get(i).getEncargado().getInfoCompleta();
             }
             objeto[2] = lista.get(i).getFecha();
@@ -70,13 +67,13 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
     }
-        
-    private void listarProducciones(){     
+
+    private void listarProducciones() {
         limpiarTablaProducciones();
         List<ProduccionDulce> lista = controlador.listarDulcePendienteAnalizar();
         modeloProducciones = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto = new Object[4];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getIdProduccion();
             objeto[1] = lista.get(i).getCodInterno();
             objeto[2] = lista.get(i).getFecha();
@@ -84,29 +81,29 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         }
         tablaProducciones.setModel(modeloProducciones);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void limpiarTablaProducciones(){
-        for(int i = 0; i < modeloProducciones.getRowCount(); i++){
+
+    private void limpiarTablaProducciones() {
+        for (int i = 0; i < modeloProducciones.getRowCount(); i++) {
             modeloProducciones.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFecha.setText(fecha);
     }
-        
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         txtEncargado.setText("");
         txtFecha.setText("");
@@ -119,34 +116,33 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         txtPh.setText("");
         txtIdProduccion.setText("");
         txtFechaProduccion.setText("");
-        txtCodigoInterno.setText("");        
+        txtCodigoInterno.setText("");
     }
-    
-    private Empleado buscarEncargado() throws Exception{
-        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
-        String[] nombreCompleto = valor.split(" ");        
+
+    private Empleado buscarEncargado() throws Exception {
+        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);
+        String[] nombreCompleto = valor.split(" ");
         List<Empleado> empleados = controlador.listarEmpleados();
-        
-        for(Empleado empleado : empleados){
-            try{
+
+        for (Empleado empleado : empleados) {
+            try {
                 Integer ci = Integer.valueOf(valor);
-                if(ci.equals(empleado.getCi())){
+                if (ci.equals(empleado.getCi())) {
                     return empleado;
                 }
-            }catch(NumberFormatException e){
-                
-            }                                    
-            if(empleado.getNombre().equalsIgnoreCase(valor) ||
-               empleado.getApellido().equalsIgnoreCase(valor) ||
-               Arrays.asList(nombreCompleto).contains(empleado.getNombre())||
-               Arrays.asList(nombreCompleto).contains(empleado.getApellido())
-               ){
-                return empleado;              
-            }                         
+            } catch (NumberFormatException e) {
+
+            }
+            if (empleado.getNombre().equalsIgnoreCase(valor)
+                    || empleado.getApellido().equalsIgnoreCase(valor)
+                    || Arrays.asList(nombreCompleto).contains(empleado.getNombre())
+                    || Arrays.asList(nombreCompleto).contains(empleado.getApellido())) {
+                return empleado;
+            }
         }
         throw new Exception("No existe un usuario con estos datos");
     }
-        
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -175,9 +171,9 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             rf = RowFilter.regexFilter("(?i)" + campo.getText());
         }
         fila.setRowFilter(rf);
-    }   
+    }
     // </editor-fold>
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -245,11 +241,11 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Levadura:");
 
-        jLabel5.setText("Mos:");
+        jLabel5.setText("Mohos:");
 
-        jLabel6.setText("Poliformos totales:");
+        jLabel6.setText("Coliformes totales:");
 
-        jLabel7.setText("Poliformos fecales:");
+        jLabel7.setText("Coliformes fecales:");
 
         jLabel8.setText("Grasa:");
 
@@ -550,7 +546,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "Grasa", "Humedad", "PH", "Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes totales", "Coliformes fecales", "Grasa", "Humedad", "PH", "Produccion"
             }
         ) {
             Class[] types = new Class [] {
@@ -632,132 +628,140 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try{
+        try {
+            String id = txtId.getText().trim();
+
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+
             String fecha = utilidad.controlarFechas(txtFecha.getText());
             int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
-            float ph=utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
-            ProduccionDulce produccion = controlador.buscarProduccionDulce(idProduccion); 
-            
-            try{
+            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            ProduccionDulce produccion = controlador.buscarProduccionDulce(idProduccion);
+
+            try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     analisis.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un empleado habilitado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
-            
-            if(pFecales > pTotales){
+
+            if (pFecales > pTotales) {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
-            
-            if(!txtId.getText().equals(""))
-            {
+
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
-            
-           analisis.setTipo(tipoAnalisis);
-           analisis.setFecha(fecha);
-           analisis.setLevadura(levadura);
-           analisis.setMos(mos);
-           analisis.setPoliformosTotales(pTotales);
-           analisis.setPoliformosFecales(pFecales);
-           analisis.setGrasa(grasa);
-           analisis.setHumedad(humedad);
-           analisis.setPh(ph);
-           
-           if(produccion instanceof ProduccionDulce){
-            analisis.setProduccion(produccion);            
-           }else{throw new Exception("La produccion no existe en el sistema");}
-          
+
+            analisis.setTipo(tipoAnalisis);
+            analisis.setFecha(fecha);
+            analisis.setLevadura(levadura);
+            analisis.setMos(mos);
+            analisis.setPoliformosTotales(pTotales);
+            analisis.setPoliformosFecales(pFecales);
+            analisis.setGrasa(grasa);
+            analisis.setHumedad(humedad);
+            analisis.setPh(ph);
+
+            if (produccion instanceof ProduccionDulce) {
+                analisis.setProduccion(produccion);
+            } else {
+                throw new Exception("La produccion no existe en el sistema");
+            }
 
             boolean alta = controlador.altaAnalisisDulce(analisis);
-            if(alta){
-              JOptionPane.showMessageDialog(null, "Analisis dado de alta.");
-              limpiarFormulario();
-              listar();
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Analisis dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaAnalisis(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Analisis dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
             int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
             int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
             int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
-            float ph=utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
-            ProduccionDulce produccion = controlador.buscarProduccionDulce(idProduccion); 
-            
+            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            ProduccionDulce produccion = controlador.buscarProduccionDulce(idProduccion);
+
             analisis = controlador.buscarAnalisisDulce(id);
-            
-            try{
+
+            try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     analisis.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un empleado habilitado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
-            
-            if(pFecales > pTotales){
+
+            if (pFecales > pTotales) {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
-            }           
-            
-           analisis.setFecha(fecha);
-           analisis.setLevadura(levadura);
-           analisis.setMos(mos);
-           analisis.setPoliformosTotales(pTotales);
-           analisis.setPoliformosFecales(pFecales);
-           analisis.setGrasa(grasa);
-           analisis.setHumedad(humedad);
-           analisis.setPh(ph);
-           
-           if(produccion instanceof ProduccionDulce){
-            analisis.setProduccion(produccion);            
-           }else{throw new Exception("La produccion no existe en el sistema");}
+            }
+
+            analisis.setFecha(fecha);
+            analisis.setLevadura(levadura);
+            analisis.setMos(mos);
+            analisis.setPoliformosTotales(pTotales);
+            analisis.setPoliformosFecales(pFecales);
+            analisis.setGrasa(grasa);
+            analisis.setHumedad(humedad);
+            analisis.setPh(ph);
+
+            if (produccion instanceof ProduccionDulce) {
+                analisis.setProduccion(produccion);
+            } else {
+                throw new Exception("La produccion no existe en el sistema");
+            }
 
             boolean modificar = controlador.modificarAnalisisDulce(analisis);
-            if(modificar){
+            if (modificar) {
                 JOptionPane.showMessageDialog(null, "Analisis modificado correctamente.");
                 limpiarFormulario();
                 listar();
-            } 
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -766,7 +770,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             encargado = buscarEncargado();
             txtEncargado.setText(encargado.getInfoCompleta());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -778,25 +782,25 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablaProduccionesMouseClicked
 
     private void tablaAnalisisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAnalisisMouseClicked
-        int fila = tablaAnalisis.rowAtPoint(evt.getPoint());       
+        int fila = tablaAnalisis.rowAtPoint(evt.getPoint());
         txtId.setText(tablaAnalisis.getValueAt(fila, 0).toString());
-        txtEncargado.setText(tablaAnalisis.getValueAt(fila, 1).toString());  
-        txtFecha.setText(tablaAnalisis.getValueAt(fila,2).toString());
+        txtEncargado.setText(tablaAnalisis.getValueAt(fila, 1).toString());
+        txtFecha.setText(tablaAnalisis.getValueAt(fila, 2).toString());
         txtLevadura.setText(tablaAnalisis.getValueAt(fila, 3).toString());
-        txtMos.setText(tablaAnalisis.getValueAt(fila,4).toString());
+        txtMos.setText(tablaAnalisis.getValueAt(fila, 4).toString());
         txtPTotales.setText(tablaAnalisis.getValueAt(fila, 5).toString());
-        txtPFecales.setText(tablaAnalisis.getValueAt(fila,6).toString());
+        txtPFecales.setText(tablaAnalisis.getValueAt(fila, 6).toString());
         txtGrasa.setText(tablaAnalisis.getValueAt(fila, 7).toString());
         txtHumedad.setText(tablaAnalisis.getValueAt(fila, 8).toString());
         txtPh.setText(tablaAnalisis.getValueAt(fila, 9).toString());
         int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 10).toString());
         ProduccionDulce produccion = controlador.buscarProduccionDulce(id);
-        if(produccion instanceof ProduccionDulce){
+        if (produccion instanceof ProduccionDulce) {
             txtIdProduccion.setText(tablaAnalisis.getValueAt(fila, 10).toString());
             txtCodigoInterno.setText(produccion.getCodInterno());
             txtFechaProduccion.setText(produccion.getFecha());
-        }        
-        btnBuscar.doClick();    
+        }
+        btnBuscar.doClick();
     }//GEN-LAST:event_tablaAnalisisMouseClicked
 
     private void txtPhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhActionPerformed

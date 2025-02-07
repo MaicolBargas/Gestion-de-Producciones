@@ -253,9 +253,9 @@
                             <Column editable="false" title="Encargado" type="java.lang.String"/>
                             <Column editable="false" title="Fecha" type="java.lang.String"/>
                             <Column editable="false" title="Levadura" type="java.lang.Integer"/>
-                            <Column editable="false" title="Mos" type="java.lang.Integer"/>
-                            <Column editable="false" title="Poliformos totales" type="java.lang.Integer"/>
-                            <Column editable="false" title="Poliformos fecales" type="java.lang.Integer"/>
+                            <Column editable="false" title="Mohos" type="java.lang.Integer"/>
+                            <Column editable="false" title="Coliformes totales" type="java.lang.Integer"/>
+                            <Column editable="false" title="Coliformes fecales" type="java.lang.Integer"/>
                             <Column editable="false" title="Grasa" type="java.lang.Integer"/>
                             <Column editable="false" title="Proteina" type="java.lang.Integer"/>
                             <Column editable="false" title="Agua" type="java.lang.Integer"/>

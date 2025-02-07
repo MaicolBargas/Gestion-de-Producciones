@@ -43,9 +43,8 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
     int idProduccionObtenido;
-    
-    
-    private TableRowSorter<TableModel> filtroTabla;    
+
+    private TableRowSorter<TableModel> filtroTabla;
 
     public GestionProduccionQueso() {
         initComponents();
@@ -58,14 +57,14 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
         agregarFiltros(txtBuscar, filtroTabla);
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
     private void listar() {
 
         limpiarTabla();
         cargarFecha();
         List<ProduccionQueso> lista = controlador.listarProduccionesQueso();
-  
+
         modelo = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto = new Object[5];
         for (int i = 0; i < lista.size(); i++) {
@@ -92,20 +91,21 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
         List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
         for (LechePasteurizada t : leche) {
             cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Litros: "
-                    + "" + t.getLitros()+"l");
+                    + "" + t.getLitros() + "l");
         }
     }
-private void listarLecheModificar(LechePasteurizada lechePast ) {
+
+    private void listarLecheModificar(LechePasteurizada lechePast) {
         cbxLeche.removeAllItems();
         List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
         leche.add(lechePast);
         for (LechePasteurizada t : leche) {
             cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Litros: "
-                    + "" + t.getLitros()+"-L");
+                    + "" + t.getLitros() + "-L");
         }
     }
 
-    private void listarProductos() {  
+    private void listarProductos() {
         cbxProducto.addItem("1 - Queso Colonia");
         cbxProducto.addItem("2 - Queso Cuartirolo");
         cbxProducto.addItem("3 - Queso Dambo");
@@ -152,7 +152,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
     private void listarEmpleados(List<Empleado> lista) {
         limpiarTablaEmpleadosTrabajaron();
-        
+
         modeloEmpleadosTrabajaron = (DefaultTableModel) tablaEmpleadosTrabajaron.getModel();
         Object[] objeto = new Object[3];
         for (int i = 0; i < lista.size(); i++) {
@@ -206,7 +206,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             objeto[1] = lista.get(i).getInsumo().getNombre();
             objeto[2] = lista.get(i).getCantidad();
             objeto[3] = lista.get(i).getInsumo().getUnidad();
-            
+
             modeloInsumosUtilizados.addRow(objeto);
         }
         tablaInsumosAgregados.setModel(modeloInsumosUtilizados);
@@ -218,13 +218,13 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             i = - 1;
         }
     }
-    
-    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
-        
+
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox) {
+
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             String item = comboBox.getItemAt(i).toString();
             String[] parts = item.split(" - ");
-        
+
             if (parts[0].trim().equals(idBuscado)) {
                 comboBox.setSelectedIndex(i);
                 break;
@@ -232,9 +232,8 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         }
     }
 
-    
     private void limpiarFormulario() {
-    
+
         this.txtCantidadInsumo.setText("");
         this.txtCodigoInterno.setText("");
         this.txtEncargado.setText("");
@@ -305,12 +304,8 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         }
         fila.setRowFilter(rf);
     }
-    
-   
-    
-   
-    // </editor-fold>  
 
+    // </editor-fold>  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1361,16 +1356,12 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
         limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        
-    }                                            
-
-    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {                                        
-
-    }                                       
-
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
             String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
@@ -1379,22 +1370,22 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Q" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtTempCuajoFinal.getText() + txtNroTacho.getText();
-            int kgObtenidos=utilidad.validarNumericos(txtObtenidos.getText(),"Kg Obtenidos",false);
+            int kgObtenidos = utilidad.validarNumericos(txtObtenidos.getText(), "Kg Obtenidos", false);
 
-            String tiempoReposoFermento=utilidad.validarHora(txtTiempoReposoFermento.getText(),"Tiempo de Reposo del Fermento");
-            float tempPastQueso=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false).toString());
-            float tempReposoFermento=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false).toString());
-            String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido",false);
-            String tiempoCuajado=utilidad.validarHora(txtTiempoCuajado.getText(),"Tiempo de Cuajado");
-            float tempAlCuajar=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false).toString());
-            int cantCuajoObtenido=utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(),"Cantidad de Cuajo Obtenido",false);
-            String tipoGrano= utilidad.sanitizarCampos(txtTipoGrano.getText(),"Tipo de Grano Obtenido",false);
-            int sueroObtenido=utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido",false);
-            String tiempoAgregadoAgua=utilidad.validarHora(txtTiempoAgregadoAgua.getText(),"Tiempo de Agregado de Agua");
-            float tempAgua=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtxTempAgua.getText(),"Temperatura de Agua", false).toString());
-            float tempCuajoFinal=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(),"Temperatura de cuajo Final",false).toString());
-            int unidadesObtenidas= utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            float acidesFermento= utilidad.validarPh(utilidad.validarNumericosFloat(txtAcidesFermento.getText(),"Acides de Fermento",false).toString());
+            String tiempoReposoFermento = utilidad.validarHora(txtTiempoReposoFermento.getText(), "Tiempo de Reposo del Fermento");
+            float tempPastQueso = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso", false).toString());
+            float tempReposoFermento = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false).toString());
+            String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido", false);
+            String tiempoCuajado = utilidad.validarHora(txtTiempoCuajado.getText(), "Tiempo de Cuajado");
+            float tempAlCuajar = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAlCuajar.getText(), "Temperatura al Cuajar", false).toString());
+            int cantCuajoObtenido = utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(), "Cantidad de Cuajo Obtenido", false);
+            String tipoGrano = utilidad.sanitizarCampos(txtTipoGrano.getText(), "Tipo de Grano Obtenido", false);
+            int sueroObtenido = utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido", false);
+            String tiempoAgregadoAgua = utilidad.validarHora(txtTiempoAgregadoAgua.getText(), "Tiempo de Agregado de Agua");
+            float tempAgua = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtxTempAgua.getText(), "Temperatura de Agua", false).toString());
+            float tempCuajoFinal = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(), "Temperatura de cuajo Final", false).toString());
+            int unidadesObtenidas = utilidad.validarNumericos(txtUnidadesObtenidas.getText(), "Unidades Obtenidas", false);
+            float acidesFermento = utilidad.validarPh(utilidad.validarNumericosFloat(txtAcidesFermento.getText(), "Acides de Fermento", false).toString());
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
 
@@ -1412,7 +1403,7 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
 
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            int litros =  lechep.getLitros();
+            int litros = lechep.getLitros();
 
             if (lechep instanceof LechePasteurizada) {
 
@@ -1421,19 +1412,17 @@ private void listarLecheModificar(LechePasteurizada lechePast ) {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
 
-            if(acidesFermento<14&&acidesFermento>0){
-                System.out.println("ACIDES  "+acidesFermento);
+            if (acidesFermento < 14 && acidesFermento > 0) {
+                System.out.println("ACIDES  " + acidesFermento);
                 produccion.setAcidesFermento(acidesFermento);
-            }
-            else{
+            } else {
                 throw new Exception("El valor de acides del fermento debe de estar contenido entre 0.0 y 14.0");
             }
 
-            if(kgObtenidos>(litros/4)){
+            if (kgObtenidos > (litros / 4)) {
                 throw new Exception("Los Kg obtenidos no son coherentes respecto a la cantidad de materia prima utilizada(Litros de Leche)");
             }
-if(!txtId.getText().equals(""))
-            {
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
             int rendimiento = Math.round((kgObtenidos / (litros)) * 100); // Usa división en coma flotante
@@ -1630,20 +1619,20 @@ if(!txtId.getText().equals(""))
     private void tablaProduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProduccionesMouseClicked
         int fila = tablaProducciones.rowAtPoint(evt.getPoint());
         int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
-        idProduccionObtenido=id;
+        idProduccionObtenido = id;
 
         ProduccionQueso prod = controlador.buscarProduccionQueso(id);
         txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
         txtCodigoInterno.setText(prod.getCodInterno());
         if (prod.getLechep() instanceof LechePasteurizada) {
             listarLecheModificar(prod.getLechep());
-            seleccionarEnComboBox(prod.getLechep().getId()+"",cbxLeche);
+            seleccionarEnComboBox(prod.getLechep().getId() + "", cbxLeche);
         }
         if (prod.getProducto() instanceof Producto) {
 
-            seleccionarEnComboBox(prod.getProducto().getId()+"",cbxProducto);
+            seleccionarEnComboBox(prod.getProducto().getId() + "", cbxProducto);
         }
-        txtIRendimiento.setText(""+prod.getRendimiento());
+        txtIRendimiento.setText("" + prod.getRendimiento());
         txtLitros.setText(prod.getLitros() + "");
 
         txtObtenidos.setText(prod.getKgLtsObt() + "");
@@ -1655,22 +1644,22 @@ if(!txtId.getText().equals(""))
 
         this.txtHoraFin.setText(prod.getHoraFin());
         this.txtHoraInicio.setText(prod.getHoraInicio());
-        this.txtNroTacho.setText(prod.getNroTacho()+"");
+        this.txtNroTacho.setText(prod.getNroTacho() + "");
         this.txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
-        this.txtTiempoReposoFermento.setText(""+prod.getTiempoReposoFermento());
-        this.txtTempReposoFermento.setText(prod.getTempReposoFermento()+"");
+        this.txtTiempoReposoFermento.setText("" + prod.getTiempoReposoFermento());
+        this.txtTempReposoFermento.setText(prod.getTempReposoFermento() + "");
         this.txtTipoCuajoObtenido.setText(prod.getTipoCuajoObtenido());
-        this.txtCantidadCuajoObtenido.setText(prod.getCantCuajoObtenido()+"");
-        this.txtTempPastQueso.setText(""+prod.getTempPastQueso());
-        this.txtTempAlCuajar.setText(prod.getTempAlCuajar()+"");
-        this.txtSueroObtenido.setText(""+prod.getLitrosSueroObtenidos());
-        this.txtTiempoAgregadoAgua.setText(""+prod.getTiempoAgregadoAgua());
-        this.txtxTempAgua.setText(""+prod.getTempAgua());
-        this.txtTempCuajoFinal.setText(""+prod.getTempCuajoFinal());
+        this.txtCantidadCuajoObtenido.setText(prod.getCantCuajoObtenido() + "");
+        this.txtTempPastQueso.setText("" + prod.getTempPastQueso());
+        this.txtTempAlCuajar.setText(prod.getTempAlCuajar() + "");
+        this.txtSueroObtenido.setText("" + prod.getLitrosSueroObtenidos());
+        this.txtTiempoAgregadoAgua.setText("" + prod.getTiempoAgregadoAgua());
+        this.txtxTempAgua.setText("" + prod.getTempAgua());
+        this.txtTempCuajoFinal.setText("" + prod.getTempCuajoFinal());
         this.txtTiempoCuajado.setText(prod.getTiempoCuajado());
         this.txtTipoGrano.setText(prod.getTipoDeGrano());
-        this.txtUnidadesObtenidas.setText(prod.getUnidadesObtenidas()+"");
-        this.txtAcidesFermento.setText(prod.getAcidesFermento()+"");
+        this.txtUnidadesObtenidas.setText(prod.getUnidadesObtenidas() + "");
+        this.txtAcidesFermento.setText(prod.getAcidesFermento() + "");
         listaEmpleados = prod.getListaEmpleados();
         listaInsumosLinea = prod.getListaInsumos();
 
@@ -1683,7 +1672,7 @@ if(!txtId.getText().equals(""))
     }//GEN-LAST:event_txtCantidadCuajoObtenidoActionPerformed
 
     private void btnBaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaja1ActionPerformed
-       try {
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaProduccion(id, "produccion_queso");
             if (baja) {
@@ -1694,12 +1683,12 @@ if(!txtId.getText().equals(""))
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-     
+
     }//GEN-LAST:event_btnBaja1ActionPerformed
 
     private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-       try{
-            int id= Integer.parseInt(txtId.getText());
+        try {
+            int id = Integer.parseInt(txtId.getText());
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
             String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
@@ -1708,25 +1697,25 @@ if(!txtId.getText().equals(""))
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Q" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtTempCuajoFinal.getText() + txtNroTacho.getText();
-            int kgObtenidos=utilidad.validarNumericos(txtObtenidos.getText(),"Kg Obtenidos",false);
+            int kgObtenidos = utilidad.validarNumericos(txtObtenidos.getText(), "Kg Obtenidos", false);
 
-            String tiempoReposoFermento=utilidad.validarHora(txtTiempoReposoFermento.getText(),"Tiempo de Reposo del Fermento");
-            float tempPastQueso=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso",false).toString());
-            float tempReposoFermento= utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false).toString());
-            String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido",false);
-            String tiempoCuajado=utilidad.validarHora(txtTiempoCuajado.getText(),"Tiempo de Cuajado");
-            float tempAlCuajar=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAlCuajar.getText(),"Temperatura al Cuajar", false).toString());
-            int cantCuajoObtenido=utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(),"Cantidad de Cuajo Obtenido",false);
-            String tipoGrano= utilidad.sanitizarCampos(txtTipoGrano.getText(),"Tipo de Grano Obtenido",false);
-            int sueroObtenido=utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido",false);
-            String tiempoAgregadoAgua=utilidad.validarHora(txtTiempoAgregadoAgua.getText(),"Tiempo de Agregado de Agua");
-            float tempAgua=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtxTempAgua.getText(),"Temperatura de Agua", false).toString());
-            float tempCuajoFinal=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(),"Temperatura de Cuajo Final",false).toString());
-            int unidadesObtenidas= utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            float acidesFermento= utilidad.validarPh(utilidad.validarNumericosFloat(txtAcidesFermento.getText(),"Acides de Fermento",false).toString());
+            String tiempoReposoFermento = utilidad.validarHora(txtTiempoReposoFermento.getText(), "Tiempo de Reposo del Fermento");
+            float tempPastQueso = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempPastQueso.getText(), "Temperatura de Pasteurizado del queso", false).toString());
+            float tempReposoFermento = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempReposoFermento.getText(), "Temperatura Reposo Fermento", false).toString());
+            String tipoCuajo = utilidad.sanitizarCampos(txtTipoCuajoObtenido.getText(), "Tipo de Cuajo Obtenido", false);
+            String tiempoCuajado = utilidad.validarHora(txtTiempoCuajado.getText(), "Tiempo de Cuajado");
+            float tempAlCuajar = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAlCuajar.getText(), "Temperatura al Cuajar", false).toString());
+            int cantCuajoObtenido = utilidad.validarNumericos(txtCantidadCuajoObtenido.getText(), "Cantidad de Cuajo Obtenido", false);
+            String tipoGrano = utilidad.sanitizarCampos(txtTipoGrano.getText(), "Tipo de Grano Obtenido", false);
+            int sueroObtenido = utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido", false);
+            String tiempoAgregadoAgua = utilidad.validarHora(txtTiempoAgregadoAgua.getText(), "Tiempo de Agregado de Agua");
+            float tempAgua = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtxTempAgua.getText(), "Temperatura de Agua", false).toString());
+            float tempCuajoFinal = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(), "Temperatura de Cuajo Final", false).toString());
+            int unidadesObtenidas = utilidad.validarNumericos(txtUnidadesObtenidas.getText(), "Unidades Obtenidas", false);
+            float acidesFermento = utilidad.validarPh(utilidad.validarNumericosFloat(txtAcidesFermento.getText(), "Acides de Fermento", false).toString());
 
-            Controlador c= new Controlador();
-            ProduccionQueso produccion=c.buscarProduccionQueso(id);
+            Controlador c = new Controlador();
+            ProduccionQueso produccion = c.buscarProduccionQueso(id);
 
             try {
                 Empleado empleado = controlador.buscarEmpleado(idEncargado);
@@ -1740,11 +1729,9 @@ if(!txtId.getText().equals(""))
                 throw new Exception("Debe buscar un encargado valido primero, por favor verifique");
             }
 
-            
-            
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            int litros =  lechep.getLitros();
+            int litros = lechep.getLitros();
 
             if (lechep instanceof LechePasteurizada) {
 
@@ -1752,84 +1739,83 @@ if(!txtId.getText().equals(""))
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-            if(acidesFermento<14&&acidesFermento>0){
-                System.out.println("ACIDES  "+acidesFermento);
+            if (acidesFermento < 14 && acidesFermento > 0) {
+                System.out.println("ACIDES  " + acidesFermento);
                 produccion.setAcidesFermento(acidesFermento);
-                   
-                    produccion.setAcidesFermento(acidesFermento);
-            }
-            else{
+
+                produccion.setAcidesFermento(acidesFermento);
+            } else {
                 throw new Exception("El valor de acides del fermento debe de estar contenido entre 0.0 y 14.0");
             }
 
-            if(kgObtenidos>litros){
+            if (kgObtenidos > litros) {
                 throw new Exception("Los Kg obtenidos no pueden ser mayor a la cantidad de materia prima utilizada(Litros de Leche)");
             }
 
-            
             modeloInsumosUtilizados = (DefaultTableModel) tablaInsumosAgregados.getModel();
-        Object[] objeto = new Object[4];
-        for (int i = 0; i < tablaInsumosAgregados.getRowCount(); i++) {
-            
-            objeto[0] = tablaInsumosAgregados.getValueAt(i,0);
-            objeto[1] = tablaInsumosAgregados.getValueAt(i,1);
-            objeto[2]=tablaInsumosAgregados.getValueAt(i,2);
-            objeto[3]=tablaInsumosAgregados.getValueAt(i,3);
-           
-            listaInsumosLinea.get(i).setCantidad((int)objeto[2]);
+            Object[] objeto = new Object[4];
+            for (int i = 0; i < tablaInsumosAgregados.getRowCount(); i++) {
 
-            int rendimiento = Math.round((kgObtenidos / (litros)) * 100);
-            String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
-            Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
-            produccion.setCodInterno(CodigoInterno);
-            produccion.setListaInsumos(listaInsumosLinea);
-            produccion.setListaEmpleados(listaEmpleados);
-            produccion.setLechep(lechep);
-            produccion.setProducto(producto);
-            produccion.setRendimiento(rendimiento);
-            produccion.setKgLtsObt(kgObtenidos);
-            produccion.setFecha(fecha);
-            produccion.setHoraInicio(horaInicio);
-            produccion.setHoraFin(horaFin);
-            produccion.setTiempoTrabajado(TiempoTrabajado);
-            produccion.setNroTacho(nroTacho);
+                objeto[0] = tablaInsumosAgregados.getValueAt(i, 0);
+                objeto[1] = tablaInsumosAgregados.getValueAt(i, 1);
+                objeto[2] = tablaInsumosAgregados.getValueAt(i, 2);
+                objeto[3] = tablaInsumosAgregados.getValueAt(i, 3);
 
-            produccion.setTempPastQueso(tempPastQueso);
-            produccion.setTiempoReposoFermento(tiempoReposoFermento);
-            produccion.setTempReposoFermento(tempReposoFermento);
-            produccion.setTipoCuajoObtenido(tipoCuajo);
-            produccion.setTiempoCuajado(tiempoCuajado);
-            produccion.setTempAlCuajar(tempAlCuajar);
-            produccion.setCantCuajoObtenido(cantCuajoObtenido);
-            produccion.setTipoDeGrano(tipoGrano);
-            produccion.setLitrosSueroObtenidos(sueroObtenido);
-            produccion.setTiempoAgregadoAgua(tiempoAgregadoAgua);
-            produccion.setTempAgua(tempAgua);
-            produccion.setTempCuajoFinal(tempCuajoFinal);
-            produccion.setUnidadesObtenidas(unidadesObtenidas);
-            produccion.setAcidesFermento(acidesFermento);
+                listaInsumosLinea.get(i).setCantidad((int) objeto[2]);
 
-            boolean modificar = controlador.modificarProduccionQueso(produccion);
-            if (modificar) {
+                int rendimiento = Math.round((kgObtenidos / (litros)) * 100);
+                String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
+                Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
+                produccion.setCodInterno(CodigoInterno);
+                produccion.setListaInsumos(listaInsumosLinea);
+                produccion.setListaEmpleados(listaEmpleados);
+                produccion.setLechep(lechep);
+                produccion.setProducto(producto);
+                produccion.setRendimiento(rendimiento);
+                produccion.setKgLtsObt(kgObtenidos);
+                produccion.setFecha(fecha);
+                produccion.setHoraInicio(horaInicio);
+                produccion.setHoraFin(horaFin);
+                produccion.setTiempoTrabajado(TiempoTrabajado);
+                produccion.setNroTacho(nroTacho);
 
-                JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
+                produccion.setTempPastQueso(tempPastQueso);
+                produccion.setTiempoReposoFermento(tiempoReposoFermento);
+                produccion.setTempReposoFermento(tempReposoFermento);
+                produccion.setTipoCuajoObtenido(tipoCuajo);
+                produccion.setTiempoCuajado(tiempoCuajado);
+                produccion.setTempAlCuajar(tempAlCuajar);
+                produccion.setCantCuajoObtenido(cantCuajoObtenido);
+                produccion.setTipoDeGrano(tipoGrano);
+                produccion.setLitrosSueroObtenidos(sueroObtenido);
+                produccion.setTiempoAgregadoAgua(tiempoAgregadoAgua);
+                produccion.setTempAgua(tempAgua);
+                produccion.setTempCuajoFinal(tempCuajoFinal);
+                produccion.setUnidadesObtenidas(unidadesObtenidas);
+                produccion.setAcidesFermento(acidesFermento);
 
-                limpiarFormulario();
-                listar();
-                listarLeche();
+                boolean modificar = controlador.modificarProduccionQueso(produccion);
+                if (modificar) {
+
+                    JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
+
+                    limpiarFormulario();
+                    listar();
+                    listarLeche();
+                }
+
             }
-
-        } }catch (Exception ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
-   /* private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
+    /* private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         int litrosDisponibles = lecheP.getCremaDisponible();
         lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
         controlador.modificarPasteurizado(lecheP);
     }*/
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane PanelScroll;
     private javax.swing.JButton btnAgregarEmpleado;

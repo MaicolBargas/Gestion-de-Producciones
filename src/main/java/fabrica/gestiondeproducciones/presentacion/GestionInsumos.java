@@ -12,13 +12,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class GestionInsumos extends javax.swing.JInternalFrame {
+
     Utilidades utilidad = new Utilidades();
     Insumo insumo = new Insumo();
     Controlador controlador = new Controlador();
     DefaultTableModel modelo = new DefaultTableModel();
-    private TableRowSorter<TableModel> filtroTabla;      
+    private TableRowSorter<TableModel> filtroTabla;
+
     /**
      * Creates new form GestionInsumos
      */
@@ -26,16 +27,16 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         initComponents();
         listar();
         agregarFiltros(txtBuscar, filtroTabla);
-        
+
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
-    private void listar(){
+    private void listar() {
         limpiarTabla();
         List<Insumo> lista = controlador.listarInsumos();
         modelo = (DefaultTableModel) tablaInsumos.getModel();
         Object[] objeto = new Object[4];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getNombre();
             objeto[2] = lista.get(i).getDescripcion();
@@ -47,21 +48,21 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaInsumos.setRowSorter(filtroTabla);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
         cxbUnidad.setSelectedIndex(0);
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -91,9 +92,8 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-        
+
     //</editor-fold>
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -376,44 +376,47 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      try{
-          String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
-          String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
-          String unidad = utilidad.sanitizarCampos(cxbUnidad.getSelectedItem().toString(), "Descripcion", false);
-          insumo.setNombre(nombre);
-          insumo.setDescripcion(descripcion);
-          insumo.setUnidad(unidad);
-          if(!txtId.getText().equals(""))
-            {
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
+            String unidad = utilidad.sanitizarCampos(cxbUnidad.getSelectedItem().toString(), "Descripcion", false);
+            insumo.setNombre(nombre);
+            insumo.setDescripcion(descripcion);
+            insumo.setUnidad(unidad);
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
-          boolean alta = controlador.altaInsumo(insumo);
-          if(alta){
-            JOptionPane.showMessageDialog(null, "Insumo dado de alta.");
-            limpiarFormulario();
-            listar();
-          }
-      }catch(Exception e){
-        JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
+            boolean alta = controlador.altaInsumo(insumo);
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Insumo dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaInsumo(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Insumo dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
@@ -425,14 +428,14 @@ public class GestionInsumos extends javax.swing.JInternalFrame {
             insumo.setUnidad(unidad);
 
             boolean modificar = controlador.modificarInsumo(insumo);
-            if(modificar){
-              JOptionPane.showMessageDialog(null, "Insumo modificado correctamente.");
-              limpiarFormulario();
-              listar();
+            if (modificar) {
+                JOptionPane.showMessageDialog(null, "Insumo modificado correctamente.");
+                limpiarFormulario();
+                listar();
             }
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tablaInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInsumosMouseClicked

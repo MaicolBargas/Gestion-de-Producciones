@@ -115,7 +115,7 @@ public class PersistenciaProduccion {
         }
     }
     
-    public void agregarInsumos(int idProd,int idInsumo,int cantidad){
+    public void agregarInsumos(int idProd,int idInsumo,float cantidad){
         String sql = "INSERT INTO linea_insumos" +"(idProduccion,idInsumo,cantidad) VALUES (?,?,?)";
         
         try{
@@ -123,7 +123,7 @@ public class PersistenciaProduccion {
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, idProd);
             consulta.setInt(2, idInsumo);
-            consulta.setInt(3,cantidad);
+            consulta.setFloat(3,cantidad);
             consulta.execute();
         }catch(SQLException e){            
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));

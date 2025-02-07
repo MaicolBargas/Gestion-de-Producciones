@@ -42,10 +42,9 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     int idInsumoEliminar;
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
-    private TableRowSorter<TableModel> filtroTabla;       
+    private TableRowSorter<TableModel> filtroTabla;
     int idProduccionObtenido = -1;
     int idManteca = 19;
-    
 
     public GestionProduccionManteca() {
         initComponents();
@@ -1128,6 +1127,10 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
             String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
@@ -1167,8 +1170,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-if(!txtId.getText().equals(""))
-            {
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
@@ -1321,10 +1323,8 @@ if(!txtId.getText().equals(""))
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
             int actual = (int) produccion.getLitros();
-          
-            
-              int  litros = utilidad.validarNumericos(txtLitros.getText(), "Litros de Crema", false);
-           
+
+            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros de Crema", false);
 
             int rendimiento = Math.round((kgObtenidos / litros) * 100);
             int diferencia = 0;

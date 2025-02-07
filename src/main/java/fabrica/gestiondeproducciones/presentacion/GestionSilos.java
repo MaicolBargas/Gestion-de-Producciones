@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -8,12 +7,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class GestionSilos extends javax.swing.JInternalFrame {
+
     Utilidades utilidad = new Utilidades();
     Silo silo = new Silo();
     Controlador controlador = new Controlador();
-    DefaultTableModel modelo = new DefaultTableModel();;
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    ;
     /**
      * Creates new form GestionSilos
      */
@@ -21,13 +22,13 @@ public class GestionSilos extends javax.swing.JInternalFrame {
         initComponents();
         listar();
     }
-    
-    private void listar(){
+
+    private void listar() {
         limpiarTabla();
         List<Silo> lista = controlador.listarSilos();
         modelo = (DefaultTableModel) TablaSilos.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getCodigoInterno();
             objeto[2] = lista.get(i).getCapacidad();
@@ -35,11 +36,11 @@ public class GestionSilos extends javax.swing.JInternalFrame {
         }
         TablaSilos.setModel(modelo);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
 
@@ -282,26 +283,27 @@ public class GestionSilos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCodigoInternoActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      try{
-        int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno", false);
-        int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad", false);
-if(!txtId.getText().equals(""))
-            {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
             }
-        silo.setCodigoInterno(codigoInterno);
-        silo.setCapacidad(capacidad);
+            int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno", false);
+            int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad", false);
 
-        boolean alta = controlador.altaSilo(silo);
-        if(alta){
-          JOptionPane.showMessageDialog(null, "Silo dado de alta.");
-          limpiarFormulario();
-          listar();
+            silo.setCodigoInterno(codigoInterno);
+            silo.setCapacidad(capacidad);
+
+            boolean alta = controlador.altaSilo(silo);
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Silo dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-      
+
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void TablaSilosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaSilosMouseClicked
@@ -312,16 +314,16 @@ if(!txtId.getText().equals(""))
     }//GEN-LAST:event_TablaSilosMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaSilo(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Silo dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
@@ -330,7 +332,7 @@ if(!txtId.getText().equals(""))
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-      try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             int codigoInterno = utilidad.validarNumericos(txtCodigoInterno.getText(), "Codigo Interno", false);
             int capacidad = utilidad.validarNumericos(txtCapacidad.getText(), "Capacidad", false);
@@ -340,17 +342,17 @@ if(!txtId.getText().equals(""))
             silo.setCapacidad(capacidad);
 
             boolean modificarSilo = controlador.modificarSilo(silo);
-            if(modificarSilo){
-              JOptionPane.showMessageDialog(null, "Silo modificado correctamente.");
-              limpiarFormulario();
-              listar();
+            if (modificarSilo) {
+                JOptionPane.showMessageDialog(null, "Silo modificado correctamente.");
+                limpiarFormulario();
+                listar();
             }
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    public void limpiarFormulario(){
+    public void limpiarFormulario() {
         txtId.setText("");
         txtCodigoInterno.setText("");
         txtCapacidad.setText("");

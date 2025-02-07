@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -18,14 +17,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class GestionIngresoLeche extends javax.swing.JInternalFrame {
-    
+
     Utilidades utilidad = new Utilidades();
     IngresoLeche ingreso = new IngresoLeche();
     Controlador controlador = new Controlador();
     DefaultTableModel modelo = new DefaultTableModel();
-    private TableRowSorter<TableModel> filtroTabla;    
+    private TableRowSorter<TableModel> filtroTabla;
+
     /**
      * Creates new form GestionIngresoLeche
      */
@@ -33,19 +32,19 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         initComponents();
         listarTambos();
         listarSilos();
-        listar();     
+        listar();
         agregarFiltros(txtBuscar, filtroTabla);
 
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
-    private void listar(){
+    private void listar() {
         limpiarTabla();
         cargarFecha();
         List<IngresoLeche> lista = controlador.listarIngresos();
         modelo = (DefaultTableModel) tablaIngresos.getModel();
         Object[] objeto = new Object[5];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getIdIngreso();
             objeto[1] = lista.get(i).getTambo().getId() + " - " + lista.get(i).getTambo().getPropietario();
             objeto[2] = lista.get(i).getLitros();
@@ -57,15 +56,15 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaIngresos.setRowSorter(filtroTabla);
     }
-        
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         cbxTambo.setSelectedIndex(0);
         txtLitros.setText("");
@@ -73,33 +72,32 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         txtFecha.setText("");
 
     }
-    
-    private void listarTambos(){      
+
+    private void listarTambos() {
         List<Tambo> tambos = controlador.listarTambo();
-        for(Tambo t : tambos){        
-            cbxTambo.addItem(t.getId() + " - " +t.getPropietario());
+        for (Tambo t : tambos) {
+            cbxTambo.addItem(t.getId() + " - " + t.getPropietario());
         }
     }
-    
-    private void listarSilos(){      
+
+    private void listarSilos() {
         List<Silo> silos = controlador.listarSilos();
-        for(Silo s : silos){    
-            if(s.getCodigoInterno()==0){
-                cbxSilo.addItem("Pasteurizacion Directa- cod: "+s.getCodigoInterno());
+        for (Silo s : silos) {
+            if (s.getCodigoInterno() == 0) {
+                cbxSilo.addItem("Pasteurizacion Directa- cod: " + s.getCodigoInterno());
+            } else {
+                cbxSilo.addItem("" + s.getCodigoInterno());
             }
-            else
-            {
-            cbxSilo.addItem(""+s.getCodigoInterno());}
         }
     }
-    
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFecha.setText(fecha);
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -129,12 +127,12 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-        
-    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
+
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox) {
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             String item = comboBox.getItemAt(i).toString();
             String[] parts = item.split(" - ");
-        
+
             if (parts[0].trim().equals(idBuscado)) {
                 comboBox.setSelectedIndex(i);
                 break;
@@ -142,7 +140,7 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         }
     }
     //</editor-fold>
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -435,58 +433,11 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-       try{
-        String[] partes = cbxTambo.getSelectedItem().toString().split(" - ");
-        Tambo tambo = controlador.buscarTambo(Integer.parseInt(partes[0]));
-        
-        int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);
-        
-        String[] partesSilo = cbxSilo.getSelectedItem().toString().split(" - ");
-        Silo silo = controlador.buscarSiloXCodigo(Integer.parseInt(partesSilo[0]));
-        
-        String fecha = utilidad.controlarFechas(txtFecha.getText());
-
-        if(tambo instanceof Tambo){
-            ingreso.setTambo(tambo);
-        }else{ throw new Exception("El tambo seleccionado no existe");}  
-        ingreso.setLitros(litros);
-        ingreso.setLitrosDisponibles(litros);        
-        if(silo instanceof Silo){
-            ingreso.setSilo(silo);
-        }else{ throw new Exception("El silo seleccionado no existe");}
-if(!txtId.getText().equals(""))
-            {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
             }
-        ingreso.setFecha(fecha);
-        
-        boolean alta = controlador.altaIngreso(ingreso);
-        if(alta){
-          JOptionPane.showMessageDialog(null, "Ingreso dado de alta.");
-          limpiarFormulario();
-          listar();
-        }
-      }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
-    }//GEN-LAST:event_btnAltaActionPerformed
-
-    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
-            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
-            boolean baja = controlador.bajaIngreso(id);
-            if(baja){
-                JOptionPane.showMessageDialog(null, "Ingreso dada de baja.");
-                limpiarFormulario();
-                listar();
-            }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnBajaActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
             String[] partes = cbxTambo.getSelectedItem().toString().split(" - ");
             Tambo tambo = controlador.buscarTambo(Integer.parseInt(partes[0]));
 
@@ -497,34 +448,92 @@ if(!txtId.getText().equals(""))
 
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
-            if(tambo instanceof Tambo){
+            if (tambo instanceof Tambo) {
                 ingreso.setTambo(tambo);
-            }else{ throw new Exception("El tambo seleccionado no existe");}  
+            } else {
+                throw new Exception("El tambo seleccionado no existe");
+            }
             ingreso.setLitros(litros);
             ingreso.setLitrosDisponibles(litros);
-            if(silo instanceof Silo){
+            if (silo instanceof Silo) {
                 ingreso.setSilo(silo);
-            }else{ throw new Exception("El silo seleccionado no existe");}
+            } else {
+                throw new Exception("El silo seleccionado no existe");
+            }
+            if (!txtId.getText().equals("")) {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
+            ingreso.setFecha(fecha);
+
+            boolean alta = controlador.altaIngreso(ingreso);
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Ingreso dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAltaActionPerformed
+
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
+        try {
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaIngreso(id);
+            if (baja) {
+                JOptionPane.showMessageDialog(null, "Ingreso dada de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            String[] partes = cbxTambo.getSelectedItem().toString().split(" - ");
+            Tambo tambo = controlador.buscarTambo(Integer.parseInt(partes[0]));
+
+            int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros", false);
+
+            String[] partesSilo = cbxSilo.getSelectedItem().toString().split(" - ");
+            Silo silo = controlador.buscarSiloXCodigo(Integer.parseInt(partesSilo[0]));
+
+            String fecha = utilidad.controlarFechas(txtFecha.getText());
+
+            if (tambo instanceof Tambo) {
+                ingreso.setTambo(tambo);
+            } else {
+                throw new Exception("El tambo seleccionado no existe");
+            }
+            ingreso.setLitros(litros);
+            ingreso.setLitrosDisponibles(litros);
+            if (silo instanceof Silo) {
+                ingreso.setSilo(silo);
+            } else {
+                throw new Exception("El silo seleccionado no existe");
+            }
 
             ingreso.setFecha(fecha);
 
             boolean modificar = controlador.modificarIngreso(ingreso);
-            if(modificar){
+            if (modificar) {
                 JOptionPane.showMessageDialog(null, "Ingreso modificado correctamente.");
                 limpiarFormulario();
                 listar();
-            } 
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tablaIngresosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaIngresosMouseClicked
         int fila = tablaIngresos.rowAtPoint(evt.getPoint());
         txtId.setText(tablaIngresos.getValueAt(fila, 0).toString());
-        seleccionarEnComboBox(tablaIngresos.getValueAt(fila, 1).toString().split(" - ")[0],cbxTambo);            
+        seleccionarEnComboBox(tablaIngresos.getValueAt(fila, 1).toString().split(" - ")[0], cbxTambo);
         txtLitros.setText(tablaIngresos.getValueAt(fila, 2).toString());
-        seleccionarEnComboBox(tablaIngresos.getValueAt(fila, 3).toString().split(" - ")[0],cbxSilo);            
+        seleccionarEnComboBox(tablaIngresos.getValueAt(fila, 3).toString().split(" - ")[0], cbxSilo);
         txtFecha.setText(tablaIngresos.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tablaIngresosMouseClicked
 

@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import com.itextpdf.text.Chunk;
@@ -67,7 +66,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
 public class ListadoProducciones extends javax.swing.JInternalFrame {
 
     Utilidades utilidad = new Utilidades();
@@ -84,19 +82,19 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
     public ListadoProducciones() {
         initComponents();
         listar();
-        agregarFiltros(txtEncargado, filtroTabla,4); 
-        agregarFiltros(txtCodigoInterno, filtroTabla,1);       
-        agregarFiltros(txtProducto, filtroTabla,2);
+        agregarFiltros(txtEncargado, filtroTabla, 4);
+        agregarFiltros(txtCodigoInterno, filtroTabla, 1);
+        agregarFiltros(txtProducto, filtroTabla, 2);
         detalleProducciones();
         seleccionDeProducciones();
     }
 
-    private void listar(){
+    private void listar() {
         cargarFecha();
         List<Produccion> lista = controlador.listarProducciones();
         modelo = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto;
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto = obtenerProduccion(lista.get(i));
             modelo.addRow(objeto);
         }
@@ -104,34 +102,34 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaProducciones.setRowSorter(filtroTabla);
     }
-    
-    private Object[] obtenerProduccion(Produccion produccion){
-            Object[] objeto = new Object[15];
-            objeto[0] = produccion.getIdProduccion();
-            objeto[1] = produccion.getCodInterno();
 
-            if(produccion.getProducto() instanceof Producto){
-                objeto[2] = produccion.getProducto().getNombre();
-            }
-           
-            objeto[3] = produccion.getFecha();
-            if(produccion.getEncargado() instanceof Empleado){
-                objeto[4] = produccion.getEncargado().getInfoCompleta();
-            }
-            return objeto;
+    private Object[] obtenerProduccion(Produccion produccion) {
+        Object[] objeto = new Object[15];
+        objeto[0] = produccion.getIdProduccion();
+        objeto[1] = produccion.getCodInterno();
+
+        if (produccion.getProducto() instanceof Producto) {
+            objeto[2] = produccion.getProducto().getNombre();
+        }
+
+        objeto[3] = produccion.getFecha();
+        if (produccion.getEncargado() instanceof Empleado) {
+            objeto[4] = produccion.getEncargado().getInfoCompleta();
+        }
+        return objeto;
     }
-    
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFechaFin.setText(fecha);
-        
+
         LocalDate fechaInicio = fechaHoy.minusDays(30);
         String fechaInicioStr = fechaInicio.format(format);
         txtFechaInicio.setText(fechaInicioStr);
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila, int columna) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -163,21 +161,21 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
     }
 
     private void detalleProducciones() {
-    tablaProducciones.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() == 2) { // Doble clic en la fila
-                int filaSeleccionada = tablaProducciones.getSelectedRow();
-                if (filaSeleccionada != -1) {
-                    int id = (int) tablaProducciones.getValueAt(filaSeleccionada, 0);
-                    String codigoInterno = (String) tablaProducciones.getValueAt(filaSeleccionada, 1);
+        tablaProducciones.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { // Doble clic en la fila
+                    int filaSeleccionada = tablaProducciones.getSelectedRow();
+                    if (filaSeleccionada != -1) {
+                        int id = (int) tablaProducciones.getValueAt(filaSeleccionada, 0);
+                        String codigoInterno = (String) tablaProducciones.getValueAt(filaSeleccionada, 1);
 
-                    Object[] produccion = obtenerProduccionPorCodigo(id, codigoInterno);
-                    mostrarDetalleProduccion(tablaProducciones, produccion);
+                        Object[] produccion = obtenerProduccionPorCodigo(id, codigoInterno);
+                        mostrarDetalleProduccion(tablaProducciones, produccion);
+                    }
                 }
             }
-        }
-    });
+        });
     }
 
     private void mostrarDetalleProduccion(Component parent, Object[] produccion) {
@@ -198,11 +196,10 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         dialogo.setLocationRelativeTo(parent);
         dialogo.setVisible(true);
     }
- 
-    private Object[] obtenerProduccionPorCodigo(int id, String codigo){
 
+    private Object[] obtenerProduccionPorCodigo(int id, String codigo) {
 
-        switch(codigo.charAt(0)){
+        switch (codigo.charAt(0)) {
             case 'M' -> {
                 ProduccionManteca produccionManteca = controlador.buscarProduccionManteca(id);
                 return produccionManteca.produccionToArray();
@@ -224,7 +221,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             }
         }
     }
-    
+
     private void abrirPDF(String rutaArchivo) {
         try {
             File archivoPDF = new File(rutaArchivo);
@@ -237,7 +234,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Error al intentar abrir el archivo PDF: " + e.getMessage());
         }
     }
-    
+
     private void seleccionDeProducciones() {
         tablaProducciones.getSelectionModel().addListSelectionListener(e -> {
             listaProduccionesSeleccionadas.clear();
@@ -249,13 +246,13 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
                         Produccion produccion = controlador.buscarProduccion(id);
                         listaProduccionesSeleccionadas.add(produccion);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "No es posible imprimir mas de 10 registros a la vez");
                 }
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -511,7 +508,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
-        try{
+        try {
             String fechaInicioStr = utilidad.controlarFechas(txtFechaInicio.getText());
             String fechaFinStr = utilidad.controlarFechas(txtFechaFin.getText());
 
@@ -524,7 +521,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
                     RowFilter<TableModel, Object> rf = new RowFilter<TableModel, Object>() {
                         @Override
                         public boolean include(RowFilter.Entry<? extends TableModel, ? extends Object> entry) {
-                            String fechaStr = (String) entry.getValue(3); 
+                            String fechaStr = (String) entry.getValue(3);
                             try {
                                 Date fecha = sdf.parse(fechaStr);
 
@@ -543,7 +540,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             } else {
                 filtroTabla.setRowFilter(null);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnFiltrarActionPerformed
@@ -566,37 +563,37 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             if (produccionSeleccionada == null) {
                 throw new DocumentException("Debe seleccionar un análisis");
             }
- 
+
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
             String fechaHoraString = fechaHoraActual.format(formato);
-            
-            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Produccion_"+ produccionSeleccionada.getCodInterno()+ "_" + fechaHoraString + ".pdf";
+
+            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Produccion_" + produccionSeleccionada.getCodInterno() + "_" + fechaHoraString + ".pdf";
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            
+
             documento.open();
-            
+
             // Agregar tabla de encabezado con logo y textos
             PdfPTable headerTable = new PdfPTable(3);
             headerTable.setWidthPercentage(100);
             float[] columnWidths = {1f, 2f, 1f};
             headerTable.setWidths(columnWidths);
-           
-             //Logo
+
+            //Logo
             String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
             Image logo = Image.getInstance(path);
             logo.scaleToFit(80, 80);
             PdfPCell cellLogo = new PdfPCell(logo);
             cellLogo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellLogo);
-            
+
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia", fontTitulo));
             cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
             cellTitulo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellTitulo);
-            
+
             // Fecha
             PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
             cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -604,10 +601,10 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             headerTable.addCell(cellFecha);
             headerTable.setSpacingBefore(10);
             headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
-            
+
             documento.add(headerTable);
             documento.add(Chunk.NEWLINE);
-            
+
             // Subtitulo
             Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14);
             Paragraph subTitulo = new Paragraph("Reporte de Produccion", fontSubTitulo);
@@ -616,27 +613,27 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             documento.add(Chunk.NEWLINE);
 
             PdfPTable tabla = new PdfPTable(2);
-            tabla.setWidthPercentage(100); 
+            tabla.setWidthPercentage(100);
 
-            Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(),produccionSeleccionada.getCodInterno());
-            
+            Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(), produccionSeleccionada.getCodInterno());
+
             //FORMATO TABLA
             for (Object campo : campos) {
                 Object[] linea = (Object[]) campo;
                 String titulo = (String) linea[0];
                 String valor = linea[1].toString();
-                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-                    cellCampo.setPadding(5);
-                    cellCampo.setBorderWidth(1.5f);
-                    tabla.addCell(cellCampo);
+                PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                cellCampo.setPadding(5);
+                cellCampo.setBorderWidth(1.5f);
+                tabla.addCell(cellCampo);
 
-                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
-                    cellValor.setPadding(5);
-                    cellValor.setBorderWidth(1.5f);
-                    tabla.addCell(cellValor);
+                PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                cellValor.setPadding(5);
+                cellValor.setBorderWidth(1.5f);
+                tabla.addCell(cellValor);
             }
             documento.add(tabla);
-            documento.add(Chunk.NEWLINE);     
+            documento.add(Chunk.NEWLINE);
             documento.close();
 
             JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
@@ -655,37 +652,37 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             if (listaProduccionesSeleccionadas.isEmpty()) {
                 throw new DocumentException("El listado de análisis está vacío");
             }
-            
+
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
             String fechaHoraString = fechaHoraActual.format(formato);
-            
+
             String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Lista_Producciones_" + fechaHoraString + ".pdf";
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            
+
             documento.open();
-            
+
             // Agregar tabla de encabezado con logo y textos
             PdfPTable headerTable = new PdfPTable(3);
             headerTable.setWidthPercentage(100);
             float[] columnWidths = {1f, 2f, 1f};
             headerTable.setWidths(columnWidths);
-           
-             //Logo
+
+            //Logo
             String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
             Image logo = Image.getInstance(path);
             logo.scaleToFit(80, 80);
             PdfPCell cellLogo = new PdfPCell(logo);
             cellLogo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellLogo);
-            
+
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia", fontTitulo));
             cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
             cellTitulo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellTitulo);
-            
+
             // Fecha
             PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
             cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -693,48 +690,48 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             headerTable.addCell(cellFecha);
             headerTable.setSpacingBefore(10);
             headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
-            
+
             documento.add(headerTable);
             documento.add(Chunk.NEWLINE);
-            
+
             // Subtítulo
             Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
             Paragraph subTitulo = new Paragraph("Listado de Producciones", fontSubTitulo);
             subTitulo.setAlignment(Element.ALIGN_CENTER);
             documento.add(subTitulo);
             documento.add(Chunk.NEWLINE);
-            
+
             for (Produccion produccion : listaProduccionesSeleccionadas) {
                 PdfPTable tabla = new PdfPTable(2);
-                tabla.setWidthPercentage(100); 
-                
+                tabla.setWidthPercentage(100);
+
                 Paragraph codigoProd = new Paragraph(produccion.getCodInterno(), fontSubTitulo);
                 documento.add(codigoProd);
                 documento.add(Chunk.SPACETABBING);
 
-                Object[] campos = obtenerProduccionPorCodigo(produccion.getIdProduccion(),produccion.getCodInterno());
+                Object[] campos = obtenerProduccionPorCodigo(produccion.getIdProduccion(), produccion.getCodInterno());
 
                 //FORMATO TABLA
                 for (Object campo : campos) {
                     Object[] linea = (Object[]) campo;
                     String titulo = (String) linea[0];
                     String valor = linea[1].toString();
-                        PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-                        cellCampo.setPadding(5);
-                        cellCampo.setBorderWidth(1.5f);
-                        tabla.addCell(cellCampo);
+                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                    cellCampo.setPadding(5);
+                    cellCampo.setBorderWidth(1.5f);
+                    tabla.addCell(cellCampo);
 
-                        PdfPCell cellValor = new PdfPCell(new Phrase(valor));
-                        cellValor.setPadding(5);
-                        cellValor.setBorderWidth(1.5f);
-                        tabla.addCell(cellValor);
+                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                    cellValor.setPadding(5);
+                    cellValor.setBorderWidth(1.5f);
+                    tabla.addCell(cellValor);
                 }
 
-                    documento.add(tabla);
-                    documento.add(Chunk.NEWLINE);
+                documento.add(tabla);
+                documento.add(Chunk.NEWLINE);
 
             }
-            
+
             documento.close();
             JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
             abrirPDF(ruta);
@@ -750,39 +747,38 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             if (produccionSeleccionada == null) {
                 throw new DocumentException("Debe seleccionar un análisis");
             }
- 
+
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
             String fechaHoraString = fechaHoraActual.format(formato);
-            
-            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Produccion_FlujoCompleto_"+ produccionSeleccionada.getCodInterno()+ "_" + fechaHoraString + ".pdf";
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            
-            documento.open();
-            
-            // <editor-fold defaultstate="collapsed" desc="HEADER PDF">                          
 
+            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Produccion_FlujoCompleto_" + produccionSeleccionada.getCodInterno() + "_" + fechaHoraString + ".pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+
+            documento.open();
+
+            // <editor-fold defaultstate="collapsed" desc="HEADER PDF">                          
             // Agregar tabla de encabezado con logo y textos
             PdfPTable headerTable = new PdfPTable(3);
             headerTable.setWidthPercentage(100);
             float[] columnWidths = {1f, 2f, 1f};
             headerTable.setWidths(columnWidths);
-           
-             //Logo
+
+            //Logo
             String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
             Image logo = Image.getInstance(path);
             logo.scaleToFit(80, 80);
             PdfPCell cellLogo = new PdfPCell(logo);
             cellLogo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellLogo);
-            
+
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia", fontTitulo));
             cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
             cellTitulo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellTitulo);
-            
+
             // Fecha
             PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
             cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -790,10 +786,10 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             headerTable.addCell(cellFecha);
             headerTable.setSpacingBefore(10);
             headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
-            
+
             documento.add(headerTable);
             documento.add(Chunk.NEWLINE);
-            
+
             // Subtitulo
             Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14);
             Paragraph subTitulo = new Paragraph("Flujo completo de Produccion", fontSubTitulo);
@@ -801,15 +797,12 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             documento.add(subTitulo);
             documento.add(Chunk.NEWLINE);
 
-            
             //</editor-fold>
-            
             // <editor-fold defaultstate="collapsed" desc="PRODUCCION"> 
-            
             PdfPTable tablaProduccion = new PdfPTable(2);
-            tablaProduccion.setWidthPercentage(100); 
-            
-            Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(),produccionSeleccionada.getCodInterno());
+            tablaProduccion.setWidthPercentage(100);
+
+            Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(), produccionSeleccionada.getCodInterno());
             Paragraph subProd = new Paragraph("Produccion", fontSubTitulo);
             documento.add(subProd);
             documento.add(Chunk.SPACETABBING);
@@ -817,40 +810,37 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
                 Object[] linea = (Object[]) campo;
                 String titulo = (String) linea[0];
                 String valor = linea[1].toString();
-                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-                    cellCampo.setPadding(5);
-                    cellCampo.setBorderWidth(1.5f);
-                    tablaProduccion.addCell(cellCampo);
+                PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                cellCampo.setPadding(5);
+                cellCampo.setBorderWidth(1.5f);
+                tablaProduccion.addCell(cellCampo);
 
-                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
-                    cellValor.setPadding(5);
-                    cellValor.setBorderWidth(1.5f);
-                    tablaProduccion.addCell(cellValor);
+                PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                cellValor.setPadding(5);
+                cellValor.setBorderWidth(1.5f);
+                tablaProduccion.addCell(cellValor);
             }
-            
+
             documento.add(tablaProduccion);
             documento.add(Chunk.NEWLINE);
 
             //</editor-fold>
-            
             // <editor-fold defaultstate="collapsed" desc="ANALISIS">                          
-
-            
             Analisis analisis = controlador.buscarAnalisisXProduccion(produccionSeleccionada.getIdProduccion());
-            
-            if(analisis instanceof Analisis){
+
+            if (analisis instanceof Analisis) {
                 PdfPTable tablaAnalisis = new PdfPTable(2);
-                tablaAnalisis.setWidthPercentage(100); 
+                tablaAnalisis.setWidthPercentage(100);
                 Object[] objetoAnalisis = listadoAnalisis.obtenerAnalisis(analisis);
 
                 Map<String, Object> datosAnalisis = new HashMap<>();
-                String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
+                String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes Totales", "Coliformes Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
 
                 // Indices para excluir
                 Set<Integer> indicesExcluidos = new HashSet<>();
-                indicesExcluidos.add(4); 
-                indicesExcluidos.add(6);  
-                indicesExcluidos.add(8);  
+                indicesExcluidos.add(4);
+                indicesExcluidos.add(6);
+                indicesExcluidos.add(8);
 
                 for (int i = 0; i < nombresCampos.length; i++) {
                     if (!indicesExcluidos.contains(i) && objetoAnalisis[i] != null) {
@@ -875,46 +865,43 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
                         tablaAnalisis.addCell(cellValor);
                     }
                 }
-            documento.add(tablaAnalisis);
-            }else{
+                documento.add(tablaAnalisis);
+            } else {
                 Paragraph subAnalisis = new Paragraph("Esta producción aún no tiene un análisis.", fontSubTitulo);
                 documento.add(subAnalisis);
                 documento.add(Chunk.SPACETABBING);
-            }        
+            }
             documento.add(Chunk.NEWLINE);
 
             //</editor-fold>
-            
             // <editor-fold defaultstate="collapsed" desc="LECHE">                          
-
             PdfPTable tablaLeche = new PdfPTable(2);
             tablaLeche.setWidthPercentage(100);
-                
+
             Object[] pasteurizadaObj = produccionSeleccionada.getLechep().pasteurizadaToArray();
             Paragraph subLeche = new Paragraph("Leche", fontSubTitulo);
             documento.add(subLeche);
             documento.add(Chunk.SPACETABBING);
-                 
+
             for (Object campo : pasteurizadaObj) {
                 Object[] linea = (Object[]) campo;
                 String titulo = (String) linea[0];
                 String valor = linea[1].toString();
-                    PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
-                    cellCampo.setPadding(5);
-                    cellCampo.setBorderWidth(1.5f);
-                    tablaLeche.addCell(cellCampo);
+                PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
+                cellCampo.setPadding(5);
+                cellCampo.setBorderWidth(1.5f);
+                tablaLeche.addCell(cellCampo);
 
-                    PdfPCell cellValor = new PdfPCell(new Phrase(valor));
-                    cellValor.setPadding(5);
-                    cellValor.setBorderWidth(1.5f);
-                    tablaLeche.addCell(cellValor);
+                PdfPCell cellValor = new PdfPCell(new Phrase(valor));
+                cellValor.setPadding(5);
+                cellValor.setBorderWidth(1.5f);
+                tablaLeche.addCell(cellValor);
             }
             documento.add(tablaLeche);
             documento.add(Chunk.NEWLINE);
 
             // </editor-fold>
-            
-            documento.add(Chunk.NEWLINE);     
+            documento.add(Chunk.NEWLINE);
             documento.close();
 
             JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");

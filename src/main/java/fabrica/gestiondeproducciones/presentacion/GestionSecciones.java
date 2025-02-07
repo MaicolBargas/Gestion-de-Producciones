@@ -1,6 +1,4 @@
-
 package fabrica.gestiondeproducciones.presentacion;
-
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Seccion;
@@ -16,7 +14,9 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
     Utilidades utilidad = new Utilidades();
     Seccion seccion = new Seccion();
     Controlador controlador = new Controlador();
-    DefaultTableModel modelo = new DefaultTableModel();;
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    ;
     
     
     public GestionSecciones() {
@@ -24,18 +24,18 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
         listarSecciones();
     }
 
-     public void limpiarFormulario(){
+    public void limpiarFormulario() {
         txtId.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
     }
-    
- private void listarSecciones(){
+
+    private void listarSecciones() {
         limpiarTabla();
         List<Seccion> lista = controlador.listarSecciones();
         modelo = (DefaultTableModel) TablaSecciones.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getNombre();
             objeto[2] = lista.get(i).getDescripcion();
@@ -43,15 +43,14 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
         }
         TablaSecciones.setModel(modelo);
     }
- 
- private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
- 
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -284,45 +283,46 @@ public class GestionSecciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try{
-            String nombre = utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
             seccion.setNombre(nombre);
             seccion.setDescripcion(descripcion);
-if(!txtId.getText().equals(""))
-            {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
-            }
+
             boolean altaSeccion = controlador.altaSeccion(seccion);
-            if(altaSeccion){
-              JOptionPane.showMessageDialog(null, "Seccion dada de alta.");
-              limpiarFormulario();
-              listarSecciones();
+            if (altaSeccion) {
+                JOptionPane.showMessageDialog(null, "Seccion dada de alta.");
+                limpiarFormulario();
+                listarSecciones();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
-            int id = utilidad.validarNumericos(txtId.getText(), "Id",false);
+        try {
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean bajaSeccion = controlador.bajaSeccion(id);
-            if(bajaSeccion){
+            if (bajaSeccion) {
                 JOptionPane.showMessageDialog(null, "Seccion dada de baja.");
                 limpiarFormulario();
                 listarSecciones();
             }
-        }catch (Exception ex) {
-                  JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-                }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
-            String nombre = utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
             seccion.setId(id);
@@ -330,13 +330,13 @@ if(!txtId.getText().equals(""))
             seccion.setDescripcion(descripcion);
 
             boolean modificarSeccion = controlador.modificarSeccion(seccion);
-            if(modificarSeccion){
+            if (modificarSeccion) {
                 JOptionPane.showMessageDialog(null, "Seccion modificada correctamente.");
                 limpiarFormulario();
                 listarSecciones();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

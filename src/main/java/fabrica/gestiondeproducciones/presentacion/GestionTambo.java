@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -14,12 +13,14 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class GestionTambo extends javax.swing.JInternalFrame {
+
     Utilidades utilidad = new Utilidades();
     Tambo tambo = new Tambo();
     Controlador controlador = new Controlador();
-    DefaultTableModel modelo = new DefaultTableModel();;
+    DefaultTableModel modelo = new DefaultTableModel();
+    ;
     private TableRowSorter<TableModel> filtroTabla;
-    
+
     /**
      * Creates new form GestionTambo
      */
@@ -30,12 +31,12 @@ public class GestionTambo extends javax.swing.JInternalFrame {
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
-    private void listar(){
+    private void listar() {
         limpiarTabla();
         List<Tambo> lista = controlador.listarTambo();
         modelo = (DefaultTableModel) tablaTambos.getModel();
         Object[] objeto = new Object[4];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getPropietario();
             objeto[2] = lista.get(i).getContacto();
@@ -46,14 +47,14 @@ public class GestionTambo extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaTambos.setRowSorter(filtroTabla);
     }
-        
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -83,9 +84,8 @@ public class GestionTambo extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-        
+
     //</editor-fold>
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -364,65 +364,66 @@ public class GestionTambo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      try{
-        String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre del propietario", false);
-        String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
-        String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
-if(!txtId.getText().equals(""))
-            {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
-            }
-        tambo.setPropietario(propietario);
-        tambo.setContacto(contacto);
-        tambo.setDireccion(direccion);
+        try {
 
-        boolean alta = controlador.altaTambo(tambo);
-        if(alta){
-          JOptionPane.showMessageDialog(null, "Tambo dado de alta.");
-          limpiarFormulario();
-          listar();
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre del propietario", false);
+            String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
+            String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
+
+            tambo.setPropietario(propietario);
+            tambo.setContacto(contacto);
+            tambo.setDireccion(direccion);
+
+            boolean alta = controlador.altaTambo(tambo);
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Tambo dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }
-      catch(Exception e){
-        JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaTambo(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Tambo dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-      try{
-        int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
-        String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre Propietario", false);
-        String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
-        String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
+        try {
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            String propietario = utilidad.sanitizarCampos(txtPropietario.getText(), "Nombre Propietario", false);
+            String contacto = utilidad.sanitizarCampos(txtContacto.getText(), "Contacto", false);
+            String direccion = utilidad.sanitizarCampos(txtDireccion.getText(), "Direccion", false);
 
-        tambo.setId(id);
-        tambo.setPropietario(propietario);
-        tambo.setContacto(contacto);
-        tambo.setDireccion(direccion);
+            tambo.setId(id);
+            tambo.setPropietario(propietario);
+            tambo.setContacto(contacto);
+            tambo.setDireccion(direccion);
 
-        boolean modificar = controlador.modificarTambo(tambo);
-        if(modificar){
-          JOptionPane.showMessageDialog(null, "Tambo modificado correctamente.");
-          limpiarFormulario();
-          listar();
+            boolean modificar = controlador.modificarTambo(tambo);
+            if (modificar) {
+                JOptionPane.showMessageDialog(null, "Tambo modificado correctamente.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch(Exception e){
-        JOptionPane.showMessageDialog(null, e.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-      }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -437,8 +438,7 @@ if(!txtId.getText().equals(""))
         txtDireccion.setText(tablaTambos.getValueAt(fila, 3).toString());
     }//GEN-LAST:event_tablaTambosMouseClicked
 
-    
-    public void limpiarFormulario(){
+    public void limpiarFormulario() {
         txtId.setText("");
         txtPropietario.setText("");
         txtContacto.setText("");

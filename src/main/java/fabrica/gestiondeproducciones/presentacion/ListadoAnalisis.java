@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import com.itextpdf.text.Chunk;
@@ -51,7 +50,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class ListadoAnalisis extends javax.swing.JInternalFrame {
 
     Utilidades utilidad = new Utilidades();
@@ -61,24 +59,24 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     Analisis analisisSeleccionado = null;
     List<Analisis> listaAnalisisSeleccionados = new ArrayList<>();
 
-    
     /**
      * Creates new form ListadoAnalisis
      */
     public ListadoAnalisis() {
         initComponents();
         listar();
-        agregarFiltros(txtEncargado, filtroTabla,1);
-        agregarFiltrosComboBox(cbxTipo, filtroTabla,13);
+        agregarFiltros(txtEncargado, filtroTabla, 1);
+        agregarFiltrosComboBox(cbxTipo, filtroTabla, 13);
         seleccionDeAnalisis();
 
     }
-    private void listar(){
+
+    private void listar() {
         cargarFecha();
         List<Analisis> lista = controlador.listarAnalisis();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
         Object[] objeto;
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto = obtenerAnalisis(lista.get(i));
             modelo.addRow(objeto);
         }
@@ -86,36 +84,36 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
     }
-    
-    public Object[] obtenerAnalisis(Analisis analisis){
-            Object[] objeto = new Object[15];
-            objeto[0] = analisis.getId();
-            if(analisis.getEncargado() instanceof Empleado){
-                objeto[1] = analisis.getEncargado().getInfoCompleta();
-            }
-            objeto[2] = analisis.getFecha();
-            objeto[3] = analisis.getLevadura();
-            objeto[4] = analisis.getMos();
-            objeto[5] = analisis.getPoliformosTotales();
-            objeto[6] = analisis.getPoliformosFecales();
-            listarAnalisisEspecifico(analisis,objeto); 
-            return objeto;
+
+    public Object[] obtenerAnalisis(Analisis analisis) {
+        Object[] objeto = new Object[15];
+        objeto[0] = analisis.getId();
+        if (analisis.getEncargado() instanceof Empleado) {
+            objeto[1] = analisis.getEncargado().getInfoCompleta();
+        }
+        objeto[2] = analisis.getFecha();
+        objeto[3] = analisis.getLevadura();
+        objeto[4] = analisis.getMos();
+        objeto[5] = analisis.getPoliformosTotales();
+        objeto[6] = analisis.getPoliformosFecales();
+        listarAnalisisEspecifico(analisis, objeto);
+        return objeto;
     }
-    
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFechaFin.setText(fecha);
-        
+
         LocalDate fechaInicio = fechaHoy.minusDays(30);
         String fechaInicioStr = fechaInicio.format(format);
         txtFechaInicio.setText(fechaInicioStr);
     }
-    
-    private void listarAnalisisEspecifico(Analisis analisis, Object[] objeto){
+
+    private void listarAnalisisEspecifico(Analisis analisis, Object[] objeto) {
         int id = analisis.getId();
-        switch(analisis.getTipo()){
+        switch (analisis.getTipo()) {
             case "ingreso" -> {
                 AnalisisIngreso a = controlador.buscarAnalisisIngreso(id);
                 objeto[7] = a.getGrasa();
@@ -160,20 +158,20 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                 objeto[13] = a.getTipo();
                 objeto[14] = a.getProduccion().getCodInterno();
                 break;
-            }      
+            }
             case "queso" -> {
                 AnalisisQueso a = controlador.buscarAnalisisQueso(id);
                 objeto[7] = a.getGrasa();
                 objeto[10] = a.getHumedad();
-                objeto[11] = a.getSal();                
+                objeto[11] = a.getSal();
                 objeto[12] = a.getPh();
                 objeto[13] = a.getTipo();
                 objeto[14] = a.getProduccion().getCodInterno();
                 break;
-            } 
+            }
         }
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila, int columna) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -205,9 +203,9 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     }
 
     private void agregarFiltrosComboBox(javax.swing.JComboBox<String> comboBox, TableRowSorter fila, int columna) {
-    comboBox.addItemListener((ItemEvent e) -> {
-        applyFilterComboBox(comboBox, fila, columna);
-    });
+        comboBox.addItemListener((ItemEvent e) -> {
+            applyFilterComboBox(comboBox, fila, columna);
+        });
     }
 
     private void applyFilterComboBox(javax.swing.JComboBox<String> comboBox, TableRowSorter fila, int columna) {
@@ -247,14 +245,14 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                         Analisis analisis = controlador.buscarAnalisis(id);
                         listaAnalisisSeleccionados.add(analisis);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "No es posible imprimir mas de 10 registros a la vez");
                 }
 
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -374,7 +372,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "Humedad", "Sal", "PH", "Tipo de analisis", "Ingreso / Produccion"
+                "Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes totales", "Coliformes fecales", "Grasa", "Proteina", "Agua", "Humedad", "Sal", "PH", "Tipo de analisis", "Ingreso / Produccion"
             }
         ) {
             Class[] types = new Class [] {
@@ -507,7 +505,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechasActionPerformed
-        try{
+        try {
             String fechaInicioStr = utilidad.controlarFechas(txtFechaInicio.getText());
             String fechaFinStr = utilidad.controlarFechas(txtFechaFin.getText());
 
@@ -520,7 +518,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                     RowFilter<TableModel, Object> rf = new RowFilter<TableModel, Object>() {
                         @Override
                         public boolean include(RowFilter.Entry<? extends TableModel, ? extends Object> entry) {
-                            String fechaStr = (String) entry.getValue(2); 
+                            String fechaStr = (String) entry.getValue(2);
                             try {
                                 Date fecha = sdf.parse(fechaStr);
 
@@ -539,7 +537,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             } else {
                 filtroTabla.setRowFilter(null);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnFechasActionPerformed
@@ -549,42 +547,42 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnImprimirUnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirUnicoActionPerformed
-         Document documento = new Document();
+        Document documento = new Document();
         try {
             if (analisisSeleccionado == null) {
                 throw new DocumentException("Debe seleccionar un análisis");
             }
- 
+
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
             String fechaHoraString = fechaHoraActual.format(formato);
-            
-            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Analisis_"+ analisisSeleccionado.getId()+ "_" + fechaHoraString + ".pdf";
+
+            String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Analisis_" + analisisSeleccionado.getId() + "_" + fechaHoraString + ".pdf";
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            
+
             documento.open();
-            
+
             // Agregar tabla de encabezado con logo y textos
             PdfPTable headerTable = new PdfPTable(3);
             headerTable.setWidthPercentage(100);
             float[] columnWidths = {1f, 2f, 1f};
             headerTable.setWidths(columnWidths);
-           
-             //Logo
+
+            //Logo
             String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
             Image logo = Image.getInstance(path);
             logo.scaleToFit(80, 80);
             PdfPCell cellLogo = new PdfPCell(logo);
             cellLogo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellLogo);
-            
+
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia - Reporte de Análisis", fontTitulo));
             cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
             cellTitulo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellTitulo);
-            
+
             // Fecha
             PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
             cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -592,38 +590,38 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             headerTable.addCell(cellFecha);
             headerTable.setSpacingBefore(10);
             headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
-            
+
             documento.add(headerTable);
             documento.add(Chunk.NEWLINE);
-            
+
             // Subtitulo
             Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14);
-            Paragraph subTitulo = new Paragraph("Analisis de " +analisisSeleccionado.getTipo().toUpperCase(), fontSubTitulo);
+            Paragraph subTitulo = new Paragraph("Analisis de " + analisisSeleccionado.getTipo().toUpperCase(), fontSubTitulo);
             subTitulo.setAlignment(Element.ALIGN_CENTER);
             documento.add(subTitulo);
             documento.add(Chunk.NEWLINE);
 
             PdfPTable tabla = new PdfPTable(2);
-            tabla.setWidthPercentage(100); 
+            tabla.setWidthPercentage(100);
 
             Object[] objeto = obtenerAnalisis(analisisSeleccionado);
 
             Map<String, Object> datosAnalisis = new HashMap<>();
-            
-            String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
+
+            String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes Totales", "Coliformes Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
 
             // Indices para excluir
             Set<Integer> indicesExcluidos = new HashSet<>();
-            indicesExcluidos.add(4); 
-            indicesExcluidos.add(6);  
-            indicesExcluidos.add(8);  
+            indicesExcluidos.add(4);
+            indicesExcluidos.add(6);
+            indicesExcluidos.add(8);
 
             for (int i = 0; i < nombresCampos.length; i++) {
                 if (!indicesExcluidos.contains(i) && objeto[i] != null) {
                     datosAnalisis.put(nombresCampos[i], objeto[i]);
                 }
             }
-            
+
             //FORMATO TABLA
             for (String campo : nombresCampos) {
                 if (datosAnalisis.containsKey(campo)) {
@@ -639,7 +637,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                 }
             }
             documento.add(tabla);
-            documento.add(Chunk.NEWLINE);     
+            documento.add(Chunk.NEWLINE);
             documento.close();
 
             JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
@@ -649,7 +647,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         } catch (IOException ex) {
             Logger.getLogger(ListadoAnalisis.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }//GEN-LAST:event_btnImprimirUnicoActionPerformed
 
     private void tablaAnalisisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAnalisisMouseClicked
@@ -665,37 +663,37 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             if (listaAnalisisSeleccionados.isEmpty()) {
                 throw new DocumentException("El listado de análisis está vacío");
             }
-            
+
             LocalDateTime fechaHoraActual = LocalDateTime.now();
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd-MM_HH-mm");
             String fechaHoraString = fechaHoraActual.format(formato);
-            
+
             String ruta = System.getProperty("user.home") + "/Desktop/Reportes/Lista_Analisis_" + fechaHoraString + ".pdf";
             PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            
+
             documento.open();
-            
+
             // Agregar tabla de encabezado con logo y textos
             PdfPTable headerTable = new PdfPTable(3);
             headerTable.setWidthPercentage(100);
             float[] columnWidths = {1f, 2f, 1f};
             headerTable.setWidths(columnWidths);
-           
-             //Logo
+
+            //Logo
             String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
             Image logo = Image.getInstance(path);
             logo.scaleToFit(80, 80);
             PdfPCell cellLogo = new PdfPCell(logo);
             cellLogo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellLogo);
-            
+
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
             PdfPCell cellTitulo = new PdfPCell(new Paragraph("Granja La Magnolia - Reporte de Análisis", fontTitulo));
             cellTitulo.setHorizontalAlignment(Element.ALIGN_CENTER);
             cellTitulo.setBorder(Rectangle.NO_BORDER);
             headerTable.addCell(cellTitulo);
-            
+
             // Fecha
             PdfPCell cellFecha = new PdfPCell(new Phrase("Fecha: " + fechaHoraActual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
             cellFecha.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -703,38 +701,38 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             headerTable.addCell(cellFecha);
             headerTable.setSpacingBefore(10);
             headerTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
-            
+
             documento.add(headerTable);
             documento.add(Chunk.NEWLINE);
-            
+
             // Subtítulo
             Font fontSubTitulo = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
             Paragraph subTitulo = new Paragraph("Listado de Análisis", fontSubTitulo);
             subTitulo.setAlignment(Element.ALIGN_CENTER);
             documento.add(subTitulo);
             documento.add(Chunk.NEWLINE);
-            
+
             for (Analisis analisis : listaAnalisisSeleccionados) {
                 PdfPTable tabla = new PdfPTable(2);
                 tabla.setWidthPercentage(100);
                 tabla.setSpacingBefore(10);
-                
+
                 Object[] objeto = obtenerAnalisis(analisis);
                 Map<String, Object> datosAnalisis = new HashMap<>();
-                String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mos", "Totales", "Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
-                
+                String[] nombresCampos = {"Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes Totales", "Coliformes Fecales", "Grasa", "Proteína", "Agua", "Humedad", "Sal", "PH", "Tipo", "Analizado"};
+
                 // Indices para excluir
                 Set<Integer> indicesExcluidos = new HashSet<>();
-                indicesExcluidos.add(4); 
-                indicesExcluidos.add(6);  
-                indicesExcluidos.add(8);  
-                
+                indicesExcluidos.add(4);
+                indicesExcluidos.add(6);
+                indicesExcluidos.add(8);
+
                 for (int i = 0; i < nombresCampos.length; i++) {
                     if (!indicesExcluidos.contains(i) && objeto[i] != null) {
                         datosAnalisis.put(nombresCampos[i], objeto[i]);
                     }
                 }
-                
+
                 for (String campo : nombresCampos) {
                     if (datosAnalisis.containsKey(campo)) {
                         PdfPCell cellCampo = new PdfPCell(new Phrase(campo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
@@ -748,11 +746,11 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
                         tabla.addCell(cellValor);
                     }
                 }
-                
+
                 documento.add(tabla);
                 documento.add(Chunk.NEWLINE);
             }
-            
+
             documento.close();
             JOptionPane.showMessageDialog(null, "El reporte se ha generado correctamente.");
             abrirPDF(ruta);
@@ -762,7 +760,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnImprimirListadoAnalisisActionPerformed
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFechas;
     private javax.swing.JButton btnImprimirListadoAnalisis;

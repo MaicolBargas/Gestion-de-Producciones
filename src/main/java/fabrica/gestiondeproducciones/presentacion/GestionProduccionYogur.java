@@ -43,28 +43,28 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
     private TableRowSorter<TableModel> filtroFilaEmpleados;
     private TableRowSorter<TableModel> filtroFilaInsumos;
     int idProduccionObtenido;
-    private TableRowSorter<TableModel> filtroTabla; 
-    
+    private TableRowSorter<TableModel> filtroTabla;
+
     public GestionProduccionYogur() {
         initComponents();
         listar();
         listarLeche();
         listarProductos();
         listarAgregarEmpleado();
-        listarAgregarInsumo();  
+        listarAgregarInsumo();
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
         agregarFiltros(txtBuscar, filtroTabla);
 
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
     private void listar() {
 
         limpiarTabla();
         cargarFecha();
         List<ProduccionYogur> lista = controlador.listarProduccionesYogur();
-  
+
         modelo = (DefaultTableModel) tablaProducciones.getModel();
         Object[] objeto = new Object[5];
         for (int i = 0; i < lista.size(); i++) {
@@ -91,18 +91,20 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
         List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
         for (LechePasteurizada t : leche) {
             cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Litros: "
-                    + "" + t.getLitros()+"l");
+                    + "" + t.getLitros() + "l");
         }
     }
-    private void listarLecheModificar(LechePasteurizada lechePast ) {
+
+    private void listarLecheModificar(LechePasteurizada lechePast) {
         cbxLeche.removeAllItems();
         List<LechePasteurizada> leche = controlador.listarPasteurizadosNoUsados();
         leche.add(lechePast);
         for (LechePasteurizada t : leche) {
             cbxLeche.addItem(t.getId() + " - Tambo de : " + t.getIngreso().getTambo().getPropietario() + " -Litros: "
-                    + "" + t.getLitros()+"-L");
+                    + "" + t.getLitros() + "-L");
         }
     }
+
     private void listarProductos() {
         cbxProducto.addItem("20 - Yogur bebible Frutilla");
         cbxProducto.addItem("21 - Yogur bebible Durazno");
@@ -148,7 +150,7 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
 
     private void listarEmpleados(List<Empleado> lista) {
         limpiarTablaEmpleadosTrabajaron();
-        
+
         modeloEmpleadosTrabajaron = (DefaultTableModel) tablaEmpleadosTrabajaron.getModel();
         Object[] objeto = new Object[3];
         for (int i = 0; i < lista.size(); i++) {
@@ -202,7 +204,7 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             objeto[1] = lista.get(i).getInsumo().getNombre();
             objeto[2] = lista.get(i).getCantidad();
             objeto[3] = lista.get(i).getInsumo().getUnidad();
-            
+
             modeloInsumosUtilizados.addRow(objeto);
         }
         tablaInsumosAgregados.setModel(modeloInsumosUtilizados);
@@ -214,8 +216,8 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             i = - 1;
         }
     }
-    
-    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox){
+
+    private void seleccionarEnComboBox(String idBuscado, JComboBox comboBox) {
         for (int i = 0; i < comboBox.getItemCount(); i++) {
             String item = comboBox.getItemAt(i).toString();
             String[] parts = item.split(" - ");
@@ -227,9 +229,8 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
         }
     }
 
-    
     private void limpiarFormulario() {
-    
+
         this.txtCantidadInsumo.setText("");
         this.txtCodigoInterno.setText("");
         this.txtEncargado.setText("");
@@ -296,12 +297,8 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
         }
         fila.setRowFilter(rf);
     }
-    
-   
-    
-   
-    // </editor-fold>  
 
+    // </editor-fold>  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1291,54 +1288,56 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
     private void tablaProduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProduccionesMouseClicked
         int fila = tablaProducciones.rowAtPoint(evt.getPoint());
         int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
-        idProduccionObtenido=id;
-        
+        idProduccionObtenido = id;
+
         ProduccionYogur prod = controlador.buscarProduccionYogur(id);
         txtId.setText(tablaProducciones.getValueAt(fila, 0).toString());
         txtCodigoInterno.setText(prod.getCodInterno());
         if (prod.getLechep() instanceof LechePasteurizada) {
             listarLecheModificar(prod.getLechep());
-            seleccionarEnComboBox(prod.getLechep().getId()+"",cbxLeche);            
+            seleccionarEnComboBox(prod.getLechep().getId() + "", cbxLeche);
         }
         if (prod.getProducto() instanceof Producto) {
-            
-            seleccionarEnComboBox(prod.getProducto().getId()+"",cbxProducto);            
+
+            seleccionarEnComboBox(prod.getProducto().getId() + "", cbxProducto);
         }
-        txtIRendimiento.setText(""+prod.getRendimiento());
+        txtIRendimiento.setText("" + prod.getRendimiento());
         txtLitros.setText(prod.getLitros() + "");
-        
+
         txtObtenidos.setText(prod.getKgLtsObt() + "");
         txtFecha.setText(prod.getFecha());
         if (prod.getEncargado() instanceof Empleado) {
             txtEncargado.setText(prod.encargadoToString());
             idEncargado = prod.getEncargado().getId();
         }
-        
-       
-       
+
         this.txtHoraFin.setText(prod.getHoraFin());
         this.txtHoraInicio.setText(prod.getHoraInicio());
-        this.txtNroTacho.setText(prod.getNroTacho()+"");
+        this.txtNroTacho.setText(prod.getNroTacho() + "");
         this.txtTiempoTrabajado.setText(prod.getTiempoTrabajado());
-        this.txtTempInc.setText(""+prod.getTemperaturaIncubacion());
+        this.txtTempInc.setText("" + prod.getTemperaturaIncubacion());
         this.txtComienzoInc.setText(prod.getHoraComienzoIncubacion());
         this.txtFinInc.setText(prod.getHoraFinIncubacion());
         this.txtFinEnfriado.setText(prod.getHoraFinEnfriado());
-        this.txtSuero.setText(""+prod.getLitrosSuero());
+        this.txtSuero.setText("" + prod.getLitrosSuero());
         this.txtComienzoEnfriado.setText(prod.getHoraComienzoEnfriado());
-        this.txtTempAgua.setText(""+prod.getTempAguaHelada());
-        this.txtTempAgregadoSabor.setText(""+prod.getTempAgregadoSabor());
-        this.txtTempAgregadoColor.setText(""+prod.getTempAgregadoColor());
-        this.txtUnidadesObtenidas.setText(""+prod.getUnidadesObtenidas());
+        this.txtTempAgua.setText("" + prod.getTempAguaHelada());
+        this.txtTempAgregadoSabor.setText("" + prod.getTempAgregadoSabor());
+        this.txtTempAgregadoColor.setText("" + prod.getTempAgregadoColor());
+        this.txtUnidadesObtenidas.setText("" + prod.getUnidadesObtenidas());
         listaEmpleados = prod.getListaEmpleados();
-        listaInsumosLinea = prod.getListaInsumos();       
-        
+        listaInsumosLinea = prod.getListaInsumos();
+
         listarEmpleados(prod.getListaEmpleados());
         listarLineaInsumos(prod.getListaInsumos());
     }//GEN-LAST:event_tablaProduccionesMouseClicked
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
         try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
             String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
@@ -1347,33 +1346,31 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Y" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtUnidadesObtenidas.getText() + txtNroTacho.getText();
-            float tempIncubacion=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false).toString());
-            
+            float tempIncubacion = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempInc.getText(), "Temperatura de Incubacion", false).toString());
+
             String horaComienzoIncubacion = utilidad.validarHora(txtComienzoInc.getText(), "Hora de Inicio de Incubacion");
             String horaFinIncubacion = utilidad.validarHora(txtFinInc.getText(), "Hora de Finalizacion de Incubacion");
             String totalIncubacion = utilidad.calcularDiferenciaHoras(horaComienzoIncubacion, horaFinIncubacion);
-            String horaComienzoEnfriado=utilidad.validarHora(txtComienzoEnfriado.getText(),"Hora de comienzo de Enfriado");
-            String horaFinEnfriado=utilidad.validarHora(txtFinEnfriado.getText(),"Hora de Fin de Enfriado");
-            String tiempoEnfriado=utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
-            float tempAguaHelada=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false).toString());
-            float tempAgregadoSabor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false).toString());
-            float tempAgregadoColor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false).toString());
-            int litrosSuero=utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero",false);
-            int unidadesObtenidas=utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            
-          
+            String horaComienzoEnfriado = utilidad.validarHora(txtComienzoEnfriado.getText(), "Hora de comienzo de Enfriado");
+            String horaFinEnfriado = utilidad.validarHora(txtFinEnfriado.getText(), "Hora de Fin de Enfriado");
+            String tiempoEnfriado = utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
+            float tempAguaHelada = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada", false).toString());
+            float tempAgregadoSabor = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(), "Temperatura Agregado Sabor", false).toString());
+            float tempAgregadoColor = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(), "Temperatura Agregado Color", false).toString());
+            int litrosSuero = utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero", false);
+            int unidadesObtenidas = utilidad.validarNumericos(txtUnidadesObtenidas.getText(), "Unidades Obtenidas", false);
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
             utilidad.validarHoraNoMayor(horaComienzoIncubacion, horaFinIncubacion, "Hora de Inicio de Incubacion y Hora de Fin de Incubacion", "Inicio ", "Fin ");
-            utilidad.validarHoraNoMayor(horaInicio, horaComienzoIncubacion, "Hora de Inicio de Produccion y Hora de Inicio de Incubacion","Inicio de Incubacion", "Inicio de Produccion");
-            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFin, "Hora de Finalizacion de Incubacion y Hora de Finalizacion de Produccion","Fin de Incubacion", "Fin de Produccion");
-            utilidad.validarHoraNoMayor(horaComienzoEnfriado, horaFinEnfriado, "Hora de Inicio de Enfriado y Hora de fin de Enfriado","Hora Inicio Enfriado", "Hora fin Enfriado");
-            utilidad.validarHoraNoMayor(horaComienzoIncubacion,horaComienzoEnfriado,"Hora de Comienzo Enfriado y Hora de Comienzo Incubacion","Hora Comienzo Incubacion","Hora Comienzo Enfriado");
-            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFinEnfriado, "Hora de Finalizacion de Incubacion y Hora de finalizacion de Enfriado","Hora fin incubacion","Hora Fin Enfriado");
-            utilidad.validarHoraNoMayor(horaFinEnfriado, horaFin, "Hora de Finalizacion de Enfriado y Hora de Finalizacion de Produccion","Fin de Enfriado", "Fin de Produccion");
+            utilidad.validarHoraNoMayor(horaInicio, horaComienzoIncubacion, "Hora de Inicio de Produccion y Hora de Inicio de Incubacion", "Inicio de Incubacion", "Inicio de Produccion");
+            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFin, "Hora de Finalizacion de Incubacion y Hora de Finalizacion de Produccion", "Fin de Incubacion", "Fin de Produccion");
+            utilidad.validarHoraNoMayor(horaComienzoEnfriado, horaFinEnfriado, "Hora de Inicio de Enfriado y Hora de fin de Enfriado", "Hora Inicio Enfriado", "Hora fin Enfriado");
+            utilidad.validarHoraNoMayor(horaComienzoIncubacion, horaComienzoEnfriado, "Hora de Comienzo Enfriado y Hora de Comienzo Incubacion", "Hora Comienzo Incubacion", "Hora Comienzo Enfriado");
+            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFinEnfriado, "Hora de Finalizacion de Incubacion y Hora de finalizacion de Enfriado", "Hora fin incubacion", "Hora Fin Enfriado");
+            utilidad.validarHoraNoMayor(horaFinEnfriado, horaFin, "Hora de Finalizacion de Enfriado y Hora de Finalizacion de Produccion", "Fin de Enfriado", "Fin de Produccion");
             try {
                 Empleado empleado = controlador.buscarEmpleado(idEncargado);
-                
+
                 if (empleado instanceof Empleado) {
                     produccion.setEncargado(empleado);
                 } else {
@@ -1385,21 +1382,20 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
 
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            int litros =  lechep.getLitros();
-           
+            int litros = lechep.getLitros();
+
             if (lechep instanceof LechePasteurizada) {
 
                 produccion.setLitros(litros);
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-            
-           if(!txtId.getText().equals(""))
-            {
+
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
             int kgObtenidos = unidadesObtenidas;
-            int rendimiento = Math.round(kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante
+            int rendimiento = Math.round(kgObtenidos / (litros + litrosSuero)) * 100; // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);
@@ -1414,8 +1410,7 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             produccion.setHoraFin(horaFin);
             produccion.setTiempoTrabajado(TiempoTrabajado);
             produccion.setNroTacho(nroTacho);
-            
-            
+
             produccion.setHoraComienzoIncubacion(horaComienzoIncubacion);
             produccion.setHoraFinIncubacion(horaFinIncubacion);
             produccion.setHoraComienzoEnfriado(horaComienzoEnfriado);
@@ -1428,14 +1423,10 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             produccion.setTiempoTotalEnfriado(tiempoEnfriado);
             produccion.setLitrosSuero(litrosSuero);
             produccion.setUnidadesObtenidas(unidadesObtenidas);
-            
-            
-            if(unidadesObtenidas<litros+litrosSuero)
-            {
+
+            if (unidadesObtenidas < litros + litrosSuero) {
                 produccion.setUnidadesObtenidas(unidadesObtenidas);
-            }
-            else
-            {
+            } else {
                 throw new Exception("Verifique cantidad de unidades obtenidas o cantidad de materia prima (Suero y Leche),"
                         + "dicha cantidad de Unidades daria como resultado una obtencion de materia prima incoherente "
                         + "respecto a la cantidad de materia prima utilizada");
@@ -1445,7 +1436,7 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             if (alta) {
 
                 JOptionPane.showMessageDialog(null, "Produccion dada de alta.");
-                
+
                 limpiarFormulario();
                 listar();
                 listarLeche();
@@ -1527,8 +1518,8 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{   
-            int id= Integer.parseInt(txtId.getText());
+        try {
+            int id = Integer.parseInt(txtId.getText());
             String fecha = utilidad.controlarFechas(txtFecha.getText());
 
             String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
@@ -1537,37 +1528,35 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
             String[] partesFecha = txtFecha.getText().split("/");
             String CodigoInterno = "Y" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtUnidadesObtenidas.getText() + txtNroTacho.getText();
-            float tempIncubacion=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempInc.getText(),"Temperatura de Incubacion",false).toString());
-            
+            float tempIncubacion = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempInc.getText(), "Temperatura de Incubacion", false).toString());
+
             String horaComienzoIncubacion = utilidad.validarHora(txtComienzoInc.getText(), "Hora de Inicio de Incubacion");
             String horaFinIncubacion = utilidad.validarHora(txtFinInc.getText(), "Hora de Finalizacion de Incubacion");
             String totalIncubacion = utilidad.calcularDiferenciaHoras(horaComienzoIncubacion, horaFinIncubacion);
-            String horaComienzoEnfriado=utilidad.validarHora(txtComienzoEnfriado.getText(),"Hora de comienzo de Enfriado");
-            String horaFinEnfriado=utilidad.validarHora(txtFinEnfriado.getText(),"Hora de Fin de Enfriado");
-            String tiempoEnfriado=utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
-            float tempAguaHelada=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada",false).toString());
-            float tempAgregadoSabor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(),"Temperatura Agregado Sabor", false).toString());
-            float tempAgregadoColor=utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(),"Temperatura Agregado Color", false).toString());
-            int litrosSuero=utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero",false);
-            int unidadesObtenidas=utilidad.validarNumericos(txtUnidadesObtenidas.getText(),"Unidades Obtenidas",false);
-            
-          
+            String horaComienzoEnfriado = utilidad.validarHora(txtComienzoEnfriado.getText(), "Hora de comienzo de Enfriado");
+            String horaFinEnfriado = utilidad.validarHora(txtFinEnfriado.getText(), "Hora de Fin de Enfriado");
+            String tiempoEnfriado = utilidad.calcularDiferenciaHoras(horaComienzoEnfriado, horaFinEnfriado);
+            float tempAguaHelada = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgua.getText(), "Temperatura de Agua Helada", false).toString());
+            float tempAgregadoSabor = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoSabor.getText(), "Temperatura Agregado Sabor", false).toString());
+            float tempAgregadoColor = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempAgregadoColor.getText(), "Temperatura Agregado Color", false).toString());
+            int litrosSuero = utilidad.validarNumericos(txtSuero.getText(), "Litros de Suero", false);
+            int unidadesObtenidas = utilidad.validarNumericos(txtUnidadesObtenidas.getText(), "Unidades Obtenidas", false);
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
             utilidad.validarHoraNoMayor(horaComienzoIncubacion, horaFinIncubacion, "Hora de Inicio de Incubacion y Hora de Fin de Incubacion", "Inicio ", "Fin ");
-            utilidad.validarHoraNoMayor(horaInicio, horaComienzoIncubacion, "Hora de Inicio de Produccion y Hora de Inicio de Incubacion","Inicio de Incubacion", "Inicio de Produccion");
-            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFin, "Hora de Finalizacion de Incubacion y Hora de Finalizacion de Produccion","Fin de Incubacion", "Fin de Produccion");
-            utilidad.validarHoraNoMayor(horaComienzoEnfriado, horaFinEnfriado, "Hora de Inicio de Enfriado y Hora de fin de Enfriado","Hora Inicio Enfriado", "Hora fin Enfriado");
-            utilidad.validarHoraNoMayor(horaComienzoIncubacion,horaComienzoEnfriado,"Hora de Comienzo Enfriado y Hora de Comienzo Incubacion","Hora Comienzo Incubacion","Hora Comienzo Enfriado");
-            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFinEnfriado, "Hora de Finalizacion de Incubacion y Hora de finalizacion de Enfriado","Hora fin incubacion","Hora Fin Enfriado");
-            utilidad.validarHoraNoMayor(horaFinEnfriado, horaFin, "Hora de Finalizacion de Enfriado y Hora de Finalizacion de Produccion","Fin de Enfriado", "Fin de Produccion");
-           
-            Controlador c= new Controlador();
-            ProduccionYogur produccion=c.buscarProduccionYogur(id);
-            
+            utilidad.validarHoraNoMayor(horaInicio, horaComienzoIncubacion, "Hora de Inicio de Produccion y Hora de Inicio de Incubacion", "Inicio de Incubacion", "Inicio de Produccion");
+            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFin, "Hora de Finalizacion de Incubacion y Hora de Finalizacion de Produccion", "Fin de Incubacion", "Fin de Produccion");
+            utilidad.validarHoraNoMayor(horaComienzoEnfriado, horaFinEnfriado, "Hora de Inicio de Enfriado y Hora de fin de Enfriado", "Hora Inicio Enfriado", "Hora fin Enfriado");
+            utilidad.validarHoraNoMayor(horaComienzoIncubacion, horaComienzoEnfriado, "Hora de Comienzo Enfriado y Hora de Comienzo Incubacion", "Hora Comienzo Incubacion", "Hora Comienzo Enfriado");
+            utilidad.validarHoraNoMayor(horaFinIncubacion, horaFinEnfriado, "Hora de Finalizacion de Incubacion y Hora de finalizacion de Enfriado", "Hora fin incubacion", "Hora Fin Enfriado");
+            utilidad.validarHoraNoMayor(horaFinEnfriado, horaFin, "Hora de Finalizacion de Enfriado y Hora de Finalizacion de Produccion", "Fin de Enfriado", "Fin de Produccion");
+
+            Controlador c = new Controlador();
+            ProduccionYogur produccion = c.buscarProduccionYogur(id);
+
             try {
                 Empleado empleado = controlador.buscarEmpleado(idEncargado);
-                
+
                 if (empleado instanceof Empleado) {
                     produccion.setEncargado(empleado);
                 } else {
@@ -1579,18 +1568,17 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
 
             String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
             LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            int litros =  lechep.getLitros();
-           
+            int litros = lechep.getLitros();
+
             if (lechep instanceof LechePasteurizada) {
 
                 produccion.setLitros(litros);
             } else {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
-            
-           
+
             int kgObtenidos = unidadesObtenidas;
-            int rendimiento = Math.round(kgObtenidos / (litros+litrosSuero)) * 100; // Usa división en coma flotante // Usa división en coma flotante
+            int rendimiento = Math.round(kgObtenidos / (litros + litrosSuero)) * 100; // Usa división en coma flotante // Usa división en coma flotante
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
             produccion.setCodInterno(CodigoInterno);
@@ -1606,7 +1594,7 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             produccion.setTiempoTrabajado(TiempoTrabajado);
             produccion.setNroTacho(nroTacho);
             produccion.setIdProduccion(id);
-            
+
             produccion.setHoraComienzoIncubacion(horaComienzoIncubacion);
             produccion.setHoraFinIncubacion(horaFinIncubacion);
             produccion.setHoraComienzoEnfriado(horaComienzoEnfriado);
@@ -1619,14 +1607,10 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             produccion.setTiempoTotalEnfriado(tiempoEnfriado);
             produccion.setLitrosSuero(litrosSuero);
             produccion.setUnidadesObtenidas(unidadesObtenidas);
-            
-            
-            if(unidadesObtenidas<litros+litrosSuero)
-            {
+
+            if (unidadesObtenidas < litros + litrosSuero) {
                 produccion.setUnidadesObtenidas(unidadesObtenidas);
-            }
-            else
-            {
+            } else {
                 throw new Exception("Verifique cantidad de unidades obtenidas o cantidad de materia prima (Suero y Leche),"
                         + "dicha cantidad de Unidades daria como resultado una obtencion de materia prima incoherente "
                         + "respecto a la cantidad de materia prima utilizada");
@@ -1634,14 +1618,14 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
 
             boolean modificar = controlador.modificarProduccionYogur(produccion);
             if (modificar) {
-               
+
                 JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
-                
+
                 limpiarFormulario();
                 listar();
                 listarLeche();
             }
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
@@ -1739,12 +1723,12 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUnidadesObtenidasActionPerformed
 
-   /* private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
+    /* private void actualizarLitros(LechePasteurizada lecheP, int litrosUtilizados) {
         int litrosDisponibles = lecheP.getCremaDisponible();
         lecheP.setCremaDisponible(litrosDisponibles - litrosUtilizados);
         controlador.modificarPasteurizado(lecheP);
     }*/
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane PanelScroll;
     private javax.swing.JButton btnAgregarEmpleado;

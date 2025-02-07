@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -13,116 +12,109 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JInternalFrame;
 
-
 public class Principal extends javax.swing.JFrame {
 
     /**
      * Creates new form Principal
      */
-    
-    
     public Principal() {
         initComponents();
-   
+
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="Singleton">
-   private void Singleton(String pFormulario) {
-    boolean encontrado = false;
+    private void Singleton(String pFormulario) {
+        boolean encontrado = false;
 
-    
-    for (JInternalFrame frame : escritorio.getAllFrames()) {
-        if (frame.getName().equals(pFormulario)) { // Usamos getName() en lugar de getTitle()
-            encontrado = true;
-            try {
-                frame.setSelected(true); 
-            } catch (Exception e) {
-                e.printStackTrace();
+        for (JInternalFrame frame : escritorio.getAllFrames()) {
+            if (frame.getName().equals(pFormulario)) { // Usamos getName() en lugar de getTitle()
+                encontrado = true;
+                try {
+                    frame.setSelected(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break; // Detiene la búsqueda una vez encontrada
             }
-            break; // Detiene la búsqueda una vez encontrada
-        }
-    }
-
-    
-    if (!encontrado) {
-        JInternalFrame nuevoFrame = null;
-
-        switch (pFormulario) {
-            case "GestionSilos":
-                nuevoFrame = new GestionSilos();
-                break;
-            case "GestionAnalisisDulce":
-                nuevoFrame = new GestionAnalisisDulce();
-                break;
-            case "GestionAnalisisLeche":
-                nuevoFrame = new GestionAnalisisLeche();
-                break;
-            case "GestionAnalisisLechePasteurizada":
-                nuevoFrame = new GestionAnalisisLechePasteurizada();
-                break;    
-            case "GestionAnalisisManteca":
-                nuevoFrame = new GestionAnalisisManteca();
-                break;
-            case "GestionAnalisisQueso":
-                nuevoFrame = new GestionAnalisisQueso();
-                break;
-            case "GestionAnalisisYogur":
-                nuevoFrame = new GestionAnalisisYogur();
-                break;
-            case "GestionEmpleados":
-                nuevoFrame = new GestionEmpleados();
-                break;
-            case "GestionEnvases":
-                nuevoFrame = new GestionEnvases();
-                break;
-            case "GestionIngresoLeche":
-                nuevoFrame = new GestionIngresoLeche();
-                break;
-            case "GestionInsumos":
-                nuevoFrame = new GestionInsumos();
-                break;
-            case "GestionPasteurizados":
-                nuevoFrame = new GestionPasteurizados();
-                break;
-            case "GestionProduccionDulce":
-                nuevoFrame = new GestionProduccionDulce();
-                break;    
-            case "GestionProduccionManteca":
-                nuevoFrame = new GestionProduccionManteca();
-                break;
-            case "GestionProduccionQueso":
-                nuevoFrame = new GestionProduccionQueso();
-                break;    
-            case "GestionProduccionYogur":
-                nuevoFrame = new GestionProduccionYogur();
-                break;
-            case "GestionProductos":
-                nuevoFrame = new GestionProductos();
-                break;
-            case "GestionSecciones":
-                nuevoFrame = new GestionSecciones();
-                break;
-            case "GestionTambo":
-                nuevoFrame = new GestionTambo();
-                break;
-            case "ListadoAnalisis":
-                nuevoFrame = new ListadoAnalisis();
-                break;
-            case "ListadoProducciones":
-                nuevoFrame = new ListadoProducciones();
-                break;
-
         }
 
-        if (nuevoFrame != null) {
-            nuevoFrame.setName(pFormulario); // Establece un nombre para comparación
-            escritorio.add(nuevoFrame);
-            nuevoFrame.setVisible(true);
+        if (!encontrado) {
+            JInternalFrame nuevoFrame = null;
+
+            switch (pFormulario) {
+                case "GestionSilos":
+                    nuevoFrame = new GestionSilos();
+                    break;
+                case "GestionAnalisisDulce":
+                    nuevoFrame = new GestionAnalisisDulce();
+                    break;
+                case "GestionAnalisisLeche":
+                    nuevoFrame = new GestionAnalisisLeche();
+                    break;
+                case "GestionAnalisisLechePasteurizada":
+                    nuevoFrame = new GestionAnalisisLechePasteurizada();
+                    break;
+                case "GestionAnalisisManteca":
+                    nuevoFrame = new GestionAnalisisManteca();
+                    break;
+                case "GestionAnalisisQueso":
+                    nuevoFrame = new GestionAnalisisQueso();
+                    break;
+                case "GestionAnalisisYogur":
+                    nuevoFrame = new GestionAnalisisYogur();
+                    break;
+                case "GestionEmpleados":
+                    nuevoFrame = new GestionEmpleados();
+                    break;
+                case "GestionEnvases":
+                    nuevoFrame = new GestionEnvases();
+                    break;
+                case "GestionIngresoLeche":
+                    nuevoFrame = new GestionIngresoLeche();
+                    break;
+                case "GestionInsumos":
+                    nuevoFrame = new GestionInsumos();
+                    break;
+                case "GestionPasteurizados":
+                    nuevoFrame = new GestionPasteurizados();
+                    break;
+                case "GestionProduccionDulce":
+                    nuevoFrame = new GestionProduccionDulce();
+                    break;
+                case "GestionProduccionManteca":
+                    nuevoFrame = new GestionProduccionManteca();
+                    break;
+                case "GestionProduccionQueso":
+                    nuevoFrame = new GestionProduccionQueso();
+                    break;
+                case "GestionProduccionYogur":
+                    nuevoFrame = new GestionProduccionYogur();
+                    break;
+                case "GestionProductos":
+                    nuevoFrame = new GestionProductos();
+                    break;
+                case "GestionSecciones":
+                    nuevoFrame = new GestionSecciones();
+                    break;
+                case "GestionTambo":
+                    nuevoFrame = new GestionTambo();
+                    break;
+                case "ListadoAnalisis":
+                    nuevoFrame = new ListadoAnalisis();
+                    break;
+                case "ListadoProducciones":
+                    nuevoFrame = new ListadoProducciones();
+                    break;
+
+            }
+
+            if (nuevoFrame != null) {
+                nuevoFrame.setName(pFormulario); // Establece un nombre para comparación
+                escritorio.add(nuevoFrame);
+                nuevoFrame.setVisible(true);
+            }
         }
-    }
-}// </editor-fold>  
-
-
+    }// </editor-fold>  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -402,7 +394,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuSeccionesActionPerformed
 
     private void menuTambosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuTambosMouseClicked
-       this.Singleton("GestionTambo");
+        this.Singleton("GestionTambo");
     }//GEN-LAST:event_menuTambosMouseClicked
 
     private void menuTambosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTambosActionPerformed
@@ -410,7 +402,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuTambosActionPerformed
 
     private void menuInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuInsumosMouseClicked
-       this.Singleton("GestionInsumos");
+        this.Singleton("GestionInsumos");
     }//GEN-LAST:event_menuInsumosMouseClicked
 
     private void menuEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuEmpleadosMouseClicked
@@ -430,7 +422,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAnalisisLecheActionPerformed
 
     private void menuAnalisisLechePasteurizadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisLechePasteurizadaActionPerformed
-       this.Singleton("GestionAnalisisLechePasteurizada");
+        this.Singleton("GestionAnalisisLechePasteurizada");
     }//GEN-LAST:event_menuAnalisisLechePasteurizadaActionPerformed
 
     private void menuProduccionesMantecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProduccionesMantecaActionPerformed
@@ -446,7 +438,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAnalisisMantecaActionPerformed
 
     private void menuProduccionQuesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProduccionQuesoActionPerformed
-       this.Singleton("GestionProduccionQueso");
+        this.Singleton("GestionProduccionQueso");
     }//GEN-LAST:event_menuProduccionQuesoActionPerformed
 
     private void menuAnalisisYogurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisYogurActionPerformed
@@ -458,11 +450,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAnalisisQuesoActionPerformed
 
     private void menuEnvasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuEnvasesMouseClicked
-       this.Singleton("GestionEnvases");
+        this.Singleton("GestionEnvases");
     }//GEN-LAST:event_menuEnvasesMouseClicked
 
     private void menuProduccionDulceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProduccionDulceActionPerformed
-       this.Singleton("GestionProduccionDulce");
+        this.Singleton("GestionProduccionDulce");
     }//GEN-LAST:event_menuProduccionDulceActionPerformed
 
     private void menuAnalisisDulceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAnalisisDulceActionPerformed
@@ -541,6 +533,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuSilos;
     private javax.swing.JMenu menuTambos;
     // End of variables declaration//GEN-END:variables
-
 
 }

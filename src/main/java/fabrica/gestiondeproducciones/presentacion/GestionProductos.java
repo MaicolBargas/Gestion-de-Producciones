@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -8,24 +7,24 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class GestionProductos extends javax.swing.JInternalFrame {
 
-     Utilidades utilidad = new Utilidades();
+    Utilidades utilidad = new Utilidades();
     Producto producto = new Producto();
     Controlador controlador = new Controlador();
     DefaultTableModel modelo = new DefaultTableModel();
-    
+
     public GestionProductos() {
         initComponents();
         listarProductos();
     }
-private void listarProductos(){
+
+    private void listarProductos() {
         limpiarTabla();
         List<Producto> lista = controlador.listarProductos();
         modelo = (DefaultTableModel) TablaProductos.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getNombre();
             objeto[2] = lista.get(i).getDescripcion();
@@ -33,17 +32,20 @@ private void listarProductos(){
         }
         TablaProductos.setModel(modelo);
     }
-   public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
         txtNombre.setText("");
         txtDescripcion.setText("");
     }
- private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -259,45 +261,46 @@ private void listarProductos(){
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try{
-            String nombre = utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
             producto.setNombre(nombre);
             producto.setDescripcion(descripcion);
-if(!txtId.getText().equals(""))
-            {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
-            }
+
             boolean altaProducto = controlador.altaProducto(producto);
-            if(altaProducto){
+            if (altaProducto) {
                 JOptionPane.showMessageDialog(null, "Producto dado de alta.");
                 limpiarFormulario();
                 listarProductos();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean bajaProducto = controlador.bajaProducto(id);
-            if(bajaProducto){
+            if (bajaProducto) {
                 JOptionPane.showMessageDialog(null, "Producto dado de baja.");
                 limpiarFormulario();
                 listarProductos();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
-            String nombre =utilidad.sanitizarCampos(txtNombre.getText(),"Nombre", false);
+            String nombre = utilidad.sanitizarCampos(txtNombre.getText(), "Nombre", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
 
             producto.setId(id);
@@ -305,13 +308,13 @@ if(!txtId.getText().equals(""))
             producto.setDescripcion(descripcion);
 
             boolean modificarProducto = controlador.modificarProducto(producto);
-            if(modificarProducto){
+            if (modificarProducto) {
                 JOptionPane.showMessageDialog(null, "Producto modificado correctamente.");
                 limpiarFormulario();
                 listarProductos();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

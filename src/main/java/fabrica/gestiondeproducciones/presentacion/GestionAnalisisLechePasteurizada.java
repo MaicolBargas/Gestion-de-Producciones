@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.AnalisisLechePasteurizada;
@@ -24,13 +23,13 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     Utilidades utilidad = new Utilidades();
     AnalisisLechePasteurizada analisis = new AnalisisLechePasteurizada();
     Controlador controlador = new Controlador();
-    Empleado encargado= new Empleado();
-    LechePasteurizada lechePast= new LechePasteurizada();
+    Empleado encargado = new Empleado();
+    LechePasteurizada lechePast = new LechePasteurizada();
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel modeloIngresos = new DefaultTableModel();
     String tipoAnalisis = "pasteurizada";
     private TableRowSorter<TableModel> filtroTabla;
-    
+
     public GestionAnalisisLechePasteurizada() {
         initComponents();
         listar();
@@ -38,22 +37,18 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
     }
 
-    
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
-    
-     private String descremadoTexto(boolean p){
-        if(!p){
+    private String descremadoTexto(boolean p) {
+        if (!p) {
             return "No";
-        }
-        else
-        {
+        } else {
             return "Si";
         }
     }
-     
-    public void limpiarFormulario(){
+
+    public void limpiarFormulario() {
         txtId.setText("");
-        txtLitros.setText("");      
+        txtLitros.setText("");
         txtEncargado.setText("");
         txtFecha.setText("");
         txtLevadura.setText("");
@@ -70,56 +65,55 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         txtDescremado.setText("");
         txtLecheIng.setText("");
         txtCantCrema.setText("");
-        
+
     }
-  
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-   
-    
-    private void limpiarTablaIngresos(){
-        for(int i = 0; i < modeloIngresos.getRowCount(); i++){
+
+    private void limpiarTablaIngresos() {
+        for (int i = 0; i < modeloIngresos.getRowCount(); i++) {
             modeloIngresos.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
-    
-    private void listarLechePasteurizada(){     
+
+    private void listarLechePasteurizada() {
         limpiarTablaIngresos();
         List<LechePasteurizada> lista = controlador.listarPasteurizadosPendientesAnalizar();
         modeloIngresos = (DefaultTableModel) tablaIngresos.getModel();
         Object[] objeto = new Object[6];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getTemperatura();
             objeto[2] = lista.get(i).getLitros();
-            objeto[3] = lista.get(i).getIngreso().getIdIngreso()+" - "+lista.get(i).getIngreso().getTambo().getPropietario();
+            objeto[3] = lista.get(i).getIngreso().getIdIngreso() + " - " + lista.get(i).getIngreso().getTambo().getPropietario();
             objeto[4] = descremadoTexto(lista.get(i).getDescremado());
             objeto[5] = lista.get(i).getCrema();
             modeloIngresos.addRow(objeto);
         }
         tablaIngresos.setModel(modeloIngresos);
     }
-  
-    private void cargarFecha(){
+
+    private void cargarFecha() {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fecha = fechaHoy.format(format);
         txtFecha.setText(fecha);
     }
-    
-    private void listar(){
+
+    private void listar() {
         limpiarTabla();
         listarLechePasteurizada();
         cargarFecha();
         List<AnalisisLechePasteurizada> lista = controlador.listarAnalisisLechePast();
         modelo = (DefaultTableModel) tablaAnalisis.getModel();
         Object[] objeto = new Object[12];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getEncargado().getNombre();
             objeto[2] = lista.get(i).getFecha();
@@ -139,32 +133,31 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
     }
-  
-    private Empleado buscarEncargado() throws Exception{
-        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);        
-        String[] nombreCompleto = valor.split(" ");        
+
+    private Empleado buscarEncargado() throws Exception {
+        String valor = utilidad.sanitizarCampos(txtEncargado.getText(), "Encargado", false);
+        String[] nombreCompleto = valor.split(" ");
         List<Empleado> empleados = controlador.listarEmpleados();
-        
-        for(Empleado empleado : empleados){
-            try{
+
+        for (Empleado empleado : empleados) {
+            try {
                 Integer ci = Integer.valueOf(valor);
-                if(ci.equals(empleado.getCi())){
+                if (ci.equals(empleado.getCi())) {
                     return empleado;
                 }
-            }catch(NumberFormatException e){
-                
-            }                                    
-            if(empleado.getNombre().equalsIgnoreCase(valor) ||
-               empleado.getApellido().equalsIgnoreCase(valor) ||
-               Arrays.asList(nombreCompleto).contains(empleado.getNombre())||
-               Arrays.asList(nombreCompleto).contains(empleado.getApellido())
-               ){
-                return empleado;              
-            }                         
+            } catch (NumberFormatException e) {
+
+            }
+            if (empleado.getNombre().equalsIgnoreCase(valor)
+                    || empleado.getApellido().equalsIgnoreCase(valor)
+                    || Arrays.asList(nombreCompleto).contains(empleado.getNombre())
+                    || Arrays.asList(nombreCompleto).contains(empleado.getApellido())) {
+                return empleado;
+            }
         }
         throw new Exception("No existe un usuario con estos datos");
     }
-    
+
     private void agregarFiltros(javax.swing.JTextField campo, TableRowSorter fila) {
         campo.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -193,10 +186,9 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             rf = RowFilter.regexFilter("(?i)" + campo.getText());
         }
         fila.setRowFilter(rf);
-    }   
-    
+    }
+
     // </editor-fold>
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -466,13 +458,13 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
         txtLevadura.setToolTipText("");
 
-        jLabel6.setText("Mos:");
+        jLabel6.setText("Mohos:");
 
         txtMos.setToolTipText("");
 
-        jLabel7.setText("Poliformos totales:");
+        jLabel7.setText("Coliformes totales:");
 
-        jLabel8.setText("Poliformos fecales:");
+        jLabel8.setText("Coliformes fecales:");
 
         jLabel13.setText("Grasa:");
 
@@ -656,7 +648,7 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
             },
             new String [] {
-                "Id", "Encargado", "Fecha", "Levadura", "Mos", "Poliformos Totales", "Poliformos fecales", "Grasa", "Proteina", "Agua", "PH", "Pasteurizada"
+                "Id", "Encargado", "Fecha", "Levadura", "Mohos", "Coliformes Totales", "Coliformes fecales", "Grasa", "Proteina", "Agua", "PH", "Pasteurizada"
             }
         ) {
             Class[] types = new Class [] {
@@ -720,7 +712,13 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try{
+        try {
+
+            String idP = txtId.getText().trim();
+            if (!idP.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+
             String fecha = utilidad.controlarFechas(txtFecha.getText());
             int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
@@ -730,26 +728,25 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int id = utilidad.validarNumericos(txtIdLechePast.getText(), "leche pasteurizada", false);
-             float ph= utilidad.validarNumericosFloat(txtPh.getText(),"PH", false);
+            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
             LechePasteurizada ingreso = controlador.buscarPasteurizado(id);
 
-            try{
+            try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     analisis.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un empleado habilitado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
-            
-            if(pFecales > pTotales){
+
+            if (pFecales > pTotales) {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
-            if(!txtId.getText().equals(""))
-            {
+            if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
             analisis.setTipo(tipoAnalisis);
@@ -763,39 +760,40 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             analisis.setProteina(proteina);
             analisis.setAgua(agua);
             analisis.setPh(ph);
-            
 
-            if(lechePast instanceof LechePasteurizada){
+            if (lechePast instanceof LechePasteurizada) {
                 analisis.setLechePast(ingreso);
-            }else{throw new Exception("La Pasteurizacion no existe en el sistema");}
+            } else {
+                throw new Exception("La Pasteurizacion no existe en el sistema");
+            }
 
             boolean alta = controlador.altaAnalisisLechePast(analisis);
-            if(alta){
+            if (alta) {
                 JOptionPane.showMessageDialog(null, "Analisis dado de alta.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaAnalisis(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Analisis dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        try{
+        try {
             String fecha = utilidad.controlarFechas(txtFecha.getText());
             int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
@@ -805,21 +803,21 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
             int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
             int id = utilidad.validarNumericos(txtIdLechePast.getText(), "Ingreso", false);
-             float ph= utilidad.validarNumericosFloat(txtPh.getText(),"PH", false);
+            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
             LechePasteurizada lechePast = controlador.buscarPasteurizado(id);
-            
-            try{
+
+            try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
-                if(empleado instanceof Empleado){
+                if (empleado instanceof Empleado) {
                     analisis.setEncargado(empleado);
-                }else{
+                } else {
                     throw new Exception("Debe seleccionar un empleado habilitado");
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 throw new Exception("Debe buscar un usuario valido primero, por favor verifique");
             }
-            if(pFecales > pTotales){
+            if (pFecales > pTotales) {
                 throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
             }
 
@@ -832,67 +830,67 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             analisis.setProteina(proteina);
             analisis.setAgua(agua);
             analisis.setPh(ph);
-            
-            if(lechePast instanceof LechePasteurizada){
+
+            if (lechePast instanceof LechePasteurizada) {
                 analisis.setLechePast(lechePast);
-            }else{throw new Exception("El Pasteurizado no existe en el sistema");}
+            } else {
+                throw new Exception("El Pasteurizado no existe en el sistema");
+            }
 
             boolean modificar = controlador.modificarAnalisisLechePast(analisis);
-            if(modificar){
+            if (modificar) {
                 JOptionPane.showMessageDialog(null, "Analisis modificado correctamente.");
                 limpiarFormulario();
                 listar();
             }
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
             encargado = buscarEncargado();
-            txtEncargado.setText(encargado.getId() + " - " + encargado.getNombre() +" "+ encargado.getApellido());
+            txtEncargado.setText(encargado.getId() + " - " + encargado.getNombre() + " " + encargado.getApellido());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-  
-    
+
     private void tablaAnalisisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAnalisisMouseClicked
         int fila = tablaAnalisis.rowAtPoint(evt.getPoint());
         txtId.setText(tablaAnalisis.getValueAt(fila, 0).toString());
-        txtEncargado.setText(tablaAnalisis.getValueAt(fila,1).toString());
-        txtFecha.setText(tablaAnalisis.getValueAt(fila,2).toString());
-        txtLevadura.setText(tablaAnalisis.getValueAt(fila,3).toString());
-        txtMos.setText(tablaAnalisis.getValueAt(fila,4).toString());
-        txtPTotales.setText(tablaAnalisis.getValueAt(fila,5).toString());
-        txtPFecales.setText(tablaAnalisis.getValueAt(fila,6).toString());
-        txtGrasa.setText(tablaAnalisis.getValueAt(fila,7).toString());
-        txtProteina.setText(tablaAnalisis.getValueAt(fila,8).toString());
-        txtAgua.setText(tablaAnalisis.getValueAt(fila,9).toString());
-        txtPh.setText(tablaAnalisis.getValueAt(fila,10).toString());
+        txtEncargado.setText(tablaAnalisis.getValueAt(fila, 1).toString());
+        txtFecha.setText(tablaAnalisis.getValueAt(fila, 2).toString());
+        txtLevadura.setText(tablaAnalisis.getValueAt(fila, 3).toString());
+        txtMos.setText(tablaAnalisis.getValueAt(fila, 4).toString());
+        txtPTotales.setText(tablaAnalisis.getValueAt(fila, 5).toString());
+        txtPFecales.setText(tablaAnalisis.getValueAt(fila, 6).toString());
+        txtGrasa.setText(tablaAnalisis.getValueAt(fila, 7).toString());
+        txtProteina.setText(tablaAnalisis.getValueAt(fila, 8).toString());
+        txtAgua.setText(tablaAnalisis.getValueAt(fila, 9).toString());
+        txtPh.setText(tablaAnalisis.getValueAt(fila, 10).toString());
         int id = Integer.parseInt(tablaAnalisis.getValueAt(fila, 11).toString());
         LechePasteurizada pasteurizada = controlador.buscarPasteurizado(id);
-        if(pasteurizada instanceof LechePasteurizada){
+        if (pasteurizada instanceof LechePasteurizada) {
             txtIdLechePast.setText(tablaAnalisis.getValueAt(fila, 11).toString());
-            txtTemp.setText(""+pasteurizada.getTemperatura());
-            txtLitros.setText(pasteurizada.getLitros()+"");
+            txtTemp.setText("" + pasteurizada.getTemperatura());
+            txtLitros.setText(pasteurizada.getLitros() + "");
             txtDescremado.setText(descremadoTexto(pasteurizada.getDescremado()));
-            txtCantCrema.setText(pasteurizada.getCrema()+"");
+            txtCantCrema.setText(pasteurizada.getCrema() + "");
             IngresoLeche ingreso = controlador.buscarIngreso(pasteurizada.getIngreso().getIdIngreso());
-            if(ingreso instanceof IngresoLeche){
-                txtLecheIng.setText(ingreso.getIdIngreso()+" - "+ ingreso.getTambo().getPropietario());
+            if (ingreso instanceof IngresoLeche) {
+                txtLecheIng.setText(ingreso.getIdIngreso() + " - " + ingreso.getTambo().getPropietario());
             }
-        }        
-        btnBuscar.doClick();            
+        }
+        btnBuscar.doClick();
     }//GEN-LAST:event_tablaAnalisisMouseClicked
 
     private void txtPhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPhActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlta;

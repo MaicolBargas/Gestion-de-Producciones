@@ -903,7 +903,7 @@
                           <Table columnCount="4" rowCount="0">
                             <Column editable="false" title="Id Insumo" type="java.lang.Integer"/>
                             <Column editable="false" title="Nombre" type="java.lang.String"/>
-                            <Column editable="true" title="Cantidad" type="java.lang.Integer"/>
+                            <Column editable="false" title="Cantidad" type="java.lang.Float"/>
                             <Column editable="false" title="Unidad Medida" type="java.lang.String"/>
                           </Table>
                         </Property>

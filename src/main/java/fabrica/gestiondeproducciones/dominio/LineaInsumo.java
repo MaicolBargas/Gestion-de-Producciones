@@ -6,7 +6,7 @@ import java.util.Objects;
 public class LineaInsumo {
     private int id;
     private Insumo insumo;
-    private int cantidad;
+    private float cantidad;
 
     public LineaInsumo() {
     }
@@ -28,21 +28,21 @@ public class LineaInsumo {
         this.insumo = insumo;
     }
 
-    public int getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(float cantidad) {
         this.cantidad = cantidad;
     }
 
-    public LineaInsumo(int id, Insumo insumo, int cantidad) {
+    public LineaInsumo(int id, Insumo insumo, float cantidad) {
         this.id = id;
         this.insumo = insumo;
         this.cantidad = cantidad;
     }
 
-    public LineaInsumo(Insumo insumo, int cantidad) {
+    public LineaInsumo(Insumo insumo, float cantidad) {
          this.insumo = insumo;
          this.cantidad = cantidad;
     }

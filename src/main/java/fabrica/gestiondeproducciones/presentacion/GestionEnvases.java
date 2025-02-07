@@ -1,4 +1,3 @@
-
 package fabrica.gestiondeproducciones.presentacion;
 
 import fabrica.gestiondeproducciones.dominio.Controlador;
@@ -9,12 +8,14 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class GestionEnvases extends javax.swing.JInternalFrame {
+
     Utilidades utilidad = new Utilidades();
-    EnvasesDulce envase= new EnvasesDulce();
+    EnvasesDulce envase = new EnvasesDulce();
     Controlador controlador = new Controlador();
-    DefaultTableModel modelo = new DefaultTableModel();;
+    DefaultTableModel modelo = new DefaultTableModel();
+
+    ;
     /**
      * Creates new form GestionSilos
      */
@@ -22,13 +23,13 @@ public class GestionEnvases extends javax.swing.JInternalFrame {
         initComponents();
         listar();
     }
-    
-    private void listar(){
+
+    private void listar() {
         limpiarTabla();
         List<EnvasesDulce> lista = controlador.listarEnvases();
         modelo = (DefaultTableModel) TablaEnvases.getModel();
         Object[] objeto = new Object[3];
-        for(int i = 0; i < lista.size(); i++){
+        for (int i = 0; i < lista.size(); i++) {
             objeto[0] = lista.get(i).getId();
             objeto[1] = lista.get(i).getDescripcion();
             objeto[2] = lista.get(i).getCapacidad();
@@ -36,11 +37,11 @@ public class GestionEnvases extends javax.swing.JInternalFrame {
         }
         TablaEnvases.setModel(modelo);
     }
-    
-    private void limpiarTabla(){
-        for(int i = 0; i < modelo.getRowCount(); i++){
+
+    private void limpiarTabla() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i =- 1;
+            i = - 1;
         }
     }
 
@@ -290,25 +291,26 @@ public class GestionEnvases extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDescripcionActionPerformed
 
     private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-      try{
-        String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Codigo Interno", false);
-        float capacidad = utilidad.validarNumericosFloat(txtCapacidad.getText(), "Capacidad", false);
-if(!txtId.getText().equals(""))
-            {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
-            }       envase.setDescripcion(descripcion);
-       envase.setCapacidad(capacidad);
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Codigo Interno", false);
+            float capacidad = utilidad.validarNumericosFloat(txtCapacidad.getText(), "Capacidad", false);
+            envase.setDescripcion(descripcion);
+            envase.setCapacidad(capacidad);
 
-        boolean alta = controlador.altaEnvase(envase);
-        if(alta){
-          JOptionPane.showMessageDialog(null, "Envase dado de alta.");
-          limpiarFormulario();
-          listar();
+            boolean alta = controlador.altaEnvase(envase);
+            if (alta) {
+                JOptionPane.showMessageDialog(null, "Envase dado de alta.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-      }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-      
+
     }//GEN-LAST:event_btnAltaActionPerformed
 
     private void TablaEnvasesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaEnvasesMouseClicked
@@ -319,16 +321,16 @@ if(!txtId.getText().equals(""))
     }//GEN-LAST:event_TablaEnvasesMouseClicked
 
     private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             boolean baja = controlador.bajaEnvase(id);
-            if(baja){
+            if (baja) {
                 JOptionPane.showMessageDialog(null, "Envase dado de baja.");
                 limpiarFormulario();
                 listar();
             }
-        }catch (Exception ex) {
-          JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBajaActionPerformed
 
@@ -337,7 +339,7 @@ if(!txtId.getText().equals(""))
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-      try{
+        try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String descripcion = utilidad.sanitizarCampos(txtDescripcion.getText(), "Descripcion", false);
             Float capacidad = utilidad.validarNumericosFloat(txtCapacidad.getText(), "Capacidad", false);
@@ -347,13 +349,13 @@ if(!txtId.getText().equals(""))
             envase.setCapacidad(capacidad);
 
             boolean modificarEnvase = controlador.modificarEnvase(envase);
-            if(modificarEnvase){
-              JOptionPane.showMessageDialog(null, "Envase modificado correctamente.");
-              limpiarFormulario();
-              listar();
+            if (modificarEnvase) {
+                JOptionPane.showMessageDialog(null, "Envase modificado correctamente.");
+                limpiarFormulario();
+                listar();
             }
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),"Advertencia", JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -361,7 +363,7 @@ if(!txtId.getText().equals(""))
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCapacidadActionPerformed
 
-    public void limpiarFormulario(){
+    public void limpiarFormulario() {
         txtId.setText("");
         txtDescripcion.setText("");
         txtCapacidad.setText("");

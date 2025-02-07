@@ -235,17 +235,17 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mos:"/>
+                <Property name="text" type="java.lang.String" value="Mohos:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Poliformos totales:"/>
+                <Property name="text" type="java.lang.String" value="Coliformes totales:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Poliformos fecales:"/>
+                <Property name="text" type="java.lang.String" value="Coliformes fecales:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -553,9 +553,9 @@
                     <Column editable="false" title="Encargado" type="java.lang.String"/>
                     <Column editable="false" title="Fecha" type="java.lang.String"/>
                     <Column editable="false" title="Levadura" type="java.lang.Integer"/>
-                    <Column editable="false" title="Mos" type="java.lang.Object"/>
-                    <Column editable="false" title="Poliformos totales" type="java.lang.Object"/>
-                    <Column editable="false" title="Poliformos fecales" type="java.lang.Object"/>
+                    <Column editable="false" title="Mohos" type="java.lang.Object"/>
+                    <Column editable="false" title="Coliformes totales" type="java.lang.Object"/>
+                    <Column editable="false" title="Coliformes fecales" type="java.lang.Object"/>
                     <Column editable="false" title="Humedad" type="java.lang.Object"/>
                     <Column editable="false" title="Sal" type="java.lang.Object"/>
                     <Column editable="false" title="PH" type="java.lang.Float"/>
