@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-public class AnalisisDulce extends Analisis{
-    
+public class AnalisisDulce extends Analisis {
+
     private int grasa;
     private int humedad;
     private float ph;
@@ -33,8 +32,6 @@ public class AnalisisDulce extends Analisis{
         this.produccion = produccion;
     }
 
-    
-
     public int getGrasa() {
         return grasa;
     }
@@ -58,6 +55,5 @@ public class AnalisisDulce extends Analisis{
     public void setProduccion(Produccion produccion) {
         this.produccion = produccion;
     }
-    
-    
+
 }

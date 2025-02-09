@@ -11,6 +11,7 @@ import fabrica.gestiondeproducciones.utilidades.Utilidades;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -259,6 +260,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
         this.txtTiempoCuajado.setText("");
         this.txtUnidadesObtenidas.setText("");
         this.txtAcidesFermento.setText("");
+        this.txtObservaciones.setText("");
         idEncargado = -1;
         idEncargadoobtener = -1;
         idEmpleado = -1;
@@ -404,6 +406,9 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
         txtUnidadesObtenidas = new javax.swing.JTextField();
         jLabel66 = new javax.swing.JLabel();
         txtAcidesFermento = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtObservaciones = new javax.swing.JTextArea();
         jPanel11 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -643,7 +648,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, true, false
@@ -1047,6 +1052,12 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setText("Observaciones:");
+
+        txtObservaciones.setColumns(20);
+        txtObservaciones.setRows(5);
+        jScrollPane1.setViewportView(txtObservaciones);
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -1094,21 +1105,31 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                             .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEncargado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtHoraInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel66)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtAcidesFermento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+                            .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel63)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtTempCuajoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel65, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel10Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel48)
+                                    .addComponent(jLabel54)
+                                    .addComponent(jLabel49))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTiempoTrabajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel65)
+                                    .addGroup(jPanel10Layout.createSequentialGroup()
                                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                                                 .addComponent(jLabel62)
@@ -1142,15 +1163,9 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                                                 .addComponent(txtTempAlCuajar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel10Layout.createSequentialGroup()
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel48)
-                                    .addComponent(jLabel54)
-                                    .addComponent(jLabel49))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtTiempoTrabajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1)))))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1264,7 +1279,11 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel66, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAcidesFermento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Buscar:");
@@ -1300,7 +1319,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                        .addGap(48, 48, 48)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1315,11 +1334,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1327,8 +1342,12 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                         .addGap(2, 2, 2)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(241, 241, 241))
+                        .addComponent(jScrollPane8))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(202, 202, 202))
         );
 
         PanelScroll.setViewportView(jPanel1);
@@ -1339,14 +1358,13 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PanelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 1566, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(PanelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1782, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(PanelScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 1045, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(PanelScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 1124, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -1386,6 +1404,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             float tempCuajoFinal = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(), "Temperatura de cuajo Final", false).toString());
             int unidadesObtenidas = utilidad.validarNumericos(txtUnidadesObtenidas.getText(), "Unidades Obtenidas", false);
             float acidesFermento = utilidad.validarPh(utilidad.validarNumericosFloat(txtAcidesFermento.getText(), "Acides de Fermento", false).toString());
+            String observaciones = utilidad.sanitizarCampos(txtObservaciones.getText(), "Observaciones", true);
 
             utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
 
@@ -1422,9 +1441,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             if (kgObtenidos > (litros / 4)) {
                 throw new Exception("Los Kg obtenidos no son coherentes respecto a la cantidad de materia prima utilizada(Litros de Leche)");
             }
-            if (!txtId.getText().equals("")) {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
-            }
+
             int rendimiento = Math.round((kgObtenidos / (litros)) * 100); // Usa división en coma flotante
 
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
@@ -1441,6 +1458,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             produccion.setHoraFin(horaFin);
             produccion.setTiempoTrabajado(TiempoTrabajado);
             produccion.setNroTacho(nroTacho);
+            produccion.setObservaciones(observaciones);
 
             produccion.setTempPastQueso(tempPastQueso);
             produccion.setTiempoReposoFermento(tiempoReposoFermento);
@@ -1660,6 +1678,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
         this.txtTipoGrano.setText(prod.getTipoDeGrano());
         this.txtUnidadesObtenidas.setText(prod.getUnidadesObtenidas() + "");
         this.txtAcidesFermento.setText(prod.getAcidesFermento() + "");
+        this.txtObservaciones.setText(prod.getObservaciones());
         listaEmpleados = prod.getListaEmpleados();
         listaInsumosLinea = prod.getListaInsumos();
 
@@ -1710,9 +1729,10 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             int sueroObtenido = utilidad.validarNumericos(txtSueroObtenido.getText(), "Cantidad de Suero Obtenido", false);
             String tiempoAgregadoAgua = utilidad.validarHora(txtTiempoAgregadoAgua.getText(), "Tiempo de Agregado de Agua");
             float tempAgua = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtxTempAgua.getText(), "Temperatura de Agua", false).toString());
-            float tempCuajoFinal = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(), "Temperatura de Cuajo Final", false).toString());
+            float tempCuajoFinal = utilidad.validarTemperatura(utilidad.validarNumericosFloat(txtTempCuajoFinal.getText(), "Temperatura de cuajo Final", false).toString());
             int unidadesObtenidas = utilidad.validarNumericos(txtUnidadesObtenidas.getText(), "Unidades Obtenidas", false);
             float acidesFermento = utilidad.validarPh(utilidad.validarNumericosFloat(txtAcidesFermento.getText(), "Acides de Fermento", false).toString());
+            String observaciones = utilidad.sanitizarCampos(txtObservaciones.getText(), "Observaciones", true);
 
             Controlador c = new Controlador();
             ProduccionQueso produccion = c.buscarProduccionQueso(id);
@@ -1740,7 +1760,6 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                 throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
             }
             if (acidesFermento < 14 && acidesFermento > 0) {
-                System.out.println("ACIDES  " + acidesFermento);
                 produccion.setAcidesFermento(acidesFermento);
 
                 produccion.setAcidesFermento(acidesFermento);
@@ -1761,52 +1780,52 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
                 objeto[2] = tablaInsumosAgregados.getValueAt(i, 2);
                 objeto[3] = tablaInsumosAgregados.getValueAt(i, 3);
 
-                listaInsumosLinea.get(i).setCantidad((int) objeto[2]);
+                listaInsumosLinea.get(i).setCantidad((float) objeto[2]);
+            }
 
-                int rendimiento = Math.round((kgObtenidos / (litros)) * 100);
-                String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
-                Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
-                produccion.setCodInterno(CodigoInterno);
-                produccion.setListaInsumos(listaInsumosLinea);
-                produccion.setListaEmpleados(listaEmpleados);
-                produccion.setLechep(lechep);
-                produccion.setProducto(producto);
-                produccion.setRendimiento(rendimiento);
-                produccion.setKgLtsObt(kgObtenidos);
-                produccion.setFecha(fecha);
-                produccion.setHoraInicio(horaInicio);
-                produccion.setHoraFin(horaFin);
-                produccion.setTiempoTrabajado(TiempoTrabajado);
-                produccion.setNroTacho(nroTacho);
+            int rendimiento = Math.round((kgObtenidos / (litros)) * 100);
+            String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
+            Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));
+            produccion.setCodInterno(CodigoInterno);
+            produccion.setListaInsumos(listaInsumosLinea);
+            produccion.setListaEmpleados(listaEmpleados);
+            produccion.setLechep(lechep);
+            produccion.setProducto(producto);
+            produccion.setRendimiento(rendimiento);
+            produccion.setKgLtsObt(kgObtenidos);
+            produccion.setFecha(fecha);
+            produccion.setHoraInicio(horaInicio);
+            produccion.setHoraFin(horaFin);
+            produccion.setTiempoTrabajado(TiempoTrabajado);
+            produccion.setNroTacho(nroTacho);
+            produccion.setObservaciones(observaciones);
 
-                produccion.setTempPastQueso(tempPastQueso);
-                produccion.setTiempoReposoFermento(tiempoReposoFermento);
-                produccion.setTempReposoFermento(tempReposoFermento);
-                produccion.setTipoCuajoObtenido(tipoCuajo);
-                produccion.setTiempoCuajado(tiempoCuajado);
-                produccion.setTempAlCuajar(tempAlCuajar);
-                produccion.setCantCuajoObtenido(cantCuajoObtenido);
-                produccion.setTipoDeGrano(tipoGrano);
-                produccion.setLitrosSueroObtenidos(sueroObtenido);
-                produccion.setTiempoAgregadoAgua(tiempoAgregadoAgua);
-                produccion.setTempAgua(tempAgua);
-                produccion.setTempCuajoFinal(tempCuajoFinal);
-                produccion.setUnidadesObtenidas(unidadesObtenidas);
-                produccion.setAcidesFermento(acidesFermento);
+            produccion.setTempPastQueso(tempPastQueso);
+            produccion.setTiempoReposoFermento(tiempoReposoFermento);
+            produccion.setTempReposoFermento(tempReposoFermento);
+            produccion.setTipoCuajoObtenido(tipoCuajo);
+            produccion.setTiempoCuajado(tiempoCuajado);
+            produccion.setTempAlCuajar(tempAlCuajar);
+            produccion.setCantCuajoObtenido(cantCuajoObtenido);
+            produccion.setTipoDeGrano(tipoGrano);
+            produccion.setLitrosSueroObtenidos(sueroObtenido);
+            produccion.setTiempoAgregadoAgua(tiempoAgregadoAgua);
+            produccion.setTempAgua(tempAgua);
+            produccion.setTempCuajoFinal(tempCuajoFinal);
+            produccion.setUnidadesObtenidas(unidadesObtenidas);
+            produccion.setAcidesFermento(acidesFermento);
 
-                boolean modificar = controlador.modificarProduccionQueso(produccion);
-                if (modificar) {
+            boolean modificar = controlador.modificarProduccionQueso(produccion);
+            if (modificar) {
 
-                    JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
+                JOptionPane.showMessageDialog(null, "Produccion Modificada Correctamente.");
 
-                    limpiarFormulario();
-                    listar();
-                    listarLeche();
-                }
-
+                limpiarFormulario();
+                listar();
+                listarLeche();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getStackTrace(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
@@ -1845,6 +1864,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
@@ -1875,6 +1895,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
@@ -1900,6 +1921,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLitros;
     private javax.swing.JTextField txtNroTacho;
+    private javax.swing.JTextArea txtObservaciones;
     private javax.swing.JTextField txtObtenidos;
     private javax.swing.JTextField txtSueroObtenido;
     private javax.swing.JTextField txtTempAlCuajar;

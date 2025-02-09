@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class EnvasesDulce {
+
     private int id;
     private String descripcion;
     private float capacidad;

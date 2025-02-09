@@ -1,7 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-public class AnalisisYogur extends Analisis{
+public class AnalisisYogur extends Analisis {
+
     private float ph;
     private Produccion produccion;
 
@@ -35,7 +35,4 @@ public class AnalisisYogur extends Analisis{
         this.produccion = produccion;
     }
 
-    
-    
-    
 }

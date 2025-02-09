@@ -1,10 +1,9 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 import java.util.List;
 
-
 public class Produccion {
+
     private int idProduccion;
     private String codInterno;
     private List<LineaInsumo> listaInsumos;
@@ -20,6 +19,7 @@ public class Produccion {
     private String horaFin;
     private String tiempoTrabajado;
     private int nroTacho;
+    private String observaciones;
 
     public void setIdProduccion(int idProduccion) {
         this.idProduccion = idProduccion;
@@ -141,16 +141,24 @@ public class Produccion {
         return nroTacho;
     }
 
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
     public Produccion() {
     }
 
-    public Produccion(int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep,int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
+    public Produccion(int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho, String observaciones) {
         this.idProduccion = idProduccion;
         this.codInterno = codInterno;
         this.listaInsumos = listaInsumos;
         this.listaEmpleados = listaEmpleados;
         this.lechep = lechep;
-        this.litros=litros;
+        this.litros = litros;
         this.producto = producto;
         this.rendimiento = rendimiento;
         this.kgLtsObt = kgLtsObt;
@@ -160,28 +168,29 @@ public class Produccion {
         this.horaFin = horaFin;
         this.tiempoTrabajado = tiempoTrabajado;
         this.nroTacho = nroTacho;
+        this.observaciones = observaciones;
     }
-    
-    public String encargadoToString(){
-        return this.encargado.getId() +"-"+ this.encargado.getNombre() +" "+ this.encargado.getApellido();
+
+    public String encargadoToString() {
+        return this.encargado.getId() + "-" + this.encargado.getNombre() + " " + this.encargado.getApellido();
     }
-    
-    public String listadoInsumos(){
+
+    public String listadoInsumos() {
         String insumos = "";
-        for(LineaInsumo insumo : listaInsumos){
-            insumos = insumo.getCantidad()+" x "+insumo.getInsumo().getNombre()+" / ";
+        for (LineaInsumo insumo : listaInsumos) {
+            insumos += insumo.getCantidad() + " x " + insumo.getInsumo().getNombre() + " / ";
         }
         return insumos;
     }
-    
-    public String listadoEmpleados(){
+
+    public String listadoEmpleados() {
         String empleados = "";
-        for(Empleado empleado : listaEmpleados){
-            empleados = empleado.getNombreCompleto()+" / ";
+        for (Empleado empleado : listaEmpleados) {
+            empleados += empleado.getNombreCompleto() + " / ";
         }
         return empleados;
     }
-    
+
     public Object[] produccionToArray() {
         return new Object[]{
             new Object[]{"Id", idProduccion},
@@ -198,9 +207,10 @@ public class Produccion {
             new Object[]{"Hora Inicio", horaInicio},
             new Object[]{"Hora Fin", horaFin},
             new Object[]{"Tiempo Trabajado", tiempoTrabajado},
-            new Object[]{"Nro Tacho", nroTacho}
+            new Object[]{"Nro Tacho", nroTacho},
+            new Object[]{"Observaciones", observaciones}
+
         };
     }
 
-   
 }

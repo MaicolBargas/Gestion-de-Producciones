@@ -3,9 +3,7 @@ package fabrica.gestiondeproducciones.persistencia;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
-
 import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
-
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
@@ -32,8 +30,8 @@ public class PersistenciaProduccionQueso {
     public boolean altaProduccionQueso(ProduccionQueso produccion) {
         String sqlProduccion = "INSERT INTO produccion "
                 + "(codInterno, idLechePast,litros, idProducto, rendimiento, "
-                + "kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+                + "kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho, observaciones) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String sqlProduccionQueso = "INSERT INTO produccion_queso"
                 + "(idProduccion,"
                 + "tempPastQueso,"
@@ -55,7 +53,6 @@ public class PersistenciaProduccionQueso {
         try {
             con = conexion.obtenerConexion();
 
-           
             consulta = con.prepareStatement(sqlProduccion, Statement.RETURN_GENERATED_KEYS);
             consulta.setString(1, produccion.getCodInterno());
             consulta.setInt(2, produccion.getLechep().getId());
@@ -69,8 +66,8 @@ public class PersistenciaProduccionQueso {
             consulta.setString(10, produccion.getHoraFin());
             consulta.setString(11, produccion.getTiempoTrabajado());
             consulta.setInt(12, produccion.getNroTacho());
-            
-          
+            consulta.setString(13, produccion.getObservaciones());
+
             consulta.executeUpdate();
 
             // Obtener el ID generado automáticamente
@@ -87,27 +84,25 @@ public class PersistenciaProduccionQueso {
             // Preparar el segundo insert
             consulta = con.prepareStatement(sqlProduccionQueso);
             consulta.setInt(1, idProduccion);
-            consulta.setFloat(2,produccion.getTempPastQueso());
+            consulta.setFloat(2, produccion.getTempPastQueso());
             consulta.setString(3, produccion.getTiempoReposoFermento());
-            consulta.setFloat(4,produccion.getTempReposoFermento());
-            consulta.setString(5,produccion.getTipoCuajoObtenido());
-            consulta.setString(6,produccion.getTiempoCuajado());
-            consulta.setFloat(7,produccion.getTempAlCuajar());
-            consulta.setInt(8,produccion.getCantCuajoObtenido());
-            consulta.setString(9,produccion.getTipoDeGrano());
-            consulta.setInt(10,produccion.getLitrosSueroObtenidos());
-            consulta.setString(11,produccion.getTiempoAgregadoAgua());
-            consulta.setFloat(12,produccion.getTempAgua());
-            consulta.setFloat(13,produccion.getTempCuajoFinal());
-            consulta.setInt(14,produccion.getUnidadesObtenidas());
-            consulta.setFloat(15,produccion.getAcidesFermento());
+            consulta.setFloat(4, produccion.getTempReposoFermento());
+            consulta.setString(5, produccion.getTipoCuajoObtenido());
+            consulta.setString(6, produccion.getTiempoCuajado());
+            consulta.setFloat(7, produccion.getTempAlCuajar());
+            consulta.setInt(8, produccion.getCantCuajoObtenido());
+            consulta.setString(9, produccion.getTipoDeGrano());
+            consulta.setInt(10, produccion.getLitrosSueroObtenidos());
+            consulta.setString(11, produccion.getTiempoAgregadoAgua());
+            consulta.setFloat(12, produccion.getTempAgua());
+            consulta.setFloat(13, produccion.getTempCuajoFinal());
+            consulta.setInt(14, produccion.getUnidadesObtenidas());
+            consulta.setFloat(15, produccion.getAcidesFermento());
             consulta.executeUpdate();
 
             for (Empleado empleado : produccion.getListaEmpleados()) {
                 persProduccion.agregarEmpleado(idProduccion, empleado.getId());
             }
-
-          
 
             for (LineaInsumo insumo : produccion.getListaInsumos()) {
                 persProduccion.agregarInsumos(idProduccion, insumo.getInsumo().getId(), insumo.getCantidad());
@@ -207,7 +202,7 @@ public class PersistenciaProduccionQueso {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
-
+                produccion.setObservaciones(resultado.getString("observaciones"));
                 produccion.setTempPastQueso(resultado.getFloat("tempPastQueso"));
                 produccion.setTiempoReposoFermento(resultado.getString("tiempoReposoFermento"));
                 produccion.setTempReposoFermento(resultado.getFloat("tempReposoFermento"));
@@ -221,7 +216,7 @@ public class PersistenciaProduccionQueso {
                 produccion.setTempAgua(resultado.getFloat("tempAgua"));
                 produccion.setTempCuajoFinal(resultado.getFloat("tempCuajoFinal"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
-                produccion.setAcidesFermento(resultado.getFloat("acidesFermento")); 
+                produccion.setAcidesFermento(resultado.getFloat("acidesFermento"));
 
                 List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
                 produccion.setListaEmpleados(empleados);
@@ -281,6 +276,7 @@ public class PersistenciaProduccionQueso {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
+                produccion.setObservaciones(resultado.getString("observaciones"));
 
 //                listarInfoEspecifica(produccion);     
                 produccion.setTempPastQueso(resultado.getFloat("tempPastQueso"));
@@ -296,7 +292,7 @@ public class PersistenciaProduccionQueso {
                 produccion.setTempAgua(resultado.getFloat("tempAgua"));
                 produccion.setTempCuajoFinal(resultado.getFloat("tempCuajoFinal"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
-                produccion.setAcidesFermento(resultado.getFloat("acidesFermento")); 
+                produccion.setAcidesFermento(resultado.getFloat("acidesFermento"));
                 List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
                 produccion.setListaEmpleados(empleados);
 
@@ -318,7 +314,7 @@ public class PersistenciaProduccionQueso {
     }
 
     public boolean modificarProduccionQueso(ProduccionQueso produccion) {
-        String sql = "UPDATE produccion SET codInterno = ?, idLechePast = ?, idProducto = ?, rendimiento = ?, kgLtsObt = ?, fecha = ?, encargadoId = ?, horaInicio = ? ,horaFin = ?, tiempoTrabajado = ?, nroTacho = ?, litros=? WHERE idProduccion = ?";
+        String sql = "UPDATE produccion SET codInterno = ?, idLechePast = ?, idProducto = ?, rendimiento = ?, kgLtsObt = ?, fecha = ?, encargadoId = ?, horaInicio = ? ,horaFin = ?, tiempoTrabajado = ?, nroTacho = ?, litros = ?, observaciones = ? WHERE idProduccion = ?";
         String sqlProduccionQueso = "UPDATE produccion_queso SET "
                 + "tempPastQueso = ?, "
                 + "tiempoReposoFermento = ?, "
@@ -351,27 +347,28 @@ public class PersistenciaProduccionQueso {
             consulta.setString(10, produccion.getTiempoTrabajado());
             consulta.setInt(11, produccion.getNroTacho());
             consulta.setInt(12, produccion.getLitros());
-            consulta.setInt(13, produccion.getIdProduccion());
+            consulta.setString(13, produccion.getObservaciones());
+            consulta.setInt(14, produccion.getIdProduccion());
             consulta.executeUpdate();
-            
+
             consulta = con.prepareStatement(sqlProduccionQueso);
-            consulta.setFloat(1,produccion.getTempPastQueso());
+            consulta.setFloat(1, produccion.getTempPastQueso());
             consulta.setString(2, produccion.getTiempoReposoFermento());
-            consulta.setFloat(3,produccion.getTempReposoFermento());
-            consulta.setString(4,produccion.getTipoCuajoObtenido());
-            consulta.setString(5,produccion.getTiempoCuajado());
-            consulta.setFloat(6,produccion.getTempAlCuajar());
-            consulta.setInt(7,produccion.getCantCuajoObtenido());
-            consulta.setString(8,produccion.getTipoDeGrano());
-            consulta.setInt(9,produccion.getLitrosSueroObtenidos());
-            consulta.setString(10,produccion.getTiempoAgregadoAgua());
-            consulta.setFloat(11,produccion.getTempAgua());
-            consulta.setFloat(12,produccion.getTempCuajoFinal());
-            consulta.setInt(13,produccion.getUnidadesObtenidas());
-            consulta.setFloat(14,produccion.getAcidesFermento());
+            consulta.setFloat(3, produccion.getTempReposoFermento());
+            consulta.setString(4, produccion.getTipoCuajoObtenido());
+            consulta.setString(5, produccion.getTiempoCuajado());
+            consulta.setFloat(6, produccion.getTempAlCuajar());
+            consulta.setInt(7, produccion.getCantCuajoObtenido());
+            consulta.setString(8, produccion.getTipoDeGrano());
+            consulta.setInt(9, produccion.getLitrosSueroObtenidos());
+            consulta.setString(10, produccion.getTiempoAgregadoAgua());
+            consulta.setFloat(11, produccion.getTempAgua());
+            consulta.setFloat(12, produccion.getTempCuajoFinal());
+            consulta.setInt(13, produccion.getUnidadesObtenidas());
+            consulta.setFloat(14, produccion.getAcidesFermento());
             consulta.setInt(15, produccion.getIdProduccion());
             consulta.executeUpdate();
-            
+
             persProduccion.actualizarEmpleadosxProduccion(produccion.getIdProduccion(), produccion.getListaEmpleados());
             persProduccion.actualizarInsumosxProduccion(produccion.getIdProduccion(), produccion.getListaInsumos());
             return true;
@@ -386,7 +383,7 @@ public class PersistenciaProduccionQueso {
             }
         }
     }
-    
+
     public List listarQuesoPendienteAnalizar() {
         List<ProduccionQueso> lista = new ArrayList<>();
         String sql = """
@@ -428,6 +425,7 @@ public class PersistenciaProduccionQueso {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
+                produccion.setObservaciones(resultado.getString("observaciones"));
 
                 produccion.setTempPastQueso(resultado.getFloat("tempPastQueso"));
                 produccion.setTiempoReposoFermento(resultado.getString("tiempoReposoFermento"));
@@ -442,7 +440,7 @@ public class PersistenciaProduccionQueso {
                 produccion.setTempAgua(resultado.getFloat("tempAgua"));
                 produccion.setTempCuajoFinal(resultado.getFloat("tempCuajoFinal"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
-                produccion.setAcidesFermento(resultado.getFloat("acidesFermento")); 
+                produccion.setAcidesFermento(resultado.getFloat("acidesFermento"));
 
                 List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
                 produccion.setListaEmpleados(empleados);
@@ -464,7 +462,7 @@ public class PersistenciaProduccionQueso {
 
         }
     }
-    
+
 }
 
 /*private void listarInfoEspecifica(ProduccionManteca produccion){

@@ -1,16 +1,15 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 public class Seccion {
-    
+
     private int id;
     private String nombre;
     private String descripcion;
     private boolean activo;
 
-    public Seccion(){
+    public Seccion() {
     }
-    
+
     public Seccion(int id, String nombre, String descripcion, boolean activo) {
         this.id = id;
         this.nombre = nombre;
@@ -50,6 +49,4 @@ public class Seccion {
         this.activo = activo;
     }
 
-    
-    
 }

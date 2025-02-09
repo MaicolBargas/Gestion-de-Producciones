@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class Analisis {
+
     private int id;
     private Empleado encargado;
     private String fecha;
@@ -90,8 +89,4 @@ public class Analisis {
         this.tipo = tipo;
     }
 
-
-    
-    
-    
 }

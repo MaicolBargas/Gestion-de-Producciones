@@ -5,6 +5,7 @@ import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -256,6 +257,12 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         jLabel10.setText("Humedad");
 
         txtId.setEditable(false);
+
+        txtEncargado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEncargadoKeyPressed(evt);
+            }
+        });
 
         txtPFecales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -822,6 +829,13 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtEncargadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEncargadoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnBuscar.doClick();
+        }
+
+    }//GEN-LAST:event_txtEncargadoKeyPressed
     //</editor-fold>
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

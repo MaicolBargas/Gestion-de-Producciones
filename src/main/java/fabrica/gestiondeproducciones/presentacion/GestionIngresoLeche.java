@@ -428,6 +428,8 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // <editor-fold defaultstate="collapsed" desc="ABM">
+
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarActionPerformed
@@ -537,6 +539,7 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         txtFecha.setText(tablaIngresos.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tablaIngresosMouseClicked
 
+    //</editor-fold>
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlta;

@@ -3,7 +3,6 @@ package fabrica.gestiondeproducciones.persistencia;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.dominio.LineaInsumo;
-import fabrica.gestiondeproducciones.dominio.ProduccionManteca;
 import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
@@ -31,8 +30,8 @@ public class PersistenciaProduccionYogur {
     public boolean altaProduccionYogur(ProduccionYogur produccion) {
         String sqlProduccion = "INSERT INTO produccion "
                 + "(codInterno, idLechePast,litros, idProducto, rendimiento, "
-                + "kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+                + "kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho, observaciones) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String sqlProduccionYogur = "INSERT INTO produccion_yogur"
                 + "(idProduccion, tempIncubacion,horaComienzoInc,horaFinInc,tiempoIncubacion,horaComienzoEnfriado,horaFinEnfriado"
                 + ",tiempoTotalEnfriado,tempAguaHelada,tempAgregadoSabor,tempAgregadoColor,litrosSuero,unidadesObtenidas) "
@@ -41,7 +40,6 @@ public class PersistenciaProduccionYogur {
         try {
             con = conexion.obtenerConexion();
 
-           
             consulta = con.prepareStatement(sqlProduccion, Statement.RETURN_GENERATED_KEYS);
             consulta.setString(1, produccion.getCodInterno());
             consulta.setInt(2, produccion.getLechep().getId());
@@ -55,8 +53,8 @@ public class PersistenciaProduccionYogur {
             consulta.setString(10, produccion.getHoraFin());
             consulta.setString(11, produccion.getTiempoTrabajado());
             consulta.setInt(12, produccion.getNroTacho());
-            
-          
+            consulta.setString(13, produccion.getObservaciones());
+
             consulta.executeUpdate();
 
             // Obtener el ID generado automáticamente
@@ -84,7 +82,7 @@ public class PersistenciaProduccionYogur {
             consulta.setFloat(10, produccion.getTempAgregadoSabor());
             consulta.setFloat(11, produccion.getTempAgregadoColor());
             consulta.setInt(12, produccion.getLitrosSuero());
-            consulta.setInt(13,produccion.getUnidadesObtenidas());
+            consulta.setInt(13, produccion.getUnidadesObtenidas());
 
             consulta.executeUpdate();
 
@@ -190,7 +188,7 @@ public class PersistenciaProduccionYogur {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
-
+                produccion.setObservaciones(resultado.getString("observaciones"));
                 produccion.setTemperaturaIncubacion(resultado.getFloat("tempIncubacion"));
                 produccion.setHoraComienzoIncubacion(resultado.getString("horaComienzoInc"));
                 produccion.setHoraFinIncubacion(resultado.getString("horaFinInc"));
@@ -262,6 +260,7 @@ public class PersistenciaProduccionYogur {
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
+                produccion.setObservaciones(resultado.getString("observaciones"));
 
 //                listarInfoEspecifica(produccion);     
                 produccion.setTemperaturaIncubacion(resultado.getFloat("tempIncubacion"));
@@ -297,7 +296,7 @@ public class PersistenciaProduccionYogur {
     }
 
     public boolean modificarProduccionYogur(ProduccionYogur produccion) {
-        String sql = "UPDATE produccion SET codInterno = ?, idLechePast = ?, idProducto = ?, rendimiento = ?, kgLtsObt = ?, fecha = ?, encargadoId = ?, horaInicio = ? ,horaFin = ?, tiempoTrabajado = ?, nroTacho = ?, litros=? WHERE idProduccion = ?";
+        String sql = "UPDATE produccion SET codInterno = ?, idLechePast = ?, idProducto = ?, rendimiento = ?, kgLtsObt = ?, fecha = ?, encargadoId = ?, horaInicio = ? ,horaFin = ?, tiempoTrabajado = ?, nroTacho = ?, litros = ?, observaciones = ? WHERE idProduccion = ?";
         String sqlProduccionYogur = "UPDATE produccion_yogur SET  tempIncubacion=?,horaComienzoInc=?,horaFinInc=?,"
                 + "tiempoIncubacion=?,horaComienzoEnfriado=?,horaFinEnfriado=?"
                 + ",tiempoTotalEnfriado=?,tempAguaHelada=?,tempAgregadoSabor=?,tempAgregadoColor=?,litrosSuero=?, unidadesObtenidas=?"
@@ -317,9 +316,10 @@ public class PersistenciaProduccionYogur {
             consulta.setString(10, produccion.getTiempoTrabajado());
             consulta.setInt(11, produccion.getNroTacho());
             consulta.setInt(12, produccion.getLitros());
-            consulta.setInt(13, produccion.getIdProduccion());
+            consulta.setString(13, produccion.getObservaciones());
+            consulta.setInt(14, produccion.getIdProduccion());
             consulta.executeUpdate();
-            
+
             consulta = con.prepareStatement(sqlProduccionYogur);
             consulta.setFloat(1, produccion.getTemperaturaIncubacion());
             consulta.setString(2, produccion.getHoraComienzoIncubacion());
@@ -332,7 +332,7 @@ public class PersistenciaProduccionYogur {
             consulta.setFloat(9, produccion.getTempAgregadoSabor());
             consulta.setFloat(10, produccion.getTempAgregadoColor());
             consulta.setInt(11, produccion.getLitrosSuero());
-            consulta.setInt(12,produccion.getUnidadesObtenidas());
+            consulta.setInt(12, produccion.getUnidadesObtenidas());
             consulta.setInt(13, produccion.getIdProduccion());
             consulta.executeUpdate();
 
@@ -350,8 +350,8 @@ public class PersistenciaProduccionYogur {
             }
         }
     }
-    
-    public List listarYogurPendienteAnalizar(){
+
+    public List listarYogurPendienteAnalizar() {
         List<ProduccionYogur> lista = new ArrayList<>();
         String sql = """
                      SELECT p.*, pm.* FROM produccion p INNER JOIN produccion_yogur pm ON p.idProduccion = pm.idProduccion WHERE p.activo = '1' AND pm.activo = '1'
@@ -359,35 +359,35 @@ public class PersistenciaProduccionYogur {
                          SELECT 1 FROM analisis a 
                          WHERE a.idProduccion = p.idProduccion 
                          AND a.activo = '1'
-                     );""";             
-        try{
+                     );""";
+        try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
-            while(resultado.next()){
+            while (resultado.next()) {
                 ProduccionYogur produccion = new ProduccionYogur();
                 int id = resultado.getInt("idProduccion");
                 produccion.setIdProduccion(id);
                 produccion.setCodInterno(resultado.getString("codInterno"));
                 LechePasteurizada lecheP = persLecheP.buscarPasteurizado(resultado.getInt("idLechePast"));
-                
-                if(lecheP instanceof LechePasteurizada){
-                       produccion.setLechep(lecheP); 
+
+                if (lecheP instanceof LechePasteurizada) {
+                    produccion.setLechep(lecheP);
                 }
-                
+
                 Producto producto = persProducto.buscarProducto(resultado.getInt("idProducto"));
-                if(producto instanceof Producto){
-                       produccion.setProducto(producto); 
+                if (producto instanceof Producto) {
+                    produccion.setProducto(producto);
                 }
-                
+
                 produccion.setRendimiento(resultado.getInt("rendimiento"));
                 produccion.setKgLtsObt(resultado.getInt("kgLtsObt"));
-                produccion.setFecha(resultado.getString("fecha"));              
+                produccion.setFecha(resultado.getString("fecha"));
                 produccion.setLitros(resultado.getInt("litros"));
                 Empleado encargado = persEmpleado.buscarEmpleado(resultado.getInt("encargadoId"));
-                if(encargado instanceof Empleado){
+                if (encargado instanceof Empleado) {
                     produccion.setEncargado(encargado);
-                } 
+                }
                 produccion.setHoraInicio(resultado.getString("horaInicio"));
                 produccion.setHoraFin(resultado.getString("horaFin"));
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
@@ -404,23 +404,24 @@ public class PersistenciaProduccionYogur {
                 produccion.setTempAgregadoColor(resultado.getFloat("tempAgregadoColor"));
                 produccion.setLitrosSuero(resultado.getInt("litrosSuero"));
                 produccion.setUnidadesObtenidas(resultado.getInt("unidadesObtenidas"));
- 
-                List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);                
+                produccion.setObservaciones(resultado.getString("observaciones"));
+
+                List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
                 produccion.setListaEmpleados(empleados);
-                
+
                 List<LineaInsumo> insumos = persProduccion.listarInsumoXProduccion(id);
                 produccion.setListaInsumos(insumos);
                 lista.add(produccion);
-            } 
+            }
             return lista;
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
-        }finally{
-            try{
+        } finally {
+            try {
                 con.close();
-            }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
     }

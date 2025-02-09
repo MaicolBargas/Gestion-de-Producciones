@@ -224,6 +224,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         this.txtTotalBatido.setText("");
         this.txtOrmas.setText("");
         this.txtLitros.setText("");
+        this.txtObservaciones.setText("");
         idEncargado = -1;
         idEncargadoobtener = -1;
         idEmpleado = -1;
@@ -359,6 +360,9 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtObservaciones = new javax.swing.JTextArea();
 
         setClosable(true);
         setIconifiable(true);
@@ -474,27 +478,25 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(btnAlta)
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(btnLimpiar)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLimpiar)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnBaja)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addComponent(btnAlta)
+                .addGap(12, 12, 12)
+                .addComponent(btnBaja)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificar)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnLimpiar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlta)
                     .addComponent(btnBaja)
-                    .addComponent(btnModificar))
+                    .addComponent(btnModificar)
+                    .addComponent(btnLimpiar))
                 .addGap(17, 17, 17))
         );
 
@@ -722,7 +724,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, true, false
@@ -867,7 +869,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -915,6 +917,12 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
+        jLabel5.setText("Observaciones:");
+
+        txtObservaciones.setColumns(20);
+        txtObservaciones.setRows(5);
+        jScrollPane1.setViewportView(txtObservaciones);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -924,75 +932,89 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 1389, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel43)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLitros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtIRendimiento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                                .addComponent(txtLitros, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxLeche, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 2, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel41)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCodigoInterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel42)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxLeche, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel50)
-                            .addComponent(jLabel46)
-                            .addComponent(jLabel47)
-                            .addComponent(jLabel48)
-                            .addComponent(jLabel54)
-                            .addComponent(jLabel52)
-                            .addComponent(jLabel53)
-                            .addComponent(jLabel55)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel49))
-                            .addComponent(jLabel45))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtObtenidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEncargado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHoraInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTiempoTrabajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtComienzoBatido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFinBatido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotalBatido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtOrmas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel43)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtIRendimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel50)
+                                    .addComponent(jLabel46)
+                                    .addComponent(jLabel47)
+                                    .addComponent(jLabel48)
+                                    .addComponent(jLabel54)
+                                    .addComponent(jLabel52)
+                                    .addComponent(jLabel53)
+                                    .addComponent(jLabel55)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel49))
+                                    .addComponent(jLabel45))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtObtenidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEncargado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHoraInicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHoraFin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTiempoTrabajado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNroTacho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtComienzoBatido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtFinBatido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtTotalBatido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtOrmas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 2, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel41)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigoInterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(386, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(380, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(432, 432, 432))))
+                        .addGap(431, 431, 431))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -1009,7 +1031,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtLitros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(39, 39, 39)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtIRendimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1028,11 +1050,8 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtHoraInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1060,14 +1079,16 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtOrmas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
         );
 
@@ -1088,6 +1109,116 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    // <editor-fold defaultstate="collapsed" desc="ABM">
+
+    private void btnAgregarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumoActionPerformed
+        try {
+            Insumo insumo = controlador.buscarInsumo(idInsumo);
+            int cantidad = Integer.parseInt(txtCantidadInsumo.getText());
+
+            LineaInsumo insumoLinea = new LineaInsumo(insumo, cantidad);
+            if (insumo instanceof Insumo && insumoLinea instanceof LineaInsumo) {
+                if (!listaInsumosLinea.contains(insumoLinea)) {
+                    listaInsumosLinea.add(insumoLinea);
+                } else {
+                    throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
+                }
+                listarLineaInsumos(listaInsumosLinea);
+            } else {
+                throw new Exception("Debe seleccionar un empleado de la lista");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAgregarInsumoActionPerformed
+
+    private void btnEliminarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarInsumoActionPerformed
+        try {
+            idInsumo = idInsumoEliminar;
+            Insumo insumo = controlador.buscarInsumo(idInsumo);
+            LineaInsumo lineaInsumo = new LineaInsumo();
+            lineaInsumo.setInsumo(insumo);
+            if (listaInsumosLinea.contains(lineaInsumo)) {
+                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar " + insumo.getNombre() + " de la lista?");
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    listaInsumosLinea.remove(lineaInsumo);
+                }
+            } else {
+                throw new Exception("Debe seleccionar un insumo a eliminar");
+            }
+            listarLineaInsumos(listaInsumosLinea);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarInsumoActionPerformed
+
+    private void tablaAgregarInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarInsumosMouseClicked
+        int fila = tablaAgregarInsumos.rowAtPoint(evt.getPoint());
+        idInsumo = (int) tablaAgregarInsumos.getValueAt(fila, 0);
+    }//GEN-LAST:event_tablaAgregarInsumosMouseClicked
+
+    private void tablaInsumosAgregadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInsumosAgregadosMouseClicked
+        int fila = tablaInsumosAgregados.rowAtPoint(evt.getPoint());
+        idInsumoEliminar = (int) tablaInsumosAgregados.getValueAt(fila, 0);
+    }//GEN-LAST:event_tablaInsumosAgregadosMouseClicked
+
+    private void btnSeleccionarEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarEncargadoActionPerformed
+
+        idEncargado = idEncargadoobtener;
+        Empleado empleado = controlador.buscarEmpleado(idEncargado);
+        txtEncargado.setText(empleado.getId() + "-" + empleado.getNombre());
+    }//GEN-LAST:event_btnSeleccionarEncargadoActionPerformed
+
+    private void btnAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadoActionPerformed
+        try {
+            idEmpleado = idEmpleadoObtener;
+            Empleado unEmpleado = controlador.buscarEmpleado(idEmpleado);
+            if (unEmpleado instanceof Empleado) {
+                if (!listaEmpleados.contains(unEmpleado)) {
+                    listaEmpleados.add(unEmpleado);
+                } else {
+                    throw new Exception("El Empleado ya se encuentra agregado a la lista");
+                }
+                listarEmpleados(listaEmpleados);
+            } else {
+                throw new Exception("Debe seleccionar un empleado de la lista");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAgregarEmpleadoActionPerformed
+
+    private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
+        try {
+            idEmpleado = idEmpleadoEliminar;
+            Empleado empleadoEliminar = controlador.buscarEmpleado(idEmpleado);
+            if (listaEmpleados.contains(empleadoEliminar)) {
+                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar a " + empleadoEliminar.getNombreCompleto() + " de la lista?");
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    listaEmpleados.remove(empleadoEliminar);
+                }
+            } else {
+                throw new Exception("Debe seleccionar un empleado a eliminar");
+            }
+            listarEmpleados(listaEmpleados);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
+
+    private void tablaAgregarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarEmpleadosMouseClicked
+
+        int fila = tablaAgregarEmpleados.rowAtPoint(evt.getPoint());
+        idEncargadoobtener = (int) tablaAgregarEmpleados.getValueAt(fila, 0);
+        idEmpleadoObtener = (int) tablaAgregarEmpleados.getValueAt(fila, 0);
+    }//GEN-LAST:event_tablaAgregarEmpleadosMouseClicked
+
+    private void tablaEmpleadosTrabajaronMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosTrabajaronMouseClicked
+        int fila = tablaEmpleadosTrabajaron.rowAtPoint(evt.getPoint());
+        idEmpleadoEliminar = (int) tablaEmpleadosTrabajaron.getValueAt(fila, 0);
+    }//GEN-LAST:event_tablaEmpleadosTrabajaronMouseClicked
+
     private void tablaProduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProduccionesMouseClicked
         int fila = tablaProducciones.rowAtPoint(evt.getPoint());
         int id = Integer.parseInt(tablaProducciones.getValueAt(fila, 0).toString());
@@ -1117,172 +1248,17 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         txtFinBatido.setText(prod.getHoraFinBatido());
         txtTotalBatido.setText(prod.getTiempoTotalBatido());
         txtOrmas.setText(prod.getCantidad() + "");
+        txtObservaciones.setText(prod.getObservaciones());
         listaEmpleados = prod.getListaEmpleados();
         listaInsumosLinea = prod.getListaInsumos();
 
         listarEmpleados(prod.getListaEmpleados());
         listarLineaInsumos(prod.getListaInsumos());
-
     }//GEN-LAST:event_tablaProduccionesMouseClicked
-
-    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
-        try {
-            String id = txtId.getText().trim();
-            if (!id.isEmpty()) {
-                throw new Exception("No puede darse de alta un registro existente.");
-            }
-            String fecha = utilidad.controlarFechas(txtFecha.getText());
-
-            String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
-            String horaFin = utilidad.validarHora(txtHoraFin.getText(), "Hora de Finalizacion");
-            String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
-            int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
-            String[] partesFecha = txtFecha.getText().split("/");
-            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtOrmas.getText() + txtNroTacho.getText();
-            String InicioBatido = utilidad.validarHora(txtComienzoBatido.getText(), "Hora de Inicio de Batido");
-            String FinBatido = utilidad.validarHora(txtFinBatido.getText(), "Hora de Finalizacion de Batido");
-            String totalBatido = utilidad.calcularDiferenciaHoras(InicioBatido, FinBatido);
-
-            utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
-            utilidad.validarHoraNoMayor(InicioBatido, FinBatido, "Hora de Inicio de Batido y Hora de Fin de Batido", "Inicio ", "Fin ");
-            utilidad.validarHoraNoMayor(horaInicio, InicioBatido, "Hora de Inicio de Produccion y Hora de Inicio de Batido", "Inicio de Batido", "Inicio de Produccion");
-            utilidad.validarHoraNoMayor(FinBatido, horaFin, "Hora de Finalizacion de Batido y Hora de Finalizacion de Produccion", "Fin de Batido", "Fin de Produccion");
-
-            try {
-                Empleado empleado = controlador.buscarEmpleado(idEncargado);
-
-                if (empleado instanceof Empleado) {
-                    produccion.setEncargado(empleado);
-                } else {
-                    throw new Exception("Debe seleccionar un Encargado");
-                }
-            } catch (Exception e) {
-                throw new Exception("Debe buscar un encargado valido primero, por favor verifique");
-            }
-
-            String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
-            LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
-            int litros = utilidad.validarCantidadCrema(utilidad.validarNumericos(txtLitros.getText(), "Litros de Crema", false), Integer.parseInt(partes[0]));
-
-            if (lechep instanceof LechePasteurizada) {
-
-                produccion.setLitros(litros);
-            } else {
-                throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
-            }
-            if (!txtId.getText().equals("")) {
-                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
-            }
-            int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
-            int kgObtenidos = ormas * 5;
-            int rendimiento = Math.round((kgObtenidos / litros) * 100); // Usa división en coma flotante
-            Producto producto = controlador.buscarProducto(idManteca);
-            produccion.setCodInterno(CodigoInterno);
-            produccion.setListaInsumos(listaInsumosLinea);
-            produccion.setListaEmpleados(listaEmpleados);
-            produccion.setLechep(lechep);
-            produccion.setProducto(producto);
-            produccion.setRendimiento(rendimiento);
-            produccion.setKgLtsObt(kgObtenidos);
-            produccion.setFecha(fecha);
-            produccion.setHoraInicio(horaInicio);
-            produccion.setHoraFin(horaFin);
-            produccion.setTiempoTrabajado(TiempoTrabajado);
-            produccion.setNroTacho(nroTacho);
-            produccion.setHoraComienzoBatido(InicioBatido);
-            produccion.setHoraFinBatido(FinBatido);
-            produccion.setTiempoTotalBatido(totalBatido);
-            if (ormas * 5 <= (litros / 10) * 7) {
-                produccion.setCantidad(ormas);
-            } else {
-                throw new Exception("Verifique cantidad de ormas o Litros de Crema utilizados,"
-                        + "dicha cantidad de ormas daria como resultado una obtencion de Manteca incoherente respecto a la cantidad de crema utilizada");
-            }
-
-            boolean alta = controlador.altaProduccionManteca(produccion);
-            if (alta) {
-
-                JOptionPane.showMessageDialog(null, "Produccion dada de alta.");
-                utilidad.actualizarLitros(lechep, litros);
-                limpiarFormulario();
-                listar();
-                listarLeche();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-
-    }//GEN-LAST:event_btnAltaActionPerformed
-
-    private void btnAgregarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarInsumoActionPerformed
-        try {
-            Insumo insumo = controlador.buscarInsumo(idInsumo);
-            int cantidad = Integer.parseInt(txtCantidadInsumo.getText());
-
-            LineaInsumo insumoLinea = new LineaInsumo(insumo, cantidad);
-            if (insumo instanceof Insumo && insumoLinea instanceof LineaInsumo) {
-                if (!listaInsumosLinea.contains(insumoLinea)) {
-                    listaInsumosLinea.add(insumoLinea);
-                } else {
-                    throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
-                }
-                listarLineaInsumos(listaInsumosLinea);
-            } else {
-                throw new Exception("Debe seleccionar un empleado de la lista");
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnAgregarInsumoActionPerformed
-
-    private void tablaInsumosAgregadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInsumosAgregadosMouseClicked
-        int fila = tablaInsumosAgregados.rowAtPoint(evt.getPoint());
-        idInsumoEliminar = (int) tablaInsumosAgregados.getValueAt(fila, 0);
-    }//GEN-LAST:event_tablaInsumosAgregadosMouseClicked
-
-    private void tablaAgregarInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarInsumosMouseClicked
-        int fila = tablaAgregarInsumos.rowAtPoint(evt.getPoint());
-        idInsumo = (int) tablaAgregarInsumos.getValueAt(fila, 0);
-
-    }//GEN-LAST:event_tablaAgregarInsumosMouseClicked
-
-    private void btnEliminarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarInsumoActionPerformed
-        try {
-            idInsumo = idInsumoEliminar;
-            Insumo insumo = controlador.buscarInsumo(idInsumo);
-            LineaInsumo lineaInsumo = new LineaInsumo();
-            lineaInsumo.setInsumo(insumo);
-            if (listaInsumosLinea.contains(lineaInsumo)) {
-                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar " + insumo.getNombre() + " de la lista?");
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    listaInsumosLinea.remove(lineaInsumo);
-                }
-            } else {
-                throw new Exception("Debe seleccionar un insumo a eliminar");
-            }
-            listarLineaInsumos(listaInsumosLinea);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEliminarInsumoActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiarFormulario();
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
-        try {
-            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
-            boolean baja = controlador.bajaProduccion(id, "produccion_manteca");
-            if (baja) {
-                JOptionPane.showMessageDialog(null, "Produccion dada de baja.");
-                limpiarFormulario();
-                listar();
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnBajaActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
@@ -1297,6 +1273,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             String InicioBatido = utilidad.validarHora(txtComienzoBatido.getText(), "Hora de Inicio de Batido");
             String FinBatido = utilidad.validarHora(txtFinBatido.getText(), "Hora de Finalizacion de Batido");
             String totalBatido = utilidad.calcularDiferenciaHoras(InicioBatido, FinBatido);
+            String observaciones = utilidad.sanitizarCampos(txtObservaciones.getText(), "Observaciones", true);
 
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
             int kgObtenidos = ormas * 5;
@@ -1385,6 +1362,8 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             produccion.setHoraComienzoBatido(InicioBatido);
             produccion.setHoraFinBatido(FinBatido);
             produccion.setTiempoTotalBatido(totalBatido);
+            produccion.setObservaciones(observaciones);
+
             if (ormas * 5 <= (litros / 10) * 7) {
                 produccion.setCantidad(ormas);
             } else {
@@ -1404,61 +1383,110 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void btnSeleccionarEncargadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarEncargadoActionPerformed
-
-        idEncargado = idEncargadoobtener;
-        Empleado empleado = controlador.buscarEmpleado(idEncargado);
-        txtEncargado.setText(empleado.getId() + "-" + empleado.getNombre());
-    }//GEN-LAST:event_btnSeleccionarEncargadoActionPerformed
-
-    private void btnAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadoActionPerformed
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         try {
-            idEmpleado = idEmpleadoObtener;
-            Empleado unEmpleado = controlador.buscarEmpleado(idEmpleado);
-            if (unEmpleado instanceof Empleado) {
-                if (!listaEmpleados.contains(unEmpleado)) {
-                    listaEmpleados.add(unEmpleado);
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
+            boolean baja = controlador.bajaProduccion(id, "produccion_manteca");
+            if (baja) {
+                JOptionPane.showMessageDialog(null, "Produccion dada de baja.");
+                limpiarFormulario();
+                listar();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBajaActionPerformed
+
+    private void btnAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaActionPerformed
+        try {
+            String id = txtId.getText().trim();
+            if (!id.isEmpty()) {
+                throw new Exception("No puede darse de alta un registro existente.");
+            }
+            String fecha = utilidad.controlarFechas(txtFecha.getText());
+
+            String horaInicio = utilidad.validarHora(txtHoraInicio.getText(), "Hora de Inicio");
+            String horaFin = utilidad.validarHora(txtHoraFin.getText(), "Hora de Finalizacion");
+            String TiempoTrabajado = utilidad.calcularDiferenciaHoras(horaInicio, horaFin);
+            int nroTacho = utilidad.validarNumericos(txtNroTacho.getText(), "Numero de Tacho", false);
+            String[] partesFecha = txtFecha.getText().split("/");
+            String CodigoInterno = "M" + partesFecha[0] + partesFecha[1] + partesFecha[2] + txtOrmas.getText() + txtNroTacho.getText();
+            String InicioBatido = utilidad.validarHora(txtComienzoBatido.getText(), "Hora de Inicio de Batido");
+            String FinBatido = utilidad.validarHora(txtFinBatido.getText(), "Hora de Finalizacion de Batido");
+            String totalBatido = utilidad.calcularDiferenciaHoras(InicioBatido, FinBatido);
+            String observaciones = utilidad.sanitizarCampos(txtObservaciones.getText(), "Observaciones", true);
+
+            utilidad.validarHoraNoMayor(horaInicio, horaFin, "Hora de Inicio y Hora de Fin", "Inicio de Produccion ", "Fin de Produccion");
+            utilidad.validarHoraNoMayor(InicioBatido, FinBatido, "Hora de Inicio de Batido y Hora de Fin de Batido", "Inicio ", "Fin ");
+            utilidad.validarHoraNoMayor(horaInicio, InicioBatido, "Hora de Inicio de Produccion y Hora de Inicio de Batido", "Inicio de Batido", "Inicio de Produccion");
+            utilidad.validarHoraNoMayor(FinBatido, horaFin, "Hora de Finalizacion de Batido y Hora de Finalizacion de Produccion", "Fin de Batido", "Fin de Produccion");
+
+            try {
+                Empleado empleado = controlador.buscarEmpleado(idEncargado);
+
+                if (empleado instanceof Empleado) {
+                    produccion.setEncargado(empleado);
                 } else {
-                    throw new Exception("El Empleado ya se encuentra agregado a la lista");
+                    throw new Exception("Debe seleccionar un Encargado");
                 }
-                listarEmpleados(listaEmpleados);
+            } catch (Exception e) {
+                throw new Exception("Debe buscar un encargado valido primero, por favor verifique");
+            }
+
+            String[] partes = cbxLeche.getSelectedItem().toString().split(" - ");
+            LechePasteurizada lechep = controlador.buscarPasteurizado(Integer.parseInt(partes[0]));
+            int litros = utilidad.validarCantidadCrema(utilidad.validarNumericos(txtLitros.getText(), "Litros de Crema", false), Integer.parseInt(partes[0]));
+
+            if (lechep instanceof LechePasteurizada) {
+
+                produccion.setLitros(litros);
             } else {
-                throw new Exception("Debe seleccionar un empleado de la lista");
+                throw new Exception("El Pasteurizado seleccionado ya no esta disponible");
+            }
+            if (!txtId.getText().equals("")) {
+                throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
+            }
+            int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
+            int kgObtenidos = ormas * 5;
+            int rendimiento = Math.round((kgObtenidos / litros) * 100); // Usa división en coma flotante
+            Producto producto = controlador.buscarProducto(idManteca);
+            produccion.setCodInterno(CodigoInterno);
+            produccion.setListaInsumos(listaInsumosLinea);
+            produccion.setListaEmpleados(listaEmpleados);
+            produccion.setLechep(lechep);
+            produccion.setProducto(producto);
+            produccion.setRendimiento(rendimiento);
+            produccion.setKgLtsObt(kgObtenidos);
+            produccion.setFecha(fecha);
+            produccion.setHoraInicio(horaInicio);
+            produccion.setHoraFin(horaFin);
+            produccion.setTiempoTrabajado(TiempoTrabajado);
+            produccion.setNroTacho(nroTacho);
+            produccion.setHoraComienzoBatido(InicioBatido);
+            produccion.setHoraFinBatido(FinBatido);
+            produccion.setTiempoTotalBatido(totalBatido);
+            produccion.setObservaciones(observaciones);
+
+            if (ormas * 5 <= (litros / 10) * 7) {
+                produccion.setCantidad(ormas);
+            } else {
+                throw new Exception("Verifique cantidad de ormas o Litros de Crema utilizados,"
+                        + "dicha cantidad de ormas daria como resultado una obtencion de Manteca incoherente respecto a la cantidad de crema utilizada");
+            }
+
+            boolean alta = controlador.altaProduccionManteca(produccion);
+            if (alta) {
+
+                JOptionPane.showMessageDialog(null, "Produccion dada de alta.");
+                utilidad.actualizarLitros(lechep, litros);
+                limpiarFormulario();
+                listar();
+                listarLeche();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_btnAgregarEmpleadoActionPerformed
-
-    private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
-        try {
-            idEmpleado = idEmpleadoEliminar;
-            Empleado empleadoEliminar = controlador.buscarEmpleado(idEmpleado);
-            if (listaEmpleados.contains(empleadoEliminar)) {
-                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Desea eliminar a " + empleadoEliminar.getNombreCompleto() + " de la lista?");
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    listaEmpleados.remove(empleadoEliminar);
-                }
-            } else {
-                throw new Exception("Debe seleccionar un empleado a eliminar");
-            }
-            listarEmpleados(listaEmpleados);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
-
-    private void tablaAgregarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaAgregarEmpleadosMouseClicked
-
-        int fila = tablaAgregarEmpleados.rowAtPoint(evt.getPoint());
-        idEncargadoobtener = (int) tablaAgregarEmpleados.getValueAt(fila, 0);
-        idEmpleadoObtener = (int) tablaAgregarEmpleados.getValueAt(fila, 0);
-    }//GEN-LAST:event_tablaAgregarEmpleadosMouseClicked
-
-    private void tablaEmpleadosTrabajaronMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosTrabajaronMouseClicked
-        int fila = tablaEmpleadosTrabajaron.rowAtPoint(evt.getPoint());
-        idEmpleadoEliminar = (int) tablaEmpleadosTrabajaron.getValueAt(fila, 0);
-    }//GEN-LAST:event_tablaEmpleadosTrabajaronMouseClicked
+    }//GEN-LAST:event_btnAltaActionPerformed
 
     private void txtOrmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOrmasActionPerformed
         // TODO add your handling code here:
@@ -1497,6 +1525,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
@@ -1515,6 +1544,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane7;
@@ -1540,6 +1570,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLitros;
     private javax.swing.JTextField txtNroTacho;
+    private javax.swing.JTextArea txtObservaciones;
     private javax.swing.JTextField txtObtenidos;
     private javax.swing.JTextField txtOrmas;
     private javax.swing.JTextField txtTiempoTrabajado;

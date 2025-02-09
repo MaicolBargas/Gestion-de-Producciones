@@ -1,10 +1,9 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 import java.util.List;
 
-
 public class ProduccionManteca extends Produccion {
+
     private String horaComienzoBatido;
     private String horaFinBatido;
     private String tiempoTotalBatido;
@@ -12,8 +11,6 @@ public class ProduccionManteca extends Produccion {
 
     public ProduccionManteca() {
     }
-
-   
 
     public String getHoraComienzoBatido() {
         return horaComienzoBatido;
@@ -46,15 +43,22 @@ public class ProduccionManteca extends Produccion {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
-     public ProduccionManteca(String horaComienzoBatido, String horaFinBatido, String tiempoTotalBatido, int cantidad, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep,int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
-        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep,litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
+
+    public ProduccionManteca(String horaComienzoBatido, String horaFinBatido, String tiempoTotalBatido, int cantidad) {
         this.horaComienzoBatido = horaComienzoBatido;
         this.horaFinBatido = horaFinBatido;
         this.tiempoTotalBatido = tiempoTotalBatido;
         this.cantidad = cantidad;
     }
-     
+
+    public ProduccionManteca(String horaComienzoBatido, String horaFinBatido, String tiempoTotalBatido, int cantidad, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho, String observaciones) {
+        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho, observaciones);
+        this.horaComienzoBatido = horaComienzoBatido;
+        this.horaFinBatido = horaFinBatido;
+        this.tiempoTotalBatido = tiempoTotalBatido;
+        this.cantidad = cantidad;
+    }
+
     @Override
     public Object[] produccionToArray() {
         Object[] datosProduccion = super.produccionToArray();

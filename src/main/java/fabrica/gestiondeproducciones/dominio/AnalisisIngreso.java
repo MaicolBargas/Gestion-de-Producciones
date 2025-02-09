@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-public class AnalisisIngreso extends AnalisisLeche{
-    
+public class AnalisisIngreso extends AnalisisLeche {
+
     private IngresoLeche ingreso;
 
     public AnalisisIngreso() {
@@ -13,8 +12,6 @@ public class AnalisisIngreso extends AnalisisLeche{
         this.ingreso = ingreso;
     }
 
-    
-
     public IngresoLeche getIngreso() {
         return ingreso;
     }
@@ -22,6 +19,5 @@ public class AnalisisIngreso extends AnalisisLeche{
     public void setIngreso(IngresoLeche ingreso) {
         this.ingreso = ingreso;
     }
-    
-    
+
 }

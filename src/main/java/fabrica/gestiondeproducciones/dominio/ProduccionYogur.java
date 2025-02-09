@@ -1,11 +1,9 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 import java.util.List;
 
+public class ProduccionYogur extends Produccion {
 
-public class ProduccionYogur extends Produccion{
-    
     private float temperaturaIncubacion;
     private String horaComienzoIncubacion;
     private String horaFinIncubacion;
@@ -37,8 +35,8 @@ public class ProduccionYogur extends Produccion{
         this.unidadesObtenidas = unidadesObtenidas;
     }
 
-    public ProduccionYogur(float temperaturaIncubacion, String horaComienzoIncubacion, String horaFinIncubacion, String tiempoIncubacion, String horaComienzoEnfriado, String horaFinEnfriado, String tiempoTotalEnfriado, float tempAguaHelada, float tempAgregadoSabor, float tempAgregadoColor, int litrosSuero, int unidadesObtenidas, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
-        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
+    public ProduccionYogur(float temperaturaIncubacion, String horaComienzoIncubacion, String horaFinIncubacion, String tiempoIncubacion, String horaComienzoEnfriado, String horaFinEnfriado, String tiempoTotalEnfriado, float tempAguaHelada, float tempAgregadoSabor, float tempAgregadoColor, int litrosSuero, int unidadesObtenidas, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho, String observaciones) {
+        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho, observaciones);
         this.temperaturaIncubacion = temperaturaIncubacion;
         this.horaComienzoIncubacion = horaComienzoIncubacion;
         this.horaFinIncubacion = horaFinIncubacion;
@@ -175,5 +173,4 @@ public class ProduccionYogur extends Produccion{
         return resultado;
     }
 
-   
 }

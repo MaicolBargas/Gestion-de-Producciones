@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 public class Silo {
-    
+
     private int id;
     private int codigoInterno;
     private int capacidad;
@@ -17,7 +16,7 @@ public class Silo {
         this.capacidad = capacidad;
         this.activo = activo;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -49,6 +48,5 @@ public class Silo {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
-    
+
 }

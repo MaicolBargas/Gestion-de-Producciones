@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class AnalisisManteca extends Analisis {
+
     private float ph;
     private int humedad;
     private int grasa;
@@ -57,6 +56,5 @@ public class AnalisisManteca extends Analisis {
     public void setProduccion(Produccion produccion) {
         this.produccion = produccion;
     }
-    
-    
+
 }

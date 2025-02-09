@@ -1,15 +1,6 @@
 package fabrica.gestiondeproducciones.presentacion;
 
-import fabrica.gestiondeproducciones.dominio.Controlador;
-import fabrica.gestiondeproducciones.dominio.Empleado;
-import fabrica.gestiondeproducciones.dominio.Insumo;
-import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
-import fabrica.gestiondeproducciones.dominio.Produccion;
-import fabrica.gestiondeproducciones.dominio.Producto;
-import fabrica.gestiondeproducciones.persistencia.PersistenciaProduccion;
-import fabrica.gestiondeproducciones.utilidades.Utilidades;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
 public class Principal extends javax.swing.JFrame {
@@ -19,7 +10,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-
+        String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
+        ImageIcon icono = new ImageIcon(path);
+        setIconImage(icono.getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Singleton">
@@ -159,11 +152,11 @@ public class Principal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 1478, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGap(0, 815, Short.MAX_VALUE)
         );
 
         menuSilos.setText("Silos");
@@ -363,13 +356,13 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 1478, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(escritorio))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 429, Short.MAX_VALUE)
+            .addGap(0, 815, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(escritorio))
         );
@@ -495,14 +488,13 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 new Principal().setVisible(true);
             }
-        });
+        });       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

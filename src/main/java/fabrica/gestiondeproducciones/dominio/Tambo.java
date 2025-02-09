@@ -1,7 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 public class Tambo {
+
     private int id;
     private String propietario;
     private String contacto;
@@ -48,6 +48,5 @@ public class Tambo {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-            
-}
 
+}

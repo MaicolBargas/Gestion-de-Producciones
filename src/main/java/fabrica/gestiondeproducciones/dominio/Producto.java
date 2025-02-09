@@ -1,9 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class Producto {
-    
+
     private int id;
     private String nombre;
     private String descripcion;
@@ -46,7 +44,8 @@ public class Producto {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
-    
-    public Producto(){}
-    
+
+    public Producto() {
+    }
+
 }

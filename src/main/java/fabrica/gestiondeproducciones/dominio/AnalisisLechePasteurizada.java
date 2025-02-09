@@ -1,9 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
+public class AnalisisLechePasteurizada extends AnalisisLeche {
 
-public class AnalisisLechePasteurizada extends AnalisisLeche{
-    
     private LechePasteurizada lechePast;
 
     public LechePasteurizada getLechePast() {
@@ -22,7 +20,4 @@ public class AnalisisLechePasteurizada extends AnalisisLeche{
         this.lechePast = lechePast;
     }
 
-   
-    
-    
 }

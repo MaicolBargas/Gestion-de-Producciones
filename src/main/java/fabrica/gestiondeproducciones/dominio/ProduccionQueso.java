@@ -1,10 +1,9 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 import java.util.List;
 
-
 public class ProduccionQueso extends Produccion {
+
     private float tempPastQueso;
     private String tiempoReposoFermento;
     private float tempReposoFermento;
@@ -40,8 +39,8 @@ public class ProduccionQueso extends Produccion {
         this.acidesFermento = acidesFermento;
     }
 
-    public ProduccionQueso(float tempPastQueso, String tiempoReposoFermento, float tempReposoFermento, String tipoCuajoObtenido, String tiempoCuajado, float tempAlCuajar, int cantCuajoObtenido, String tipoDeGrano, int litrosSueroObtenidos, String tiempoAgregadoAgua, float tempAgua, float tempCuajoFinal, int unidadesObtenidas, float acidesFermento, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho) {
-        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho);
+    public ProduccionQueso(float tempPastQueso, String tiempoReposoFermento, float tempReposoFermento, String tipoCuajoObtenido, String tiempoCuajado, float tempAlCuajar, int cantCuajoObtenido, String tipoDeGrano, int litrosSueroObtenidos, String tiempoAgregadoAgua, float tempAgua, float tempCuajoFinal, int unidadesObtenidas, float acidesFermento, int idProduccion, String codInterno, List<LineaInsumo> listaInsumos, List<Empleado> listaEmpleados, LechePasteurizada lechep, int litros, Producto producto, int rendimiento, int kgLtsObt, String fecha, Empleado encargado, String horaInicio, String horaFin, String tiempoTrabajado, int nroTacho, String observaciones) {
+        super(idProduccion, codInterno, listaInsumos, listaEmpleados, lechep, litros, producto, rendimiento, kgLtsObt, fecha, encargado, horaInicio, horaFin, tiempoTrabajado, nroTacho, observaciones);
         this.tempPastQueso = tempPastQueso;
         this.tiempoReposoFermento = tiempoReposoFermento;
         this.tempReposoFermento = tempReposoFermento;

@@ -1,13 +1,12 @@
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class Insumo {
 
     private int id;
     private String nombre;
     private String descripcion;
     private String unidad;
-    
+
     public Insumo() {
     }
 
@@ -71,8 +70,5 @@ public class Insumo {
         final Insumo other = (Insumo) obj;
         return this.id == other.id;
     }
-    
-    
-    
-    
+
 }

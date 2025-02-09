@@ -6,6 +6,7 @@ import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.IngresoLeche;
 import fabrica.gestiondeproducciones.dominio.LechePasteurizada;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -442,6 +443,11 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         jLabel3.setText("Encargado:");
 
         txtEncargado.setToolTipText("");
+        txtEncargado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEncargadoKeyPressed(evt);
+            }
+        });
 
         jLabel4.setText("Fecha:");
 
@@ -890,6 +896,13 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
     private void txtPhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPhActionPerformed
+
+    private void txtEncargadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEncargadoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnBuscar.doClick();
+        }
+
+    }//GEN-LAST:event_txtEncargadoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

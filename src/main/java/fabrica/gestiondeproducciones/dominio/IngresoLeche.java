@@ -1,6 +1,5 @@
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class IngresoLeche {
 
     private int idIngreso;
@@ -14,7 +13,7 @@ public class IngresoLeche {
     public IngresoLeche() {
     }
 
-    public IngresoLeche(int idIngreso, Tambo tambo, int litros, int litrosDisponibles,  Silo silo, String fecha, boolean activo) {
+    public IngresoLeche(int idIngreso, Tambo tambo, int litros, int litrosDisponibles, Silo silo, String fecha, boolean activo) {
         this.idIngreso = idIngreso;
         this.tambo = tambo;
         this.litros = litros;

@@ -3,479 +3,466 @@ package fabrica.gestiondeproducciones.dominio;
 import fabrica.gestiondeproducciones.persistencia.ControladorPersistencia;
 import java.util.List;
 
-
 public class Controlador {
-    
+
     ControladorPersistencia persistencia = new ControladorPersistencia();
-    
+
     // <editor-fold defaultstate="collapsed" desc="Silo">
-    public boolean altaSilo(Silo silo){
+    public boolean altaSilo(Silo silo) {
         return persistencia.altaSilo(silo);
     }
-    
-    public List listarSilos(){
+
+    public List listarSilos() {
         return persistencia.listarSilos();
     }
-    
-    public boolean bajaSilo(int id){
+
+    public boolean bajaSilo(int id) {
         return persistencia.bajaSilo(id);
     }
-    
-    public boolean modificarSilo(Silo silo){
-       return persistencia.modificarSilo(silo);
+
+    public boolean modificarSilo(Silo silo) {
+        return persistencia.modificarSilo(silo);
     }
-    
-    public Silo buscarSilo(int id){
+
+    public Silo buscarSilo(int id) {
         return persistencia.buscarSilo(id);
     }
-    
-    public Silo buscarSiloXCodigo(int codigo){
+
+    public Silo buscarSiloXCodigo(int codigo) {
         return persistencia.buscarSiloXCodigo(codigo);
     }
-    
+
     // </editor-fold>  
     
     // <editor-fold defaultstate="collapsed" desc="Producto">
-    public boolean altaProducto(Producto producto){
+    public boolean altaProducto(Producto producto) {
         return persistencia.altaProducto(producto);
     }
-    
-    public List listarProductos(){
+
+    public List listarProductos() {
         return persistencia.listarProductos();
     }
-    
-    public boolean bajaProducto (int id){
+
+    public boolean bajaProducto(int id) {
         return persistencia.bajaProducto(id);
     }
-    
-    public boolean modificarProducto (Producto producto ){
-       return persistencia.modificarProducto(producto);
+
+    public boolean modificarProducto(Producto producto) {
+        return persistencia.modificarProducto(producto);
     }
-    
-    public Producto buscarProducto(int id){
+
+    public Producto buscarProducto(int id) {
         return persistencia.buscarProducto(id);
     }
-    
+
     // </editor-fold> 
     
     // <editor-fold defaultstate="collapsed" desc="Seccion">
-    public boolean altaSeccion(Seccion seccion){
+    public boolean altaSeccion(Seccion seccion) {
         return persistencia.altaSeccion(seccion);
     }
-    
-    public List listarSecciones(){
+
+    public List listarSecciones() {
         return persistencia.listarSecciones();
     }
-    
-    public boolean bajaSeccion(int id){
+
+    public boolean bajaSeccion(int id) {
         return persistencia.bajaSeccion(id);
     }
-    
-    public boolean modificarSeccion(Seccion seccion){
-       return persistencia.modificarSeccion(seccion);
+
+    public boolean modificarSeccion(Seccion seccion) {
+        return persistencia.modificarSeccion(seccion);
     }
-    
-    public Seccion buscarSeccion(int id){
+
+    public Seccion buscarSeccion(int id) {
         return persistencia.buscarSeccion(id);
     }
-    
-      // </editor-fold> 
+
+    // </editor-fold> 
     
     // <editor-fold defaultstate="collapsed" desc="Tambo">
-    public boolean altaTambo(Tambo tambo){
+    public boolean altaTambo(Tambo tambo) {
         return persistencia.altaTambo(tambo);
     }
-    
-    public List listarTambo(){
+
+    public List listarTambo() {
         return persistencia.listarTambos();
     }
-    
-    public boolean bajaTambo(int id){
+
+    public boolean bajaTambo(int id) {
         return persistencia.bajaTambo(id);
     }
-    
-    public boolean modificarTambo(Tambo tambo){
-       return persistencia.modificarTambo(tambo);
+
+    public boolean modificarTambo(Tambo tambo) {
+        return persistencia.modificarTambo(tambo);
     }
-    
-    public Tambo buscarTambo(int id){
+
+    public Tambo buscarTambo(int id) {
         return persistencia.buscarTambo(id);
     }
-   // </editor-fold>   
-    
+    // </editor-fold>   
+
     // <editor-fold defaultstate="collapsed" desc="Insumo">
-    public boolean altaInsumo(Insumo tambo){
-       return persistencia.altaInsumo(tambo);
+    public boolean altaInsumo(Insumo tambo) {
+        return persistencia.altaInsumo(tambo);
     }
-    
-    public List listarInsumos(){
+
+    public List listarInsumos() {
         return persistencia.listarInsumos();
     }
-    
-    public boolean bajaInsumo(int id){
+
+    public boolean bajaInsumo(int id) {
         return persistencia.bajaInsumo(id);
     }
-    
-    public boolean modificarInsumo(Insumo tambo){
-       return persistencia.modificarInsumo(tambo);
+
+    public boolean modificarInsumo(Insumo tambo) {
+        return persistencia.modificarInsumo(tambo);
     }
-    
-    public Insumo buscarInsumo(int id){
+
+    public Insumo buscarInsumo(int id) {
         return persistencia.buscarInsumo(id);
     }
     // </editor-fold> 
-    
+
     // <editor-fold defaultstate="collapsed" desc="Empleado">
-    public boolean altaEmpleado(Empleado empleado){
-       return persistencia.altaEmpleado(empleado);
+    public boolean altaEmpleado(Empleado empleado) {
+        return persistencia.altaEmpleado(empleado);
     }
-    
-    public List listarEmpleados(){
+
+    public List listarEmpleados() {
         return persistencia.listarEmpleados();
     }
-    
-    public boolean bajaEmpleado(int id){
+
+    public boolean bajaEmpleado(int id) {
         return persistencia.bajaEmpleado(id);
     }
-    
-    public boolean modificarEmpleado(Empleado empleado){
-       return persistencia.modificarEmpleado(empleado);
+
+    public boolean modificarEmpleado(Empleado empleado) {
+        return persistencia.modificarEmpleado(empleado);
     }
-    
-    public Empleado buscarEmpleado(int id){
+
+    public Empleado buscarEmpleado(int id) {
         return persistencia.buscarEmpleado(id);
     }
-    
-    public Empleado buscarEmpleadoXCi(int ci){
+
+    public Empleado buscarEmpleadoXCi(int ci) {
         return persistencia.buscarEmpleado(ci);
     }
     // </editor-fold> 
-    
+
     // <editor-fold defaultstate="collapsed" desc="Ingreso Leche">
-    public boolean altaIngreso(IngresoLeche ingreso){
-       return persistencia.altaIngreso(ingreso);
+    public boolean altaIngreso(IngresoLeche ingreso) {
+        return persistencia.altaIngreso(ingreso);
     }
-    
-    public List listarIngresos(){
+
+    public List listarIngresos() {
         return persistencia.listarIngresos();
     }
-    
-    public List listarIngresosPendientesAnalizar(){
+
+    public List listarIngresosPendientesAnalizar() {
         return persistencia.listarIngresosPendientesAnalizar();
     }
-    
-    public boolean bajaIngreso(int id){
+
+    public boolean bajaIngreso(int id) {
         return persistencia.bajaIngreso(id);
     }
-    
-    public boolean modificarIngreso(IngresoLeche ingreso){
-       return persistencia.modificarIngreso(ingreso);
+
+    public boolean modificarIngreso(IngresoLeche ingreso) {
+        return persistencia.modificarIngreso(ingreso);
     }
-    
-    public IngresoLeche buscarIngreso(int id){
+
+    public IngresoLeche buscarIngreso(int id) {
         return persistencia.buscarIngreso(id);
     }
     // </editor-fold> 
-    
+
     // <editor-fold defaultstate="collapsed" desc="Leche Pasteurizada">
-    public boolean altaPasteurizado(LechePasteurizada lecheP){
-       return persistencia.altaPasteurizado(lecheP);
+    public boolean altaPasteurizado(LechePasteurizada lecheP) {
+        return persistencia.altaPasteurizado(lecheP);
     }
-    
-    public List listarPasteurizadosPendientesAnalizar(){
+
+    public List listarPasteurizadosPendientesAnalizar() {
         return persistencia.listarPasteurizadosPendientesAnalizar();
     }
-    
-    public List listarPasteurizados(){
+
+    public List listarPasteurizados() {
         return persistencia.listarPasteurizados();
     }
-    
-    public List listarPasteurizadosManteca(){
+
+    public List listarPasteurizadosManteca() {
         return persistencia.listarPasteurizadosManteca();
     }
-    
-    public boolean bajaPasteurizado(int id){
+
+    public boolean bajaPasteurizado(int id) {
         return persistencia.bajaPasteurizado(id);
     }
-    
-    public List listarPasteurizadosNoUsados(){
+
+    public List listarPasteurizadosNoUsados() {
         return persistencia.listarPasteurizadosNoUsados();
     }
-    public boolean modificarPasteurizado(LechePasteurizada lecheP){
-       return persistencia.modificarPasteurizado(lecheP);
+
+    public boolean modificarPasteurizado(LechePasteurizada lecheP) {
+        return persistencia.modificarPasteurizado(lecheP);
     }
-    
-    public LechePasteurizada buscarPasteurizado(int id){
+
+    public LechePasteurizada buscarPasteurizado(int id) {
         return persistencia.buscarPasteurizado(id);
     }
-    
+
     // </editor-fold> 
     
     // <editor-fold defaultstate="collapsed" desc="Analisis">
-    
     // <editor-fold defaultstate="collapsed" desc="Analisis Ingreso Leche">
-    public boolean altaAnalisisIngreso(AnalisisIngreso analisis){
-       return persistencia.altaAnalisisIngreso(analisis);
+    public boolean altaAnalisisIngreso(AnalisisIngreso analisis) {
+        return persistencia.altaAnalisisIngreso(analisis);
     }
-    
-    public List listarAnalisisIngreso(){
+
+    public List listarAnalisisIngreso() {
         return persistencia.listarAnalisisIngreso();
     }
-    
-    public boolean bajaAnalisis(int id){
+
+    public boolean bajaAnalisis(int id) {
         return persistencia.bajaAnalisis(id);
     }
-    
-    public boolean modificarAnalisisIngreso(AnalisisIngreso analisis){
-       return persistencia.modificarAnalisisIngreso(analisis);
+
+    public boolean modificarAnalisisIngreso(AnalisisIngreso analisis) {
+        return persistencia.modificarAnalisisIngreso(analisis);
     }
-    
-    public AnalisisIngreso buscarAnalisisIngreso(int id){
+
+    public AnalisisIngreso buscarAnalisisIngreso(int id) {
         return persistencia.buscarAnalisisIngreso(id);
     }
     // </editor-fold> 
-        
+
     // <editor-fold defaultstate="collapsed" desc="Analisis Leche Pasteurizada">
-    public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-       return persistencia.altaAnalisisLechePast(analisisLechePast);
+    public boolean altaAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast) {
+        return persistencia.altaAnalisisLechePast(analisisLechePast);
     }
-    
-    public List listarAnalisisLechePast(){
+
+    public List listarAnalisisLechePast() {
         return persistencia.listarAnalisisLechePast();
     }
-    
-   
-    
-    public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast){
-       return persistencia.modificarAnalisisLechePast(analisisLechePast);
+
+    public boolean modificarAnalisisLechePast(AnalisisLechePasteurizada analisisLechePast) {
+        return persistencia.modificarAnalisisLechePast(analisisLechePast);
     }
-    
-    public AnalisisLechePasteurizada buscarAnalisisLechePast(int id){
+
+    public AnalisisLechePasteurizada buscarAnalisisLechePast(int id) {
         return persistencia.buscarAnalisisLechePast(id);
     }
     // </editor-fold> 
-    
+
     // <editor-fold defaultstate="collapsed" desc="Analisis Manteca">    
-    public boolean altaAnalisisManteca(AnalisisManteca analisis){
-       return persistencia.altaAnalisisManteca(analisis);
+    public boolean altaAnalisisManteca(AnalisisManteca analisis) {
+        return persistencia.altaAnalisisManteca(analisis);
     }
-    
-    public List listarAnalisisManteca(){
+
+    public List listarAnalisisManteca() {
         return persistencia.listarAnalisisManteca();
     }
-    
-   
-    public boolean modificarAnalisisManteca(AnalisisManteca analisis){
-       return persistencia.modificarAnalisisManteca(analisis);
+
+    public boolean modificarAnalisisManteca(AnalisisManteca analisis) {
+        return persistencia.modificarAnalisisManteca(analisis);
     }
-    
-    public AnalisisManteca buscarAnalisisManteca(int id){
+
+    public AnalisisManteca buscarAnalisisManteca(int id) {
         return persistencia.buscarAnalisisManteca(id);
     }
-    
+
     // </editor-fold> 
-    
     // <editor-fold defaultstate="collapsed" desc="Analisis Yogur">    
-    public boolean altaAnalisisYogur(AnalisisYogur analisis){
-       return persistencia.altaAnalisisYogur(analisis);
+    public boolean altaAnalisisYogur(AnalisisYogur analisis) {
+        return persistencia.altaAnalisisYogur(analisis);
     }
-    
-    public List listarAnalisisYogur(){
+
+    public List listarAnalisisYogur() {
         return persistencia.listarAnalisisYogur();
     }
-    
-   
-    public boolean modificarAnalisisYogur(AnalisisYogur analisis){
-       return persistencia.modificarAnalisisYogur(analisis);
+
+    public boolean modificarAnalisisYogur(AnalisisYogur analisis) {
+        return persistencia.modificarAnalisisYogur(analisis);
     }
-    
-    public AnalisisYogur buscarAnalisisYogur(int id){
+
+    public AnalisisYogur buscarAnalisisYogur(int id) {
         return persistencia.buscarAnalisisYogur(id);
     }
-    
+
     // </editor-fold> 
-    
     // <editor-fold defaultstate="collapsed" desc="Analisis Queso">    
-    public boolean altaAnalisisQueso(AnalisisQueso analisis){
-       return persistencia.altaAnalisisQueso(analisis);
+    public boolean altaAnalisisQueso(AnalisisQueso analisis) {
+        return persistencia.altaAnalisisQueso(analisis);
     }
-    
-    public List listarAnalisisQueso(){
+
+    public List listarAnalisisQueso() {
         return persistencia.listarAnalisisQueso();
     }
-    
-   
-    public boolean modificarAnalisisQueso(AnalisisQueso analisis){
-       return persistencia.modificarAnalisisQueso(analisis);
+
+    public boolean modificarAnalisisQueso(AnalisisQueso analisis) {
+        return persistencia.modificarAnalisisQueso(analisis);
     }
-    
-    public AnalisisQueso buscarAnalisisQueso(int id){
+
+    public AnalisisQueso buscarAnalisisQueso(int id) {
         return persistencia.buscarAnalisisQueso(id);
     }
-    
+
     // </editor-fold>   
-    
     // <editor-fold defaultstate="collapsed" desc="Analisis Dulce">    
-    public boolean altaAnalisisDulce(AnalisisDulce analisis){
-       return persistencia.altaAnalisisDulce(analisis);
+    public boolean altaAnalisisDulce(AnalisisDulce analisis) {
+        return persistencia.altaAnalisisDulce(analisis);
     }
-    
-    public List listarAnalisisDulce(){
+
+    public List listarAnalisisDulce() {
         return persistencia.listarAnalisisDulce();
     }
-    
-   
-    public boolean modificarAnalisisDulce(AnalisisDulce analisis){
-       return persistencia.modificarAnalisisDulce(analisis);
+
+    public boolean modificarAnalisisDulce(AnalisisDulce analisis) {
+        return persistencia.modificarAnalisisDulce(analisis);
     }
-    
-    public AnalisisDulce buscarAnalisisDulce(int id){
+
+    public AnalisisDulce buscarAnalisisDulce(int id) {
         return persistencia.buscarAnalisisDulce(id);
     }
-    
+
     // </editor-fold> 
-    
-    public List listarAnalisis(){
-       return persistencia.listarAnalisis();
+    public List listarAnalisis() {
+        return persistencia.listarAnalisis();
     }
-    
-    public Analisis buscarAnalisis(int id){
+
+    public Analisis buscarAnalisis(int id) {
         return persistencia.buscarAnalisis(id);
     }
-        
-    public Analisis buscarAnalisisXProduccion(int id){
-       return persistencia.buscarAnalisisXProduccion(id);
+
+    public Analisis buscarAnalisisXProduccion(int id) {
+        return persistencia.buscarAnalisisXProduccion(id);
     }
     // </editor-fold>
-      
-    // <editor-fold defaultstate="collapsed" desc="Produccion">
 
+    // <editor-fold defaultstate="collapsed" desc="Produccion">
     // <editor-fold defaultstate="collapsed" desc="Produccion Manteca">
-    public boolean altaProduccionManteca(ProduccionManteca produccionManteca){
+    public boolean altaProduccionManteca(ProduccionManteca produccionManteca) {
         return persistencia.altaProduccionManteca(produccionManteca);
     }
-   
-    public List listarProduccionesManteca(){
+
+    public List listarProduccionesManteca() {
         return persistencia.listarProduccionesManteca();
     }
-       
-    public ProduccionManteca buscarProduccionManteca(int id){
+
+    public ProduccionManteca buscarProduccionManteca(int id) {
         return persistencia.buscarProduccionManteca(id);
     }
-    
-    public boolean modificarProduccionManteca(ProduccionManteca produccion){
+
+    public boolean modificarProduccionManteca(ProduccionManteca produccion) {
         return persistencia.modificarProduccionManteca(produccion);
-    }    
-    
-    public List listarMantecaPendienteAnalizar(){
+    }
+
+    public List listarMantecaPendienteAnalizar() {
         return persistencia.listarMantecaPendienteAnalizar();
     }
     // </editor-fold>  
-    
+
     // <editor-fold defaultstate="collapsed" desc="Produccion Yogur">
-    public boolean altaProduccionYogur(ProduccionYogur produccionYogur){
+    public boolean altaProduccionYogur(ProduccionYogur produccionYogur) {
         return persistencia.altaProduccionYogur(produccionYogur);
     }
-   
-    public List listarProduccionesYogur(){
+
+    public List listarProduccionesYogur() {
         return persistencia.listarProduccionesYogur();
     }
-       
-    public ProduccionYogur buscarProduccionYogur(int id){
+
+    public ProduccionYogur buscarProduccionYogur(int id) {
         return persistencia.buscarProduccionYogur(id);
     }
-    
-    public boolean modificarProduccionYogur(ProduccionYogur produccion){
+
+    public boolean modificarProduccionYogur(ProduccionYogur produccion) {
         return persistencia.modificarProduccionYogur(produccion);
-    }    
-    
-    public List listarYogurPendienteAnalizar(){
+    }
+
+    public List listarYogurPendienteAnalizar() {
         return persistencia.listarYogurPendienteAnalizar();
     }
     // </editor-fold>  
 
     // <editor-fold defaultstate="collapsed" desc="Produccion Queso">
-    public boolean altaProduccionQueso(ProduccionQueso produccionQueso){
+    public boolean altaProduccionQueso(ProduccionQueso produccionQueso) {
         return persistencia.altaProduccionQueso(produccionQueso);
     }
-   
-    public List listarProduccionesQueso(){
+
+    public List listarProduccionesQueso() {
         return persistencia.listarProduccionesQueso();
     }
-       
-    public ProduccionQueso buscarProduccionQueso(int id){
+
+    public ProduccionQueso buscarProduccionQueso(int id) {
         return persistencia.buscarProduccionQueso(id);
     }
-    
-    public boolean modificarProduccionQueso(ProduccionQueso produccion){
+
+    public boolean modificarProduccionQueso(ProduccionQueso produccion) {
         return persistencia.modificarProduccionQueso(produccion);
-    }    
-    
-    public List listarQuesoPendienteAnalizar(){
+    }
+
+    public List listarQuesoPendienteAnalizar() {
         return persistencia.listarQuesoPendienteAnalizar();
     }
     // </editor-fold>  
-    
+
     // <editor-fold defaultstate="collapsed" desc="Produccion Dulce">
-    public boolean altaProduccionDulce(ProduccionDulce produccionDulce){
+    public boolean altaProduccionDulce(ProduccionDulce produccionDulce) {
         return persistencia.altaProduccionDulce(produccionDulce);
     }
-   
-    public List listarProduccionesDulce(){
+
+    public List listarProduccionesDulce() {
         return persistencia.listarProduccionesDulce();
     }
-       
-    public ProduccionDulce buscarProduccionDulce(int id){
+
+    public ProduccionDulce buscarProduccionDulce(int id) {
         return persistencia.buscarProduccionDulce(id);
     }
-    
-    public boolean modificarProduccionDulce(ProduccionDulce produccion){
+
+    public boolean modificarProduccionDulce(ProduccionDulce produccion) {
         return persistencia.modificarProduccionDulce(produccion);
-    }    
-    
-    public List listarDulcePendienteAnalizar(){
+    }
+
+    public List listarDulcePendienteAnalizar() {
         return persistencia.listarDulcePendienteAnalizar();
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Envases Dulce">
-    public boolean altaEnvase(EnvasesDulce envase){
+    public boolean altaEnvase(EnvasesDulce envase) {
         return persistencia.altaEnvase(envase);
     }
-   
-    public List listarEnvases(){
+
+    public List listarEnvases() {
         return persistencia.listarEnvases();
     }
-       
-    public EnvasesDulce buscarEnvase(int id){
+
+    public EnvasesDulce buscarEnvase(int id) {
         return persistencia.buscarEnvase(id);
     }
-    
-    public boolean modificarEnvase(EnvasesDulce envase){
+
+    public boolean modificarEnvase(EnvasesDulce envase) {
         return persistencia.modificarEnvase(envase);
-    }    
-    
-     public boolean bajaEnvase(int id) {
+    }
+
+    public boolean bajaEnvase(int id) {
         return persistencia.bajaEnvase(id);
     }
     // </editor-fold> 
-    
-    public boolean altaProduccion(Produccion produccion){
+
+    public boolean altaProduccion(Produccion produccion) {
         return persistencia.altaProduccion(produccion);
     }
-    
-    public boolean bajaProduccion(int id, String tabla) throws Exception{
+
+    public boolean bajaProduccion(int id, String tabla) throws Exception {
         return persistencia.bajaProduccion(id, tabla);
     }
-    
-    public List listarProducciones(){
+
+    public List listarProducciones() {
         return persistencia.listarProducciones();
     }
-    
-    public Produccion buscarProduccion(int id){
+
+    public Produccion buscarProduccion(int id) {
         return persistencia.buscarProduccion(id);
     }
-  
+
     // </editor-fold>  
-    
 }

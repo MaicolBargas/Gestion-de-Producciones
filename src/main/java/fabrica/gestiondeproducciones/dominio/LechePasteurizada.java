@@ -1,7 +1,7 @@
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class LechePasteurizada {
+
     private int id;
     private float temperatura;
     private int litros;
@@ -20,8 +20,6 @@ public class LechePasteurizada {
 
     public LechePasteurizada() {
     }
-
-   
 
     public int getId() {
         return id;
@@ -49,20 +47,17 @@ public class LechePasteurizada {
         this.cremaDisponible = cremaDisponible;
     }
 
-    
     public Object[] pasteurizadaToArray() {
         return new Object[]{
             new Object[]{"Id", id},
             new Object[]{"Temperatura", temperatura},
             new Object[]{"Litros", litros},
-            new Object[]{"Descremado", descremado ? "Sí, "+ crema+ " de crema obtenido" : "No"},
+            new Object[]{"Descremado", descremado ? "Sí, " + crema + " de crema obtenido" : "No"},
             new Object[]{"Ingreso de Leche", ingreso.getIdIngreso()},
             new Object[]{"Fecha ingreso", ingreso.getFecha()},
-            new Object[]{"Tambo de origen", ingreso.getTambo().getPropietario()+" - "+ ingreso.getTambo().getContacto()},
-            new Object[]{"Silo", ingreso.getSilo().getCodigoInterno()},                
-        };
+            new Object[]{"Tambo de origen", ingreso.getTambo().getPropietario() + " - " + ingreso.getTambo().getContacto()},
+            new Object[]{"Silo", ingreso.getSilo().getCodigoInterno()},};
     }
-
 
     public int getLitros() {
         return litros;
@@ -95,6 +90,5 @@ public class LechePasteurizada {
     public void setCrema(int crema) {
         this.crema = crema;
     }
-    
-    
+
 }

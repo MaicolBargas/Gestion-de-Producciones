@@ -1,9 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class Empleado {
-    
+
     private int id;
     private int ci;
     private String nombre;
@@ -106,12 +104,12 @@ public class Empleado {
         }
         return this.ci == other.ci;
     }
-    
-    public String getNombreCompleto(){
+
+    public String getNombreCompleto() {
         return this.nombre + " " + this.apellido;
     }
-    
-    public String getInfoCompleta(){
-        return this.id + " - "+ this.getNombreCompleto();
+
+    public String getInfoCompleta() {
+        return this.id + " - " + this.getNombreCompleto();
     }
 }

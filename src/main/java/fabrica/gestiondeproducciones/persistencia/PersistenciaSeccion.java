@@ -1,5 +1,5 @@
-
 package fabrica.gestiondeproducciones.persistencia;
+
 import fabrica.gestiondeproducciones.dominio.Seccion;
 import fabrica.gestiondeproducciones.utilidades.Excepciones;
 import java.sql.Connection;
@@ -11,81 +11,81 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PersistenciaSeccion {
+
     Conexion conexion = new Conexion();
     Connection con;
     PreparedStatement consulta;
     ResultSet resultado;
     String nombreTabla = "secciones";
-    
-    public boolean altaSeccion(Seccion seccion){
-        String sql = "INSERT INTO "+ nombreTabla +"(nombre, descripcion) VALUES (?,?)";
-        
-        try{
+
+    public boolean altaSeccion(Seccion seccion) {
+        String sql = "INSERT INTO " + nombreTabla + "(nombre, descripcion) VALUES (?,?)";
+
+        try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
-            consulta.setString(1,seccion.getNombre());
-            consulta.setString(2,seccion.getDescripcion());
+            consulta.setString(1, seccion.getNombre());
+            consulta.setString(2, seccion.getDescripcion());
             consulta.execute();
             return true;
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
-        }finally{
-            try{
+        } finally {
+            try {
                 con.close();
-            }catch(SQLException e){
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            
+
             }
         }
     }
-    
-    public List listarSecciones(){
+
+    public List listarSecciones() {
         List<Seccion> lista = new ArrayList();
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE activo = '1'";
-        try{
+        String sql = "SELECT * FROM " + nombreTabla + " WHERE activo = '1'";
+        try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             resultado = consulta.executeQuery();
-            while(resultado.next()){
+            while (resultado.next()) {
                 Seccion seccion = new Seccion();
                 seccion.setId(resultado.getInt("idSeccion"));
                 seccion.setNombre(resultado.getString("nombre"));
                 seccion.setDescripcion(resultado.getString("descripcion"));
                 lista.add(seccion);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.toString());
             return null;
         }
         return lista;
     }
-    
-    
-    public boolean bajaSeccion(int id){
-        String sql = "UPDATE "+ nombreTabla +" SET activo = 0 WHERE idSeccion = ?";
-       
-        try{
+
+    public boolean bajaSeccion(int id) {
+        String sql = "UPDATE " + nombreTabla + " SET activo = 0 WHERE idSeccion = ?";
+
+        try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
             consulta.execute();
             return true;
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
-        }finally{
-            try{
+        } finally {
+            try {
                 con.close();
-            }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
     }
-    
-     public boolean modificarSeccion(Seccion seccion){
-        String sql = "UPDATE "+ nombreTabla +" SET nombre = ?, descripcion = ? WHERE idSeccion = ?";
-        try{
+
+    public boolean modificarSeccion(Seccion seccion) {
+        String sql = "UPDATE " + nombreTabla + " SET nombre = ?, descripcion = ? WHERE idSeccion = ?";
+        try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setString(1, seccion.getNombre());
@@ -93,45 +93,44 @@ public class PersistenciaSeccion {
             consulta.setInt(3, seccion.getId());
             consulta.execute();
             return true;
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return false;
-        }finally{
-            try{
+        } finally {
+            try {
                 con.close();
-            }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
-        
-     
+
     }
-     
-     public Seccion buscarSeccion(int id){
-        String sql = "SELECT * FROM "+ nombreTabla +" WHERE idSeccion =?";
-        try{
+
+    public Seccion buscarSeccion(int id) {
+        String sql = "SELECT * FROM " + nombreTabla + " WHERE idSeccion =?";
+        try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
             consulta.setInt(1, id);
-            resultado = consulta.executeQuery();     
-            if(resultado.next()){
+            resultado = consulta.executeQuery();
+            if (resultado.next()) {
                 Seccion seccion = new Seccion();
                 seccion.setId(resultado.getInt("idSeccion"));
                 seccion.setNombre(resultado.getString("nombre"));
                 seccion.setDescripcion(resultado.getString("descripcion"));
                 return seccion;
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.toString());
             return null;
-        }finally{
-            try{
+        } finally {
+            try {
                 con.close();
-            }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             }
         }
         return null;
-    } 
-    
+    }
+
 }

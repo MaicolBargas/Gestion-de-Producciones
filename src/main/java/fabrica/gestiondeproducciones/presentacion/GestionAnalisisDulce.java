@@ -5,6 +5,7 @@ import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.ProduccionDulce;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -252,6 +253,12 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
         jLabel9.setText("Humedad:");
 
         txtId.setEditable(false);
+
+        txtEncargado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEncargadoKeyPressed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -806,6 +813,11 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
     private void txtPhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPhActionPerformed
+
+    private void txtEncargadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEncargadoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnBuscar.doClick();
+    }    }//GEN-LAST:event_txtEncargadoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

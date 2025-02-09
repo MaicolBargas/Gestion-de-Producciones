@@ -1,8 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-public class AnalisisQueso extends Analisis{
-    
+public class AnalisisQueso extends Analisis {
+
     private int humedad;
     private int sal;
     private float ph;
@@ -68,7 +67,5 @@ public class AnalisisQueso extends Analisis{
     public void setProduccion(ProduccionQueso produccion) {
         this.produccion = produccion;
     }
-    
-    
-    
+
 }

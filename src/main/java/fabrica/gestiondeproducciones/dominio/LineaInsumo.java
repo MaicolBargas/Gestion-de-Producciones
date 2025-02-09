@@ -1,9 +1,9 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
 import java.util.Objects;
 
 public class LineaInsumo {
+
     private int id;
     private Insumo insumo;
     private float cantidad;
@@ -11,7 +11,6 @@ public class LineaInsumo {
     public LineaInsumo() {
     }
 
-    
     public int getId() {
         return id;
     }
@@ -43,8 +42,8 @@ public class LineaInsumo {
     }
 
     public LineaInsumo(Insumo insumo, float cantidad) {
-         this.insumo = insumo;
-         this.cantidad = cantidad;
+        this.insumo = insumo;
+        this.cantidad = cantidad;
     }
 
     @Override
@@ -68,7 +67,5 @@ public class LineaInsumo {
         final LineaInsumo other = (LineaInsumo) obj;
         return Objects.equals(this.insumo, other.insumo);
     }
-    
-    
-    
+
 }

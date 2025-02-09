@@ -1,9 +1,7 @@
-
 package fabrica.gestiondeproducciones.dominio;
 
-
 public class AnalisisLeche extends Analisis {
-    
+
     private int grasa;
     private int proteina;
     private int agua;
@@ -26,8 +24,6 @@ public class AnalisisLeche extends Analisis {
         this.agua = agua;
         this.ph = ph;
     }
-
-   
 
     public int getGrasa() {
         return grasa;
@@ -52,5 +48,5 @@ public class AnalisisLeche extends Analisis {
     public void setAgua(int agua) {
         this.agua = agua;
     }
-    
+
 }
