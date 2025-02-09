@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-01-2025 a las 03:26:29
+-- Tiempo de generación: 09-02-2025 a las 19:05:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -131,7 +131,7 @@ CREATE TABLE `linea_insumos` (
   `idLinea` int(11) NOT NULL,
   `idProduccion` int(11) NOT NULL,
   `idInsumo` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `cantidad` float(5,2) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -172,6 +172,7 @@ CREATE TABLE `produccion` (
   `horaFin` varchar(5) NOT NULL,
   `tiempoTrabajado` varchar(5) NOT NULL,
   `nroTacho` int(11) NOT NULL,
+  `observaciones` text DEFAULT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -340,15 +341,6 @@ CREATE TABLE `silos` (
   `capacidad` int(8) NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `silos`
---
-
-INSERT INTO `silos` (`IdSilo`, `codigoSilo`, `capacidad`, `activo`) VALUES
-(1, '1', 50000, 1),
-(2, '2', 50000, 1),
-(3, '3', 45000, 1);
 
 -- --------------------------------------------------------
 
@@ -577,7 +569,7 @@ ALTER TABLE `secciones`
 -- AUTO_INCREMENT de la tabla `silos`
 --
 ALTER TABLE `silos`
-  MODIFY `IdSilo` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `IdSilo` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tambo`
