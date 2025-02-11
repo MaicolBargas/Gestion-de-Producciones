@@ -22,7 +22,6 @@ import fabrica.gestiondeproducciones.dominio.ProduccionQueso;
 import fabrica.gestiondeproducciones.dominio.ProduccionYogur;
 import fabrica.gestiondeproducciones.dominio.Producto;
 import fabrica.gestiondeproducciones.utilidades.Utilidades;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
@@ -50,15 +49,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -87,6 +83,8 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         agregarFiltros(txtProducto, filtroTabla, 2);
         detalleProducciones();
         seleccionDeProducciones();
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+
     }
 
     private void listar() {
@@ -202,8 +200,8 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         switch (codigo.charAt(0)) {
             case 'M' -> {
                 ProduccionManteca produccionManteca = controlador.buscarProduccionManteca(id);
-                return produccionManteca.produccionToArray();
-            }
+                    return produccionManteca.produccionToArray();
+                }
             case 'Q' -> {
                 ProduccionQueso produccionQueso = controlador.buscarProduccionQueso(id);
                 return produccionQueso.produccionToArray();
@@ -614,14 +612,14 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
 
             PdfPTable tabla = new PdfPTable(2);
             tabla.setWidthPercentage(100);
-
+           
             Object[] campos = obtenerProduccionPorCodigo(produccionSeleccionada.getIdProduccion(), produccionSeleccionada.getCodInterno());
 
             //FORMATO TABLA
             for (Object campo : campos) {
                 Object[] linea = (Object[]) campo;
                 String titulo = (String) linea[0];
-                String valor = linea[1].toString();
+                String valor = linea[1]+"";
                 PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
                 cellCampo.setPadding(5);
                 cellCampo.setBorderWidth(1.5f);
@@ -715,7 +713,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
                 for (Object campo : campos) {
                     Object[] linea = (Object[]) campo;
                     String titulo = (String) linea[0];
-                    String valor = linea[1].toString();
+                    String valor = linea[1]+"";
                     PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
                     cellCampo.setPadding(5);
                     cellCampo.setBorderWidth(1.5f);
@@ -798,6 +796,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             documento.add(Chunk.NEWLINE);
 
             //</editor-fold>
+            
             // <editor-fold defaultstate="collapsed" desc="PRODUCCION"> 
             PdfPTable tablaProduccion = new PdfPTable(2);
             tablaProduccion.setWidthPercentage(100);
@@ -809,7 +808,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             for (Object campo : campos) {
                 Object[] linea = (Object[]) campo;
                 String titulo = (String) linea[0];
-                String valor = linea[1].toString();
+                String valor = linea[1]+"";
                 PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
                 cellCampo.setPadding(5);
                 cellCampo.setBorderWidth(1.5f);
@@ -825,6 +824,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             documento.add(Chunk.NEWLINE);
 
             //</editor-fold>
+            
             // <editor-fold defaultstate="collapsed" desc="ANALISIS">                          
             Analisis analisis = controlador.buscarAnalisisXProduccion(produccionSeleccionada.getIdProduccion());
 
@@ -874,6 +874,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             documento.add(Chunk.NEWLINE);
 
             //</editor-fold>
+            
             // <editor-fold defaultstate="collapsed" desc="LECHE">                          
             PdfPTable tablaLeche = new PdfPTable(2);
             tablaLeche.setWidthPercentage(100);
@@ -886,7 +887,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             for (Object campo : pasteurizadaObj) {
                 Object[] linea = (Object[]) campo;
                 String titulo = (String) linea[0];
-                String valor = linea[1].toString();
+                String valor = linea[1]+"";
                 PdfPCell cellCampo = new PdfPCell(new Phrase(titulo, new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
                 cellCampo.setPadding(5);
                 cellCampo.setBorderWidth(1.5f);

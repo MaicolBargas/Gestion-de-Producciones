@@ -15,6 +15,8 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -55,6 +57,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
         agregarFiltros(txtBuscar, filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -1303,9 +1306,22 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
 
             int litros = utilidad.validarNumericos(txtLitros.getText(), "Litros de Crema", false);
 
-            int rendimiento = Math.round((kgObtenidos / litros) * 100);
+            int rendimiento = Math.round(((float) kgObtenidos / litros) * 100);
+
             int diferencia = 0;
 
+            modeloInsumosUtilizados = (DefaultTableModel) tablaInsumosAgregados.getModel();
+            Object[] arrayInsumos = new Object[4];
+            for (int i = 0; i < tablaInsumosAgregados.getRowCount(); i++) {
+                arrayInsumos[0] = tablaInsumosAgregados.getValueAt(i,0);
+                arrayInsumos[1] = tablaInsumosAgregados.getValueAt(i,1);
+                arrayInsumos[2]=  tablaInsumosAgregados.getValueAt(i,2);
+                arrayInsumos[3]= tablaInsumosAgregados.getValueAt(i,3);
+
+                listaInsumosLinea.get(i).setCantidad((float)arrayInsumos[2]);
+            }
+            
+            
             if (lechep.getId() == c.buscarProduccionManteca(idProduccionObtenido).getLechep().getId()) {
 
                 if (actual <= litros) {
@@ -1448,7 +1464,7 @@ public class GestionProduccionManteca extends javax.swing.JInternalFrame {
             }
             int ormas = utilidad.validarNumericos(txtOrmas.getText(), "Ormas", false);
             int kgObtenidos = ormas * 5;
-            int rendimiento = Math.round((kgObtenidos / litros) * 100); // Usa división en coma flotante
+            int rendimiento = Math.round(((float) kgObtenidos / litros) * 100); // Usa división en coma flotante
             Producto producto = controlador.buscarProducto(idManteca);
             produccion.setCodInterno(CodigoInterno);
             produccion.setListaInsumos(listaInsumosLinea);

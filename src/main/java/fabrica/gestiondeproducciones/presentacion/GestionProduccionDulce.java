@@ -17,6 +17,8 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -63,6 +65,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
         agregarFiltros(txtBuscar, filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -1408,7 +1411,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                 throw new Exception("Verificar Cantidad de Envases o materia Prima(Leche Y Suero), Los kg Obtenidos son demasiados para la produccion ");
             }
             int divisor = litros + litrosSuero;
-            int rendimiento = Math.round((kgObtenidos / (float) divisor) * 100);
+            int rendimiento = Math.round((kgObtenidos / (float) divisor) * 100);             
             if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
             }
@@ -1565,16 +1568,30 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
 
             float kg = 0;
 
-            modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
-            Object[] objeto = new Object[4];
-            for (int i = 0; i < modeloEnvasesUtilizados.getRowCount(); i++) {
 
-                modeloEnvasesUtilizados.setValueAt(modeloEnvasesUtilizados.getValueAt(i, 3), i, 3);
+            modeloInsumosUtilizados = (DefaultTableModel) tablaInsumosAgregados.getModel();
+            Object[] arrayInsumos = new Object[4];
+            for (int i = 0; i < tablaInsumosAgregados.getRowCount(); i++) {
+                arrayInsumos[0] = tablaInsumosAgregados.getValueAt(i,0);
+                arrayInsumos[1] = tablaInsumosAgregados.getValueAt(i,1);
+                arrayInsumos[2]=  tablaInsumosAgregados.getValueAt(i,2);
+                arrayInsumos[3]= tablaInsumosAgregados.getValueAt(i,3);
 
-                System.out.println("CANTIDAD ENVASES      " + modeloEnvasesUtilizados.getValueAt(i, 3));
-                produccion.getListaEnvases().get(i).setCantidad((int) modeloEnvasesUtilizados.getValueAt(i, 3));
-
+                listaInsumosLinea.get(i).setCantidad((float)arrayInsumos[2]);
             }
+            
+            modeloEnvasesUtilizados = (DefaultTableModel) tablaEnvasesUtilizados.getModel();
+            Object[] arrayEnvases = new Object[4];
+            for (int i = 0; i < tablaEnvasesUtilizados.getRowCount(); i++) {
+                arrayEnvases[0] = tablaEnvasesUtilizados.getValueAt(i,0);
+                arrayEnvases[1] = tablaEnvasesUtilizados.getValueAt(i,1);
+                arrayEnvases[2]=  tablaEnvasesUtilizados.getValueAt(i,2);
+                arrayEnvases[3]= tablaEnvasesUtilizados.getValueAt(i,3);
+
+                listaEnvasesLinea.get(i).setCantidad((int)arrayEnvases[3]);
+            }
+            
+            
             for (LineaEnvase linea : listaEnvasesLinea) {
                 kg = kg + (linea.getEnvase().getCapacidad() * linea.getCantidad());
             }

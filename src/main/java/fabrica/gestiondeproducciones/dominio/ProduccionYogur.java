@@ -152,17 +152,17 @@ public class ProduccionYogur extends Produccion {
         Object[] datosProduccion = super.produccionToArray();
 
         Object[] datosYogur = new Object[]{
-            new Object[]{"Temperatura Incubación", temperaturaIncubacion},
+            new Object[]{"Temperatura Incubación", temperaturaIncubacion + " °C"},
             new Object[]{"Hora Comienzo Incubación", horaComienzoIncubacion},
             new Object[]{"Hora Fin Incubación", horaFinIncubacion},
             new Object[]{"Tiempo Incubación", tiempoIncubacion},
             new Object[]{"Hora Comienzo Enfriado", horaComienzoEnfriado},
             new Object[]{"Hora Fin Enfriado", horaFinEnfriado},
             new Object[]{"Tiempo Total Enfriado", tiempoTotalEnfriado},
-            new Object[]{"Temp. Agua Helada", tempAguaHelada},
-            new Object[]{"Temp. Agregado Sabor", tempAgregadoSabor},
-            new Object[]{"Temp. Agregado Color", tempAgregadoColor},
-            new Object[]{"Litros de Suero", litrosSuero},
+            new Object[]{"Temp. Agua Helada", tempAguaHelada + " °C"},
+            new Object[]{"Temp. Agregado Sabor", tempAgregadoSabor + " °C"},
+            new Object[]{"Temp. Agregado Color", tempAgregadoColor + " °C"},
+            new Object[]{"Litros de Suero", litrosSuero + " L"},
             new Object[]{"Unidades Obtenidas", unidadesObtenidas}
         };
 

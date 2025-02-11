@@ -49,6 +49,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 
 public class ListadoAnalisis extends javax.swing.JInternalFrame {
 
@@ -68,6 +70,7 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         agregarFiltros(txtEncargado, filtroTabla, 1);
         agregarFiltrosComboBox(cbxTipo, filtroTabla, 13);
         seleccionDeAnalisis();
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 

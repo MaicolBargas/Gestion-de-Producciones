@@ -174,18 +174,18 @@ public class ProduccionQueso extends Produccion {
         Object[] datosProduccion = super.produccionToArray();
 
         Object[] datosQueso = new Object[]{
-            new Object[]{"Temp. Pasteurización Queso", tempPastQueso},
+            new Object[]{"Temp. Pasteurización Queso", tempPastQueso+ " °C"},
             new Object[]{"Tiempo Reposo Fermento", tiempoReposoFermento},
-            new Object[]{"Temp. Reposo Fermento", tempReposoFermento},
+            new Object[]{"Temp. Reposo Fermento", tempReposoFermento + " °C"},
             new Object[]{"Tipo Cuajo Obtenido", tipoCuajoObtenido},
             new Object[]{"Tiempo Cuajado", tiempoCuajado},
-            new Object[]{"Temp. al Cuajar", tempAlCuajar},
-            new Object[]{"Cantidad Cuajo Obtenido", cantCuajoObtenido},
+            new Object[]{"Temp. al Cuajar", tempAlCuajar + " °C"},
+            new Object[]{"Cantidad Cuajo Obtenido", cantCuajoObtenido + " kg"},
             new Object[]{"Tipo de Grano", tipoDeGrano},
-            new Object[]{"Litros de Suero Obtenidos", litrosSueroObtenidos},
+            new Object[]{"Litros de Suero Obtenidos", litrosSueroObtenidos +" L"},
             new Object[]{"Tiempo Agregado Agua", tiempoAgregadoAgua},
-            new Object[]{"Temp. Agua", tempAgua},
-            new Object[]{"Temp. Cuajo Final", tempCuajoFinal},
+            new Object[]{"Temp. Agua", tempAgua + " °C"},
+            new Object[]{"Temp. Cuajo Final", tempCuajoFinal + " °C"},
             new Object[]{"Unidades Obtenidas", unidadesObtenidas},
             new Object[]{"Acidez Fermento", acidesFermento}
         };

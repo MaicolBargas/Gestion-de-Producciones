@@ -178,7 +178,7 @@ public class Produccion {
     public String listadoInsumos() {
         String insumos = "";
         for (LineaInsumo insumo : listaInsumos) {
-            insumos += insumo.getCantidad() + " x " + insumo.getInsumo().getNombre() + " / ";
+            insumos += insumo.getCantidad()+" "+ insumo.getInsumo().getUnidad() + " x " + insumo.getInsumo().getNombre() + " / ";
         }
         return insumos;
     }
@@ -198,10 +198,10 @@ public class Produccion {
             new Object[]{"Lista Insumos", listadoInsumos()},
             new Object[]{"Lista Empleados", listadoEmpleados()},
             new Object[]{"Leche Pasteurizada", lechep.getId()},
-            new Object[]{"Litros", litros},
+            new Object[]{"Litros", litros +" L"},
             new Object[]{"Producto", producto.getNombre()},
-            new Object[]{"Rendimiento", rendimiento},
-            new Object[]{"Kg/Lts Obt", kgLtsObt},
+            new Object[]{"Rendimiento", rendimiento+ "%"},
+            new Object[]{"Kg/Lts Obt", kgLtsObt + " Kg/Lts"},
             new Object[]{"Fecha", fecha},
             new Object[]{"Encargado", encargado.getInfoCompleta()},
             new Object[]{"Hora Inicio", horaInicio},

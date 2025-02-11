@@ -62,7 +62,7 @@ public class ProduccionDulce extends Produccion {
     public String listadoEnvases() {
         String envases = "";
         for (LineaEnvase envase : listaEnvases) {
-            envases += envase.getCantidad() + " x " + envase.getEnvase().getCapacidad() + " / ";
+            envases += envase.getCantidad() + " x " + envase.getEnvase().getCapacidad() + " Kg / ";
         }
         return envases;
     }
@@ -74,7 +74,7 @@ public class ProduccionDulce extends Produccion {
         Object[] datosDulce = new Object[]{
             new Object[]{"PH Leche Sin Neutralizar", phLecheSn},
             new Object[]{"PH Leche Neutralizada", phLecheNeut},
-            new Object[]{"Litros Suero", litrosSuero},
+            new Object[]{"Litros Suero", litrosSuero +" L"},
             new Object[]{"Envases", listadoEnvases()}
         };
 
