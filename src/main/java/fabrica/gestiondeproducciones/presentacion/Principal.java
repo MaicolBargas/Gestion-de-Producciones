@@ -1,5 +1,7 @@
 package fabrica.gestiondeproducciones.presentacion;
 
+import java.io.IOException;
+import java.io.InputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 
@@ -10,9 +12,17 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
-        ImageIcon icono = new ImageIcon(path);
-        setIconImage(icono.getImage());
+        InputStream imageStream = getClass().getClassLoader().getResourceAsStream("magnolia-logo.jpg");
+
+        if (imageStream != null) {
+            try {
+                byte[] imageBytes = imageStream.readAllBytes();
+                ImageIcon icono = new ImageIcon(imageBytes);
+                setIconImage(icono.getImage());
+            } catch (IOException e) {
+
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Singleton">
@@ -494,7 +504,7 @@ public class Principal extends javax.swing.JFrame {
             public void run() {
                 new Principal().setVisible(true);
             }
-        });       
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

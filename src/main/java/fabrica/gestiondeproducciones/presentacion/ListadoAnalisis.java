@@ -41,6 +41,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -572,12 +573,16 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             headerTable.setWidths(columnWidths);
 
             //Logo
-            String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
-            Image logo = Image.getInstance(path);
-            logo.scaleToFit(80, 80);
-            PdfPCell cellLogo = new PdfPCell(logo);
-            cellLogo.setBorder(Rectangle.NO_BORDER);
-            headerTable.addCell(cellLogo);
+            InputStream imageStream = getClass().getClassLoader().getResourceAsStream("magnolia-logo.jpg");
+          
+            if (imageStream != null) {
+                byte[] imageBytes = imageStream.readAllBytes();
+                Image logo = Image.getInstance(imageBytes);
+                logo.scaleToFit(80, 80);
+                PdfPCell cellLogo = new PdfPCell(logo);
+                cellLogo.setBorder(Rectangle.NO_BORDER);
+                headerTable.addCell(cellLogo);
+            }
 
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
@@ -683,12 +688,16 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             headerTable.setWidths(columnWidths);
 
             //Logo
-            String path = System.getProperty("user.dir") + "/src/main/java/fabrica/gestiondeproducciones/img/magnolia-logo.jpg";
-            Image logo = Image.getInstance(path);
-            logo.scaleToFit(80, 80);
-            PdfPCell cellLogo = new PdfPCell(logo);
-            cellLogo.setBorder(Rectangle.NO_BORDER);
-            headerTable.addCell(cellLogo);
+            InputStream imageStream = getClass().getClassLoader().getResourceAsStream("magnolia-logo.jpg");
+          
+            if (imageStream != null) {
+                byte[] imageBytes = imageStream.readAllBytes();
+                Image logo = Image.getInstance(imageBytes);
+                logo.scaleToFit(80, 80);
+                PdfPCell cellLogo = new PdfPCell(logo);
+                cellLogo.setBorder(Rectangle.NO_BORDER);
+                headerTable.addCell(cellLogo);
+            }
 
             // Títulos centrales
             Font fontTitulo = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
