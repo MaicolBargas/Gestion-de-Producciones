@@ -437,7 +437,7 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
             String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
             Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
             String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
-            String mail = utilidad.validarVacios(txtMail.getText(), "Mail");
+            String mail = txtMail.getText();
 
             Empleado e = controlador.buscarEmpleadoXCi(ci);
             if (e instanceof Empleado) {
@@ -491,7 +491,7 @@ public class GestionEmpleados extends javax.swing.JInternalFrame {
             String[] partes = cbxSeccion.getSelectedItem().toString().split(" - ");
             Seccion seccion = controlador.buscarSeccion(Integer.parseInt(partes[0]));
             String telefono = utilidad.sanitizarCampos(txtTelefono.getText(), "Telefono", false);
-            String mail = utilidad.validarVacios(txtMail.getText(), "Mail");
+            String mail = txtMail.getText();
 
             empleado.setCi(ci);
             empleado.setNombre(nombre);

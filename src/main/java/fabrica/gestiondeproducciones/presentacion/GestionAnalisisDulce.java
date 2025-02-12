@@ -669,7 +669,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
 
             if (!txtId.getText().equals("")) {
@@ -746,7 +746,7 @@ public class GestionAnalisisDulce extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
 
             analisis.setFecha(fecha);

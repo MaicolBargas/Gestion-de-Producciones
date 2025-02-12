@@ -651,7 +651,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
             if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");

@@ -377,6 +377,7 @@ public class PersistenciaProduccionManteca {
                 produccion.setTiempoTrabajado(resultado.getString("tiempoTrabajado"));
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
                 produccion.setObservaciones(resultado.getString("observaciones"));
+                produccion.setCantidad(resultado.getInt("ormas"));
 
                 List<Empleado> empleados = persProduccion.listarEmpleadosXProduccion(id);
                 produccion.setListaEmpleados(empleados);

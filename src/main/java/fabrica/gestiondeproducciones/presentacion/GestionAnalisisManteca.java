@@ -179,6 +179,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
     }
 
     // </editor-fold>
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -687,7 +688,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
             if (!txtId.getText().equals("")) {
                 throw new Exception("No puede dar de alta un elemento seleccionado de la tabla, si desea puede Modificar");
@@ -762,7 +763,7 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
 
             analisis.setFecha(fecha);
