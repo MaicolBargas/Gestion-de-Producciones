@@ -38,7 +38,6 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         initComponents();
         listar();
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -71,6 +70,8 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private void listarProducciones() {
@@ -627,14 +628,14 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             }
 
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
-            int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
-            int sal = utilidad.validarNumericos(txtSal.getText(), "Sal", false);
+            int humedad = utilidad.validarPorcentaje(txtHumedad.getText(), "Humedad", false);
+            int sal = utilidad.validarPorcentaje(txtSal.getText(), "Sal", false);
             float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionQueso produccion = controlador.buscarProduccionQueso(idProduccion);
 
@@ -703,14 +704,14 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
         try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
-            int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
-            int sal = utilidad.validarNumericos(txtSal.getText(), "Sal", false);
+            int humedad = utilidad.validarPorcentaje(txtHumedad.getText(), "Humedad", false);
+            int sal = utilidad.validarPorcentaje(txtSal.getText(), "Sal", false);
             float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionQueso produccion = controlador.buscarProduccionQueso(idProduccion);
 
@@ -729,7 +730,7 @@ public class GestionAnalisisQueso extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
 
             analisis.setFecha(fecha);

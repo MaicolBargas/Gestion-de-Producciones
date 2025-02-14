@@ -84,7 +84,6 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         agregarFiltros(txtProducto, filtroTabla, 2);
         detalleProducciones();
         seleccionDeProducciones();
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -100,6 +99,7 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
         tablaProducciones.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaProducciones.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));        
     }
 
     private Object[] obtenerProduccion(Produccion produccion) {
@@ -744,7 +744,6 @@ public class ListadoProducciones extends javax.swing.JInternalFrame {
             abrirPDF(ruta);
         } catch (DocumentException | HeadlessException | IOException e) {
             JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
-            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnImprimirListadoActionPerformed
 

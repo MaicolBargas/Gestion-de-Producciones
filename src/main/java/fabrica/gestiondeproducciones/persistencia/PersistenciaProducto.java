@@ -56,7 +56,7 @@ public class PersistenciaProducto {
                 lista.add(producto);
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
         }
         return lista;
@@ -121,7 +121,7 @@ public class PersistenciaProducto {
                 return producto;
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
         } finally {
             try {

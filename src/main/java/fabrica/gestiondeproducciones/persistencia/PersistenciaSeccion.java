@@ -55,8 +55,8 @@ public class PersistenciaSeccion {
                 seccion.setDescripcion(resultado.getString("descripcion"));
                 lista.add(seccion);
             }
-        } catch (SQLException e) {
-            System.out.println(e.toString());
+        } catch (SQLException e) {               
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
         }
         return lista;
@@ -121,7 +121,7 @@ public class PersistenciaSeccion {
                 return seccion;
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
             return null;
         } finally {
             try {

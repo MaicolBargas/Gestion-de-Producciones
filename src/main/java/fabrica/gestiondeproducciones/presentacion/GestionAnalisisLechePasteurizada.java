@@ -37,7 +37,6 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         initComponents();
         listar();
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -136,6 +135,8 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
         tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private Empleado buscarEncargado() throws Exception {
@@ -729,15 +730,15 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
             }
 
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
-            int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
+            int proteina = utilidad.validarPorcentaje(txtProteina.getText(), "Proteina", false);
+            int agua = utilidad.validarPorcentaje(txtAgua.getText(), "Agua", false);
             int id = utilidad.validarNumericos(txtIdLechePast.getText(), "leche pasteurizada", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             LechePasteurizada ingreso = controlador.buscarPasteurizado(id);
 
             try {
@@ -803,18 +804,21 @@ public class GestionAnalisisLechePasteurizada extends javax.swing.JInternalFrame
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);            
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
-            int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
-            int id = utilidad.validarNumericos(txtIdLechePast.getText(), "Ingreso", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
-            LechePasteurizada lechePast = controlador.buscarPasteurizado(id);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
+            int proteina = utilidad.validarPorcentaje(txtProteina.getText(), "Proteina", false);
+            int agua = utilidad.validarPorcentaje(txtAgua.getText(), "Agua", false);
+            int idIngreso = utilidad.validarNumericos(txtIdLechePast.getText(), "Ingreso", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
+            lechePast = controlador.buscarPasteurizado(idIngreso);
 
+            analisis = controlador.buscarAnalisisLechePast(id);
+            
             try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));

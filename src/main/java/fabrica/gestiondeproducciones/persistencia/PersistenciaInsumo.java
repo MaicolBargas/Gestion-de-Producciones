@@ -32,7 +32,6 @@ public class PersistenciaInsumo {
             return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            System.out.println(e.toString());
             return false;
         } finally {
             try {

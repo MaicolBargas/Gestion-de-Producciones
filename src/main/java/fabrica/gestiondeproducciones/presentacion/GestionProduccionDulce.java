@@ -65,7 +65,6 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -88,6 +87,8 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
         tablaProducciones.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaProducciones.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+
     }
 
     private void limpiarTabla() {
@@ -1465,7 +1466,7 @@ public class GestionProduccionDulce extends javax.swing.JInternalFrame {
                 }
                 listarLineaInsumos(listaInsumosLinea);
             } else {
-                throw new Exception("Debe seleccionar un empleado de la lista");
+                throw new Exception("Debe seleccionar un insumo de la lista");
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Advertencia", JOptionPane.WARNING_MESSAGE);

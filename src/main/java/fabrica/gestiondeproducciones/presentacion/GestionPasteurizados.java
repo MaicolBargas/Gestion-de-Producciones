@@ -34,8 +34,6 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         txtCrema.setVisible(false);
         txtLitros.setEditable(true);
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">
@@ -59,6 +57,8 @@ public class GestionPasteurizados extends javax.swing.JInternalFrame {
         tablaPasteurizados.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaPasteurizados.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private void listarIngresos() {

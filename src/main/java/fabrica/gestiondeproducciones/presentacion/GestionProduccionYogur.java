@@ -57,7 +57,6 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
         agregarFiltros(txtFiltroEmpleados, filtroFilaEmpleados);
         agregarFiltros(txtFiltroInsumos, filtroFilaInsumos);
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -80,6 +79,8 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
         tablaProducciones.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaProducciones.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private void limpiarTabla() {
@@ -1474,6 +1475,7 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
             if (insumo instanceof Insumo && insumoLinea instanceof LineaInsumo) {
                 if (!listaInsumosLinea.contains(insumoLinea)) {
                     listaInsumosLinea.add(insumoLinea);
+                    txtCantidadInsumo.setText("");                    
                 } else {
                     throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
                 }
@@ -1609,7 +1611,6 @@ public class GestionProduccionYogur extends javax.swing.JInternalFrame {
 
             int kgObtenidos = unidadesObtenidas;
             int rendimiento = Math.round((float)kgObtenidos / (float)(litros + litrosSuero) * 100);
-            JOptionPane.showMessageDialog(null, " --- rendimiento: "+ rendimiento+" --- kgObtenidos: "+ kgObtenidos+" --- litros: "+ litros+" --- litrosSuero: "+ litrosSuero);
 
             String[] partes2 = cbxProducto.getSelectedItem().toString().split(" - ");
             Producto producto = controlador.buscarProducto(Integer.parseInt(partes2[0]));

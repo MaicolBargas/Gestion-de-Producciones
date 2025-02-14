@@ -82,6 +82,8 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
         tablaProducciones.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaProducciones.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private void limpiarTabla() {
@@ -1434,7 +1436,6 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             }
 
             if (acidesFermento < 14 && acidesFermento > 0) {
-                System.out.println("ACIDES  " + acidesFermento);
                 produccion.setAcidesFermento(acidesFermento);
             } else {
                 throw new Exception("El valor de acides del fermento debe de estar contenido entre 0.0 y 14.0");
@@ -1539,6 +1540,7 @@ public class GestionProduccionQueso extends javax.swing.JInternalFrame {
             if (insumo instanceof Insumo && insumoLinea instanceof LineaInsumo) {
                 if (!listaInsumosLinea.contains(insumoLinea)) {
                     listaInsumosLinea.add(insumoLinea);
+                    txtCantidadInsumo.setText("");
                 } else {
                     throw new Exception("El insumo ya se encuentra agregado a la lista, puede modificar su cantidad desde la tabla");
                 }

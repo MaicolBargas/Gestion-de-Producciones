@@ -71,7 +71,6 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         agregarFiltros(txtEncargado, filtroTabla, 1);
         agregarFiltrosComboBox(cbxTipo, filtroTabla, 13);
         seleccionDeAnalisis();
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -87,6 +86,8 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
         tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     public Object[] obtenerAnalisis(Analisis analisis) {
@@ -768,7 +769,6 @@ public class ListadoAnalisis extends javax.swing.JInternalFrame {
             abrirPDF(ruta);
         } catch (DocumentException | HeadlessException | IOException e) {
             JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
-            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnImprimirListadoAnalisisActionPerformed
 

@@ -40,7 +40,6 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         agregarFiltros(txtBuscar, filtroTabla);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -70,6 +69,8 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
         tablaAnalisis.setModel(modelo);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private void listarProducciones() {
@@ -623,7 +624,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             }
 
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
@@ -692,7 +693,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
         try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
@@ -715,7 +716,7 @@ public class GestionAnalisisYogur extends javax.swing.JInternalFrame {
             }
 
             if (pFecales > pTotales) {
-                throw new Exception("Los Poliformos Fecales no pueden ser mayores a los PoliformosTotales");
+                throw new Exception("Los Coliformes Fecales no pueden ser mayores a los Coliformes Totales");
             }
 
             analisis.setFecha(fecha);

@@ -448,9 +448,6 @@ public class Controlador {
     }
     // </editor-fold> 
 
-    public boolean altaProduccion(Produccion produccion) {
-        return persistencia.altaProduccion(produccion);
-    }
 
     public boolean bajaProduccion(int id, String tabla) throws Exception {
         return persistencia.bajaProduccion(id, tabla);

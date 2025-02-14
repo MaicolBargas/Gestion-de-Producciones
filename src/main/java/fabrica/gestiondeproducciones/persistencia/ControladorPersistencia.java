@@ -360,10 +360,6 @@ public class ControladorPersistencia {
     PersistenciaProduccionDulce persistenciaProduccionDulce = new PersistenciaProduccionDulce();
     PersistenciaEnvases persistenciaEnvases = new PersistenciaEnvases();
 
-    public boolean altaProduccion(Produccion produccion) {
-        return persistenciaProduccion.altaProduccion(produccion);
-    }
-
     public boolean bajaProduccion(int id, String tabla) throws Exception {
         return persistenciaProduccion.bajaProduccion(id, tabla);
     }

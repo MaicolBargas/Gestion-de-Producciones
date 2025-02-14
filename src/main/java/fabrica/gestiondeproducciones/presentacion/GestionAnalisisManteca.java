@@ -38,7 +38,6 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         initComponents();
         listar();
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));        
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
@@ -69,6 +68,8 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));        
+
     }
 
     private void listarProducciones() {
@@ -665,13 +666,13 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
                 throw new Exception("No puede darse de alta un registro existente.");
             }
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
             float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
-            int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
+            int humedad = utilidad.validarPorcentaje(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionManteca produccion = controlador.buscarProduccionManteca(idProduccion);
 
@@ -738,13 +739,13 @@ public class GestionAnalisisManteca extends javax.swing.JInternalFrame {
         try {
             int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
-            int mos = utilidad.validarNumericos(txtMos.getText(), "Mos", false);
-            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Poliformos Totales", false);
-            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Poliformos Fecales", false);
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
+            int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
+            int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
+            int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
             float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
-            int humedad = utilidad.validarNumericos(txtHumedad.getText(), "Humedad", false);
+            int humedad = utilidad.validarPorcentaje(txtHumedad.getText(), "Humedad", false);
             int idProduccion = utilidad.validarNumericos(txtIdProduccion.getText(), "Produccion", false);
             ProduccionManteca produccion = controlador.buscarProduccionManteca(idProduccion);
 

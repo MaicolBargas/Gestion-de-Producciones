@@ -16,7 +16,7 @@ public class Utilidades {
                 try {
                     Integer numero = Integer.valueOf(valor);
 
-                    if (numero <= 0) {
+                    if (numero < 0) {
                         throw new Exception("El campo " + nombre + " debe ser mayor a 0.");
                     }
 
@@ -259,4 +259,29 @@ public class Utilidades {
         throw new Exception("Los Valores de ph deben de estar contenidos entre 0.0 y 14.0");
     }
 
+    public Integer validarPorcentaje(String valor, String nombre, Boolean permiteVacios) throws Exception {
+        try {
+            if (!valor.isEmpty() || permiteVacios) {
+                try {
+                    Integer numero = Integer.valueOf(valor);
+
+                    if (numero <= 0) {
+                        throw new Exception("El campo " + nombre + " debe ser mayor a 0.");
+                    }
+                    
+                    if (numero > 100) {
+                        throw new Exception("El campo " + nombre + " debe ser menor a 100.");
+                    }
+                    
+                    return numero;
+                } catch (NumberFormatException e) {
+                    throw new Exception("El campo " + nombre + " no es numerico, por favor verifique.");
+                }
+            } else {
+                throw new Exception("El campo " + nombre + " no puede ser vacio");
+            }
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
 }

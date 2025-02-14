@@ -124,49 +124,6 @@ public class PersistenciaProduccionQueso {
         }
     }
 
-    public void agregarEmpleado(int idProd, int idEmpleado) {
-        String sqlAgregarEmpleados = "INSERT INTO produccion_empleados" + "(idProduccion,idEmpleado) VALUES (?,?)";
-
-        try {
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sqlAgregarEmpleados);
-            consulta.setInt(1, idProd);
-            consulta.setInt(2, idEmpleado);
-            consulta.execute();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            }
-        }
-    }
-
-    public boolean agregarInsumos(int idProd, int idInsumo, int cantidad) {
-        String sql = "INSERT INTO linea_insumos" + "(idProduccion,idInsumo,cantidad) VALUES (?,?,?)";
-
-        try {
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            consulta.setInt(1, idProd);
-            consulta.setInt(2, idInsumo);
-            consulta.setInt(3, cantidad);
-            consulta.execute();
-            return true;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return false;
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            }
-        }
-    }
-
     public List listarProduccionesQueso() {
         List<ProduccionQueso> lista = new ArrayList<>();
         String sql = "SELECT * FROM produccion p INNER JOIN produccion_queso pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1' GROUP BY p.idProduccion";
@@ -241,7 +198,6 @@ public class PersistenciaProduccionQueso {
 
     public ProduccionQueso buscarProduccionQueso(int id) {
         String sql = "SELECT * FROM produccion p INNER JOIN produccion_queso pm  On p.idProduccion=pm.idProduccion where p.activo='1' and pm.activo='1' and p.idProduccion=?";
-        //"SELECT * FROM produccion WHERE idProduccion = ? AND activo = '1'";
         try {
             con = conexion.obtenerConexion();
             consulta = con.prepareStatement(sql);
@@ -278,7 +234,6 @@ public class PersistenciaProduccionQueso {
                 produccion.setNroTacho(resultado.getInt("NroTacho"));
                 produccion.setObservaciones(resultado.getString("observaciones"));
 
-//                listarInfoEspecifica(produccion);     
                 produccion.setTempPastQueso(resultado.getFloat("tempPastQueso"));
                 produccion.setTiempoReposoFermento(resultado.getString("tiempoReposoFermento"));
                 produccion.setTempReposoFermento(resultado.getFloat("tempReposoFermento"));
@@ -465,19 +420,3 @@ public class PersistenciaProduccionQueso {
 
 }
 
-/*private void listarInfoEspecifica(ProduccionManteca produccion){
-        String sql = "SELECT * FROM produccion_manteca WHERE activo = '1'";
-        try{
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql);
-            resultado = consulta.executeQuery();
-            while(resultado.next()){           
-                produccion.setHoraComienzoBatido(resultado.getString("comienzoBatido"));
-                produccion.setHoraFinBatido(resultado.getString("finBatido"));
-                produccion.setTiempoTotalBatido(resultado.getString("totalBatido"));
-                produccion.setCantidad(resultado.getInt("ormas"));
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-        }
-    }*/

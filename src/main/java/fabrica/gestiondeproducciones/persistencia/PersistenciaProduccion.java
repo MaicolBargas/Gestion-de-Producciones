@@ -1,6 +1,5 @@
 package fabrica.gestiondeproducciones.persistencia;
 
-import fabrica.gestiondeproducciones.dominio.Controlador;
 import fabrica.gestiondeproducciones.dominio.Empleado;
 import fabrica.gestiondeproducciones.dominio.EnvasesDulce;
 import fabrica.gestiondeproducciones.dominio.Insumo;
@@ -31,62 +30,6 @@ public class PersistenciaProduccion {
     PersistenciaEmpleado persEmpleado = new PersistenciaEmpleado();
     PersistenciaProducto persProducto = new PersistenciaProducto();
     PersistenciaPasteurizado persLecheP = new PersistenciaPasteurizado();
-
-    int idGenerado;
-
-    public int getIdGenerado() {
-        return idGenerado;
-    }
-
-    public boolean altaProduccion(Produccion produccion) {
-        String sql = "INSERT INTO " + nombreTabla
-                + " (codInterno, idLechePast, idProducto, rendimiento, kgLtsObt, fecha, encargadoId, horaInicio, horaFin, tiempoTrabajado, nroTacho) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            // Prepara la conexión y solicita las claves generadas
-            con = conexion.obtenerConexion();
-            consulta = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-            // Configura los valores de la consulta
-            consulta.setString(1, produccion.getCodInterno());
-            consulta.setInt(2, produccion.getLechep().getId());
-            consulta.setInt(3, produccion.getProducto().getId());
-            consulta.setFloat(4, produccion.getRendimiento());
-            consulta.setInt(5, produccion.getKgLtsObt());
-            consulta.setString(6, produccion.getFecha());
-            consulta.setInt(7, produccion.getEncargado().getId());
-            consulta.setString(8, produccion.getHoraInicio());
-            consulta.setString(9, produccion.getHoraFin());
-            consulta.setString(10, produccion.getTiempoTrabajado());
-            consulta.setInt(11, produccion.getNroTacho());
-
-            int filasAfectadas = consulta.executeUpdate();
-
-            if (filasAfectadas > 0) {
-
-                ResultSet rs = consulta.getGeneratedKeys();
-                if (rs.next()) {
-                    idGenerado = rs.getInt(1); // Lee el ID generado
-
-                } else {
-                    throw new SQLException("No se pudo obtener el ID generado.");
-                }
-            }
-
-            return true;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            return false;
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, Excepciones.controlaExepciones(e));
-            }
-        }
-    }
 
     public void agregarEmpleado(int idProd, int idEmpleado) {
         String sql = "INSERT INTO produccion_empleados" + "(idProduccion,idEmpleado) VALUES (?,?)";

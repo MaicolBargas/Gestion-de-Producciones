@@ -36,7 +36,6 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         listarSilos();
         listar();
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
 
     }
 
@@ -58,6 +57,8 @@ public class GestionIngresoLeche extends javax.swing.JInternalFrame {
         tablaIngresos.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaIngresos.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
+        
     }
 
     private void limpiarTabla() {

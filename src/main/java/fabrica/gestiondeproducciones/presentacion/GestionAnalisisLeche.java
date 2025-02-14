@@ -38,7 +38,6 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         initComponents();
         listar();
         agregarFiltros(txtBuscar, filtroTabla);
-        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Funciones auxiliares">  
@@ -70,6 +69,7 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
         tablaAnalisis.setModel(modelo);
         filtroTabla = new TableRowSorter<>(modelo);
         tablaAnalisis.setRowSorter(filtroTabla);
+        filtroTabla.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.DESCENDING)));
     }
 
     private void listarIngresos() {
@@ -702,15 +702,15 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
             }
 
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
-            int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
+            int proteina = utilidad.validarPorcentaje(txtProteina.getText(), "Proteina", false);
+            int agua = utilidad.validarPorcentaje(txtAgua.getText(), "Agua", false);
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);
 
             try {
@@ -784,18 +784,21 @@ public class GestionAnalisisLeche extends javax.swing.JInternalFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
+            int id = utilidad.validarNumericos(txtId.getText(), "Id", false);
             String fecha = utilidad.controlarFechas(txtFecha.getText());
-            int levadura = utilidad.validarNumericos(txtLevadura.getText(), "Levadura", false);
+            int levadura = utilidad.validarPorcentaje(txtLevadura.getText(), "Levadura", false);
             int mos = utilidad.validarNumericos(txtMos.getText(), "Mohos", false);
             int pTotales = utilidad.validarNumericos(txtPTotales.getText(), "Coliformes Totales", false);
             int pFecales = utilidad.validarNumericos(txtPFecales.getText(), "Coliformes Fecales", false);
-            int grasa = utilidad.validarNumericos(txtGrasa.getText(), "Grasa", false);
-            int proteina = utilidad.validarNumericos(txtProteina.getText(), "Proteina", false);
-            int agua = utilidad.validarNumericos(txtAgua.getText(), "Agua", false);
+            int grasa = utilidad.validarPorcentaje(txtGrasa.getText(), "Grasa", false);
+            int proteina = utilidad.validarPorcentaje(txtProteina.getText(), "Proteina", false);
+            int agua = utilidad.validarPorcentaje(txtAgua.getText(), "Agua", false);
             int idIngreso = utilidad.validarNumericos(txtIdIngreso.getText(), "Ingreso", false);
-            float ph = utilidad.validarNumericosFloat(txtPh.getText(), "PH", false);
+            float ph = utilidad.validarPh(utilidad.validarNumericosFloat(txtPh.getText(), "PH", false).toString());
             IngresoLeche ingreso = controlador.buscarIngreso(idIngreso);
 
+            analisis = controlador.buscarAnalisisIngreso(id);
+            
             try {
                 String[] partes = utilidad.validarVacios(txtEncargado.getText(), "Encargado").split(" - ");
                 Empleado empleado = controlador.buscarEmpleado(Integer.parseInt(partes[0]));
